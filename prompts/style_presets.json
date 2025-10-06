@@ -1,0 +1,50 @@
+{
+  "cinematic": {
+    "description": "High-quality cinematic look with professional lighting",
+    "prompt_additions": "cinematic lighting, film grain, professional photography, shallow depth of field, bokeh, 35mm, anamorphic lens, color grading, movie still",
+    "guidance_scale": 7.5,
+    "steps": 40
+  },
+  "photorealistic": {
+    "description": "Ultra-realistic photographic style",
+    "prompt_additions": "photorealistic, ultra detailed, 8k, sharp focus, professional photograph, natural lighting, high resolution, lifelike, realistic skin texture",
+    "guidance_scale": 7.0,
+    "steps": 40
+  },
+  "dramatic": {
+    "description": "Dramatic lighting and mood",
+    "prompt_additions": "dramatic lighting, high contrast, moody atmosphere, cinematic, intense shadows, rim lighting, chiaroscuro",
+    "guidance_scale": 8.0,
+    "steps": 45
+  },
+  "soft": {
+    "description": "Soft, gentle aesthetic",
+    "prompt_additions": "soft lighting, gentle atmosphere, pastel tones, dreamy, ethereal, warm colors, diffused light",
+    "guidance_scale": 6.5,
+    "steps": 35
+  },
+  "vibrant": {
+    "description": "Bold, vibrant colors",
+    "prompt_additions": "vibrant colors, vivid, saturated, bold, colorful, dynamic lighting, high energy",
+    "guidance_scale": 7.5,
+    "steps": 40
+  },
+  "moody": {
+    "description": "Dark, moody atmosphere",
+    "prompt_additions": "moody lighting, dark atmosphere, noir, shadowy, dimly lit, atmospheric, mysterious",
+    "guidance_scale": 8.0,
+    "steps": 45
+  },
+  "natural": {
+    "description": "Natural, documentary-style look",
+    "prompt_additions": "natural lighting, documentary style, realistic, candid, authentic, unposed, real-world",
+    "guidance_scale": 6.5,
+    "steps": 35
+  },
+  "stylized": {
+    "description": "Artistic, stylized look",
+    "prompt_additions": "stylized, artistic interpretation, creative composition, unique perspective, art direction",
+    "guidance_scale": 7.5,
+    "steps": 40
+  }
+}
