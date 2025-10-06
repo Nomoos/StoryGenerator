@@ -1,421 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
-=======
-# StoryGenerator - Complete Pipeline Documentation
 
-A complete pipeline for generating viral social media stories with automated text generation, voice-over, and video production.
-
-## Overview
-
-StoryGenerator automates the creation of short-form vertical videos optimized for TikTok, YouTube Shorts, and Instagram Reels. The pipeline handles everything from idea generation to final video output with thumbnails and metadata.
-
-## Pipeline Architecture
-
-```
-1. Ideas Generation (0_Ideas/)
-   ↓
-2. Script Generation (1_Scripts/)
-   ↓
-3. Script Revision (2_Revised/)
-   ↓
-4. Voice Generation (3_VoiceOver/)
-   ↓
-5. Title Generation (4_Titles/)
-   ↓
-6. Video Generation (5_Videos/) ← NEW!
-   ↓
-7. Publishing (Future)
-```
-
-## New Features: Video Pipeline Integration (Step 4)
-
-The video pipeline has been fully integrated with the following capabilities:
-
-### ✅ Modular Components
-
-1. **VideoRenderer** - Core video generation
-   - Renders videos from audio and images
-   - Automatic fallback to solid backgrounds
-   - Metadata embedding
-   - Thumbnail generation (1080x1920)
-
-2. **SceneComposer** - Scene management
-   - Multi-scene composition
-   - Scene transitions
-   - Automatic text-to-scene splitting
-
-3. **VideoPipeline** - Batch processing
-   - Process all stories at once
-   - Parallel/sequential processing options
-   - Error handling and recovery
-   - Comprehensive statistics
-
-### ✅ Error Handling & Fallbacks
-
-- **Image Generation Failure**: Automatically creates solid color background with title text
-- **TTS Failure**: Skips story and continues with batch processing
-- **Missing Files**: Comprehensive validation before processing
-- **Failed Videos**: Cleanup utilities to remove incomplete files
-
-### ✅ Metadata & Thumbnails
-
-- Embeds title, description, artist, and album metadata
-- Generates 1080x1920 thumbnails (customizable)
-- Saves metadata.json for reference
-- Copies script to video folder
-
-### ✅ Batch Processing
-
-- Sequential or parallel processing
-- Configurable worker threads
-- Skip existing videos automatically
-- Force regeneration option
-
-## Installation
-
-### 1. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Install FFmpeg
-
-FFmpeg is required for video processing:
-
-**Ubuntu/Debian:**
-```bash
-sudo apt-get install ffmpeg
-```
-
-**MacOS:**
-```bash
-brew install ffmpeg
-```
-
-**Windows:**
-Download from [https://ffmpeg.org/download.html](https://ffmpeg.org/download.html)
-
-### 3. Configure Paths
-
-Update `Tools/Utils.py` with your story root path:
-
-```python
-STORY_ROOT = "C:\\Users\\YourName\\PROJECTS\\VideoMaking\\StoryGenerator\\Stories"
-```
-
-## Usage
-
-### Complete Workflow
-
-#### 1. Generate Ideas
-```python
-from Generators.GStoryIdeas import StoryIdeaGenerator
-
-generator = StoryIdeaGenerator()
-# Generate and save ideas
-```
-
-#### 2. Generate Scripts
-```python
-from Generators.GScript import ScriptGenerator
-from Models.StoryIdea import StoryIdea
-
-generator = ScriptGenerator()
-idea = StoryIdea.from_file("path/to/idea.json")
-generator.generate_from_storyidea(idea)
-```
-
-#### 3. Revise Scripts
-```python
-from Generators.GRevise import RevisedScriptGenerator
-
-generator = RevisedScriptGenerator()
-generator.Revise(idea)
-```
-
-#### 4. Enhance Scripts (Add Voice Tags)
-```python
-from Generators.GEnhanceScript import EnhanceScriptGenerator
-
-generator = EnhanceScriptGenerator()
-generator.Enhance(folder_name)
-```
-
-#### 5. Generate Voice-Overs
-```python
-from Generators.GVoice import VoiceMaker
-
-maker = VoiceMaker()
-maker.generate_audio()
-maker.normalize_audio()
-```
-
-Or use the manual script:
-```bash
-python Generation/Manual/MVoice.py
-```
-
-#### 6. Generate Videos (NEW!)
-
-**Recommended Method - Full Pipeline:**
-```bash
-python Generation/Manual/MVideoPipeline.py
-```
-
-**Programmatic Usage:**
-```python
-from Video.VideoPipeline import VideoPipeline
-
-pipeline = VideoPipeline(
-    max_workers=2,
-    default_resolution=(1080, 1920)
-)
-
-# Process all stories
-stats = pipeline.batch_process(
-    parallel=False,
-    force_regenerate=False
-)
-
-print(f"Success: {stats['successful']}/{stats['processed']}")
-```
-
-**Process Single Story:**
-```python
-pipeline = VideoPipeline()
-success = pipeline.process_story(
-    story_folder="My_Story_Name",
-    generate_thumbnail=True
-)
-```
-
-### Manual Processing Scripts
-
-All manual scripts are in `Generation/Manual/`:
-
-- `MIdea.py` - Generate ideas
-- `MScript.py` - Generate scripts
-- `MRevise.py` - Revise scripts
-- `MEnhanceScript.py` - Add voice tags
-- `MVoice.py` - Generate voice-overs
-- `MVideoPipeline.py` - Generate videos (NEW!)
-- `MConvertMP3ToMP4.py` - Legacy converter (now uses VideoRenderer)
-
-## Project Structure
-
-```
-StoryGenerator/
-├── Models/
-│   └── StoryIdea.py              # Story data model
-├── Generators/
-│   ├── GStoryIdeas.py            # Idea generation
-│   ├── GScript.py                # Script generation
-│   ├── GRevise.py                # Script revision
-│   ├── GEnhanceScript.py         # Voice tag enhancement
-│   └── GVoice.py                 # Voice generation
-├── Video/                         # NEW: Video pipeline
-│   ├── VideoRenderer.py          # Core video rendering
-│   ├── SceneComposer.py          # Scene management
-│   ├── VideoPipeline.py          # Batch processing
-│   └── README.md                 # Detailed video docs
-├── Generation/Manual/
-│   ├── MVideoPipeline.py         # NEW: Video pipeline script
-│   └── ...                       # Other manual scripts
-├── Tools/
-│   └── Utils.py                  # Utilities and paths
-└── Stories/                      # Output directory
-    ├── 0_Ideas/
-    ├── 1_Scripts/
-    ├── 2_Revised/
-    ├── 3_VoiceOver/
-    ├── 4_Titles/
-    └── 5_Videos/                 # NEW: Final videos
-```
-
-## Video Pipeline Features
-
-### Resolution Options
-
-Default is 1080x1920 (vertical), but you can customize:
-
-```python
-# Square (Instagram)
-pipeline = VideoPipeline(default_resolution=(1080, 1080))
-
-# Horizontal (YouTube)
-pipeline = VideoPipeline(default_resolution=(1920, 1080))
-```
-
-### Parallel Processing
-
-Speed up batch processing with parallel execution:
-
-```python
-stats = pipeline.batch_process(
-    parallel=True,  # Enable parallel processing
-    force_regenerate=False
-)
-```
-
-**Note**: Parallel processing uses more CPU/memory but is significantly faster for large batches.
-
-### Custom Video Settings
-
-```python
-from Video.VideoRenderer import VideoRenderer
-
-renderer = VideoRenderer(
-    default_resolution=(1080, 1920),
-    default_fps=30,
-    default_bitrate="256k"  # Higher quality audio
-)
-```
-
-### Fallback Behavior
-
-If the background image is missing:
-1. Automatically generates a solid color (dark blue-gray) background
-2. Adds story title as text overlay (centered, white)
-3. Continues video generation without interruption
-4. Logs warning about using fallback
-
-### Metadata
-
-Each video includes embedded metadata:
-- Title (from StoryIdea)
-- Description (generated from story attributes)
-- Artist ("Nom")
-- Album ("Noms Stories")
-
-Metadata is also saved to `metadata.json` in the video folder for reference.
-
-### Thumbnail Generation
-
-Automatically generates thumbnails:
-- Resolution: 1080x1920 (matches video)
-- Extracted from video at 0.5 seconds
-- Saved as `thumbnail.jpg` in video folder
-- Can be customized or regenerated
-
-## Configuration
-
-### API Keys
-
-API keys are required for:
-- OpenAI (text generation): `Generators/GScript.py`
-- ElevenLabs (voice generation): `Generators/GVoice.py`
-
-**Note**: API keys should be stored securely (e.g., environment variables) in production.
-
-### Story Root Path
-
-Update `STORY_ROOT` in `Tools/Utils.py` to match your local setup:
-
-```python
-STORY_ROOT = "C:\\Users\\YourName\\PROJECTS\\VideoMaking\\StoryGenerator\\Stories"
-```
-
-### Video Settings
-
-Default settings in `Video/VideoRenderer.py`:
-- Resolution: 1080x1920 (vertical)
-- FPS: 30
-- Video Codec: H.264
-- Audio Codec: AAC
-- Audio Bitrate: 192k
-
-## Future Enhancements
-
-### Publishing Stage (Not Yet Implemented)
-
-The next step is automated publishing:
-
-1. **Platform APIs**:
-   - YouTube Shorts upload
-   - TikTok upload (via unofficial APIs)
-   - Instagram Reels (via scheduling partners)
-
-2. **Scheduling**:
-   - Queue videos for optimal posting times
-   - A/B testing with different thumbnails
-   - Analytics integration
-
-3. **Automation Considerations**:
-   - Many platforms restrict automation
-   - May require manual posting or scheduling partners
-   - Check platform ToS before automating
-
-### Other Future Features
-
-- Multi-scene video composition with transitions
-- Dynamic image generation from text prompts
-- Subtitle/caption overlay
-- Background music integration
-- Video quality presets (draft/final)
-- Progress webhooks/notifications
-
-## Troubleshooting
-
-### FFmpeg Not Found
-Make sure FFmpeg is installed and in your PATH:
-```bash
-ffmpeg -version
-```
-
-### Empty Videos
-Check:
-1. Audio file exists and is not empty
-2. Audio file has valid duration (use `ffprobe`)
-3. Background image path is correct
-
-### Memory Issues
-If parallel processing causes memory issues:
-```python
-# Reduce workers
-pipeline = VideoPipeline(max_workers=1)
-
-# Or disable parallel processing
-stats = pipeline.batch_process(parallel=False)
-```
-
-### Missing Dependencies
-Install all required packages:
-```bash
-pip install -r requirements.txt
-```
-
-Check for missing system dependencies:
-- FFmpeg
-- DejaVu fonts (for fallback text rendering)
-
-## Contributing
-
-When adding new features:
-1. Follow existing code structure
-2. Add error handling and fallbacks
-3. Update documentation
-4. Test with edge cases
-
-## License
-
-[Your License Here]
-
-## Credits
-
-- Video pipeline by Copilot AI Assistant
-- Story generation using OpenAI GPT models
-- Voice generation using ElevenLabs
-- Video processing with FFmpeg
-
----
-
-For detailed video pipeline documentation, see [Video/README.md](Video/README.md)
-=======
->>>>>>> origin/master
 # StoryGenerator - AI Video Content Pipeline
 
 An AI-driven video content pipeline that integrates ASR, LLM, vision, and generative models to create engaging short-form vertical videos for TikTok, YouTube Shorts, and Instagram Reels.
@@ -423,6 +6,16 @@ An AI-driven video content pipeline that integrates ASR, LLM, vision, and genera
 ## 🎯 Project Overview
 
 This project automates the creation of emotional, dramatic vertical stories targeting viewers aged 10-30 in the US, Canada, and Australia. The pipeline transforms story ideas into complete videos with voiceovers, subtitles, and visual content.
+
+## 📚 Documentation
+
+- **[README.md](README.md)** (this file) - Overview and quick start
+- **[docs/MODELS.md](docs/MODELS.md)** - Comprehensive model documentation with Hugging Face references
+- **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples for all pipeline stages
+- **[PIPELINE.md](PIPELINE.md)** - Detailed pipeline breakdown and technical specifications
+- **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Issue tracking and task templates
+- **[docs/INSTALLATION.md](docs/INSTALLATION.md)** - Detailed setup instructions
+- **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common issues and solutions
 
 ## 🏗️ Pipeline Architecture
 
@@ -524,7 +117,7 @@ pip install whisperx
 
 ## 🚀 Usage
 
-### Current Workflow
+### Quick Start Example
 
 ```python
 from Models.StoryIdea import StoryIdea
@@ -533,31 +126,55 @@ from Generators.GRevise import RevisedScriptGenerator
 from Generators.GVoice import VoiceMaker
 from Generators.GTitles import TitleGenerator
 
-# 1. Create or load a story idea
+# 1. Create a story idea
 idea = StoryIdea(
-    story_title="My Amazing Story",
+    story_title="The Unexpected Friend",
     narrator_gender="female",
-    tone="emotional",
-    theme="friendship"
+    tone="emotional, heartwarming",
+    theme="friendship, acceptance"
 )
 idea.to_file()
 
 # 2. Generate script
-script_gen = ScriptGenerator()
+script_gen = ScriptGenerator(model="gpt-4o-mini")
 script_gen.generate_from_storyidea(idea)
 
-# 3. Revise script
-revise_gen = RevisedScriptGenerator()
+# 3. Revise script for voice clarity
+revise_gen = RevisedScriptGenerator(model="gpt-4o-mini")
 revise_gen.Revise(idea)
 
 # 4. Generate voiceover
 voice_maker = VoiceMaker()
 voice_maker.generate_audio()
 
-# 5. Generate subtitles
-title_gen = TitleGenerator()
+# 5. Generate word-level subtitles
+title_gen = TitleGenerator(model_size="large-v2")
 title_gen.generate_titles()
 ```
+
+### Example Scripts
+
+The `examples/` directory contains ready-to-run demonstration scripts:
+
+- **[basic_pipeline.py](examples/basic_pipeline.py)** - Complete walkthrough of the current pipeline
+- **[batch_processing.py](examples/batch_processing.py)** - Process multiple stories in batch
+- **[custom_story_ideas.py](examples/custom_story_ideas.py)** - Create custom story variations
+
+Run an example:
+```bash
+python examples/basic_pipeline.py
+```
+
+### Input/Output Examples
+
+For detailed examples of inputs and outputs at each pipeline stage, including:
+- Story idea JSON format
+- Script generation examples
+- Voice generation specifications
+- Subtitle SRT format
+- Planned: Shotlist JSON, keyframe images, final videos
+
+📖 **See [docs/EXAMPLES.md](docs/EXAMPLES.md) for comprehensive input/output examples**
 
 ## 📁 Project Structure
 
@@ -587,19 +204,46 @@ StoryGenerator/
 ## 🔗 Model References
 
 ### Currently Used
+
 - **OpenAI GPT-4o-mini**: Script generation and revision
+  - [OpenAI Platform Docs](https://platform.openai.com/docs/models/gpt-4o-mini)
+  - Cost: $0.150 / 1M input tokens, $0.600 / 1M output tokens
+
 - **ElevenLabs eleven_v3**: Voice synthesis
-- **WhisperX large-v2**: ASR and alignment
+  - [ElevenLabs API Docs](https://elevenlabs.io/docs/api-reference/text-to-speech)
+  - High-quality, natural-sounding voices
+
+- **WhisperX large-v2**: ASR and word-level alignment
+  - [openai/whisper-large-v2](https://huggingface.co/openai/whisper-large-v2)
+  - [WhisperX GitHub](https://github.com/m-bain/whisperX)
 
 ### Planned Integration
+
 - **faster-whisper large-v3**: [Systran/faster-whisper-large-v3](https://huggingface.co/Systran/faster-whisper-large-v3)
-- **Qwen2.5-14B-Instruct**: [unsloth/Qwen2.5-14B-Instruct](https://huggingface.co/unsloth/Qwen2.5-14B-Instruct)
+  - 4x faster inference, lower memory footprint
+  
+- **Qwen2.5-14B-Instruct**: [Qwen/Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct)
+  - Local LLM alternative for script generation
+  
 - **Llama-3.1-8B-Instruct**: [meta-llama/Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
-- **LLaVA-OneVision**: [docs](https://huggingface.co/docs/transformers/en/model_doc/llava_onevision)
+  - Lower VRAM alternative (16GB vs 28GB)
+  
+- **LLaVA-OneVision**: [Hugging Face Docs](https://huggingface.co/docs/transformers/en/model_doc/llava_onevision)
+  - Vision-language model for scene validation
+  
 - **Phi-3.5-vision**: [microsoft/Phi-3.5-vision-instruct](https://huggingface.co/microsoft/Phi-3.5-vision-instruct)
-- **SDXL**: [docs](https://huggingface.co/docs/diffusers/en/using-diffusers/sdxl)
+  - Lightweight vision model (4B params, 8GB VRAM)
+  
+- **Stable Diffusion XL (SDXL)**: [Hugging Face Diffusers Docs](https://huggingface.co/docs/diffusers/en/using-diffusers/sdxl)
+  - High-quality keyframe generation (1024x1024)
+  
 - **LTX-Video**: [Lightricks/LTX-Video](https://huggingface.co/Lightricks/LTX-Video)
-- **Stable Video Diffusion**: [stability.ai](https://stability.ai/stable-video)
+  - Video generation from keyframes
+  
+- **Stable Video Diffusion**: [Stability AI](https://stability.ai/stable-video)
+  - Image-to-video conversion with smooth motion
+
+📖 **For detailed model documentation, specifications, and usage examples, see [docs/MODELS.md](docs/MODELS.md)**
 
 ## 🎯 Target Audience
 
@@ -610,9 +254,54 @@ StoryGenerator/
 
 ## 📋 Issue Tracking
 
-For detailed component implementation plans, see:
-- [PIPELINE.md](PIPELINE.md) - Complete pipeline breakdown
-- [docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md) - Individual component issues
+This project uses a structured issue tracking system to manage the implementation of all pipeline components.
+
+### Documentation
+
+- **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Complete issue templates for all 10 pipeline stages
+- **[PIPELINE.md](PIPELINE.md)** - Technical breakdown with implementation status
+
+### 10 Major Pipeline Stages
+
+1. ✅ **Environment & Model Setup** - Configuration and model management
+2. ✅ **ASR Enhancement** - Speech recognition with WhisperX (upgrade to faster-whisper planned)
+3. 🔄 **Shotlist Generation** - LLM-based scene planning (planned)
+4. 🔄 **Vision Guidance** - Optional scene validation with vision models (planned)
+5. 🔄 **SDXL Keyframe Generation** - High-quality image generation (planned)
+6. 🔄 **Video Synthesis** - LTX-Video or SVD integration (planned)
+7. 🔄 **Post-Production** - Subtitle overlay and final rendering (planned)
+8. 🔄 **Pipeline Integration** - One-click end-to-end automation (planned)
+9. 🔄 **C# Implementation** - Research and migration (planned)
+10. 🔄 **Documentation** - Comprehensive guides and examples (in progress)
+
+### Current Implementation Status
+
+**✅ Completed (Stages 1-5 of current pipeline)**:
+- Story idea generation with viral potential scoring
+- GPT-4o-mini script generation (~360 words, emotional hooks)
+- Script revision optimized for AI voice synthesis
+- ElevenLabs voice generation with LUFS normalization
+- WhisperX word-level subtitle generation and alignment
+
+**🔄 In Progress**:
+- Documentation enhancement
+- Model references and citations
+- Input/output examples
+
+**📋 Planned**:
+- Shotlist generation using local LLMs
+- SDXL keyframe generation
+- Video synthesis with LTX-Video/SVD
+- Complete automation pipeline
+
+### Creating Issues
+
+Use the templates in [docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md) to create GitHub issues for each component. Each template includes:
+- Clear description and scope
+- Requirements (Must/Should/Nice to have)
+- Detailed subtasks
+- Success criteria
+- Dependencies and references
 
 ## 🔐 Security Notes
 
@@ -620,10 +309,9 @@ For detailed component implementation plans, see:
 - Use environment variables
 - Implement proper secrets management
 - Rotate keys regularly
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master
+
+---
+
 # StoryGenerator
 
 AI-powered story generation pipeline for creating engaging short-form video content for TikTok, YouTube Shorts, and Instagram Reels.
@@ -839,10 +527,6 @@ For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMEN
 
 [Add your license here]
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
 ## 🤝 Contributing
 
 [Add contribution guidelines here]
@@ -850,10 +534,7 @@ For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMEN
 ## 📧 Contact
 
 [Add contact information here]
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master
+
 ---
 
 ## 🙏 Acknowledgments
@@ -867,10 +548,3 @@ For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMEN
 **Note**: This repository was recently reorganized to support both C# and Python implementations. The C# version is under development and will become the primary implementation.
 
 **Remember**: Always keep your API keys secure and never commit them to version control!
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> master
-=======
-=======
->>>>>>> origin/master
->>>>>>> master

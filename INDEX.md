@@ -8,10 +8,12 @@ Welcome to the StoryGenerator documentation! This index will help you find the i
 
 **New to StoryGenerator?** Start here:
 
-1. **[README.md](README.md)** - Overview of both implementations
-   - Repository structure
-   - Quick start for C# and Python
-   - Which version to use
+1. **[README.md](README.md)** - Project overview
+   - Pipeline architecture (10 stages)
+   - Currently implemented features
+   - Model references and citations
+   - Issue tracking overview
+   - Quick start example
 
 2. **[QUICKSTART.md](QUICKSTART.md)** - 15-minute Python setup guide
    - Installation steps
@@ -19,10 +21,49 @@ Welcome to the StoryGenerator documentation! This index will help you find the i
    - First story generation
    - Common troubleshooting
 
-3. **[REORGANIZATION_GUIDE.md](REORGANIZATION_GUIDE.md)** - Migration guide
-   - What changed in the reorganization
-   - How to update existing setups
-   - Troubleshooting reorganization issues
+3. **[docs/INSTALLATION.md](docs/INSTALLATION.md)** - Detailed setup instructions
+   - System requirements
+   - Dependencies
+   - GPU configuration
+   - Model downloads
+
+## 📖 Core Documentation
+
+### Pipeline & Technical Details
+
+4. **[PIPELINE.md](PIPELINE.md)** - Complete pipeline breakdown (~860 lines)
+   - 10 major stages with technical specs
+   - Current implementation status
+   - Model integration details
+   - Subtasks and requirements
+   - Files to create/modify
+
+5. **[docs/MODELS.md](docs/MODELS.md)** - AI model documentation (~680 lines)
+   - 11 models with Hugging Face links
+   - Configuration examples
+   - System requirements (VRAM, GPU)
+   - Model comparison tables
+   - Performance benchmarks
+   - License information
+
+6. **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples (~810 lines)
+   - Complete examples for all 8 pipeline stages
+   - Story idea JSON format
+   - Script generation examples
+   - Voice generation specs
+   - Subtitle SRT format
+   - Shotlist JSON (planned)
+   - Keyframe generation (planned)
+   - Final video specs (planned)
+
+### Issue Tracking & Planning
+
+7. **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Issue templates (~1790 lines)
+   - 10 comprehensive issue templates
+   - Status tracking table
+   - Subtasks and checklists
+   - Success criteria
+   - Dependencies and references
 
 ## 🔴 URGENT: Security
 
@@ -34,11 +75,11 @@ Welcome to the StoryGenerator documentation! This index will help you find the i
   - Git history cleanup
   - Ongoing security practices
 
-## 📊 In-Depth Analysis
+## 📊 Analysis & Research
 
 **For maintainers and contributors:**
 
-3. **[RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMENTS.md)** - Complete analysis (~18KB)
+8. **[RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMENTS.md)** - Complete analysis (~18KB)
    - Critical security issues
    - Architecture problems
    - Code quality assessment
@@ -48,14 +89,14 @@ Welcome to the StoryGenerator documentation! This index will help you find the i
    - Priority matrix
    - Cost estimates
 
-4. **[SUMMARY.md](SUMMARY.md)** - Implementation summary
+9. **[SUMMARY.md](SUMMARY.md)** - Implementation summary
    - What was delivered
    - Critical findings
    - Action plan
    - Metrics and estimates
    - Next steps
 
-5. **[ARCHITECTURE.md](ARCHITECTURE.md)** - Technical architecture (~15KB)
+10. **[ARCHITECTURE.md](ARCHITECTURE.md)** - Technical architecture (~15KB)
    - System overview diagrams
    - Pipeline visualization
    - Component interactions
@@ -103,8 +144,17 @@ Welcome to the StoryGenerator documentation! This index will help you find the i
 #### ...get started quickly
 → [QUICKSTART.md](QUICKSTART.md)
 
-#### ...understand the full system
-→ [README.md](README.md) then [ARCHITECTURE.md](ARCHITECTURE.md)
+#### ...understand the pipeline
+→ [README.md](README.md) → [PIPELINE.md](PIPELINE.md) → [docs/MODELS.md](docs/MODELS.md)
+
+#### ...see input/output examples
+→ [docs/EXAMPLES.md](docs/EXAMPLES.md)
+
+#### ...track implementation progress
+→ [docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)
+
+#### ...understand AI models used
+→ [docs/MODELS.md](docs/MODELS.md)
 
 #### ...fix security issues
 → [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md)
@@ -119,23 +169,33 @@ Welcome to the StoryGenerator documentation! This index will help you find the i
 → [README.md](README.md) → Contributing section
 
 #### ...troubleshoot problems
-→ [QUICKSTART.md](QUICKSTART.md) → Common Issues section
+→ [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 
-#### ...understand costs
-→ [QUICKSTART.md](QUICKSTART.md) → Understanding Costs section
+#### ...understand the full system
+→ [ARCHITECTURE.md](ARCHITECTURE.md)
 
 ## 📋 Documentation by Role
 
 ### 👤 New User
 1. Read [QUICKSTART.md](QUICKSTART.md)
-2. Reference [README.md](README.md) as needed
-3. Check [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md) for best practices
+2. Run [examples/basic_pipeline.py](examples/basic_pipeline.py)
+3. Reference [README.md](README.md) as needed
+4. Check [docs/EXAMPLES.md](docs/EXAMPLES.md) for format details
+5. Review [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md) for best practices
+
+### 👨‍💻 Developer/Contributor
+1. Read [README.md](README.md) for overview
+2. Study [PIPELINE.md](PIPELINE.md) for technical details
+3. Review [docs/MODELS.md](docs/MODELS.md) for AI model specs
+4. Check [docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md) for tasks
+5. Reference [docs/EXAMPLES.md](docs/EXAMPLES.md) for formats
 
 ### 👨‍💼 Repository Owner
 1. **URGENT**: Review [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md)
 2. Read [SUMMARY.md](SUMMARY.md) for overview
 3. Study [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMENTS.md) for roadmap
-4. Plan implementation based on priority matrix
+4. Review [docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md) for implementation tracking
+5. Plan implementation based on priority matrix
 
 ### 👨‍💻 Developer/Contributor
 1. Setup: [QUICKSTART.md](QUICKSTART.md)
