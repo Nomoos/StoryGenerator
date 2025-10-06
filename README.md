@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 # StoryGenerator - AI Video Content Pipeline
 
 An AI-driven video content pipeline that integrates ASR, LLM, vision, and generative models to create engaging short-form vertical videos for TikTok, YouTube Shorts, and Instagram Reels.
@@ -203,7 +206,10 @@ For detailed component implementation plans, see:
 - Use environment variables
 - Implement proper secrets management
 - Rotate keys regularly
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 # StoryGenerator
 
 AI-powered story generation pipeline for creating engaging short-form video content for TikTok, YouTube Shorts, and Instagram Reels.
@@ -410,6 +416,9 @@ For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMEN
 - **Security**: See [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md)
 
 ---
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
 
 ## 📄 License
@@ -417,6 +426,9 @@ For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMEN
 [Add your license here]
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 ## 🤝 Contributing
 
 [Add contribution guidelines here]
@@ -424,7 +436,10 @@ For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMEN
 ## 📧 Contact
 
 [Add contact information here]
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 ---
 
 ## 🙏 Acknowledgments
@@ -438,4 +453,7 @@ For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMEN
 **Note**: This repository was recently reorganized to support both C# and Python implementations. The C# version is under development and will become the primary implementation.
 
 **Remember**: Always keep your API keys secure and never commit them to version control!
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master

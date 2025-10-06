@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 # Stories output directory
 Stories/*
 !Stories/.gitkeep
@@ -56,7 +59,10 @@ logs/
 
 # Checkpoints
 checkpoints/
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 # Story Generator - GitIgnore
 
 # Environment Variables
@@ -125,7 +131,17 @@ logs/
 # Generated Stories
 Stories/*
 !Stories/.gitkeep
+__pycache__/
+*.pyc
 
+<<<<<<< HEAD
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+=======
 # Cache
 cache/
 *.cache
@@ -139,6 +155,9 @@ dmypy.json
 # Documentation
 docs/_build/
 site/
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
 
 # Temporary files
@@ -146,7 +165,10 @@ tmp/
 temp/
 *.tmp
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 *.bak
 *.swp
 
