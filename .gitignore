@@ -170,6 +170,8 @@ trends/*/*/*
 # Config files (may contain sensitive data)
 config/**/*
 !config/**/.gitkeep
+!config/*.yaml
+!config/*.yml
 
 # =============================================================================
 # ENVIRONMENT & SECRETS

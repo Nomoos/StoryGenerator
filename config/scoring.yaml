@@ -1,0 +1,11 @@
+# Scoring Configuration
+# Weights for viral content scoring metrics
+
+# Viral Score Calculation
+# Total weights should sum to 1.0 for normalized scoring
+viral:
+  novelty: 0.25      # Uniqueness and originality of content
+  emotional: 0.25    # Emotional impact and engagement
+  clarity: 0.20      # Message clarity and comprehension
+  replay: 0.15       # Rewatchability and repeat value
+  share: 0.15        # Shareability and viral potential
