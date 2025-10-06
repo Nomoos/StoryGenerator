@@ -44,6 +44,22 @@ namespace StoryGenerator.Research
             CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Transcribe audio and generate VTT subtitle file.
+        /// </summary>
+        /// <param name="audioPath">Path to audio file</param>
+        /// <param name="outputPath">Path to save VTT file</param>
+        /// <param name="language">Language code or null for auto-detection</param>
+        /// <param name="maxWordsPerLine">Maximum words per subtitle line</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>VTT content as string</returns>
+        Task<string> TranscribeToVttAsync(
+            string audioPath,
+            string outputPath = null,
+            string language = null,
+            int maxWordsPerLine = 10,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Detect the language of an audio file.
         /// </summary>
         /// <param name="audioPath">Path to audio file</param>

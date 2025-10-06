@@ -42,6 +42,7 @@ transformers>=4.35.0
 accelerate>=0.25.0
 safetensors>=0.4.0
 # Audio processing
+faster-whisper>=0.10.0
 whisperx>=3.0.0
 torch>=2.0.0
 diffusers>=0.21.0
