@@ -1,2 +1,9 @@
 Stories/*
 !Stories/.gitkeep
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
