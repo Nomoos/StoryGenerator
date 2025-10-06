@@ -1,0 +1,50 @@
+{
+  "audience": {
+    "genders": [
+      {
+        "name": "men",
+        "preference_percentage": 70
+      },
+      {
+        "name": "women",
+        "preference_percentage": 30
+      }
+    ],
+    "countries": [
+      {
+        "name": "US",
+        "preference_percentage": 80
+      },
+      {
+        "name": "UK",
+        "preference_percentage": 20
+      }
+    ],
+    "age_groups": [
+      {
+        "range": "20-24",
+        "preference_percentage": 50
+      },
+      {
+        "range": "25-29",
+        "preference_percentage": 30
+      },
+      {
+        "range": "30-34",
+        "preference_percentage": 20
+      }
+    ]
+  },
+  "folder_structure": {
+    "content_folders": [
+      "ideas",
+      "topics"
+    ],
+    "script_folders": [
+      "scripts/raw_local"
+    ],
+    "simple_folders": [
+      "config"
+    ]
+  }
+}
