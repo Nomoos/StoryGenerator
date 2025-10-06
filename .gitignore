@@ -2,18 +2,24 @@
 Stories/*
 !Stories/.gitkeep
 <<<<<<< HEAD
+<<<<<<< HEAD
 logs/
 *.log
 __pycache__/
 *.pyc
 =======
+>>>>>>> origin/master
+=======
 
 # Python
+>>>>>>> master
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+<<<<<<< HEAD
+=======
 build/
 develop-eggs/
 dist/
