@@ -1,6 +1,7 @@
 import os
 import shutil
 import re
+import time
 from difflib import SequenceMatcher
 
 import whisperx
@@ -13,6 +14,9 @@ from Tools.Utils import (
     sanitize_filename,
     SUBTITLESWBW_NAME,
 )
+from Tools.Monitor import logger, PerformanceMonitor, log_error, log_info
+from Tools.Retry import retry_with_exponential_backoff
+from Tools.Validator import OutputValidator
 
 VOICEOVER_FILE = "voiceover_normalized.mp3"
 REVISED_FILE = "Revised.txt"
@@ -45,10 +49,44 @@ class TitleGenerator:
                 continue
 
             srt_output = os.path.join(output_path, SUBTITLESWBW_NAME)
-            self.align_script_to_word_level_srt(mp3_path, revised_path, srt_output)
+            
+            # Time the alignment operation
+            operation_start = time.time()
+            success = False
+            error_msg = None
+            metrics = {}
+            
+            try:
+                self.align_script_to_word_level_srt(mp3_path, revised_path, srt_output)
+                success = True
+                
+                # Validate subtitle output
+                is_valid, validation_metrics = OutputValidator.validate_text_file(srt_output, min_length=50)
+                metrics.update(validation_metrics)
+                
+                if not is_valid:
+                    error_msg = "Generated subtitle file failed validation"
+                    success = False
+                
+            except Exception as e:
+                error_msg = str(e)
+                log_error("Title Generation", folder_name, e)
+            finally:
+                duration = time.time() - operation_start
+                PerformanceMonitor.log_operation(
+                    operation="Alignment_Generation",
+                    story_title=folder_name,
+                    duration=duration,
+                    success=success,
+                    error=error_msg,
+                    metrics=metrics
+                )
 
     def align_script_to_word_level_srt(self, audio_path: str, script_path: str, output_srt: str, log_mismatches: bool = True):
         print(f"🎧 Aligning script to audio using WhisperX: {audio_path}")
+        
+        alignment_start = time.time()
+        transcribe_start = time.time()
 
         with open(script_path, "r", encoding="utf-8") as f:
             script_text = f.read()
@@ -56,8 +94,15 @@ class TitleGenerator:
 
         try:
             audio = whisperx.load_audio(audio_path)
-            result = self.model.transcribe(audio, batch_size=16)
+            result = self._transcribe_with_retry(audio)
+            
+            transcribe_duration = time.time() - transcribe_start
+            log_info(f"✅ Transcription completed in {transcribe_duration:.2f}s")
+            
+            align_start = time.time()
             result_aligned = whisperx.align(result["segments"], self.alignment_model, self.metadata, audio, self.device)
+            align_duration = time.time() - align_start
+            log_info(f"✅ Alignment completed in {align_duration:.2f}s")
 
             spoken_words = result_aligned["word_segments"]
             spoken_clean = [self._normalize_word(w["word"]) for w in spoken_words]
@@ -86,11 +131,27 @@ class TitleGenerator:
             if log_mismatches:
                 estimated = sum(1 for s in segments if s["start"] == s["end"])
                 print(f"🧾 Estimated {estimated} timestamps out of {len(segments)} words.")
+                log_info(f"Alignment accuracy: {((len(segments) - estimated) / len(segments) * 100):.1f}%")
 
             self._export_word_srt(segments, output_srt)
+            
+            total_duration = time.time() - alignment_start
+            log_info(f"✅ Total alignment time: {total_duration:.2f}s")
 
         except Exception as e:
+            log_error("Alignment", audio_path, e)
             print(f"❌ Error during alignment: {e}")
+            raise
+    
+    @retry_with_exponential_backoff(
+        max_retries=2,
+        base_delay=1.0,
+        max_delay=20.0,
+        exceptions=(Exception,)
+    )
+    def _transcribe_with_retry(self, audio):
+        """Transcribe audio with retry logic."""
+        return self.model.transcribe(audio, batch_size=16)
 
     def _estimate_time(self, index, segments):
         prev_time = None

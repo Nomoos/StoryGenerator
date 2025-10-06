@@ -2,6 +2,13 @@
 Stories/*
 !Stories/.gitkeep
 <<<<<<< HEAD
+<<<<<<< HEAD
+logs/
+*.log
+__pycache__/
+*.pyc
+=======
+>>>>>>> origin/master
 =======
 
 # Python

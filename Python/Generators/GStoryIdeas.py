@@ -1,7 +1,10 @@
 import openai
 import json
+import time
 from typing import List, Optional
 from Models.StoryIdea import StoryIdea
+from Tools.Monitor import logger, PerformanceMonitor, log_error, log_info
+from Tools.Retry import retry_with_exponential_backoff, with_circuit_breaker
 
 openai.api_key = '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'
 
@@ -16,38 +19,75 @@ class StoryIdeasGenerator:
         tone: Optional[str] = None,
         theme: Optional[str] = None
     ) -> List[StoryIdea]:
-        prompt = self._build_prompt(topic, count, tone, theme)
-
+        operation_start = time.time()
+        success = False
+        error_msg = None
+        metrics = {"count": count}
+        
         try:
-            response = openai.ChatCompletion.create(
-                model=self.model,
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.9
+            prompt = self._build_prompt(topic, count, tone, theme)
+
+            try:
+                response = self._call_openai_with_retry(prompt)
+            except Exception as e:
+                error_msg = f"Failed to generate ideas: {e}"
+                log_error("Idea Generation", topic, e)
+                raise RuntimeError(error_msg)
+
+            reply = response.choices[0].message['content']
+
+            try:
+                cleaned = reply.strip().strip('```json').strip('```').strip()
+                ideas_data = json.loads(cleaned)
+            except json.JSONDecodeError as e:
+                error_msg = f"Invalid JSON from ChatGPT: {e}"
+                log_error("Idea Parsing", topic, e)
+                raise ValueError(f"Invalid JSON from ChatGPT:\n{reply}")
+
+            if not isinstance(ideas_data, list):
+                error_msg = "Expected a JSON array (list of story ideas)"
+                raise ValueError(error_msg)
+
+            valid_ideas = []
+            for item in ideas_data:
+                if isinstance(item, dict) and 'story_title' in item:
+                    idea = StoryIdea(**item)
+                    idea.to_file()  # ✅ delegate saving to the model itself
+                    valid_ideas.append(idea)
+                else:
+                    log_error("Idea Validation", topic, Exception(f"Invalid idea format: {item}"))
+                    raise ValueError(f"Invalid idea format: {item}")
+
+            success = True
+            metrics["generated_count"] = len(valid_ideas)
+            log_info(f"✅ Generated {len(valid_ideas)} story ideas for topic '{topic}'")
+            return valid_ideas
+            
+        finally:
+            duration = time.time() - operation_start
+            PerformanceMonitor.log_operation(
+                operation="Idea_Generation",
+                story_title=topic,
+                duration=duration,
+                success=success,
+                error=error_msg,
+                metrics=metrics
             )
-        except Exception as e:
-            raise RuntimeError(f"Failed to generate ideas: {e}")
-
-        reply = response.choices[0].message['content']
-
-        try:
-            cleaned = reply.strip().strip('```json').strip('```').strip()
-            ideas_data = json.loads(cleaned)
-        except json.JSONDecodeError:
-            raise ValueError(f"Invalid JSON from ChatGPT:\n{reply}")
-
-        if not isinstance(ideas_data, list):
-            raise ValueError("Expected a JSON array (list of story ideas).")
-
-        valid_ideas = []
-        for item in ideas_data:
-            if isinstance(item, dict) and 'story_title' in item:
-                idea = StoryIdea(**item)
-                idea.to_file()  # ✅ delegate saving to the model itself
-                valid_ideas.append(idea)
-            else:
-                raise ValueError(f"Invalid idea format: {item}")
-
-        return valid_ideas
+    
+    @retry_with_exponential_backoff(
+        max_retries=3,
+        base_delay=2.0,
+        max_delay=30.0,
+        exceptions=(Exception,)
+    )
+    @with_circuit_breaker("openai")
+    def _call_openai_with_retry(self, prompt: str):
+        """Call OpenAI API with retry logic and circuit breaker."""
+        return openai.ChatCompletion.create(
+            model=self.model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.9
+        )
 
     def _build_prompt(self, topic: str, count: int, tone: Optional[str], theme: Optional[str]) -> str:
         prompt = f"""
