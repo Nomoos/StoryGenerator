@@ -1,41 +1,47 @@
 # StoryGenerator - C# Implementation
 
-## 🚧 Under Development
+[![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/download)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-The C# implementation of StoryGenerator is currently under development. This will be the **primary/preferred** implementation going forward.
+## 🎯 Overview
 
-## 🎯 Goals
+The C# implementation of StoryGenerator provides a high-performance, type-safe alternative to the Python version. Built with modern .NET features, it offers improved performance, better tooling support, and production-ready reliability.
 
-- **Performance**: Faster execution compared to Python
-- **Type Safety**: Strong typing with compile-time checks
-- **Modern Features**: Async/await, LINQ, and more
-- **Cross-Platform**: Run on Windows, macOS, and Linux with .NET
-- **Easy Deployment**: Single binary deployment
-- **Better Tooling**: Excellent IDE support (Visual Studio, Rider, VS Code)
+## ✨ Key Features
 
-## 📋 Planned Architecture
+- **🚀 High Performance**: Async/await throughout, optimized for throughput
+- **🔒 Type Safety**: Strong typing with nullable reference types
+- **🔄 Resilience**: Polly-based retry and circuit breaker patterns
+- **📊 Monitoring**: Built-in performance tracking and metrics
+- **🔧 Extensible**: Clean architecture with dependency injection
+- **📝 Well-Documented**: Comprehensive XML docs and migration guides
+
+## 📦 Requirements
+
+- .NET 8.0 or later
+- OpenAI API key
+- ElevenLabs API key (for voice generation)
+
+## 🏗️ Architecture
 
 ```
 CSharp/
-├── StoryGenerator.Core/        # Core library
-│   ├── Models/                 # Data models
-│   ├── Interfaces/             # Abstractions
-│   └── Services/               # Business logic
-├── StoryGenerator.Generators/  # Generator implementations
-│   ├── IdeaGenerator.cs
-│   ├── ScriptGenerator.cs
-│   ├── RevisionGenerator.cs
-│   ├── EnhancementGenerator.cs
-│   └── VoiceGenerator.cs
-├── StoryGenerator.Providers/   # External service providers
-│   ├── OpenAI/                 # OpenAI integration
-│   └── ElevenLabs/             # ElevenLabs integration
+├── StoryGenerator.Core/        # Core models, utilities, and services
+│   ├── Models/                 # StoryIdea, ViralPotential
+│   ├── Utils/                  # FileHelper, PathConfiguration
+│   └── Services/               # PerformanceMonitor, RetryService
+├── StoryGenerator.Providers/   # External API integrations
+│   ├── OpenAI/                 # OpenAI API client
+│   └── ElevenLabs/             # ElevenLabs TTS client
+├── StoryGenerator.Generators/  # Content generation implementations
+│   └── IdeaGenerator.cs        # ✅ Implemented
 ├── StoryGenerator.CLI/         # Command-line interface
-├── StoryGenerator.API/         # Web API (optional)
 └── StoryGenerator.Tests/       # Unit and integration tests
 ```
 
-## 🚀 Quick Start (Coming Soon)
+## 🚀 Quick Start
+
+### Installation
 
 ```bash
 # Clone the repository
@@ -45,58 +51,243 @@ cd StoryGenerator/CSharp
 # Build the solution
 dotnet build
 
-# Run the CLI
-dotnet run --project StoryGenerator.CLI -- generate-ideas --topic "your topic"
+# Run tests
+dotnet test
 ```
 
-## 📦 Requirements
+### Configuration
 
-- .NET 8.0 or later
-- OpenAI API key
-- ElevenLabs API key (for voice generation)
+Create an `appsettings.json` file:
 
-## ⚙️ Configuration
-
-Configuration will be managed through:
-- `appsettings.json` for application settings
-- Environment variables for secrets
-- User secrets for local development
-
-Example configuration:
 ```json
 {
   "OpenAI": {
-    "ApiKey": "YOUR_API_KEY",
+    "ApiKey": "your-openai-api-key",
     "Model": "gpt-4o-mini",
     "Temperature": 0.9
   },
   "ElevenLabs": {
-    "ApiKey": "YOUR_API_KEY",
+    "ApiKey": "your-elevenlabs-api-key",
     "VoiceId": "BZgkqPqms7Kj9ulSkVzn",
-    "Model": "eleven_v3"
+    "Model": "eleven_v3",
+    "OutputFormat": "mp3_44100_192"
   },
-  "Storage": {
-    "StoriesPath": "./Stories"
+  "PathConfiguration": {
+    "StoryRoot": "./Stories"
   }
 }
 ```
 
-## 🔧 Features (Planned)
+Or use environment variables:
 
-- ✅ **Async/Await**: Native async support for better performance
-- ✅ **Dependency Injection**: Built-in DI container
-- ✅ **Strong Typing**: Compile-time type safety
-- ✅ **LINQ**: Powerful query capabilities
-- ✅ **NuGet Packages**: Easy dependency management
-- ✅ **Unit Testing**: Comprehensive test coverage
-- ✅ **Logging**: Built-in logging infrastructure
-- ✅ **Configuration**: Flexible configuration system
-- ✅ **CLI**: Rich command-line interface
-- ✅ **API**: RESTful API (optional)
+```bash
+export OpenAI__ApiKey="your-key"
+export ElevenLabs__ApiKey="your-key"
+```
 
-## 💻 Development
+### Usage Example
 
-### Prerequisites
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+using StoryGenerator.Generators;
+
+// Set up dependency injection
+var services = new ServiceCollection();
+ConfigureServices(services);
+var serviceProvider = services.BuildServiceProvider();
+
+// Generate story ideas
+var ideaGenerator = serviceProvider.GetRequiredService<IIdeaGenerator>();
+var ideas = await ideaGenerator.GenerateIdeasAsync(
+    topic: "A person who discovers something unexpected",
+    count: 5,
+    tone: "emotional"
+);
+
+foreach (var idea in ideas)
+{
+    Console.WriteLine($"Title: {idea.StoryTitle}");
+    Console.WriteLine($"Potential: {idea.Potential.Overall}/100");
+}
+```
+
+## 📋 Implementation Status
+
+### ✅ Phase 1: Core Infrastructure (Completed)
+
+- [x] StoryIdea model with JSON serialization
+- [x] ViralPotential scoring model
+- [x] FileHelper utilities
+- [x] PathConfiguration
+- [x] PerformanceMonitor with metrics tracking
+- [x] RetryService with Polly integration
+
+### ✅ Phase 2: API Providers (Completed)
+
+- [x] OpenAI client with chat completions
+- [x] ElevenLabs client for TTS
+- [x] Retry and circuit breaker integration
+- [x] Strongly-typed request/response models
+
+### ✅ Phase 3: Generators (Partial)
+
+- [x] **IdeaGenerator** - Story idea generation with viral potential
+- [ ] **ScriptGenerator** - ~360 word script generation
+- [ ] **RevisionGenerator** - Script revision for voice clarity
+- [ ] **EnhancementGenerator** - ElevenLabs tag enhancement
+- [ ] **VoiceGenerator** - TTS with audio normalization
+
+### 🔄 Phase 4: Advanced Features (Planned)
+
+- [ ] SubtitleGenerator (WhisperX integration)
+- [ ] VideoGenerator (FFmpeg wrapper)
+- [ ] VideoPipelineGenerator
+- [ ] VideoCompositor
+- [ ] VideoInterpolator
+
+### 🔄 Phase 5: Vision & AI (Planned)
+
+- [ ] VisionGenerator
+- [ ] SceneAnalyzer
+- [ ] SceneDescriber
+- [ ] KeyframeGenerator (SDXL)
+- [ ] IncrementalImprover
+
+## 🎨 C# Improvements Over Python
+
+### Performance
+- **Async I/O**: True non-blocking operations
+- **Connection pooling**: Reused HTTP clients
+- **Compiled code**: Native execution speed
+
+### Reliability
+- **Polly integration**: Exponential backoff and circuit breakers
+- **Strong typing**: Compile-time error detection
+- **Null safety**: Nullable reference types
+
+### Developer Experience
+- **IntelliSense**: Full IDE support
+- **Refactoring**: Safe automated refactoring
+- **Debugging**: Excellent debugging tools
+
+### Maintainability
+- **Dependency injection**: Testable, decoupled code
+- **LINQ**: Expressive data transformations
+- **XML docs**: Built-in documentation
+
+## 📚 Documentation
+
+- **[MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)** - Complete migration guide from Python
+- **[Interfaces/IGenerators.cs](Interfaces/IGenerators.cs)** - Generator interfaces
+- **XML Documentation** - Inline with code
+
+## 🔧 Development
+
+### Building
+
+```bash
+dotnet build
+```
+
+### Running Tests
+
+```bash
+dotnet test
+```
+
+### Publishing
+
+```bash
+# Single-file executable
+dotnet publish StoryGenerator.CLI -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
+
+# Cross-platform
+dotnet publish StoryGenerator.CLI -c Release -r linux-x64 --self-contained
+dotnet publish StoryGenerator.CLI -c Release -r osx-x64 --self-contained
+```
+
+## 🤝 Contributing
+
+When implementing new generators:
+
+1. Follow the IdeaGenerator pattern
+2. Use async/await for all I/O operations
+3. Integrate PerformanceMonitor for metrics
+4. Use RetryService for external API calls
+5. Add comprehensive logging
+6. Write unit tests
+7. Update documentation
+
+See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed implementation patterns.
+
+## 📊 Performance Metrics
+
+Performance monitoring is built-in. View metrics:
+
+```csharp
+var monitor = serviceProvider.GetRequiredService<PerformanceMonitor>();
+var summary = await monitor.GetPerformanceSummaryAsync();
+
+Console.WriteLine($"Total Operations: {summary.TotalOperations}");
+Console.WriteLine($"Success Rate: {summary.SuccessRate}%");
+```
+
+Metrics are automatically saved to `logs/metrics.json`.
+
+## 🐛 Troubleshooting
+
+### API Key Issues
+Ensure your API keys are properly configured in `appsettings.json` or environment variables.
+
+### Build Errors
+```bash
+dotnet clean
+dotnet restore
+dotnet build
+```
+
+### Missing Dependencies
+```bash
+dotnet restore
+```
+
+## 📄 License
+
+MIT License - see LICENSE file for details
+
+## 🔗 Related Projects
+
+- **Python Implementation**: [/Python](../Python/)
+- **Documentation**: [/docs](../docs/)
+
+## 👥 Contributors
+
+- Initial C# port and architecture design
+- OpenAI and ElevenLabs provider implementations
+- Core infrastructure and utilities
+
+## 📮 Support
+
+For issues and questions:
+- GitHub Issues: https://github.com/Nomoos/StoryGenerator/issues
+- Documentation: See MIGRATION_GUIDE.md
+
+## 🗺️ Roadmap
+
+- [ ] Complete all generator implementations
+- [ ] Add CLI with rich commands
+- [ ] Implement configuration validation
+- [ ] Add performance benchmarks vs Python
+- [ ] Create Docker images
+- [ ] Add API server (optional)
+- [ ] Implement streaming responses
+- [ ] Add batch processing support
+
+## ⚙️ Configuration Options
+
+Full configuration reference available in [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md#configuration).
+
+## 💻 Development Prerequisites
 
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download)
 - Visual Studio 2022, Rider, or VS Code
