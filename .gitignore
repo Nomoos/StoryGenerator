@@ -66,6 +66,10 @@ logs/
 # Generated Stories
 Stories/*
 !Stories/.gitkeep
+<<<<<<< HEAD
+__pycache__/
+*.pyc
+=======
 
 # Cache
 cache/
@@ -91,3 +95,4 @@ temp/
 # OS
 Thumbs.db
 .DS_Store
+>>>>>>> master
