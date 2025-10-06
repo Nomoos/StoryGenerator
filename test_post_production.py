@@ -72,11 +72,11 @@ def create_test_srt(output_path: str):
 This is the first subtitle
 
 2
-00:00:02,000 --> 00:00:04,000
+00:00:02,100 --> 00:00:04,000
 This is the second subtitle
 
 3
-00:00:04,000 --> 00:00:06,000
+00:00:04,100 --> 00:00:06,000
 This is the third subtitle
 """
     with open(output_path, 'w', encoding='utf-8') as f:
