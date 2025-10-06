@@ -2,6 +2,15 @@
 
 This document provides a comprehensive breakdown of all pipeline components, their current implementation status, requirements, and planned features.
 
+## 📚 Related Documentation
+
+- **[README.md](README.md)** - Project overview and quick start
+- **[docs/MODELS.md](docs/MODELS.md)** - Comprehensive model documentation with Hugging Face references
+- **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples for all stages
+- **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Issue templates for tracking implementation
+- **[docs/INSTALLATION.md](docs/INSTALLATION.md)** - Detailed setup instructions
+- **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common issues and solutions
+
 ## 📊 Pipeline Overview
 
 ```
@@ -80,6 +89,9 @@ Story Idea → Script Generation → Script Revision → Voice Synthesis
 ### Current Implementation
 - **File**: `Generators/GTitles.py`
 - **Model**: WhisperX large-v2
+  - **Hugging Face**: [openai/whisper-large-v2](https://huggingface.co/openai/whisper-large-v2)
+  - **GitHub**: [m-bain/whisperX](https://github.com/m-bain/whisperX)
+  - **Documentation**: See [docs/MODELS.md](docs/MODELS.md#3-whisperx-large-v2)
 - **Features**:
   - Word-level timestamp alignment
   - Script-to-audio synchronization
@@ -98,6 +110,9 @@ class TitleGenerator:
 
 ### Enhancement Requirements
 - [ ] Upgrade to faster-whisper large-v3
+  - **Model**: [Systran/faster-whisper-large-v3](https://huggingface.co/Systran/faster-whisper-large-v3)
+  - **Benefits**: 4x faster, 50% less VRAM, 10% better accuracy
+  - **Documentation**: See [docs/MODELS.md](docs/MODELS.md#4-faster-whisper-large-v3)
 - [ ] Add multi-language support
 - [ ] Implement confidence scoring
 - [ ] Add speaker diarization (if multiple voices)
@@ -133,6 +148,8 @@ class TitleGenerator:
 #### 3a. Script Generation
 - **File**: `Generators/GScript.py`
 - **Model**: GPT-4o-mini
+  - **Documentation**: [OpenAI Platform Docs](https://platform.openai.com/docs/models/gpt-4o-mini)
+  - **Details**: See [docs/MODELS.md](docs/MODELS.md#1-openai-gpt-4o-mini)
 - **Features**:
   - Story idea to script conversion
   - ~360 word target length
@@ -152,7 +169,9 @@ class TitleGenerator:
 - [ ] Scene breakdown from script
 - [ ] Visual cue extraction
 - [ ] Emotional beat analysis
-- [ ] Alternative LLM support (Qwen2.5, Llama-3.1)
+- [ ] Alternative LLM support
+  - **Qwen2.5-14B-Instruct**: [Model Card](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct) | [Docs](docs/MODELS.md#5-qwen25-14b-instruct)
+  - **Llama-3.1-8B-Instruct**: [Model Card](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct) | [Docs](docs/MODELS.md#6-llama-31-8b-instruct)
 - [ ] Token usage optimization
 - [ ] Response caching
 
@@ -208,7 +227,14 @@ class TitleGenerator:
 
 ### Proposed Models
 - **LLaVA-OneVision**: Multi-modal understanding
+  - **Hugging Face**: [Model Docs](https://huggingface.co/docs/transformers/en/model_doc/llava_onevision)
+  - **Details**: See [docs/MODELS.md](docs/MODELS.md#7-llava-onevision)
+  - **VRAM**: ~14GB (7B model), ~140GB (72B model)
+  
 - **Phi-3.5-vision**: Lightweight vision-language model
+  - **Hugging Face**: [microsoft/Phi-3.5-vision-instruct](https://huggingface.co/microsoft/Phi-3.5-vision-instruct)
+  - **Details**: See [docs/MODELS.md](docs/MODELS.md#8-phi-35-vision)
+  - **VRAM**: ~8GB (more efficient alternative)
 
 ### Requirements
 - [ ] Model selection and testing
@@ -266,6 +292,9 @@ Keyframes → Vision Validation → Quality Score → Accept/Reject
 
 ### Requirements
 - [ ] Upgrade to SDXL for better quality
+  - **Model**: [stabilityai/stable-diffusion-xl-base-1.0](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0)
+  - **Documentation**: [Hugging Face Diffusers SDXL Guide](https://huggingface.co/docs/diffusers/en/using-diffusers/sdxl)
+  - **Details**: See [docs/MODELS.md](docs/MODELS.md#9-stable-diffusion-xl-sdxl)
 - [ ] Integrate with shotlist generation
 - [ ] Implement consistent character generation
 - [ ] Add style preservation
@@ -330,9 +359,23 @@ class KeyframeGenerator:
 Animate keyframes into smooth video sequences synchronized with audio.
 
 ### Proposed Models
-- **LTX-Video**: Fast, high-quality video generation
-- **Stable Video Diffusion**: Motion-controlled animation
-- **AnimateDiff**: Animation from static images
+
+#### Option 1: LTX-Video (Recommended)
+- **Hugging Face**: [Lightricks/LTX-Video](https://huggingface.co/Lightricks/LTX-Video)
+- **Details**: See [docs/MODELS.md](docs/MODELS.md#10-ltx-video)
+- **Pros**: Fast, high-quality, text-to-video and image-to-video
+- **VRAM**: ~24GB
+
+#### Option 2: Stable Video Diffusion
+- **Hugging Face**: [stabilityai/stable-video-diffusion-img2vid-xt](https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt)
+- **Details**: See [docs/MODELS.md](docs/MODELS.md#11-stable-video-diffusion-svd)
+- **Pros**: Excellent temporal consistency, smooth motion
+- **VRAM**: ~20GB
+
+#### Option 3: AnimateDiff
+- **Alternative**: Motion module for SD/SDXL
+- **Pros**: Works with existing SDXL models
+- **Cons**: More complex setup
 
 ### Requirements
 - [ ] Model evaluation and selection

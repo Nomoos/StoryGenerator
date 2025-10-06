@@ -2,6 +2,15 @@
 
 This document contains templates for creating child issues for each component of the AI Video Pipeline.
 
+## 📚 Related Documentation
+
+- **[README.md](../README.md)** - Project overview and quick start
+- **[PIPELINE.md](../PIPELINE.md)** - Detailed technical pipeline breakdown
+- **[docs/MODELS.md](MODELS.md)** - Comprehensive model documentation with Hugging Face references
+- **[docs/EXAMPLES.md](EXAMPLES.md)** - Input/output examples for all stages
+- **[docs/INSTALLATION.md](INSTALLATION.md)** - Setup instructions
+- **[docs/TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Common issues and solutions
+
 ## How to Use These Templates
 
 1. Copy the relevant template
@@ -10,6 +19,25 @@ This document contains templates for creating child issues for each component of
 4. Link to parent issue: [AI Video Pipeline: Next Steps and Issue Tree](link-to-parent-issue)
 5. Add appropriate labels
 6. Assign to team members
+
+## Issue Tracking Overview
+
+This document provides 10 comprehensive issue templates covering the entire AI Video Pipeline:
+
+| # | Component | Status | Priority | Estimated Effort |
+|---|-----------|--------|----------|------------------|
+| 1 | Environment & Model Setup | ✅ Partial | High | 1-2 weeks |
+| 2 | ASR Enhancement | ✅ Implemented | Medium | 1 week |
+| 3 | Shotlist Generation | 🔄 Planned | High | 2 weeks |
+| 4 | Vision Guidance | 🔄 Planned | Low (Optional) | 2 weeks |
+| 5 | SDXL Keyframe Generation | 🔄 Planned | High | 2 weeks |
+| 6 | Video Synthesis | 🔄 Planned | High | 3 weeks |
+| 7 | Post-Production | 🔄 Planned | Medium | 1 week |
+| 8 | Pipeline Integration | 🔄 Planned | High | 2 weeks |
+| 9 | C# Implementation | 🔄 Research | Low | 4+ weeks |
+| 10 | Documentation | ✅ In Progress | Medium | 2 weeks |
+
+**Legend**: ✅ Completed/In Progress | 🔄 Planned | ⚠️ Blocked
 
 ---
 
@@ -1721,25 +1749,44 @@ examples/
 
 These child issue templates cover all 10 major stages of the AI Video Pipeline:
 
-1. ✅ Environment & Model Setup
-2. ✅ ASR Enhancement
-3. ✅ Shotlist Generation
-4. ✅ Vision Guidance (Optional)
-5. ✅ SDXL Keyframe Generation
-6. ✅ Video Synthesis
-7. ✅ Post-Production Enhancement
-8. ✅ Pipeline Integration
-9. ✅ C# Implementation (Research)
-10. ✅ Documentation Completion
+1. ✅ **Environment & Model Setup** - Configuration, GPU optimization, model caching
+2. ✅ **ASR Enhancement** - WhisperX implementation (upgrade to faster-whisper planned)
+3. 🔄 **Shotlist Generation** - LLM-based scene planning with Qwen2.5 or Llama-3.1
+4. 🔄 **Vision Guidance (Optional)** - Scene validation with LLaVA or Phi-3.5-vision
+5. 🔄 **SDXL Keyframe Generation** - High-quality image generation with Stable Diffusion XL
+6. 🔄 **Video Synthesis** - LTX-Video or Stable Video Diffusion integration
+7. 🔄 **Post-Production Enhancement** - Subtitle overlay, rendering, optimization
+8. 🔄 **Pipeline Integration** - One-click automation, error handling, checkpointing
+9. 🔄 **C# Implementation (Research)** - Migration planning and research
+10. ✅ **Documentation Completion** - Guides, examples, API docs (in progress)
 
 Each template includes:
 - Clear description and scope
 - Current state assessment
 - Detailed requirements (Must/Should/Nice to have)
-- Comprehensive subtasks
-- File structure
+- Comprehensive subtasks with checkboxes
+- File structure and implementation plan
 - Success criteria
-- Dependencies
-- References
+- Dependencies and blockers
+- References to models and documentation
+
+### Using This Document
+
+1. **For Project Planning**: Use the overview table to see current status and priorities
+2. **For Creating Issues**: Copy the relevant template to create a GitHub issue
+3. **For Implementation**: Use the subtasks as implementation checklist
+4. **For Tracking Progress**: Update checkbox items as work progresses
+
+### Related Documentation
+
+For more information on specific aspects:
+- **Model specifications**: See [docs/MODELS.md](MODELS.md)
+- **Implementation examples**: See [docs/EXAMPLES.md](EXAMPLES.md)
+- **Technical details**: See [PIPELINE.md](../PIPELINE.md)
+- **Setup instructions**: See [docs/INSTALLATION.md](INSTALLATION.md)
+
+---
+
+**Last Updated**: 2024-10-06
 
 Use these templates to create individual GitHub issues and track progress on each component.
