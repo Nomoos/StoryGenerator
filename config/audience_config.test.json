@@ -37,6 +37,7 @@
   },
   "folder_structure": {
     "content_folders": [
+      "trends",
       "ideas",
       "topics"
     ],

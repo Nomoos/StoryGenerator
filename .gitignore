@@ -122,6 +122,18 @@ videos/*/*/*/*
 research/**/*
 !research/**/.gitkeep
 
+# Trends - pattern: trends/{raw|processed|gender/age}/
+# Keep structure, sample files, and README, but ignore raw CSV and processed JSON
+trends/raw/*
+!trends/raw/.gitkeep
+trends/processed/*
+!trends/processed/.gitkeep
+!trends/samples/
+!trends/README.md
+trends/*/*/*
+!trends/*/*/*/.gitkeep
+!trends/*/*/*/.test
+
 # Config files (may contain sensitive data)
 config/**/*
 !config/**/.gitkeep
