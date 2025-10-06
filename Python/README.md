@@ -1,8 +1,6 @@
-# Quick Start Guide - StoryGenerator (Python)
+# Quick Start Guide - StoryGenerator
 
-This guide will get you up and running with the Python implementation of StoryGenerator in 15 minutes.
-
-> **Note**: This guide is for the **Python implementation**. For C# (when available), see [CSharp/README.md](CSharp/README.md).
+This guide will get you up and running with StoryGenerator in 15 minutes.
 
 ## Prerequisites
 
@@ -18,7 +16,7 @@ This guide will get you up and running with the Python implementation of StoryGe
 ```bash
 # Clone the repository
 git clone https://github.com/Nomoos/StoryGenerator.git
-cd StoryGenerator/Python
+cd StoryGenerator
 
 # Create virtual environment
 python -m venv venv
@@ -38,8 +36,8 @@ pip install -r requirements.txt
 ⚠️ **CRITICAL**: Never commit API keys to Git!
 
 ```bash
-# Copy example environment file from parent directory
-cp ../.env.example .env
+# Copy example environment file
+cp .env.example .env
 
 # Edit .env file with your favorite editor
 nano .env  # or vim, code, etc.
@@ -233,16 +231,15 @@ pip install python-dotenv
 
 **Solution**:
 ```bash
-# Create in parent directory (shared between implementations)
-mkdir -p ../Stories/{0_Ideas,1_Scripts,2_Revised,3_VoiceOver}
+mkdir -p Stories/{0_Ideas,1_Scripts,2_Revised,3_VoiceOver}
 ```
 
 ### Issue: Import errors on Windows
 
 **Solution**:
-Make sure you're in the Python directory:
+Make sure you're in the project root directory:
 ```bash
-cd StoryGenerator/Python
+cd StoryGenerator
 python quick_test.py
 ```
 

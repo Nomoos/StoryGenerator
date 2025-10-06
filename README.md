@@ -2,284 +2,223 @@
 
 AI-powered story generation pipeline for creating engaging short-form video content for TikTok, YouTube Shorts, and Instagram Reels.
 
+## 🏗️ Repository Structure
+
+This repository contains **two implementations** of the StoryGenerator:
+
+### 📌 **C# Implementation** (Primary/Preferred)
+Located in `CSharp/` - Modern, type-safe implementation with better performance and cross-platform support.
+
+### 📌 **Python Implementation** (Legacy/Alternative)
+Located in `Python/` - Original implementation, fully functional and maintained.
+
+---
+
+## 🚀 Quick Start
+
+### C# Version (Recommended)
+```bash
+cd CSharp
+# Setup instructions coming soon
+```
+
+### Python Version
+```bash
+cd Python
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+cp ../.env.example .env
+# Edit .env with your API keys
+```
+
+For detailed setup instructions, see:
+- **C#**: [CSharp/README.md](CSharp/README.md) *(coming soon)*
+- **Python**: [Python/README.md](Python/README.md)
+
+---
+
 ## ⚠️ IMPORTANT: Security Notice
 
-**CRITICAL**: Before using this project, you must set up proper API key management.
-
-### Current Issues
-
-This repository previously had API keys hardcoded in source files (now removed). If you cloned this repository before the security fix:
+**CRITICAL**: This repository previously had API keys hardcoded in source files. Before using:
 
 1. **All exposed API keys should be considered compromised**
-2. Revoke any API keys that may have been exposed
-3. Generate new API keys from your providers:
+2. Generate new API keys:
    - [OpenAI API Keys](https://platform.openai.com/api-keys)
    - [ElevenLabs API Keys](https://elevenlabs.io/app/settings/api-keys)
+3. Set up `.env` file from `.env.example`
+4. **Never commit API keys to version control**
 
-## Features
+See [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md) for detailed security procedures.
+
+---
+
+## 📚 Documentation
+
+### Getting Started
+- [QUICKSTART.md](QUICKSTART.md) - 15-minute setup guide (Python)
+- [INDEX.md](INDEX.md) - Documentation navigation hub
+
+### Technical Documentation
+- [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture and design
+- [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMENTS.md) - Analysis and roadmap
+
+### Security
+- [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md) - Security procedures and checklist
+
+### Reference
+- [SUMMARY.md](SUMMARY.md) - Implementation summary
+
+---
+
+## 🎯 Features
 
 - 🎯 **AI-Powered Story Generation**: Generate viral story ideas using GPT-4
 - ✍️ **Script Writing**: Create emotionally engaging scripts optimized for short-form video
 - 🎙️ **Voice Enhancement**: Add performance tags for realistic AI voices
 - 🔊 **Voice Generation**: Generate high-quality voiceovers using ElevenLabs
-- 📊 **Viral Potential Scoring**: Estimate engagement potential across platforms and demographics
+- 📊 **Viral Potential Scoring**: Estimate engagement potential across platforms
 
-## Installation
+---
 
-### Prerequisites
-
-- Python 3.12 or higher
-- OpenAI API key
-- ElevenLabs API key (for voice generation)
-
-### Setup
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/Nomoos/StoryGenerator.git
-cd StoryGenerator
-```
-
-2. **Create and activate virtual environment**
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. **Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-4. **Set up environment variables**
-```bash
-cp .env.example .env
-```
-
-5. **Edit `.env` file with your API keys**
-```bash
-OPENAI_API_KEY=your_actual_openai_key_here
-ELEVENLABS_API_KEY=your_actual_elevenlabs_key_here
-```
-
-⚠️ **NEVER commit your `.env` file to version control!**
-
-## Project Structure
+## 📁 Directory Structure
 
 ```
 StoryGenerator/
-├── Generators/          # Core generation modules
-│   ├── GStoryIdeas.py  # Story idea generation
-│   ├── GScript.py      # Script generation
-│   ├── GRevise.py      # Script revision
-│   ├── GEnhanceScript.py # Add voice tags
-│   └── GVoice.py       # Voice generation
-├── Models/              # Data models
-│   └── StoryIdea.py    # Story idea model
-├── Tools/               # Utilities
-│   └── Utils.py        # Helper functions
-├── Generation/          # Manual generation scripts
-│   └── Manual/         # Entry points for manual workflows
-└── Stories/            # Generated content (gitignored)
-    ├── 0_Ideas/        # Generated story ideas
-    ├── 1_Scripts/      # Initial scripts
-    ├── 2_Revised/      # Revised scripts
-    └── 3_VoiceOver/    # Generated audio
+│
+├── 📁 CSharp/                  # C# Implementation (Primary)
+│   ├── Generators/             # Coming soon
+│   ├── Models/                 # Coming soon
+│   └── README.md               # C# setup guide (coming soon)
+│
+├── 📁 Python/                  # Python Implementation
+│   ├── Generators/             # Core generation modules
+│   │   ├── GStoryIdeas.py     # Story idea generation
+│   │   ├── GScript.py         # Script generation
+│   │   ├── GRevise.py         # Script revision
+│   │   ├── GEnhanceScript.py  # Voice tag enhancement
+│   │   ├── GVoice.py          # Voice generation
+│   │   └── GTitles.py         # Title generation
+│   ├── Models/                 # Data models
+│   │   └── StoryIdea.py       # Story idea model
+│   ├── Tools/                  # Utilities
+│   │   └── Utils.py           # Helper functions
+│   ├── Generation/             # Manual execution scripts
+│   │   └── Manual/            # Entry points
+│   ├── requirements.txt        # Python dependencies
+│   ├── requirements-dev.txt    # Dev dependencies
+│   ├── pyproject.toml         # Python project config
+│   └── README.md              # Python-specific documentation
+│
+├── 📁 Stories/                 # Generated content (gitignored)
+│   ├── 0_Ideas/               # Story ideas
+│   ├── 1_Scripts/             # Initial scripts
+│   ├── 2_Revised/             # Revised scripts
+│   └── 3_VoiceOver/           # Audio files
+│
+├── 📄 Documentation
+│   ├── README.md              # This file
+│   ├── QUICKSTART.md          # Quick setup guide
+│   ├── ARCHITECTURE.md        # Technical architecture
+│   ├── RESEARCH_AND_IMPROVEMENTS.md
+│   ├── SECURITY_CHECKLIST.md
+│   ├── SUMMARY.md
+│   └── INDEX.md               # Documentation index
+│
+└── 📄 Configuration
+    ├── .env.example           # Environment template
+    └── .gitignore             # Git exclusions
 ```
 
-## Usage
+---
 
-### Generate Story Ideas
+## 🔧 Which Version Should I Use?
 
-```python
-from Generators.GStoryIdeas import StoryIdeasGenerator
+| Feature | C# | Python |
+|---------|-----|--------|
+| **Status** | 🚧 In Development | ✅ Ready |
+| **Performance** | ⚡ Faster | 🐌 Slower |
+| **Type Safety** | ✅ Strong typing | ⚠️ Dynamic |
+| **Async Support** | ✅ Native | ⚠️ Added complexity |
+| **Deployment** | 📦 Single binary | 🐍 Requires interpreter |
+| **IDE Support** | ✅ Excellent | ✅ Good |
+| **Learning Curve** | 📈 Moderate | 📈 Easy |
 
-generator = StoryIdeasGenerator()
-ideas = generator.generate_ideas(
-    topic="falling for someone who gives mixed signals",
-    count=5,
-    tone="awkward, romantic, relatable",
-    theme="first love, quiet sadness, learning to let go"
-)
+**Recommendation**: 
+- **For Production**: Wait for C# implementation
+- **For Development/Testing**: Use Python implementation now
 
-for idea in ideas:
-    print(f"Title: {idea.story_title}")
-    print(f"Potential: {idea.potencial['overall']}")
-```
+---
 
-### Generate Script from Idea
+## 💻 Development
 
-```python
-from Generators.GScript import ScriptGenerator
-from Models.StoryIdea import StoryIdea
+### Contributing
 
-# Load an idea
-idea = StoryIdea.from_file("Stories/0_Ideas/your_story_idea.json")
+Contributions are welcome for both implementations!
 
-# Generate script
-generator = ScriptGenerator()
-generator.generate_from_storyidea(idea)
-```
+**For C# development**:
+- Coming soon
 
-### Revise Script
-
-```python
-from Generators.GRevise import RevisedScriptGenerator
-
-reviser = RevisedScriptGenerator()
-reviser.Revise(idea)
-```
-
-### Add Voice Tags
-
-```python
-from Generators.GEnhanceScript import EnhanceScriptGenerator
-
-enhancer = EnhanceScriptGenerator()
-enhancer.Enhance(folder_name)
-```
-
-### Generate Voiceover
-
-```python
-from Generators.GVoice import VoiceMaker
-
-voice_maker = VoiceMaker()
-voice_maker.generate_audio()
-```
-
-## Pipeline Workflow
-
-The typical story generation pipeline:
-
-1. **Idea Generation** → `GStoryIdeas.py`
-   - Input: Topic, tone, theme
-   - Output: JSON files with story ideas in `Stories/0_Ideas/`
-
-2. **Script Writing** → `GScript.py`
-   - Input: Story idea
-   - Output: Initial script in `Stories/1_Scripts/`
-
-3. **Script Revision** → `GRevise.py`
-   - Input: Initial script
-   - Output: Revised script in `Stories/2_Revised/`
-
-4. **Voice Enhancement** → `GEnhanceScript.py`
-   - Input: Revised script
-   - Output: Script with ElevenLabs tags
-
-5. **Voice Generation** → `GVoice.py`
-   - Input: Enhanced script
-   - Output: MP3 voiceover in `Stories/3_VoiceOver/`
-
-## Configuration
-
-Key configuration options in `.env`:
-
-- `DEFAULT_MODEL`: OpenAI model to use (default: gpt-4o-mini)
-- `TEMPERATURE`: Creativity level for generation (0.0-1.0)
-- `VOICE_ID`: ElevenLabs voice ID
-- `VOICE_MODEL`: ElevenLabs model version
-- `STORY_ROOT`: Root directory for generated content
-
-## Development
-
-### Running Tests
-
+**For Python development**:
 ```bash
+cd Python
 pip install -r requirements-dev.txt
-pytest
+black .                    # Format code
+pylint Generators/         # Lint code
+pytest                     # Run tests (when available)
 ```
 
-### Code Formatting
+---
 
-```bash
-black .
-isort .
-```
+## 🔄 Migration from Python to C#
 
-### Linting
+Migration guidance will be provided when the C# implementation is complete.
 
-```bash
-pylint Generators/
-flake8
-```
+---
 
-## Known Issues & Limitations
+## 📈 Roadmap
 
-See [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMENTS.md) for a comprehensive analysis of current issues and planned improvements.
+### C# Implementation
+- [ ] Port core generators to C#
+- [ ] Implement async/await patterns
+- [ ] Add comprehensive unit tests
+- [ ] Create CLI interface
+- [ ] Build NuGet packages
+- [ ] Add web API
 
-### Current Limitations
+### Python Implementation
+- [x] Existing functionality
+- [ ] Add unit tests
+- [ ] Improve error handling
+- [ ] Add logging system
+- [ ] Create CLI interface
 
-1. **API Costs**: Each generation incurs OpenAI and ElevenLabs API costs
-2. **Rate Limits**: Subject to API provider rate limits
-3. **Platform-Specific Paths**: Some paths may need adjustment for different OS
-4. **No Retry Logic**: API failures are not automatically retried
-5. **Limited Error Handling**: Some edge cases may not be handled gracefully
+For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMENTS.md).
 
-## Contributing
+---
 
-Contributions are welcome! Please:
+## 📞 Support
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- **Documentation**: Check [INDEX.md](INDEX.md) for all documentation
+- **Issues**: Open a GitHub issue
+- **Security**: See [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md)
 
-### Development Guidelines
+---
 
-- Follow PEP 8 style guide
-- Add tests for new features
-- Update documentation
-- Never commit API keys or sensitive data
-
-## Security
-
-### Reporting Security Issues
-
-If you discover a security vulnerability, please email [security contact] instead of using the issue tracker.
-
-### Security Best Practices
-
-- Never commit API keys
-- Use environment variables for secrets
-- Regularly rotate API keys
-- Review the `.gitignore` file
-- Use `git-secrets` or similar tools to prevent accidental commits
-
-## License
+## 📄 License
 
 [Add your license here]
 
-## Acknowledgments
+---
+
+## 🙏 Acknowledgments
 
 - OpenAI for GPT models
 - ElevenLabs for voice generation
 - Community contributors
 
-## Support
-
-For questions, issues, or feature requests:
-- Open an issue on GitHub
-- Check existing documentation
-- Review [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMENTS.md)
-
-## Roadmap
-
-See [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMENTS.md) for detailed roadmap including:
-
-- ✅ Security improvements
-- 🔄 Architecture refactoring
-- 📝 Testing infrastructure
-- 🚀 Performance optimizations
-- 📚 Enhanced documentation
-
-## Version History
-
-- **Current**: Initial public release with security improvements
-- See commit history for detailed changes
-
 ---
+
+**Note**: This repository was recently reorganized to support both C# and Python implementations. The C# version is under development and will become the primary implementation.
 
 **Remember**: Always keep your API keys secure and never commit them to version control!

@@ -2,21 +2,27 @@
 
 Welcome to the StoryGenerator documentation! This index will help you find the information you need quickly.
 
+> **⚠️ Repository Reorganization**: This repository now has separate C# and Python implementations. See [REORGANIZATION_GUIDE.md](REORGANIZATION_GUIDE.md) for migration instructions.
+
 ## 🚀 Getting Started
 
 **New to StoryGenerator?** Start here:
 
-1. **[QUICKSTART.md](QUICKSTART.md)** - 15-minute setup guide
+1. **[README.md](README.md)** - Overview of both implementations
+   - Repository structure
+   - Quick start for C# and Python
+   - Which version to use
+
+2. **[QUICKSTART.md](QUICKSTART.md)** - 15-minute Python setup guide
    - Installation steps
    - API key configuration
    - First story generation
    - Common troubleshooting
 
-2. **[README.md](README.md)** - Comprehensive overview
-   - Feature list
-   - Installation details
-   - Usage examples
-   - Configuration guide
+3. **[REORGANIZATION_GUIDE.md](REORGANIZATION_GUIDE.md)** - Migration guide
+   - What changed in the reorganization
+   - How to update existing setups
+   - Troubleshooting reorganization issues
 
 ## 🔴 URGENT: Security
 
