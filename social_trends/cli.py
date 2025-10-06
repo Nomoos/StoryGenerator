@@ -39,6 +39,9 @@ Examples:
   # Use SQLite with velocity tracking
   python -m social_trends.cli --sources youtube --region US --storage sqlite --enable-velocity
 
+  # Use custom root directory (e.g., for tests)
+  python -m social_trends.cli --sources youtube --region US --root-dir TestInstance
+
 Sources:
   - youtube: YouTube Data API v3 (requires YOUTUBE_API_KEY env var)
   - google_trends: Google Trends via pytrends
@@ -79,8 +82,15 @@ Sources:
     parser.add_argument(
         "--out",
         type=str,
-        default="data/trends",
-        help="Output file path without extension (default: data/trends)"
+        default="trends",
+        help="Output file path without extension (default: trends)"
+    )
+    
+    parser.add_argument(
+        "--root-dir",
+        type=str,
+        default="data",
+        help="Root directory for all processing (default: data, use TestInstance for tests)"
     )
     
     parser.add_argument(
@@ -154,6 +164,7 @@ async def main():
     print(f"Regions: {', '.join(regions)}")
     print(f"Limit per source: {args.limit}")
     print(f"Min score: {args.min_score}")
+    print(f"Root directory: {args.root_dir}")
     print(f"Storage: {args.storage}")
     if args.enable_velocity:
         print(f"Velocity tracking: ENABLED")
@@ -176,7 +187,8 @@ async def main():
         sources=sources,
         storage_backend=args.storage,
         storage_path=args.out,
-        enable_velocity=args.enable_velocity
+        enable_velocity=args.enable_velocity,
+        root_dir=args.root_dir
     )
     
     try:
@@ -189,7 +201,8 @@ async def main():
         
         # Export if JSON format requested
         if args.format == "json":
-            pipeline.export_json(items, f"{args.out}.json")
+            json_path = f"{args.root_dir}/{args.out}.json"
+            pipeline.export_json(items, json_path)
         
         # Print summary
         print("=" * 60)

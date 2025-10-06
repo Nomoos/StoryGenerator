@@ -10,7 +10,8 @@ A modular, extensible Python package for gathering trending content from multipl
 - **Flexible Storage**: CSV and SQLite backends with easy extensibility
 - **Velocity Tracking**: Historical data comparison for trend growth metrics
 - **Comprehensive Scoring**: Weighted formula combining velocity, volume, engagement, and recency
-- **De-duplication**: Intelligent matching across sources
+- **De-duplication**: Intelligent matching across sources and with storage
+- **Configurable Root Directory**: Isolate processing for different environments
 - **CLI Interface**: Easy command-line usage
 
 ## Installation
@@ -39,6 +40,9 @@ python -m social_trends --sources youtube --region US --out trends.json --format
 
 # Use SQLite with velocity tracking
 python -m social_trends --sources youtube --region US --storage sqlite --enable-velocity
+
+# Use custom root directory (e.g., for tests)
+python -m social_trends --sources youtube --region US --root-dir TestInstance
 ```
 
 ### Python API Usage
@@ -55,15 +59,16 @@ async def main():
         GoogleTrendsSource()
     ]
     
-    # Create pipeline
+    # Create pipeline with custom root directory
     pipeline = TrendsPipeline(
         sources=sources,
         storage_backend="sqlite",
-        storage_path="data/trends",
-        enable_velocity=True
+        storage_path="trends",
+        enable_velocity=True,
+        root_dir="data"  # Use "TestInstance" for tests
     )
     
-    # Run pipeline
+    # Run pipeline (includes deduplication against storage)
     items = await pipeline.run(
         regions=["US", "UK"],
         limit_per_source=50,
@@ -166,6 +171,30 @@ score = (0.40 × velocity) + (0.30 × volume) + (0.20 × engagement) + (0.10 × 
 - **Engagement**: (likes + comments + shares) / views
 - **Recency**: Freshness bonus for recent content
 
+## De-duplication
+
+The pipeline uses a two-stage de-duplication strategy to prevent duplicate content:
+
+### 1. Storage De-duplication (Cross-Iteration)
+
+Before processing new items, the pipeline checks against previously stored items:
+- Prevents re-adding videos/keywords from previous runs
+- Compares both exact IDs and normalized titles
+- Skips items already in the storage backend
+
+### 2. Batch De-duplication (Within-Iteration)
+
+After fetching from all sources:
+- Removes duplicates within the current batch
+- Uses exact ID matching and fuzzy title matching
+- Keeps the highest-scoring duplicate
+
+**Benefits:**
+- No duplicate videos in storage
+- Efficient across multiple runs
+- Works with both CSV and SQLite backends
+- Configurable root directory allows isolated test environments
+
 ## Storage
 
 ### CSV Storage
@@ -179,6 +208,47 @@ score = (0.40 × velocity) + (0.30 × volume) + (0.20 × engagement) + (0.10 × 
 - Structured database with indexes
 - Good for: Production, medium-scale (< 10M items)
 - Features: SQL querying, velocity tracking, historical snapshots
+
+## Configurable Root Directory
+
+The pipeline supports configurable root directories for organizing data in different environments:
+
+### Default Setup (Production)
+
+```bash
+python -m social_trends --sources youtube --region US
+# Creates: data/trends.csv or data/trends.db
+```
+
+### Test Environment
+
+```bash
+python -m social_trends --sources youtube --region US --root-dir TestInstance
+# Creates: TestInstance/trends.csv or TestInstance/trends.db
+```
+
+### Custom Organization
+
+```python
+# Separate directories for different regions
+pipeline_us = TrendsPipeline(
+    sources=sources,
+    storage_path="trends_us",
+    root_dir="data/regions/us"
+)
+
+pipeline_eu = TrendsPipeline(
+    sources=sources,
+    storage_path="trends_eu",
+    root_dir="data/regions/eu"
+)
+```
+
+**Benefits:**
+- Isolate test data from production
+- Organize by region, environment, or purpose
+- Easy cleanup and management
+- Supports CI/CD test environments
 
 ## Testing
 
@@ -223,7 +293,31 @@ python -m social_trends \
   --region US \
   --limit 50 \
   --min-score 80 \
-  --out data/high_quality_trends.csv
+  --out high_quality_trends
+```
+
+### Example 4: Test Environment
+
+```bash
+# Use isolated test directory
+python -m social_trends \
+  --sources youtube \
+  --region US \
+  --limit 10 \
+  --root-dir TestInstance \
+  --storage sqlite
+```
+
+### Example 5: Multiple Iterations (De-duplication)
+
+```bash
+# First run - fetches 50 items
+python -m social_trends --sources youtube --region US --limit 50
+
+# Second run (1 hour later) - only fetches NEW items not in storage
+python -m social_trends --sources youtube --region US --limit 50
+
+# All duplicates are automatically skipped!
 ```
 
 ## API Keys

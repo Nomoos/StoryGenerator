@@ -32,7 +32,8 @@ class TrendsPipeline:
         sources: List[TrendSource],
         storage_backend: str = "csv",
         storage_path: str = "data/trends",
-        enable_velocity: bool = False
+        enable_velocity: bool = False,
+        root_dir: str = "data"
     ):
         """
         Initialize trends pipeline.
@@ -40,17 +41,34 @@ class TrendsPipeline:
         Args:
             sources: List of TrendSource instances to query
             storage_backend: 'csv' or 'sqlite'
-            storage_path: Path to storage file/database
+            storage_path: Path to storage file/database (relative to root_dir)
             enable_velocity: Enable velocity tracking (requires SQLite)
+            root_dir: Root directory for all processing (default: 'data', use 'TestInstance' for tests)
         """
         self.sources = sources
         self.enable_velocity = enable_velocity
+        self.root_dir = root_dir
+        
+        # Ensure root directory exists
+        import os
+        os.makedirs(root_dir, exist_ok=True)
+        
+        # Initialize storage with root_dir prefix if storage_path doesn't start with root_dir
+        if not storage_path.startswith(root_dir):
+            full_storage_path = f"{root_dir}/{storage_path}"
+        else:
+            full_storage_path = storage_path
+        
+        # Ensure storage directory exists
+        storage_dir = os.path.dirname(full_storage_path)
+        if storage_dir:
+            os.makedirs(storage_dir, exist_ok=True)
         
         # Initialize storage
         if storage_backend == "csv":
-            self.storage = CSVStorage(f"{storage_path}.csv")
+            self.storage = CSVStorage(f"{full_storage_path}.csv")
         elif storage_backend == "sqlite":
-            self.storage = SQLiteStorage(f"{storage_path}.db")
+            self.storage = SQLiteStorage(f"{full_storage_path}.db")
         else:
             raise ValueError(f"Unknown storage backend: {storage_backend}")
         
@@ -98,9 +116,13 @@ class TrendsPipeline:
         
         print(f"✅ Fetched {len(all_items)} items total")
         
-        # De-duplicate
+        # De-duplicate against existing items in storage
+        all_items = await self._deduplicate_with_storage(all_items)
+        print(f"🔄 After de-duplication with storage: {len(all_items)} unique items")
+        
+        # De-duplicate within current batch
         unique_items = self._deduplicate(all_items)
-        print(f"🔄 After de-duplication: {len(unique_items)} unique items")
+        print(f"🔄 After batch de-duplication: {len(unique_items)} unique items")
         
         # Apply velocity tracking if enabled
         if self.enable_velocity and hasattr(self.storage, 'get_previous_snapshot'):
@@ -139,13 +161,64 @@ class TrendsPipeline:
             print(f"    ✗ Error from {source.name}/{region}: {e}")
             return []
     
+    async def _deduplicate_with_storage(self, items: List[TrendItem]) -> List[TrendItem]:
+        """
+        De-duplicate against items already in storage.
+        
+        This prevents re-adding videos/keywords that were already processed
+        in previous iterations.
+        
+        Args:
+            items: List of items to check
+            
+        Returns:
+            List of items that don't exist in storage
+        """
+        if not hasattr(self.storage, 'load'):
+            # Storage doesn't support loading, skip this check
+            return items
+        
+        try:
+            # Load existing items from storage
+            existing_items = self.storage.load(limit=10000)  # Load recent items
+            existing_ids = {item['id'] for item in existing_items if 'id' in item}
+            existing_titles = {item['title_or_keyword'].lower().strip() 
+                             for item in existing_items if 'title_or_keyword' in item}
+            
+            # Filter out duplicates
+            unique_items = []
+            duplicates_found = 0
+            
+            for item in items:
+                # Check if ID already exists
+                if item.id in existing_ids:
+                    duplicates_found += 1
+                    continue
+                
+                # Check if title already exists (fuzzy match)
+                normalized_title = item.title_or_keyword.lower().strip()
+                if normalized_title in existing_titles:
+                    duplicates_found += 1
+                    continue
+                
+                unique_items.append(item)
+            
+            if duplicates_found > 0:
+                print(f"⚠️  Skipped {duplicates_found} duplicate items from previous iterations")
+            
+            return unique_items
+            
+        except Exception as e:
+            print(f"⚠️  Could not check storage for duplicates: {e}")
+            return items
+    
     def _deduplicate(self, items: List[TrendItem]) -> List[TrendItem]:
         """
-        Remove duplicate items using fuzzy matching.
+        Remove duplicate items within current batch using fuzzy matching.
         
         Deduplication strategy:
         1. Exact ID match (same source + ID)
-        2. Fuzzy title match (85%+ similarity)
+        2. Fuzzy title match (exact normalized title)
         3. Keep highest scoring duplicate
         """
         seen_ids: Set[str] = set()
