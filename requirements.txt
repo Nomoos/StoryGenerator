@@ -34,6 +34,15 @@ typing_extensions==4.12.2
 tzdata==2024.2
 urllib3==2.2.3
 websockets==13.1
+# SDXL and Stable Diffusion dependencies
+torch>=2.0.0
+torchvision>=0.15.0
+diffusers>=0.25.0
+transformers>=4.35.0
+accelerate>=0.25.0
+safetensors>=0.4.0
+# Audio processing
+whisperx>=3.0.0
 torch>=2.0.0
 diffusers>=0.21.0
 whisperx>=3.0.0
