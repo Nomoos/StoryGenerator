@@ -1,0 +1,182 @@
+{
+  "video_synthesis": {
+    "default_method": "ltx-video",
+    "ltx_video": {
+      "model_id": "Lightricks/LTX-Video",
+      "default_width": 1080,
+      "default_height": 1920,
+      "default_fps": 30,
+      "min_duration": 5,
+      "max_duration": 25,
+      "inference_steps": 50,
+      "guidance_scale": 7.5,
+      "memory_optimization": {
+        "enable_attention_slicing": true,
+        "enable_vae_slicing": false
+      }
+    },
+    "sdxl_keyframes": {
+      "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
+      "default_width": 1080,
+      "default_height": 1920,
+      "inference_steps": 40,
+      "guidance_scale": 7.5,
+      "keyframes_per_scene": 3,
+      "negative_prompt": "low quality, blurry, distorted, ugly, bad anatomy, watermark",
+      "style_presets": {
+        "cinematic": "cinematic lighting, film grain, depth of field, professional",
+        "animation": "animated style, cartoon, vibrant colors, stylized",
+        "realistic": "photorealistic, highly detailed, sharp focus, natural lighting",
+        "dramatic": "dramatic lighting, high contrast, moody atmosphere"
+      }
+    },
+    "frame_interpolation": {
+      "default_method": "rife",
+      "target_fps": 30,
+      "methods": {
+        "rife": {
+          "enabled": true,
+          "speed": "fast",
+          "quality": "good",
+          "description": "Real-Time Intermediate Flow Estimation"
+        },
+        "film": {
+          "enabled": true,
+          "speed": "medium",
+          "quality": "very_good",
+          "description": "Frame Interpolation for Large Motion"
+        },
+        "dain": {
+          "enabled": false,
+          "speed": "slow",
+          "quality": "excellent",
+          "description": "Depth-Aware Video Frame Interpolation"
+        }
+      }
+    },
+    "video_encoding": {
+      "codec": "libx264",
+      "preset": "medium",
+      "crf": 23,
+      "pix_fmt": "yuv420p",
+      "audio_codec": "aac",
+      "audio_bitrate": "192k"
+    },
+    "quality_presets": {
+      "fast": {
+        "method": "ltx-video",
+        "inference_steps": 30,
+        "keyframes_per_scene": 2,
+        "target_fps": 24
+      },
+      "balanced": {
+        "method": "ltx-video",
+        "inference_steps": 50,
+        "keyframes_per_scene": 3,
+        "target_fps": 30
+      },
+      "high_quality": {
+        "method": "sdxl+rife",
+        "inference_steps": 50,
+        "keyframes_per_scene": 4,
+        "target_fps": 30
+      },
+      "maximum": {
+        "method": "sdxl+film",
+        "inference_steps": 60,
+        "keyframes_per_scene": 5,
+        "target_fps": 30
+      }
+    },
+    "platform_presets": {
+      "tiktok": {
+        "width": 1080,
+        "height": 1920,
+        "fps": 30,
+        "max_duration": 60,
+        "recommended_method": "ltx-video"
+      },
+      "youtube_shorts": {
+        "width": 1080,
+        "height": 1920,
+        "fps": 30,
+        "max_duration": 60,
+        "recommended_method": "ltx-video"
+      },
+      "instagram_reels": {
+        "width": 1080,
+        "height": 1920,
+        "fps": 30,
+        "max_duration": 90,
+        "recommended_method": "ltx-video"
+      },
+      "youtube": {
+        "width": 1920,
+        "height": 1080,
+        "fps": 30,
+        "max_duration": 600,
+        "recommended_method": "sdxl+rife"
+      }
+    },
+    "motion_presets": {
+      "static": "static camera, no movement, steady shot",
+      "pan_left": "camera slowly panning left, smooth lateral movement",
+      "pan_right": "camera slowly panning right, smooth lateral movement",
+      "pan_up": "camera tilting up, upward movement",
+      "pan_down": "camera tilting down, downward movement",
+      "zoom_in": "camera slowly zooming in, forward movement",
+      "zoom_out": "camera slowly zooming out, backward movement",
+      "dolly_forward": "camera moving forward, approaching subject",
+      "dolly_backward": "camera moving backward, revealing scene",
+      "orbit": "camera orbiting around subject, circular movement",
+      "crane_up": "camera crane shot moving upward",
+      "crane_down": "camera crane shot moving downward"
+    },
+    "transition_effects": {
+      "fade": {
+        "duration": 0.5,
+        "description": "Smooth fade between clips"
+      },
+      "crossfade": {
+        "duration": 1.0,
+        "description": "Overlapping fade transition"
+      },
+      "wipe": {
+        "duration": 0.75,
+        "description": "Wipe transition effect"
+      },
+      "slide": {
+        "duration": 0.75,
+        "description": "Slide transition between clips"
+      },
+      "none": {
+        "duration": 0.0,
+        "description": "No transition, direct cut"
+      }
+    }
+  },
+  "python": {
+    "executable": "python",
+    "venv_path": null,
+    "required_packages": [
+      "torch>=2.0.0",
+      "diffusers>=0.25.0",
+      "transformers",
+      "accelerate",
+      "pillow",
+      "opencv-python",
+      "ffmpeg-python"
+    ]
+  },
+  "gpu": {
+    "enable_cuda": true,
+    "device": "cuda",
+    "max_vram_gb": 16,
+    "enable_memory_optimization": true
+  },
+  "output": {
+    "temp_dir": null,
+    "keep_intermediates": false,
+    "cleanup_on_error": true
+  }
+}
