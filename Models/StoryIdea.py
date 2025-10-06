@@ -24,7 +24,13 @@ class StoryIdea:
         locations: Optional[str] = None,
         mentioned_brands: Optional[str] = None,
         goal: Optional[str] = None,
-        potencial: Optional[Dict[str, Any]] = None
+        potencial: Optional[Dict[str, Any]] = None,
+        language: Optional[str] = None,
+        personalization: Optional[Dict[str, str]] = None,
+        video_style: Optional[str] = None,
+        voice_stability: Optional[float] = None,
+        voice_similarity_boost: Optional[float] = None,
+        voice_style_exaggeration: Optional[float] = None
     ):
         self.story_title = story_title
         self.narrator_gender = narrator_gender
@@ -43,6 +49,14 @@ class StoryIdea:
         self.locations = locations
         self.mentioned_brands = mentioned_brands
         self.goal = goal
+        
+        # New enhancement fields
+        self.language = language or "en"
+        self.personalization = personalization or {}
+        self.video_style = video_style or "cinematic"
+        self.voice_stability = voice_stability if voice_stability is not None else 0.5
+        self.voice_similarity_boost = voice_similarity_boost if voice_similarity_boost is not None else 0.75
+        self.voice_style_exaggeration = voice_style_exaggeration if voice_style_exaggeration is not None else 0.0
 
         # Default potencial structure
         self.potencial = {
