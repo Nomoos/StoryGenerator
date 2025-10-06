@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Title Schema",
+  "description": "Schema for title items in the Story Generator",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the title"
+    },
+    "segment": {
+      "type": "string",
+      "enum": ["women", "men"],
+      "description": "Target audience segment"
+    },
+    "age_bucket": {
+      "type": "string",
+      "enum": ["10-13", "14-17", "18-23"],
+      "description": "Target age range"
+    },
+    "title": {
+      "type": "string",
+      "description": "The title text"
+    },
+    "topic_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of related topic identifiers"
+    },
+    "created_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Creation timestamp in ISO-8601 format"
+    }
+  },
+  "required": ["id", "segment", "age_bucket", "title", "topic_ids", "created_utc"],
+  "additionalProperties": false
+}
