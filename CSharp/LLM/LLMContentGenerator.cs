@@ -51,8 +51,8 @@ namespace StoryGenerator.Core.LLM
 
             var systemPrompt = PromptTemplates.ScriptGenerationSystem;
             var userPrompt = PromptTemplates.FormatScriptPrompt(
-                storyIdea.Title,
-                storyIdea.Description,
+                storyIdea.StoryTitle,
+                storyIdea.Goal ?? storyIdea.EmotionalCore ?? "engaging story",
                 storyIdea.Tone ?? "engaging",
                 targetLength
             );

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using StoryGenerator.Core.Interfaces;
@@ -166,13 +167,39 @@ namespace StoryGenerator.Examples.LLM
         /// </summary>
         private class SampleStoryIdea : IStoryIdea
         {
-            public string Title { get; set; } = string.Empty;
-            public string Description { get; set; } = string.Empty;
+            public string StoryTitle { get; set; } = string.Empty;
+            public string NarratorGender { get; set; } = "female";
             public string? Tone { get; set; }
-            public string? Topic { get; set; }
-            public string? Audience { get; set; }
-            public string? Hook { get; set; }
-            public int ViralScore { get; set; }
+            public string? Theme { get; set; }
+            public string? NarratorType { get; set; } = "third-person";
+            public string? OtherCharacter { get; set; }
+            public string? Outcome { get; set; }
+            public string? EmotionalCore { get; set; }
+            public string? PowerDynamic { get; set; }
+            public string? Timeline { get; set; }
+            public string? TwistType { get; set; }
+            public string? CharacterArc { get; set; }
+            public string? VoiceStyle { get; set; }
+            public string? TargetMoral { get; set; }
+            public string? Locations { get; set; }
+            public string? MentionedBrands { get; set; }
+            public string? Goal { get; set; }
+            public string Language { get; set; } = "en";
+            public Dictionary<string, string> Personalization { get; set; } = new();
+            public string VideoStyle { get; set; } = "cinematic";
+            public float VoiceStability { get; set; } = 0.5f;
+            public float VoiceSimilarityBoost { get; set; } = 0.75f;
+            public float VoiceStyleExaggeration { get; set; } = 0.0f;
+            public ViralPotential Potential { get; set; } = new();
+
+            // Helper properties for convenience
+            public string Title
+            {
+                get => StoryTitle;
+                set => StoryTitle = value;
+            }
+
+            public string Description { get; set; } = string.Empty;
         }
     }
 }
