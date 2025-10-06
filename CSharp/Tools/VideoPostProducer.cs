@@ -57,8 +57,9 @@ namespace StoryGenerator.Tools
                 for (int i = 0; i < config.SegmentPaths.Count; i++)
                 {
                     var segmentPath = config.SegmentPaths[i];
+                    var segmentDir = Path.GetDirectoryName(segmentPath) ?? Path.GetTempPath();
                     var croppedPath = Path.Combine(
-                        Path.GetDirectoryName(segmentPath),
+                        segmentDir,
                         $"cropped_{i}_{Path.GetFileName(segmentPath)}");
                     
                     await CropToVerticalAsync(segmentPath, croppedPath, config.Fps, cancellationToken);
@@ -67,8 +68,9 @@ namespace StoryGenerator.Tools
                 }
 
                 // Step 2: Concatenate segments with transitions
+                var outputDir = Path.GetDirectoryName(config.OutputPath) ?? Path.GetTempPath();
                 var concatenatedPath = Path.Combine(
-                    Path.GetDirectoryName(config.OutputPath),
+                    outputDir,
                     $"concat_{Path.GetFileName(config.OutputPath)}");
                 
                 await ConcatenateVideosAsync(
@@ -84,7 +86,7 @@ namespace StoryGenerator.Tools
                 if (!string.IsNullOrWhiteSpace(config.SrtPath) && File.Exists(config.SrtPath))
                 {
                     var subtitledPath = Path.Combine(
-                        Path.GetDirectoryName(config.OutputPath),
+                        outputDir,
                         $"subtitled_{Path.GetFileName(config.OutputPath)}");
                     
                     await AddSubtitlesAsync(
@@ -102,7 +104,7 @@ namespace StoryGenerator.Tools
                 if (!string.IsNullOrWhiteSpace(config.BackgroundMusicPath) && File.Exists(config.BackgroundMusicPath))
                 {
                     var musicPath = Path.Combine(
-                        Path.GetDirectoryName(config.OutputPath),
+                        outputDir,
                         $"music_{Path.GetFileName(config.OutputPath)}");
                     
                     await AddBackgroundMusicAsync(
@@ -210,7 +212,7 @@ namespace StoryGenerator.Tools
             string outputPath,
             string srtPath,
             bool burnIn = true,
-            SafeTextMargins safeMargins = null,
+            SafeTextMargins? safeMargins = null,
             CancellationToken cancellationToken = default)
         {
             if (!File.Exists(inputPath))

@@ -16,18 +16,18 @@ namespace StoryGenerator.Models
         /// Output file path for the final video.
         /// Format: /final/{segment}/{age}/{title_id}_draft.mp4
         /// </summary>
-        public string OutputPath { get; set; }
+        public string? OutputPath { get; set; }
 
         /// <summary>
         /// SRT subtitle file path (optional).
         /// </summary>
-        public string SrtPath { get; set; }
+        public string? SrtPath { get; set; }
 
         /// <summary>
         /// Background music file path (optional).
         /// Must be licensed music.
         /// </summary>
-        public string BackgroundMusicPath { get; set; }
+        public string? BackgroundMusicPath { get; set; }
 
         /// <summary>
         /// Sound effects file paths (optional).
@@ -93,22 +93,22 @@ namespace StoryGenerator.Models
         /// <summary>
         /// Story segment identifier (e.g., "intro", "main", "outro").
         /// </summary>
-        public string Segment { get; set; }
+        public string? Segment { get; set; }
 
         /// <summary>
         /// Target age group (e.g., "10-13", "14-17", "18-23", "24-30").
         /// </summary>
-        public string Age { get; set; }
+        public string? Age { get; set; }
 
         /// <summary>
         /// Gender category (e.g., "men", "women").
         /// </summary>
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
 
         /// <summary>
         /// Unique title identifier.
         /// </summary>
-        public string TitleId { get; set; }
+        public string? TitleId { get; set; }
 
         public VideoPostProductionConfig()
         {
@@ -153,7 +153,7 @@ namespace StoryGenerator.Models
         /// <summary>
         /// Path to the produced video file.
         /// </summary>
-        public string OutputPath { get; set; }
+        public string? OutputPath { get; set; }
 
         /// <summary>
         /// Indicates if the operation was successful.
@@ -183,7 +183,7 @@ namespace StoryGenerator.Models
         /// <summary>
         /// Error message if operation failed.
         /// </summary>
-        public string ErrorMessage { get; set; }
+        public string? ErrorMessage { get; set; }
 
         /// <summary>
         /// Additional processing details and warnings.

@@ -48,7 +48,7 @@ namespace StoryGenerator.Interfaces
             string outputPath,
             string srtPath,
             bool burnIn = true,
-            SafeTextMargins safeMargins = null,
+            SafeTextMargins? safeMargins = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
