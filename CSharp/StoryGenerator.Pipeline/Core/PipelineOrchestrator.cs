@@ -272,21 +272,21 @@ public class PipelineOrchestrator
     {
         // Call Python scene analyzer, passing storyTitle as an argument
         var pythonCode = "from Generators.GSceneAnalyzer import SceneAnalyzer; from Models.StoryIdea import StoryIdea; import sys; analyzer = SceneAnalyzer(); idea = StoryIdea(story_title=sys.argv[1]); analyzer.analyze_story(idea)";
-        var args = new List<string> { "-c", pythonCode, storyTitle };
+        var args = $"-c \"{pythonCode}\" \"{storyTitle}\"";
         await ExecutePythonCommandAsync(args);
     }
 
     private async Task DescribeScenesAsync(string storyTitle)
     {
         var pythonCode = "from Generators.GSceneDescriber import SceneDescriber; from Models.StoryIdea import StoryIdea; import sys; describer = SceneDescriber(); idea = StoryIdea(story_title=sys.argv[1]); describer.describe_scenes(idea)";
-        var args = new List<string> { "-c", pythonCode, storyTitle };
+        var args = $"-c \"{pythonCode}\" \"{storyTitle}\"";
         await ExecutePythonCommandAsync(args);
     }
 
     private async Task GenerateKeyframesAsync(string storyTitle)
     {
         var pythonCode = "from Generators.GKeyframeGenerator import KeyframeGenerator; from Models.StoryIdea import StoryIdea; import sys; generator = KeyframeGenerator(); idea = StoryIdea(story_title=sys.argv[1]); generator.generate_keyframes(idea)";
-        var args = new List<string> { "-c", pythonCode, storyTitle };
+        var args = $"-c \"{pythonCode}\" \"{storyTitle}\"";
         await ExecutePythonCommandAsync(args);
     }
 
