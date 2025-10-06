@@ -1,0 +1,134 @@
+{
+  "audience": {
+    "genders": [
+      {
+        "name": "men",
+        "preference_percentage": 50
+      },
+      {
+        "name": "women",
+        "preference_percentage": 50
+      }
+    ],
+    "countries": [
+      {
+        "name": "US",
+        "preference_percentage": 40
+      },
+      {
+        "name": "UK",
+        "preference_percentage": 30
+      },
+      {
+        "name": "CA",
+        "preference_percentage": 20
+      },
+      {
+        "name": "AU",
+        "preference_percentage": 10
+      }
+    ],
+    "age_groups": [
+      {
+        "range": "10-14",
+        "preference_percentage": 10
+      },
+      {
+        "range": "15-19",
+        "preference_percentage": 15
+      },
+      {
+        "range": "20-24",
+        "preference_percentage": 20
+      },
+      {
+        "range": "25-29",
+        "preference_percentage": 20
+      },
+      {
+        "range": "30-34",
+        "preference_percentage": 15
+      },
+      {
+        "range": "35-39",
+        "preference_percentage": 10
+      },
+      {
+        "range": "40-44",
+        "preference_percentage": 5
+      },
+      {
+        "range": "45-49",
+        "preference_percentage": 3
+      },
+      {
+        "range": "50-54",
+        "preference_percentage": 1
+      },
+      {
+        "range": "55-59",
+        "preference_percentage": 0.5
+      },
+      {
+        "range": "60-64",
+        "preference_percentage": 0.3
+      },
+      {
+        "range": "65+",
+        "preference_percentage": 0.2
+      }
+    ]
+  },
+  "folder_structure": {
+    "base_path": "Generator",
+    "content_folders": [
+      "trends",
+      "ideas",
+      "topics",
+      "titles",
+      "scores"
+    ],
+    "script_folders": [
+      "scripts/raw_local",
+      "scripts/iter_local",
+      "scripts/gpt_improved"
+    ],
+    "voice_folders": [
+      "voices/choice"
+    ],
+    "audio_folders": [
+      "audio/tts",
+      "audio/normalized"
+    ],
+    "subtitle_folders": [
+      "subtitles/srt",
+      "subtitles/timed"
+    ],
+    "scene_folders": [
+      "scenes/json"
+    ],
+    "image_folders": [
+      "images/keyframes_v1",
+      "images/keyframes_v2"
+    ],
+    "video_folders": [
+      "videos/ltx",
+      "videos/interp"
+    ],
+    "final_folders": [
+      "final"
+    ],
+    "research_folders": [
+      "research/python",
+      "research/csharp"
+    ],
+    "simple_folders": [
+      "config"
+    ]
+  },
+  "quality_thresholds": {
+    "min_score": 70,
+    "reprocess_score": 50,
+    "underscore_prefix": "_"
+  }
+}

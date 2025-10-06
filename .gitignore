@@ -1,88 +1,179 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
-# Stories output directory
+# StoryGenerator - GitIgnore
+
+# =============================================================================
+# GENERATOR FOLDER - All generation-related artifacts organized under Generator/
+# =============================================================================
+
+# Generator folder structure - Ignore all content by default
+Generator/
+
+# But keep directory structure with .gitkeep files
+!Generator/**/
+!Generator/**/.gitkeep
+!Generator/**/.test
+!Generator/**/.test.*
+
+# Trends in Generator - Keep structure and samples, ignore data files
+Generator/trends/raw/*
+!Generator/trends/raw/.gitkeep
+Generator/trends/processed/*
+!Generator/trends/processed/.gitkeep
+!Generator/trends/samples/
+!Generator/trends/README.md
+
+# Config in Generator
+!Generator/config/
+!Generator/config/*.json
+
+# =============================================================================
+# LEGACY STRUCTURE - Old folders at root (deprecated, use Generator/ instead)
+# =============================================================================
+
+# OUTPUT DIRECTORIES - Content files are ignored, structure is preserved
+# =============================================================================
+
+# Stories output directory (legacy)
 Stories/*
 !Stories/.gitkeep
-<<<<<<< HEAD
-<<<<<<< HEAD
-logs/
-*.log
-__pycache__/
-*.pyc
-=======
->>>>>>> origin/master
-=======
 
-# Python
->>>>>>> master
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-<<<<<<< HEAD
-=======
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+# New organized folder structure - ignore content but keep structure
+# Pattern: ignore all files except .gitkeep in each directory
 
-# Virtual environments
-venv/
-<<<<<<< HEAD
-ENV/
-env/
-=======
-env/
-ENV/
-.venv
+# Ideas, topics, titles, scores, final - pattern: {folder}/{gender}/{age}/
+# Ignore all content except .gitkeep, .test, and .test.* files
+ideas/*/*/*
+!ideas/*/*/*/.gitkeep
+!ideas/*/*/*/.test
+!ideas/*/*/*/.test.json
+!ideas/*/*/*/.test.txt
 
-# Environment variables
-.env
-.env.local
->>>>>>> master
+topics/*/*/*
+!topics/*/*/*/.gitkeep
+!topics/*/*/*/.test
+!topics/*/*/*/.test.json
+!topics/*/*/*/.test.txt
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+titles/*/*/*
+!titles/*/*/*/.gitkeep
+!titles/*/*/*/.test
+!titles/*/*/*/.test.json
+!titles/*/*/*/.test.txt
 
-# OS
-.DS_Store
-Thumbs.db
-<<<<<<< HEAD
-=======
+scores/*/*/*
+!scores/*/*/*/.gitkeep
+!scores/*/*/*/.test
+!scores/*/*/*/.test.json
+!scores/*/*/*/.test.txt
 
-# Model cache (optional, uncomment if you want to ignore cached models)
-# .cache/
-# models/
+final/*/*/*
+!final/*/*/*/.gitkeep
+!final/*/*/*/.test
 
-# Logs
-*.log
-logs/
+# Scripts - pattern: scripts/{type}/{gender}/{age}/
+# Ignore all content except .gitkeep, .test, and .test.* files
+scripts/*/*/*/*
+!scripts/*/*/*/*/.gitkeep
+!scripts/*/*/*/*/.test
+!scripts/*/*/*/*/.test.txt
+!scripts/*/*/*/*/.test.json
 
-# Checkpoints
-checkpoints/
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master
-# Story Generator - GitIgnore
+# Voices - pattern: voices/{type}/{gender}/{age}/
+# Ignore all content except .gitkeep, .test, and .test.* files
+voices/*/*/*/*
+!voices/*/*/*/*/.gitkeep
+!voices/*/*/*/*/.test
+!voices/*/*/*/*/.test.json
+!voices/*/*/*/*/.test.txt
+
+# Audio - pattern: audio/{type}/{gender}/{age}/
+# All files ignored except .gitkeep and .test
+audio/*/*/*/*
+!audio/*/*/*/*/.gitkeep
+!audio/*/*/*/*/.test
+
+# Subtitles - pattern: subtitles/{type}/{gender}/{age}/
+# All files ignored except .gitkeep, .test, and .test.* samples
+subtitles/*/*/*/*
+!subtitles/*/*/*/*/.gitkeep
+!subtitles/*/*/*/*/.test
+!subtitles/*/*/*/*/.test.srt
+
+# Scenes - pattern: scenes/{type}/{gender}/{age}/
+# All files ignored except .gitkeep, .test, and .test.* samples
+scenes/*/*/*/*
+!scenes/*/*/*/*/.gitkeep
+!scenes/*/*/*/*/.test
+!scenes/*/*/*/*/.test.json
+
+# Images - pattern: images/{type}/{gender}/{age}/
+# All files ignored except .gitkeep and .test
+images/*/*/*/*
+!images/*/*/*/*/.gitkeep
+!images/*/*/*/*/.test
+
+# Videos - pattern: videos/{type}/{gender}/{age}/
+# All files ignored except .gitkeep and .test
+videos/*/*/*/*
+!videos/*/*/*/*/.gitkeep
+!videos/*/*/*/*/.test
+
+# Explicit media file extensions (extra protection)
+*.mp3
+*.wav
+*.flac
+*.aac
+*.ogg
+*.m4a
+*.wma
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.svg
+*.webp
+*.ico
+*.tiff
+*.tif
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+*.webm
+*.m4v
+*.mpg
+*.mpeg
+
+# Research - pattern: research/{language}/
+# Keep markdown documentation, ignore research scripts and data
+research/**/*.py
+research/**/*.cs
+research/**/*.csv
+research/**/*.json
+!research/**/.gitkeep
+!research/**/*.md
+
+# Trends - pattern: trends/{raw|processed|gender/age}/
+# Keep structure, sample files, and README, but ignore raw CSV and processed JSON
+trends/raw/*
+!trends/raw/.gitkeep
+trends/processed/*
+!trends/processed/.gitkeep
+!trends/samples/
+!trends/README.md
+trends/*/*/*
+!trends/*/*/*/.gitkeep
+!trends/*/*/*/.test
+
+# Config files (may contain sensitive data)
+config/**/*
+!config/**/.gitkeep
+
+# =============================================================================
+# ENVIRONMENT & SECRETS
+# =============================================================================
 
 # Environment Variables
 .env
@@ -94,12 +185,18 @@ checkpoints/
 *apikey*
 *.key
 
-# Python
+# =============================================================================
+# PYTHON
+# =============================================================================
+
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+
+# Distribution / packaging
 build/
 develop-eggs/
 dist/
@@ -127,14 +224,6 @@ env.bak/
 venv.bak/
 .venv/
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-
 # Testing
 .pytest_cache/
 .coverage
@@ -142,25 +231,31 @@ htmlcov/
 .tox/
 .hypothesis/
 
+# =============================================================================
+# IDE & EDITORS
+# =============================================================================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# =============================================================================
+# LOGS & TEMPORARY FILES
+# =============================================================================
+
 # Logs
 *.log
 logs/
 *.log.*
 
-# Generated Stories
-Stories/*
-!Stories/.gitkeep
-__pycache__/
-*.pyc
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
 
-<<<<<<< HEAD
-# Python cache
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-=======
 # Cache
 cache/
 *.cache
@@ -168,31 +263,32 @@ cache/
 .dmypy.json
 dmypy.json
 
+# =============================================================================
+# DOCUMENTATION BUILD
+# =============================================================================
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# Documentation
+# Documentation builds
 docs/_build/
 site/
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 
-# Temporary files
-tmp/
-temp/
-*.tmp
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master
-*.bak
-*.swp
+# =============================================================================
+# OS SPECIFIC
+# =============================================================================
 
-# OS
-Thumbs.db
+# macOS
 .DS_Store
->>>>>>> master
->>>>>>> master
+
+# Windows
+Thumbs.db
+
+# =============================================================================
+# MODEL & DATA FILES (Optional - uncomment if needed)
+# =============================================================================
+
+# Uncomment to ignore large model files and caches
+# .cache/
+# models/
+# checkpoints/

@@ -1,0 +1,13 @@
+{
+  "topic_id": "test_002",
+  "category": "science",
+  "title": "Space Exploration Adventures",
+  "description": "Discovering the wonders of space and our solar system",
+  "keywords": ["space", "planets", "astronomy", "exploration"],
+  "target_audience": {
+    "gender": "men",
+    "age_range": "14-17"
+  },
+  "difficulty_level": "intermediate",
+  "estimated_duration": "8-10 minutes"
+}

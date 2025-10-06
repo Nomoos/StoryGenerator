@@ -1,0 +1,3 @@
+This folder contains test/sample data for the StoryGenerator project.
+Files with .test extension are example files and will be tracked in git.
+Other content files will be ignored by git.
