@@ -181,6 +181,9 @@ class VideoCompositor:
         # For multiple segments, use simple concat with re-encoding
         # xfade can be complex and may not work in all situations
         # Use a simple concat demuxer approach instead for reliability
+        # Fallback to simple concatenation: xfade transitions are not implemented here
+        # because they can be unreliable or fail in certain scenarios. This fallback is
+        # intentional to ensure robust and reliable video composition.
         self._simple_concatenate(segments, output_path)
 
     def crop_to_vertical(self, input_video: str, output_video: str):
