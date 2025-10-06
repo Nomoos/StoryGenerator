@@ -11,6 +11,7 @@ REVISED_NAME = "Revised.txt"
 ENHANCED_NAME = "Revised_with_eleven_labs_tags.txt"
 VOICEOVER_PATH = os.path.join(STORY_ROOT, "3_VoiceOver")
 TITLES_PATH = os.path.join(STORY_ROOT, "4_Titles")
+VIDEOS_PATH = os.path.join(STORY_ROOT, "5_Videos")
 SUBTITLES_NAME = "Subtitles.txt"
 SUBTITLESWBW_NAME = "Subtitles_Word_By_Word.txt"
 RESOURCES_PATH = os.path.join(STORY_ROOT, "Resources")
