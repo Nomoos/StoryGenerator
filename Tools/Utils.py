@@ -24,6 +24,9 @@ def convert_to_mp4(mp3_file: str, output_file: str):
     """
     Converts an MP3 and a still image into a basic MP4 video.
     Ensures video is valid length and resolution.
+    
+    Note: This function is kept for backward compatibility.
+    Consider using Video.VideoRenderer for better error handling and features.
     """
     if not os.path.exists(mp3_file):
         print(f"❌ MP3 file not found: {mp3_file}")
