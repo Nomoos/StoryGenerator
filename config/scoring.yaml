@@ -1,0 +1,117 @@
+# Title Scoring Rubric Configuration
+# Used for evaluating viral potential of video titles (0-100 scale)
+
+title_scoring:
+  description: "Evaluate video titles for viral potential on social media platforms"
+  
+  # Scoring criteria with weights
+  criteria:
+    - name: "Hook Strength"
+      weight: 0.30
+      description: "How compelling is the title? Does it create curiosity or emotional response?"
+      scoring_guide:
+        excellent: "90-100: Creates intense curiosity, emotional reaction, or urgency"
+        good: "70-89: Strong hook with clear appeal"
+        average: "50-69: Moderate interest, somewhat generic"
+        poor: "0-49: Weak hook, no curiosity generated"
+    
+    - name: "Clarity"
+      weight: 0.20
+      description: "Is the title clear and easy to understand?"
+      scoring_guide:
+        excellent: "90-100: Perfectly clear, instantly understandable"
+        good: "70-89: Clear with minor ambiguity"
+        average: "50-69: Somewhat clear but requires thought"
+        poor: "0-49: Confusing or unclear"
+    
+    - name: "Relevance"
+      weight: 0.20
+      description: "Does it align with target audience interests and current trends?"
+      scoring_guide:
+        excellent: "90-100: Highly relevant to audience, taps into trends"
+        good: "70-89: Relevant to audience interests"
+        average: "50-69: Somewhat relevant"
+        poor: "0-49: Not relevant to target audience"
+    
+    - name: "Length & Format"
+      weight: 0.15
+      description: "Is the title appropriately sized for social media?"
+      scoring_guide:
+        excellent: "90-100: 40-60 characters, perfect for all platforms"
+        good: "70-89: 30-70 characters, works well"
+        average: "50-69: Too short (<30) or too long (>70)"
+        poor: "0-49: Extremely short or long, poor formatting"
+    
+    - name: "Viral Potential"
+      weight: 0.15
+      description: "Does it have elements that make people want to share?"
+      scoring_guide:
+        excellent: "90-100: High shareability, controversy, or surprise element"
+        good: "70-89: Good shareability"
+        average: "50-69: Some shareability"
+        poor: "0-49: Low likelihood of sharing"
+  
+  # Voice recommendation guidelines
+  voice_recommendation:
+    description: "Recommend narrator voice gender based on title and target audience"
+    factors:
+      - "Title tone and emotion"
+      - "Target audience gender and age"
+      - "Story genre and theme"
+      - "Cultural and social considerations"
+    
+    guidelines:
+      - "Mystery/Thriller: Consider deeper, authoritative voice (often M)"
+      - "Romance/Drama: Match target audience gender preference"
+      - "Comedy: Either gender, depends on humor style"
+      - "Educational: Authoritative voice that builds trust"
+      - "Horror/Suspense: Deeper voice often more effective (often M)"
+      - "Lifestyle/Wellness: Match target audience (F for women, M for men)"
+  
+  # Top title selection criteria
+  top_selection:
+    count: 5
+    description: "Select top 5 titles per segment/age based on:"
+    criteria:
+      - "Overall score (primary factor)"
+      - "Diversity of themes"
+      - "Target audience alignment"
+      - "Production feasibility"
+
+# LLM Prompt Template
+prompt_template: |
+  You are an expert social media content strategist specializing in viral video titles.
+  
+  Evaluate this video title for viral potential:
+  Title: "{title}"
+  Target Audience: {gender}, age {age}
+  
+  Score the title on these criteria (0-100 for each):
+  1. Hook Strength (30% weight): How compelling? Does it create curiosity?
+  2. Clarity (20% weight): Is it clear and easy to understand?
+  3. Relevance (20% weight): Does it align with target audience and trends?
+  4. Length & Format (15% weight): Is length appropriate for social media?
+  5. Viral Potential (15% weight): Will people want to share this?
+  
+  Provide:
+  1. Score for each criterion (0-100)
+  2. Overall weighted score (0-100)
+  3. Brief rationale (2-3 sentences)
+  4. Voice recommendation (M/F) with reasoning
+  
+  Respond in JSON format:
+  {{
+    "scores": {{
+      "hook_strength": <score>,
+      "clarity": <score>,
+      "relevance": <score>,
+      "length_format": <score>,
+      "viral_potential": <score>
+    }},
+    "overall_score": <weighted_score>,
+    "rationale": "<explanation>",
+    "voice_recommendation": {{
+      "gender": "M" or "F",
+      "reasoning": "<explanation>"
+    }}
+  }}
