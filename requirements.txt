@@ -42,3 +42,9 @@ accelerate>=0.25.0
 safetensors>=0.4.0
 # Audio processing
 whisperx>=3.0.0
+torch>=2.0.0
+diffusers>=0.21.0
+whisperx>=3.0.0
+transformers>=4.40.0
+scipy>=1.10.0
+accelerate>=0.20.0
