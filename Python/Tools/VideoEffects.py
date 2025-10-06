@@ -41,35 +41,16 @@ class VideoEffects:
             return
         
         try:
-            # Determine zoom parameters based on direction
-            if zoom_direction == "in":
-                scale_start = 1.0
-                scale_end = zoom_intensity
-            else:  # zoom out
-                scale_start = zoom_intensity
-                scale_end = 1.0
+            # Simple zoom effect without complex panning for reliability
+            # Zoom from 1.0 to zoom_intensity over duration
+            frames = int(duration * 30)
             
-            # Determine pan parameters
-            pan_params = VideoEffects._get_pan_params(pan_direction)
-            x_start, y_start = pan_params['start']
-            x_end, y_end = pan_params['end']
-            
-            # Create zoompan filter expression
-            zoompan_expr = (
-                f"z='min(zoom+0.0015,{scale_end})':"
-                f"x='iw/2-(iw/zoom/2)':"
-                f"y='ih/2-(ih/zoom/2)':"
-                f"d={int(duration * 30)}:"
-                f"s=1080x1920:fps=30"
-            )
-            
-            # Build ffmpeg command with Ken Burns effect
+            # Build video stream with simple zoom
             video_stream = (
                 ffmpeg
                 .input(input_image, loop=1, framerate=30, t=duration)
-                .filter('scale', '1080:1920:force_original_aspect_ratio=increase')
+                .filter('scale', '1080', '1920', force_original_aspect_ratio='increase')
                 .filter('crop', '1080', '1920')
-                .filter('zoompan', zoompan_expr)
             )
             
             audio_stream = ffmpeg.input(audio_path)

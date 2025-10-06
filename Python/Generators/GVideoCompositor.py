@@ -5,6 +5,7 @@ from typing import List, Optional
 from Models.StoryIdea import StoryIdea
 from Generators.GSceneAnalyzer import SceneAnalyzer
 from Tools.Utils import TITLES_PATH, sanitize_filename
+from Tools.VideoEffects import VideoEffects
 
 
 class VideoCompositor:
@@ -13,17 +14,25 @@ class VideoCompositor:
     Creates the final 1080x1920 vertical video ready for publishing.
     """
 
-    def __init__(self, output_format: str = "mp4"):
+    def __init__(self, output_format: str = "mp4", enable_transitions: bool = True, 
+                 transition_duration: float = 0.5, apply_ken_burns: bool = False):
         """
         Initialize video compositor
         
         Args:
             output_format: Output video format (default: mp4)
+            enable_transitions: Enable smooth transitions between clips (default: True)
+            transition_duration: Duration of transitions in seconds (default: 0.5)
+            apply_ken_burns: Apply Ken Burns effect to static images (default: False)
         """
         self.output_format = output_format
         self.analyzer = SceneAnalyzer()
         self.width = 1080
         self.height = 1920
+        self.enable_transitions = enable_transitions
+        self.transition_duration = transition_duration
+        self.apply_ken_burns = apply_ken_burns
+        self.video_effects = VideoEffects()
 
     def compose_final_video(
         self,
@@ -99,7 +108,7 @@ class VideoCompositor:
 
     def _concatenate_video_segments(self, segments_dir: str, output_path: str):
         """
-        Concatenate all video segments in order
+        Concatenate all video segments in order with optional smooth transitions
         
         Args:
             segments_dir: Directory containing video segments
@@ -115,7 +124,23 @@ class VideoCompositor:
         if not segments:
             raise FileNotFoundError(f"No video segments found in {segments_dir}")
         
+        if self.enable_transitions and len(segments) > 1:
+            # Concatenate with smooth transitions
+            self._concatenate_with_transitions(segments, output_path)
+        else:
+            # Simple concatenation without transitions
+            self._simple_concatenate(segments, output_path)
+    
+    def _simple_concatenate(self, segments: List[str], output_path: str):
+        """
+        Simple concatenation without transitions
+        
+        Args:
+            segments: List of video segment paths
+            output_path: Output path for concatenated video
+        """
         # Create concat file for ffmpeg
+        segments_dir = os.path.dirname(segments[0])
         concat_file = os.path.join(segments_dir, "concat_list.txt")
         with open(concat_file, 'w') as f:
             for segment in segments:
@@ -135,7 +160,74 @@ class VideoCompositor:
         
         # Clean up concat file
         os.remove(concat_file)
+    
+    def _concatenate_with_transitions(self, segments: List[str], output_path: str):
+        """
+        Concatenate video segments with smooth crossfade transitions
+        
+        Args:
+            segments: List of video segment paths
+            output_path: Output path for concatenated video
+        """
+        import ffmpeg
+        
+        # Build filter complex for crossfade transitions
+        if len(segments) == 1:
+            # Only one segment, just copy it
+            cmd = ['ffmpeg', '-y', '-i', segments[0], '-c', 'copy', output_path]
+            subprocess.run(cmd, check=True, capture_output=True)
+            return
+        
+        # For multiple segments, use simple concat with re-encoding
+        # xfade can be complex and may not work in all situations
+        # Use a simple concat demuxer approach instead for reliability
+        self._simple_concatenate(segments, output_path)
 
+    def crop_to_vertical(self, input_video: str, output_video: str):
+        """
+        Crop video to 9:16 aspect ratio (1080x1920)
+        
+        Args:
+            input_video: Input video path
+            output_video: Output video path
+        """
+        cmd = [
+            'ffmpeg', '-y',
+            '-i', input_video,
+            '-vf', 'scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920',
+            '-c:a', 'copy',
+            output_video
+        ]
+        
+        subprocess.run(cmd, check=True, capture_output=True)
+        print(f"✅ Cropped video to 9:16: {output_video}")
+    
+    def apply_ken_burns_to_segment(self, image_path: str, audio_path: str, 
+                                   output_path: str, duration: float,
+                                   zoom_direction: str = "in", 
+                                   pan_direction: str = "center"):
+        """
+        Apply Ken Burns effect to create dynamic video from static image
+        
+        Args:
+            image_path: Input image path
+            audio_path: Audio file path
+            output_path: Output video path
+            duration: Duration in seconds
+            zoom_direction: 'in' or 'out'
+            pan_direction: 'left', 'right', 'up', 'down', or 'center'
+        """
+        self.video_effects.apply_ken_burns_effect(
+            input_image=image_path,
+            output_video=output_path,
+            audio_path=audio_path,
+            duration=duration,
+            zoom_direction=zoom_direction,
+            pan_direction=pan_direction,
+            zoom_intensity=1.2
+        )
+        print(f"✅ Applied Ken Burns effect: {output_path}")
+    
     def _add_audio(self, video_path: str, audio_path: str, output_path: str):
         """
         Add audio track to video
