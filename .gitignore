@@ -1,88 +1,71 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> master
-# Stories output directory
+# StoryGenerator - GitIgnore
+
+# =============================================================================
+# OUTPUT DIRECTORIES - Content files are ignored, structure is preserved
+# =============================================================================
+
+# Stories output directory (legacy)
 Stories/*
 !Stories/.gitkeep
-<<<<<<< HEAD
-<<<<<<< HEAD
-logs/
-*.log
-__pycache__/
-*.pyc
-=======
->>>>>>> origin/master
-=======
 
-# Python
->>>>>>> master
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-<<<<<<< HEAD
-=======
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+# New organized folder structure - ignore content but keep structure
+# Pattern: ignore all files except .gitkeep in each directory
 
-# Virtual environments
-venv/
-<<<<<<< HEAD
-ENV/
-env/
-=======
-env/
-ENV/
-.venv
+# Ideas, topics, titles, scores, final - pattern: {folder}/{gender}/{age}/
+ideas/**/*
+!ideas/**/.gitkeep
 
-# Environment variables
-.env
-.env.local
->>>>>>> master
+topics/**/*
+!topics/**/.gitkeep
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+titles/**/*
+!titles/**/.gitkeep
 
-# OS
-.DS_Store
-Thumbs.db
-<<<<<<< HEAD
-=======
+scores/**/*
+!scores/**/.gitkeep
 
-# Model cache (optional, uncomment if you want to ignore cached models)
-# .cache/
-# models/
+final/**/*
+!final/**/.gitkeep
 
-# Logs
-*.log
-logs/
+# Scripts - pattern: scripts/{type}/{gender}/{age}/
+scripts/**/*
+!scripts/**/.gitkeep
 
-# Checkpoints
-checkpoints/
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master
-# Story Generator - GitIgnore
+# Voices - pattern: voices/{type}/{gender}/{age}/
+voices/**/*
+!voices/**/.gitkeep
+
+# Audio - pattern: audio/{type}/{gender}/{age}/
+audio/**/*
+!audio/**/.gitkeep
+
+# Subtitles - pattern: subtitles/{type}/{gender}/{age}/
+subtitles/**/*
+!subtitles/**/.gitkeep
+
+# Scenes - pattern: scenes/{type}/{gender}/{age}/
+scenes/**/*
+!scenes/**/.gitkeep
+
+# Images - pattern: images/{type}/{gender}/{age}/
+images/**/*
+!images/**/.gitkeep
+
+# Videos - pattern: videos/{type}/{gender}/{age}/
+videos/**/*
+!videos/**/.gitkeep
+
+# Research - pattern: research/{language}/
+research/**/*
+!research/**/.gitkeep
+
+# Config files (may contain sensitive data)
+config/**/*
+!config/**/.gitkeep
+
+# =============================================================================
+# ENVIRONMENT & SECRETS
+# =============================================================================
 
 # Environment Variables
 .env
@@ -94,12 +77,18 @@ checkpoints/
 *apikey*
 *.key
 
-# Python
+# =============================================================================
+# PYTHON
+# =============================================================================
+
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+
+# Distribution / packaging
 build/
 develop-eggs/
 dist/
@@ -127,14 +116,6 @@ env.bak/
 venv.bak/
 .venv/
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-
 # Testing
 .pytest_cache/
 .coverage
@@ -142,25 +123,31 @@ htmlcov/
 .tox/
 .hypothesis/
 
+# =============================================================================
+# IDE & EDITORS
+# =============================================================================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# =============================================================================
+# LOGS & TEMPORARY FILES
+# =============================================================================
+
 # Logs
 *.log
 logs/
 *.log.*
 
-# Generated Stories
-Stories/*
-!Stories/.gitkeep
-__pycache__/
-*.pyc
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
 
-<<<<<<< HEAD
-# Python cache
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-=======
 # Cache
 cache/
 *.cache
@@ -168,31 +155,32 @@ cache/
 .dmypy.json
 dmypy.json
 
+# =============================================================================
+# DOCUMENTATION BUILD
+# =============================================================================
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# Documentation
+# Documentation builds
 docs/_build/
 site/
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 
-# Temporary files
-tmp/
-temp/
-*.tmp
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master
-*.bak
-*.swp
+# =============================================================================
+# OS SPECIFIC
+# =============================================================================
 
-# OS
-Thumbs.db
+# macOS
 .DS_Store
->>>>>>> master
->>>>>>> master
+
+# Windows
+Thumbs.db
+
+# =============================================================================
+# MODEL & DATA FILES (Optional - uncomment if needed)
+# =============================================================================
+
+# Uncomment to ignore large model files and caches
+# .cache/
+# models/
+# checkpoints/
