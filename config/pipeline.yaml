@@ -1,0 +1,52 @@
+# Pipeline Configuration
+# Configuration for AI Video Generation Pipeline
+
+models:
+  # Language Model - Choose one: qwen2_5_14b | llama3_1_8b
+  llm: qwen2_5_14b
+  
+  # Vision Model - Choose one: llava_onevision_7b | phi_3_5_vision
+  vision: llava_onevision_7b
+  
+  # Text-to-Speech Engine
+  tts: local_tts_engine_name
+  
+  # Automatic Speech Recognition
+  asr: faster-whisper-large-v3
+  
+  # Image Generation Model
+  image: sdxl_base_refiner
+  
+  # Video Generation Model - Choose one: ltx_video_2b | ltx_video_13b | stable_video_diffusion
+  video: ltx_video_2b
+
+# Video Configuration
+video:
+  width: 1080
+  height: 1920
+  fps: 30
+  safe_margins_pct:
+    top: 8
+    bottom: 10
+
+# Audio Configuration
+audio:
+  target_lufs: -14
+  sample_rate: 48000
+
+# Seed Values for Reproducibility
+seeds:
+  image: 1234
+  video: 5678
+  llm: 42
+
+# File System Paths
+paths:
+  weights: ./weights
+  cache: ./cache
+  tmp: ./tmp
+
+# Feature Switches
+switches:
+  use_ltx: true
+  use_interpolation: false
