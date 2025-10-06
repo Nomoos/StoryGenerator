@@ -1,10 +1,14 @@
 import os
 import shutil
+import time
 
 import openai
 
 from Models.StoryIdea import StoryIdea
 from Tools.Utils import SCRIPTS_PATH, sanitize_filename, IDEAS_PATH, REVISED_PATH, loadScript
+from Tools.Monitor import logger, PerformanceMonitor, log_error, log_info
+from Tools.Retry import retry_with_exponential_backoff, with_circuit_breaker
+from Tools.Validator import OutputValidator
 
 openai.api_key = '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'
 
@@ -12,15 +16,65 @@ class RevisedScriptGenerator:
     def __init__(self, model: str = "gpt-4o-mini"):
         self.model = model
     def Revise(self, storyIdea: StoryIdea):
-        self.moveFolder(storyIdea)
-        script = loadScript(storyIdea)
-        messages = [
-            {"role": "system", "content": self._build_system_prompt()},
-            {"role": "user", "content": self._build_user_prompt(script)}
-        ]
-        response = openai.ChatCompletion.create(model=self.model, messages=messages)
-        script = response.choices[0].message.content.strip()
-        self.save_revised_script(storyIdea, script)
+        operation_start = time.time()
+        success = False
+        error_msg = None
+        metrics = {}
+        
+        try:
+            self.moveFolder(storyIdea)
+            script = loadScript(storyIdea)
+            metrics["original_length"] = len(script)
+            
+            messages = [
+                {"role": "system", "content": self._build_system_prompt()},
+                {"role": "user", "content": self._build_user_prompt(script)}
+            ]
+            
+            response = self._call_openai_with_retry(messages)
+            revised_script = response.choices[0].message.content.strip()
+            metrics["revised_length"] = len(revised_script)
+            metrics["word_count"] = len(revised_script.split())
+            
+            self.save_revised_script(storyIdea, revised_script)
+            
+            # Validate output
+            revised_path = os.path.join(REVISED_PATH, sanitize_filename(storyIdea.story_title), "Revised.txt")
+            is_valid, validation_metrics = OutputValidator.validate_text_file(revised_path, min_length=200)
+            metrics.update(validation_metrics)
+            
+            if not is_valid:
+                error_msg = "Revised script failed validation"
+                log_error("Script Revision Validation", storyIdea.story_title, Exception(error_msg))
+            else:
+                success = True
+                log_info(f"✅ Script revised: {metrics['word_count']} words")
+                
+        except Exception as e:
+            error_msg = str(e)
+            log_error("Script Revision", storyIdea.story_title, e)
+            raise
+        finally:
+            duration = time.time() - operation_start
+            PerformanceMonitor.log_operation(
+                operation="Script_Revision",
+                story_title=storyIdea.story_title,
+                duration=duration,
+                success=success,
+                error=error_msg,
+                metrics=metrics
+            )
+    
+    @retry_with_exponential_backoff(
+        max_retries=3,
+        base_delay=2.0,
+        max_delay=30.0,
+        exceptions=(Exception,)
+    )
+    @with_circuit_breaker("openai")
+    def _call_openai_with_retry(self, messages):
+        """Call OpenAI API with retry logic and circuit breaker."""
+        return openai.ChatCompletion.create(model=self.model, messages=messages)
 
     def _build_system_prompt(self) -> str:
         return f"""

@@ -1,6 +1,7 @@
 import os
 from elevenlabs import ElevenLabs, Voice, VoiceSettings, save
 import shutil
+import time
 
 from pydub import AudioSegment
 from pydub.silence import detect_leading_silence
@@ -12,6 +13,9 @@ import ffmpeg
 from Models.StoryIdea import StoryIdea
 from Tools.Utils import RESOURCES_PATH, SCRIPTS_PATH, VOICEOVER_PATH, REVISED_PATH, sanitize_filename, convert_to_mp4, \
     REVISED_NAME, ENHANCED_NAME
+from Tools.Monitor import logger, PerformanceMonitor, log_error, log_info
+from Tools.Retry import retry_with_exponential_backoff, with_circuit_breaker
+from Tools.Validator import OutputValidator
 
 API_KEY = 'sk_8b119f95dfca190665b8bc19a24e3be40e32d39c7c50a4d8'
 
@@ -61,6 +65,25 @@ class VoiceMaker:
         # Aplikuje tuto změnu na celou zvukovou stopu
         return audio_segment.apply_gain(change_in_dBFS)
 
+    @retry_with_exponential_backoff(
+        max_retries=3,
+        base_delay=2.0,
+        max_delay=30.0,
+        exceptions=(Exception,)
+    )
+    @with_circuit_breaker("elevenlabs")
+    def _generate_tts_with_retry(self, script: str):
+        """Generate TTS with retry logic and circuit breaker."""
+        return self.client.generate(
+            model='eleven_v3',
+            text=script,
+            output_format='mp3_44100_192',
+            voice=Voice(
+                voice_id='BZgkqPqms7Kj9ulSkVzn',
+                style='Creative'
+            )
+        )
+
 
     def generate_audio(self):
         # Projdeme všechny soubory ve složce '01_Scripts'
@@ -74,12 +97,16 @@ class VoiceMaker:
             self.moveFolder(idea)
             OUTPUT_PATH = os.path.join(VOICEOVER_PATH, folder_name)
 
-
+            operation_start = time.time()
+            success = False
+            error_msg = None
+            metrics = {}
 
             try:
                 print(f"\n--- Make voiceover for: {idea.story_title} ---")
                 voiceover_path = os.path.join(OUTPUT_PATH, 'voiceover.mp3')
                 script = self.loadScript(idea)
+                
                 try:
                     # if voiceover already exists, skip
                     if os.path.exists(voiceover_path):
@@ -88,6 +115,8 @@ class VoiceMaker:
                 except Exception as e:
                     print(f"Error reading file: {e}")
 
+                # Generate TTS with timing and retry
+                tts_start = time.time()
                 try:
                     # Prepare voice settings with inflection/variation
                     voice_settings = VoiceSettings(
@@ -105,24 +134,61 @@ class VoiceMaker:
                             settings=voice_settings
                         )
                     )
+                    audio = self._generate_tts_with_retry(script)
                     save(audio, voiceover_path)
+                    tts_duration = time.time() - tts_start
+                    metrics['tts_duration'] = round(tts_duration, 2)
+                    log_info(f"✅ TTS completed in {tts_duration:.2f}s")
                 except Exception as e:
-                    print(f"Error generating voiceover: {e}")
+                    error_msg = f"Error generating voiceover: {e}"
+                    log_error("TTS Generation", idea.story_title, e)
+                    print(f"❌ {error_msg}")
+                    continue
 
+                # Normalize audio with timing
+                normalize_start = time.time()
                 try:
                     audio_segment = AudioSegment.from_mp3(voiceover_path)
                     normalized_voiceover = self.normalize_lufs(audio_segment)
                     voiceover_path = os.path.join(OUTPUT_PATH, 'voiceover_normalized.mp3')
                     normalized_voiceover.export(voiceover_path, format='mp3',
                                                 tags={"artist": "Nom", "album": "Noms Stories"})
+                    normalize_duration = time.time() - normalize_start
+                    metrics['normalize_duration'] = round(normalize_duration, 2)
+                    log_info(f"✅ Audio normalized in {normalize_duration:.2f}s")
                     # pokud je vše v pořádku uloženo smažeme původní soubory
                     # os.remove(os.path.join(OUTPUT_PATH, 'voiceover.mp3'))
                 except Exception as e:
-                    print(f"Error trimming silence: {e}")
-
+                    error_msg = f"Error normalizing audio: {e}"
+                    log_error("Audio Normalization", idea.story_title, e)
+                    print(f"❌ {error_msg}")
+                    continue
+                
+                # Validate output
+                is_valid, validation_metrics = OutputValidator.validate_audio_file(voiceover_path)
+                metrics.update(validation_metrics)
+                
+                if not is_valid:
+                    error_msg = "Generated audio file failed validation"
+                    log_error("Audio Validation", idea.story_title, Exception(error_msg))
+                else:
+                    success = True
 
             except Exception as e:
-                print(f"❌ Failed to revise '{folder_name}': {e}")
+                error_msg = str(e)
+                log_error("Audio Generation", idea.story_title, e)
+                print(f"❌ Failed to generate audio for '{folder_name}': {e}")
+            finally:
+                # Log performance metrics
+                total_duration = time.time() - operation_start
+                PerformanceMonitor.log_operation(
+                    operation="TTS_Generation",
+                    story_title=idea.story_title,
+                    duration=total_duration,
+                    success=success,
+                    error=error_msg,
+                    metrics=metrics
+                )
 
     def normalize_audio(self):
         for folder_name in os.listdir(VOICEOVER_PATH):
