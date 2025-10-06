@@ -68,6 +68,28 @@ public class OpenAIClient
     }
 
     /// <summary>
+    /// Transcribes audio to text with word-level timestamps using Whisper.
+    /// </summary>
+    /// <param name="audioFilePath">Path to the audio file.</param>
+    /// <param name="language">Language code (e.g., "en"). If null, auto-detects.</param>
+    /// <param name="timestampGranularity">Granularity of timestamps ("word" or "segment").</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Transcription response with word-level timestamps.</returns>
+    public async Task<TranscriptionResponse> TranscribeAudioAsync(
+        string audioFilePath,
+        string? language = null,
+        string timestampGranularity = "word",
+        CancellationToken cancellationToken = default)
+    {
+        return await _retryService.ExecuteWithRetryAndCircuitBreakerAsync(
+            "openai",
+            async () => await SendTranscriptionRequestAsync(audioFilePath, language, timestampGranularity, cancellationToken),
+            maxRetries: 3,
+            baseDelay: 2.0,
+            maxDelay: 30.0);
+    }
+
+    /// <summary>
     /// Sends the actual HTTP request to OpenAI API.
     /// </summary>
     private async Task<ChatCompletionResponse> SendChatCompletionRequestAsync(
@@ -98,6 +120,49 @@ public class OpenAIClient
             cancellationToken);
 
         return result ?? throw new InvalidOperationException("Failed to deserialize OpenAI response");
+    }
+
+    /// <summary>
+    /// Sends transcription request to OpenAI Whisper API.
+    /// </summary>
+    private async Task<TranscriptionResponse> SendTranscriptionRequestAsync(
+        string audioFilePath,
+        string? language,
+        string timestampGranularity,
+        CancellationToken cancellationToken)
+    {
+        using var form = new MultipartFormDataContent();
+        using var fileStream = File.OpenRead(audioFilePath);
+        using var fileContent = new StreamContent(fileStream);
+        
+        fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("audio/mpeg");
+        form.Add(fileContent, "file", Path.GetFileName(audioFilePath));
+        form.Add(new StringContent("whisper-1"), "model");
+        form.Add(new StringContent("verbose_json"), "response_format");
+        form.Add(new StringContent(timestampGranularity), "timestamp_granularities[]");
+        
+        if (!string.IsNullOrEmpty(language))
+        {
+            form.Add(new StringContent(language), "language");
+        }
+
+        var response = await _httpClient.PostAsync("audio/transcriptions", form, cancellationToken);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync(cancellationToken);
+            _logger.LogError("OpenAI Transcription API error: {StatusCode} - {Error}", response.StatusCode, errorContent);
+            throw new HttpRequestException($"OpenAI Transcription API returned {response.StatusCode}: {errorContent}");
+        }
+
+        var result = await response.Content.ReadFromJsonAsync<TranscriptionResponse>(
+            new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+            },
+            cancellationToken);
+
+        return result ?? throw new InvalidOperationException("Failed to deserialize transcription response");
     }
 }
 
@@ -187,4 +252,76 @@ public class TokenUsage
 
     [JsonPropertyName("total_tokens")]
     public int TotalTokens { get; set; }
+}
+
+/// <summary>
+/// Transcription response model for Whisper API.
+/// </summary>
+public class TranscriptionResponse
+{
+    [JsonPropertyName("text")]
+    public string Text { get; set; } = string.Empty;
+
+    [JsonPropertyName("language")]
+    public string? Language { get; set; }
+
+    [JsonPropertyName("duration")]
+    public double Duration { get; set; }
+
+    [JsonPropertyName("words")]
+    public List<TranscriptionWord>? Words { get; set; }
+
+    [JsonPropertyName("segments")]
+    public List<TranscriptionSegment>? Segments { get; set; }
+}
+
+/// <summary>
+/// Word-level transcription with timestamp.
+/// </summary>
+public class TranscriptionWord
+{
+    [JsonPropertyName("word")]
+    public string Word { get; set; } = string.Empty;
+
+    [JsonPropertyName("start")]
+    public double Start { get; set; }
+
+    [JsonPropertyName("end")]
+    public double End { get; set; }
+}
+
+/// <summary>
+/// Segment-level transcription with timestamp.
+/// </summary>
+public class TranscriptionSegment
+{
+    [JsonPropertyName("id")]
+    public int Id { get; set; }
+
+    [JsonPropertyName("seek")]
+    public int Seek { get; set; }
+
+    [JsonPropertyName("start")]
+    public double Start { get; set; }
+
+    [JsonPropertyName("end")]
+    public double End { get; set; }
+
+    [JsonPropertyName("text")]
+    public string Text { get; set; } = string.Empty;
+
+    [JsonPropertyName("tokens")]
+    public List<int>? Tokens { get; set; }
+
+    [JsonPropertyName("temperature")]
+    public double Temperature { get; set; }
+
+    [JsonPropertyName("avg_logprob")]
+    public double AvgLogprob { get; set; }
+
+    [JsonPropertyName("compression_ratio")]
+    public double CompressionRatio { get; set; }
+
+    [JsonPropertyName("no_speech_prob")]
+    public double NoSpeechProb { get; set; }
 }

@@ -49,6 +49,14 @@ public class GeneratorConstructorTests
     }
 
     [Fact]
+    public void SubtitleGenerator_HasCorrectInterface()
+    {
+        // Verify SubtitleGenerator implements ISubtitleGenerator
+        Assert.True(typeof(ISubtitleGenerator).IsAssignableFrom(typeof(SubtitleGenerator)));
+        Assert.True(typeof(IGenerator).IsAssignableFrom(typeof(SubtitleGenerator)));
+    }
+
+    [Fact]
     public void AllGenerators_HaveRequiredInterfaces()
     {
         // Verify all generators implement IGenerator
@@ -58,7 +66,8 @@ public class GeneratorConstructorTests
             typeof(ScriptGenerator),
             typeof(RevisionGenerator),
             typeof(EnhancementGenerator),
-            typeof(VoiceGenerator)
+            typeof(VoiceGenerator),
+            typeof(SubtitleGenerator)
         };
 
         foreach (var type in generatorTypes)
