@@ -5,11 +5,25 @@ Get up and running with the ASR (Automatic Speech Recognition) module in 5 minut
 ## Prerequisites
 
 1. **Python 3.8+** installed
+   - Windows: Download from [python.org](https://www.python.org/downloads/)
+   - Linux/Mac: Usually pre-installed or via package manager
 2. **faster-whisper** library:
    ```bash
    pip install faster-whisper>=0.10.0
    ```
 3. **.NET 8.0+** (for C# components)
+
+## Platform Notes
+
+**Windows:**
+- Python is auto-detected as `python` command
+- Use backslashes or forward slashes in paths (both work)
+- Example: `C:\Audio\file.mp3` or `C:/Audio/file.mp3`
+
+**Linux/macOS:**
+- Python is auto-detected as `python3` command
+- Use forward slashes in paths
+- Example: `/home/user/audio/file.mp3`
 
 ## Quick Test (Python Only)
 
@@ -33,11 +47,22 @@ python3 research/python/test_whisper_integration.py
 ```csharp
 using StoryGenerator.Research;
 
-// Create client
+// Create client - Python executable auto-detected (python on Windows, python3 on Linux/Mac)
 var client = new WhisperClient();
 
 // Transcribe
 var result = await client.TranscribeAsync("your-audio.mp3");
+Console.WriteLine(result.Text);
+```
+
+### Windows Example
+
+```csharp
+using StoryGenerator.Research;
+
+// Works with Windows paths
+var client = new WhisperClient();
+var result = await client.TranscribeAsync(@"C:\Audio\interview.mp3");
 Console.WriteLine(result.Text);
 ```
 
@@ -248,6 +273,26 @@ pip install faster-whisper>=0.10.0
 var client = new WhisperClient(
     scriptPath: "/full/path/to/whisper_subprocess.py"
 );
+
+// Windows example
+var client = new WhisperClient(
+    scriptPath: @"C:\Projects\StoryGenerator\research\python\whisper_subprocess.py"
+);
+```
+
+### Windows: Error "python3 is not recognized"
+**Solution:**
+The client auto-detects `python` on Windows. If you still get this error:
+```csharp
+// Explicitly set Python executable
+var client = new WhisperClient(
+    pythonExecutable: "python"
+);
+
+// Or use full path
+var client = new WhisperClient(
+    pythonExecutable: @"C:\Python39\python.exe"
+);
 ```
 
 ### Error: "CUDA out of memory"
@@ -262,6 +307,20 @@ var client = new WhisperClient(
 2. CUDA drivers installed
 3. Model size appropriate for hardware
 4. Not running on battery (laptop may throttle)
+
+### Windows Path Issues
+**Solution:**
+Use verbatim string literals (`@""`) for Windows paths:
+```csharp
+// Good - verbatim string
+var result = await client.TranscribeAsync(@"C:\Audio\file.mp3");
+
+// Also works - forward slashes
+var result = await client.TranscribeAsync("C:/Audio/file.mp3");
+
+// Avoid - requires double backslashes
+var result = await client.TranscribeAsync("C:\\Audio\\file.mp3");
+```
 
 ## Model Selection Guide
 

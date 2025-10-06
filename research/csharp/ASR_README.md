@@ -13,6 +13,25 @@ The ASR (Automatic Speech Recognition) module provides C# interfaces for speech-
 - **GPU Acceleration**: Automatic GPU detection and utilization when available
 - **Voice Activity Detection**: Built-in VAD filtering for cleaner transcription
 - **Task Types**: Support for both transcription and translation tasks
+- **Cross-Platform**: Windows, Linux, and macOS compatible with automatic platform detection
+- **Async/Await**: Full async support throughout for non-blocking operations
+- **Comprehensive Error Handling**: Structured error responses with detailed messages
+
+## Platform Compatibility
+
+The ASR module is designed to work seamlessly across all major platforms:
+
+| Platform | Python Executable | Path Separator | Status |
+|----------|-------------------|----------------|--------|
+| Windows | `python` (auto-detected) | `\` | ✅ Fully Supported |
+| Linux | `python3` (auto-detected) | `/` | ✅ Fully Supported |
+| macOS | `python3` (auto-detected) | `/` | ✅ Fully Supported |
+
+**Key Platform Features:**
+- Automatic Python executable detection (python vs python3)
+- Platform-specific path handling using `Path.Combine()`
+- Cross-platform command-line argument escaping
+- Windows-compatible backslash and quote handling
 
 ## Installation
 
@@ -69,7 +88,7 @@ C# TranscriptionResult
 ```csharp
 using StoryGenerator.Research;
 
-// Initialize client
+// Initialize client (Python executable auto-detected based on platform)
 var client = new WhisperClient(
     modelSize: "large-v3",
     device: "auto",
@@ -86,6 +105,25 @@ var result = await client.TranscribeAsync(
 Console.WriteLine($"Transcription: {result.Text}");
 Console.WriteLine($"Language: {result.Language} ({result.LanguageProbability:P2})");
 Console.WriteLine($"Words: {result.Words.Count}");
+```
+
+### Windows-Specific Configuration
+
+On Windows, the Python executable is automatically detected as `python`. If you have a custom Python installation:
+
+```csharp
+// Specify custom Python executable on Windows
+var client = new WhisperClient(
+    modelSize: "large-v3",
+    pythonExecutable: @"C:\Python39\python.exe",  // Custom Python path
+    scriptPath: @"C:\Projects\StoryGenerator\research\python\whisper_subprocess.py"
+);
+
+// Windows paths work seamlessly
+var result = await client.TranscribeAsync(
+    audioPath: @"C:\Audio\interview.mp3",
+    language: "en"
+);
 ```
 
 ### Language Detection

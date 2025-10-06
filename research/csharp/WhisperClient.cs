@@ -29,20 +29,34 @@ namespace StoryGenerator.Research
         /// <param name="modelSize">Model size ("tiny", "base", "small", "medium", "large-v2", "large-v3")</param>
         /// <param name="device">Device to use ("cpu", "cuda", "auto")</param>
         /// <param name="computeType">Computation type ("float16", "float32", "int8")</param>
-        /// <param name="pythonExecutable">Path to Python executable (default: "python3")</param>
+        /// <param name="pythonExecutable">Path to Python executable (default: auto-detected)</param>
         /// <param name="scriptPath">Path to whisper_subprocess.py (default: auto-detected)</param>
         public WhisperClient(
             string modelSize = "large-v3",
             string device = "auto",
             string computeType = "float16",
-            string pythonExecutable = "python3",
+            string pythonExecutable = null,
             string scriptPath = null)
         {
             _modelSize = modelSize;
             _device = device;
             _computeType = computeType;
-            _pythonExecutable = pythonExecutable;
+            _pythonExecutable = pythonExecutable ?? GetDefaultPythonExecutable();
             _scriptPath = scriptPath ?? FindScriptPath();
+        }
+
+        /// <summary>
+        /// Get default Python executable based on platform.
+        /// </summary>
+        private static string GetDefaultPythonExecutable()
+        {
+            // On Windows, Python is typically installed as "python"
+            // On Linux/Mac, it's typically "python3"
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                return "python";
+            }
+            return "python3";
         }
 
         /// <summary>
@@ -54,16 +68,28 @@ namespace StoryGenerator.Research
             var possiblePaths = new[]
             {
                 "research/python/whisper_subprocess.py",
+                Path.Combine("research", "python", "whisper_subprocess.py"),
                 "../research/python/whisper_subprocess.py",
+                Path.Combine("..", "research", "python", "whisper_subprocess.py"),
                 "../../research/python/whisper_subprocess.py",
-                "../../../research/python/whisper_subprocess.py"
+                Path.Combine("..", "..", "research", "python", "whisper_subprocess.py"),
+                "../../../research/python/whisper_subprocess.py",
+                Path.Combine("..", "..", "..", "research", "python", "whisper_subprocess.py")
             };
 
             foreach (var path in possiblePaths)
             {
-                if (File.Exists(path))
+                try
                 {
-                    return Path.GetFullPath(path);
+                    if (File.Exists(path))
+                    {
+                        return Path.GetFullPath(path);
+                    }
+                }
+                catch
+                {
+                    // Ignore path resolution errors and try next path
+                    continue;
                 }
             }
 
@@ -411,7 +437,7 @@ namespace StoryGenerator.Research
         }
 
         /// <summary>
-        /// Escape command line argument.
+        /// Escape command line argument for cross-platform compatibility.
         /// </summary>
         private string EscapeArgument(string arg)
         {
@@ -420,11 +446,21 @@ namespace StoryGenerator.Research
                 return "\"\"";
             }
 
-            if (!arg.Contains(' ') && !arg.Contains('"'))
+            // No escaping needed if no special characters
+            if (!arg.Contains(' ') && !arg.Contains('"') && !arg.Contains('\\'))
             {
                 return arg;
             }
 
+            // For Windows, handle backslashes and quotes properly
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                // Escape backslashes that precede quotes
+                arg = arg.Replace("\\", "\\\\").Replace("\"", "\\\"");
+                return $"\"{arg}\"";
+            }
+
+            // For Unix-like systems
             return $"\"{arg.Replace("\"", "\\\"")}\"";
         }
     }
