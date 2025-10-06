@@ -1,12 +1,16 @@
 import os
 
-from Tools.Utils import VOICEOVER_PATH, convert_to_mp4, TITLES_PATH
+from Tools.Utils import TITLES_PATH
+from Video.VideoRenderer import VideoRenderer
 
 
 def batch_convert_all_voiceovers():
     """
-    Converts all 'voiceover_normalized.mp3' files under 3_VoiceOver to 'video.mp4'.
+    Converts all 'voiceover_normalized.mp3' files under 4_Titles to 'voiceover_with_image.mp4'.
+    Uses the new VideoRenderer for better error handling and fallback support.
     """
+    renderer = VideoRenderer()
+    
     for folder_name in os.listdir(TITLES_PATH):
         folder_path = os.path.join(TITLES_PATH, folder_name)
         if not os.path.isdir(folder_path):
@@ -19,6 +23,11 @@ def batch_convert_all_voiceovers():
             print(f"✅ Already exists: {output_file}")
             continue
 
-        convert_to_mp4(mp3_file, output_file)
+        # Use VideoRenderer with automatic fallback
+        renderer.render_video(
+            audio_file=mp3_file,
+            output_file=output_file,
+            title=folder_name
+        )
 
 batch_convert_all_voiceovers()

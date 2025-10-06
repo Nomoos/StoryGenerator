@@ -11,6 +11,7 @@ REVISED_NAME = "Revised.txt"
 ENHANCED_NAME = "Revised_with_eleven_labs_tags.txt"
 VOICEOVER_PATH = os.path.join(STORY_ROOT, "3_VoiceOver")
 TITLES_PATH = os.path.join(STORY_ROOT, "4_Titles")
+VIDEOS_PATH = os.path.join(STORY_ROOT, "5_Videos")
 SUBTITLES_NAME = "Subtitles.txt"
 SUBTITLESWBW_NAME = "Subtitles_Word_By_Word.txt"
 RESOURCES_PATH = os.path.join(STORY_ROOT, "Resources")
@@ -26,12 +27,17 @@ def convert_to_mp4(mp3_file: str, output_file: str, use_ken_burns: bool = False,
     Converts an MP3 and a still image into a basic MP4 video.
     Ensures video is valid length and resolution.
     
+<<<<<<< HEAD
     Args:
         mp3_file: Path to the MP3 audio file
         output_file: Path to output video file
         use_ken_burns: Apply Ken Burns zoom/pan effect
         video_style: Style filter to apply ('cinematic', 'warm', 'cold', 'vintage', 'dramatic', 'none')
         background_music: Path to background music file (optional)
+=======
+    Note: This function is kept for backward compatibility.
+    Consider using Video.VideoRenderer for better error handling and features.
+>>>>>>> origin/master
 =======
     Converts an MP3 and a still image into a vertical MP4 video.
     Optimized for Instagram Reels, TikTok, and YouTube Shorts.

@@ -1,13 +1,18 @@
 # Stories output directory
 Stories/*
 !Stories/.gitkeep
+<<<<<<< HEAD
+=======
 
 # Python
+>>>>>>> master
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+<<<<<<< HEAD
+=======
 build/
 develop-eggs/
 dist/
