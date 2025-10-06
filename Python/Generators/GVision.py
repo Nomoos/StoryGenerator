@@ -259,8 +259,8 @@ class GVision:
             
             quality_score = QualityScore(
                 overall_quality=parsed.get("overall_quality", 0.0),
-                sharpness=parsed.get("overall_quality", 0.0),  # Approximation
-                clarity=parsed.get("overall_quality", 0.0),  # Approximation
+                sharpness=parsed.get("sharpness", 0.0),
+                clarity=parsed.get("clarity", 0.0),
                 composition=parsed.get("composition", 0.0),
                 lighting=parsed.get("lighting", 0.0),
                 subject_clarity=parsed.get("subject_clarity", 0.0),
