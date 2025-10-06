@@ -79,6 +79,7 @@ def create_folder_structure(config_path=None):
     
     # Extract folder structure configuration
     folder_structure = config.get("folder_structure", {})
+    base_path = folder_structure.get("base_path", "")
     
     # Collect all folders that need gender/age structure
     folders_with_gender_age = []
@@ -98,39 +99,48 @@ def create_folder_structure(config_path=None):
     
     created_count = 0
     
+    # Create base Generator folder if specified
+    if base_path:
+        base_folder = root_dir / base_path
+        base_folder.mkdir(parents=True, exist_ok=True)
+        print(f"Creating base folder: {base_path}/")
+        print()
+    else:
+        base_folder = root_dir
+    
     # Create simple folders
     print("Creating simple folders...")
     for folder in simple_folders:
-        folder_path = root_dir / folder
+        folder_path = base_folder / folder
         folder_path.mkdir(parents=True, exist_ok=True)
         # Add .gitkeep to preserve empty directories
         gitkeep = folder_path / ".gitkeep"
         gitkeep.touch(exist_ok=True)
-        print(f"  ✓ Created: {folder}/")
+        print(f"  ✓ Created: {base_path + '/' if base_path else ''}{folder}/")
         created_count += 1
     
     # Create folders with gender and age buckets
     print("\nCreating folders with gender and age group subdirectories...")
-    for base_folder in folders_with_gender_age:
+    for base_folder_name in folders_with_gender_age:
         for gender in genders:
             for age_group in age_groups:
-                folder_path = root_dir / base_folder / gender / age_group
+                folder_path = base_folder / base_folder_name / gender / age_group
                 folder_path.mkdir(parents=True, exist_ok=True)
                 # Add .gitkeep to preserve empty directories
                 gitkeep = folder_path / ".gitkeep"
                 gitkeep.touch(exist_ok=True)
-                print(f"  ✓ Created: {base_folder}/{gender}/{age_group}/")
+                print(f"  ✓ Created: {base_path + '/' if base_path else ''}{base_folder_name}/{gender}/{age_group}/")
                 created_count += 1
     
     # Create research folders
     print("\nCreating research folders...")
     for research_folder in research_folders:
-        folder_path = root_dir / research_folder
+        folder_path = base_folder / research_folder
         folder_path.mkdir(parents=True, exist_ok=True)
         # Add .gitkeep to preserve empty directories
         gitkeep = folder_path / ".gitkeep"
         gitkeep.touch(exist_ok=True)
-        print(f"  ✓ Created: {research_folder}/")
+        print(f"  ✓ Created: {base_path + '/' if base_path else ''}{research_folder}/")
         created_count += 1
     
     print(f"\n{'=' * 60}")
@@ -139,6 +149,7 @@ def create_folder_structure(config_path=None):
     
     # Print summary
     print("\n📊 Folder Structure Summary:")
+    print(f"  - Base path: {base_path if base_path else 'root'}")
     print(f"  - Simple folders: {len(simple_folders)}")
     print(f"  - Folders with gender/age structure: {len(folders_with_gender_age)} × {len(genders)} × {len(age_groups)} = {len(folders_with_gender_age) * len(genders) * len(age_groups)}")
     print(f"  - Research folders: {len(research_folders)}")
@@ -147,6 +158,14 @@ def create_folder_structure(config_path=None):
     print(f"  - Genders: {', '.join(genders)}")
     print(f"  - Age Groups: {', '.join(age_groups)}")
     print(f"  - Countries: {', '.join(countries)}")
+    
+    # Extract quality thresholds if present
+    quality_thresholds = config.get("quality_thresholds", {})
+    if quality_thresholds:
+        print(f"\n📈 Quality Thresholds:")
+        print(f"  - Minimum Score: {quality_thresholds.get('min_score', 'N/A')}")
+        print(f"  - Reprocess Score: {quality_thresholds.get('reprocess_score', 'N/A')}")
+        print(f"  - Underscore Prefix: {quality_thresholds.get('underscore_prefix', 'N/A')}")
 
 
 if __name__ == "__main__":

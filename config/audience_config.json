@@ -80,6 +80,7 @@
     ]
   },
   "folder_structure": {
+    "base_path": "Generator",
     "content_folders": [
       "trends",
       "ideas",
@@ -124,5 +125,10 @@
     "simple_folders": [
       "config"
     ]
+  },
+  "quality_thresholds": {
+    "min_score": 70,
+    "reprocess_score": 50,
+    "underscore_prefix": "_"
   }
 }

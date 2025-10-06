@@ -1,6 +1,34 @@
 # StoryGenerator - GitIgnore
 
 # =============================================================================
+# GENERATOR FOLDER - All generation-related artifacts organized under Generator/
+# =============================================================================
+
+# Generator folder structure - Ignore all content by default
+Generator/
+
+# But keep directory structure with .gitkeep files
+!Generator/**/
+!Generator/**/.gitkeep
+!Generator/**/.test
+!Generator/**/.test.*
+
+# Trends in Generator - Keep structure and samples, ignore data files
+Generator/trends/raw/*
+!Generator/trends/raw/.gitkeep
+Generator/trends/processed/*
+!Generator/trends/processed/.gitkeep
+!Generator/trends/samples/
+!Generator/trends/README.md
+
+# Config in Generator
+!Generator/config/
+!Generator/config/*.json
+
+# =============================================================================
+# LEGACY STRUCTURE - Old folders at root (deprecated, use Generator/ instead)
+# =============================================================================
+
 # OUTPUT DIRECTORIES - Content files are ignored, structure is preserved
 # =============================================================================
 
