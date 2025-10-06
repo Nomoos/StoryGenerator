@@ -13,7 +13,7 @@ def verify_folder_structure():
     root_dir = Path(__file__).parent.absolute()
     
     genders = ["women", "men"]
-    age_buckets = ["10-13", "14-17", "18-23"]
+    age_buckets = ["10-13", "14-17", "18-23", "24-30"]
     research_categories = ["python", "csharp"]
     
     folders_with_gender_age = [

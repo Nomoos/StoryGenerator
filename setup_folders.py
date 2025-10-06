@@ -14,24 +14,24 @@ def create_folder_structure():
     
     Folder structure includes:
     - /config/
-    - /ideas/{women|men}/{10-13|14-17|18-23}/
-    - /topics/{women|men}/{10-13|14-17|18-23}/
-    - /titles/{women|men}/{10-13|14-17|18-23}/
-    - /scores/{women|men}/{10-13|14-17|18-23}/
-    - /scripts/raw_local/{women|men}/{10-13|14-17|18-23}/
-    - /scripts/iter_local/{women|men}/{10-13|14-17|18-23}/
-    - /scripts/gpt_improved/{women|men}/{10-13|14-17|18-23}/
-    - /voices/choice/{women|men}/{10-13|14-17|18-23}/
-    - /audio/tts/{women|men}/{10-13|14-17|18-23}/
-    - /audio/normalized/{women|men}/{10-13|14-17|18-23}/
-    - /subtitles/srt/{women|men}/{10-13|14-17|18-23}/
-    - /subtitles/timed/{women|men}/{10-13|14-17|18-23}/
-    - /scenes/json/{women|men}/{10-13|14-17|18-23}/
-    - /images/keyframes_v1/{women|men}/{10-13|14-17|18-23}/
-    - /images/keyframes_v2/{women|men}/{10-13|14-17|18-23}/
-    - /videos/ltx/{women|men}/{10-13|14-17|18-23}/
-    - /videos/interp/{women|men}/{10-13|14-17|18-23}/
-    - /final/{women|men}/{10-13|14-17|18-23}/
+    - /ideas/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /topics/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /titles/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /scores/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /scripts/raw_local/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /scripts/iter_local/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /scripts/gpt_improved/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /voices/choice/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /audio/tts/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /audio/normalized/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /subtitles/srt/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /subtitles/timed/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /scenes/json/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /images/keyframes_v1/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /images/keyframes_v2/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /videos/ltx/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /videos/interp/{women|men}/{10-13|14-17|18-23|24-30}/
+    - /final/{women|men}/{10-13|14-17|18-23|24-30}/
     - /research/{python|csharp}/
     """
     
@@ -41,8 +41,8 @@ def create_folder_structure():
     # Define gender categories
     genders = ["women", "men"]
     
-    # Define age buckets
-    age_buckets = ["10-13", "14-17", "18-23"]
+    # Define age buckets (covering ages 10-30)
+    age_buckets = ["10-13", "14-17", "18-23", "24-30"]
     
     # Define research categories
     research_categories = ["python", "csharp"]
@@ -121,6 +121,7 @@ def create_folder_structure():
     print(f"  - Folders with gender/age buckets: {len(folders_with_gender_age)} × {len(genders)} × {len(age_buckets)} = {len(folders_with_gender_age) * len(genders) * len(age_buckets)}")
     print(f"  - Research folders: {len(research_categories)}")
     print(f"  - Total: {created_count} folders")
+    print(f"\n📋 Age Buckets: {', '.join(age_buckets)}")
 
 
 if __name__ == "__main__":
