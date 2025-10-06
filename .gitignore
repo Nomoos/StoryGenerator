@@ -147,8 +147,13 @@ videos/*/*/*/*
 *.mpeg
 
 # Research - pattern: research/{language}/
-research/**/*
+# Keep markdown documentation, ignore research scripts and data
+research/**/*.py
+research/**/*.cs
+research/**/*.csv
+research/**/*.json
 !research/**/.gitkeep
+!research/**/*.md
 
 # Trends - pattern: trends/{raw|processed|gender/age}/
 # Keep structure, sample files, and README, but ignore raw CSV and processed JSON
