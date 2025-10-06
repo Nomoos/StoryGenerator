@@ -118,6 +118,22 @@ class VoiceMaker:
                 # Generate TTS with timing and retry
                 tts_start = time.time()
                 try:
+                    # Prepare voice settings with inflection/variation
+                    voice_settings = VoiceSettings(
+                        stability=idea.voice_stability,
+                        similarity_boost=idea.voice_similarity_boost,
+                        style=idea.voice_style_exaggeration
+                    )
+                    
+                    audio = self.client.generate(
+                        model='eleven_v3',
+                        text=script,
+                        output_format='mp3_44100_192',
+                        voice=Voice(
+                            voice_id='BZgkqPqms7Kj9ulSkVzn',
+                            settings=voice_settings
+                        )
+                    )
                     audio = self._generate_tts_with_retry(script)
                     save(audio, voiceover_path)
                     tts_duration = time.time() - tts_start

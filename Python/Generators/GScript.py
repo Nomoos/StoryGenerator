@@ -14,6 +14,32 @@ openai.api_key = 'sk-proj-7vlyZGGxYvO1uit7KW9dYoP0ga3t0_VzsL8quM1FDgGaJ1RLCyE7Wc
 class ScriptGenerator:
     def __init__(self, model="gpt-4o-mini"):
         self.model = model
+    
+    def _apply_personalization(self, text: str, personalization: dict) -> str:
+        """Apply personalization replacements to text."""
+        if not personalization:
+            return text
+        for key, value in personalization.items():
+            text = text.replace(f"{{{key}}}", value)
+        return text
+    
+    def _get_language_name(self, lang_code: str) -> str:
+        """Get full language name from code."""
+        languages = {
+            'en': 'English',
+            'es': 'Spanish',
+            'fr': 'French',
+            'de': 'German',
+            'it': 'Italian',
+            'pt': 'Portuguese',
+            'ja': 'Japanese',
+            'ko': 'Korean',
+            'zh': 'Chinese',
+            'ar': 'Arabic',
+            'hi': 'Hindi',
+            'ru': 'Russian'
+        }
+        return languages.get(lang_code, 'English')
 
     def _build_user_prompt(self, storyIdea: StoryIdea) -> str:
         narrator_type = storyIdea.narrator_type or "first-person"
@@ -22,6 +48,17 @@ class ScriptGenerator:
         # Optional goal
         if storyIdea.goal:
             prompt += f"Goal: {storyIdea.goal}\n\n"
+        
+        # Add language instruction
+        if hasattr(storyIdea, 'language') and storyIdea.language and storyIdea.language != "en":
+            prompt += f"Language: Write the story in {self._get_language_name(storyIdea.language)}\n\n"
+        
+        # Personalization instructions
+        if hasattr(storyIdea, 'personalization') and storyIdea.personalization:
+            prompt += "Personalization: "
+            for key, value in storyIdea.personalization.items():
+                prompt += f"Use '{value}' for {key}. "
+            prompt += "\n\n"
 
         # Append available fields
         for label, value in {
