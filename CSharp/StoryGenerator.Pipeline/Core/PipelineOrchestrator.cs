@@ -235,7 +235,7 @@ public class PipelineOrchestrator
         
         // Extract story title from output (assuming it's returned)
         // For now, use a placeholder
-        return $"Story_{DateTime.Now:yyyyMMdd_HHmmss}";
+        return $"Story_{_config.Seeds.RandomSeed}";
     }
 
     private async Task GenerateScriptAsync(string storyTitle)
