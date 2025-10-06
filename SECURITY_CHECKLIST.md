@@ -37,8 +37,14 @@
 
 - [ ] **Option A: Use BFG Repo-Cleaner (Recommended)**
   ```bash
-  # Install BFG
-  # Download from: https://rtyley.github.io/bfg-repo-cleaner/
+  # Install BFG Repo-Cleaner
+  # macOS/Linux (Homebrew):
+  brew install bfg
+  # Windows (Chocolatey):
+  choco install bfg
+  # Or download the latest .jar directly:
+  wget https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/bfg-1.14.0.jar -O bfg.jar
+  # (Replace version number as needed; see https://rtyley.github.io/bfg-repo-cleaner/)
   
   # Create a fresh clone
   git clone --mirror https://github.com/Nomoos/StoryGenerator.git
