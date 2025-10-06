@@ -12,14 +12,50 @@ Stories/*
 # Pattern: ignore all files except .gitkeep in each directory
 
 # Ideas, topics, titles, scores, final - pattern: {folder}/{gender}/{age}/
-# Ignore common content files but allow .gitkeep, .test files
-# Allow .test.* sample files for documentation
+# Ignore all content except .gitkeep, .test, and .test.* files
+ideas/*/*/*
+!ideas/*/*/*/.gitkeep
+!ideas/*/*/*/.test
+!ideas/*/*/*/.test.json
+!ideas/*/*/*/.test.txt
+
+topics/*/*/*
+!topics/*/*/*/.gitkeep
+!topics/*/*/*/.test
+!topics/*/*/*/.test.json
+!topics/*/*/*/.test.txt
+
+titles/*/*/*
+!titles/*/*/*/.gitkeep
+!titles/*/*/*/.test
+!titles/*/*/*/.test.json
+!titles/*/*/*/.test.txt
+
+scores/*/*/*
+!scores/*/*/*/.gitkeep
+!scores/*/*/*/.test
+!scores/*/*/*/.test.json
+!scores/*/*/*/.test.txt
+
+final/*/*/*
+!final/*/*/*/.gitkeep
+!final/*/*/*/.test
 
 # Scripts - pattern: scripts/{type}/{gender}/{age}/
-# Ignore common script files but allow .gitkeep, .test files
+# Ignore all content except .gitkeep, .test, and .test.* files
+scripts/*/*/*/*
+!scripts/*/*/*/*/.gitkeep
+!scripts/*/*/*/*/.test
+!scripts/*/*/*/*/.test.txt
+!scripts/*/*/*/*/.test.json
 
 # Voices - pattern: voices/{type}/{gender}/{age}/
-# Ignore common voice files but allow .gitkeep, .test files
+# Ignore all content except .gitkeep, .test, and .test.* files
+voices/*/*/*/*
+!voices/*/*/*/*/.gitkeep
+!voices/*/*/*/*/.test
+!voices/*/*/*/*/.test.json
+!voices/*/*/*/*/.test.txt
 
 # Audio - pattern: audio/{type}/{gender}/{age}/
 # All files ignored except .gitkeep and .test
