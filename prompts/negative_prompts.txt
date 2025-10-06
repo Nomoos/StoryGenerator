@@ -1,0 +1,33 @@
+# Negative Prompts for SDXL Keyframe Generation
+# These prompts help avoid common quality issues in generated images
+
+# Quality issues
+blurry, low quality, distorted, deformed, ugly, bad anatomy
+low resolution, pixelated, grainy, artifacts, compression artifacts
+oversaturated, undersaturated, overexposed, underexposed
+poorly drawn, poorly rendered, amateur, low-quality, draft
+
+# Composition issues
+cropped, cut off, out of frame, tilted, askew
+cluttered, messy, chaotic, disorganized
+poor composition, unbalanced, awkward framing
+
+# Format issues
+watermark, text, signature, logo, banner, caption
+multiple people, crowd, group shot
+horizontal format, landscape orientation, wide format
+split screen, multiple panels, collage
+
+# Anatomical issues (for character scenes)
+extra limbs, missing limbs, mutated hands, fused fingers
+distorted face, asymmetric eyes, weird eyes
+bad proportions, unrealistic anatomy
+
+# Style issues
+cartoon, anime, 3d render, cgi (unless specifically wanted)
+sketch, drawing, painting, illustration (for photorealistic style)
+abstract, surreal, psychedelic (unless specifically wanted)
+
+# Other
+duplicate, copy, repetitive elements
+nsfw, inappropriate content

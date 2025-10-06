@@ -1,60 +1,150 @@
 import os
 import torch
 import json
-from typing import List, Tuple
-from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
+import time
+from typing import List, Tuple, Optional
+from diffusers import DiffusionPipeline, DPMSolverMultistepScheduler
 from PIL import Image
 from Models.StoryIdea import StoryIdea
+from Models.Keyframe import Keyframe
 from Generators.GSceneAnalyzer import Scene, SceneAnalyzer
 from Tools.Utils import TITLES_PATH, sanitize_filename
+from Tools.ImageUtils import scale_and_crop
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+from config import sdxl_config
 
 
 class KeyframeGenerator:
     """
-    Generates keyframe images for each scene using Stable Diffusion.
-    Creates start, middle, and end keyframes for smooth video interpolation.
+    Generates keyframe images for each scene using Stable Diffusion XL (SDXL).
+    Creates high-quality keyframes at 1080x1920 resolution (9:16 aspect ratio).
+    Supports base + refiner pipeline for maximum quality.
     """
 
     def __init__(
         self,
-        model_id: str = "runwayml/stable-diffusion-v1-5",
+        model_id: str = None,
         device: str = None,
-        num_inference_steps: int = 30
+        num_inference_steps: int = None,
+        use_refiner: bool = None,
+        style_preset: str = None
     ):
         """
-        Initialize the keyframe generator with Stable Diffusion
+        Initialize the keyframe generator with SDXL
         
         Args:
-            model_id: HuggingFace model ID for Stable Diffusion
+            model_id: HuggingFace model ID for SDXL (default: from config)
             device: Device to run on ('cuda' or 'cpu'). Auto-detects if None
-            num_inference_steps: Number of denoising steps for image generation
+            num_inference_steps: Number of denoising steps (default: from config)
+            use_refiner: Whether to use refiner model (default: from config)
+            style_preset: Default style preset (default: from config)
         """
+        # Load configuration
+        self.config = sdxl_config
+        
+        # Set parameters from config or arguments
+        self.model_id = model_id or self.config.SDXL_BASE_MODEL
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
-        self.num_inference_steps = num_inference_steps
+        self.num_inference_steps = num_inference_steps or self.config.DEFAULT_STEPS
+        self.use_refiner = use_refiner if use_refiner is not None else self.config.USE_REFINER
+        self.style_preset = style_preset or self.config.DEFAULT_STYLE
         
-        print(f"🎨 Loading Stable Diffusion model on {self.device}...")
+        # Load style presets
+        self._load_style_presets()
         
-        # Load the model with optimizations
-        self.pipe = StableDiffusionPipeline.from_pretrained(
-            model_id,
-            torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
-            safety_checker=None  # Disable for speed
-        )
+        # Load negative prompts
+        self._load_negative_prompts()
         
-        # Use DPM-Solver for faster generation
-        self.pipe.scheduler = DPMSolverMultistepScheduler.from_config(
-            self.pipe.scheduler.config
+        print(f"🎨 Loading SDXL model on {self.device}...")
+        print(f"   Model: {self.model_id}")
+        print(f"   Refiner: {'Enabled' if self.use_refiner else 'Disabled'}")
+        print(f"   Style: {self.style_preset}")
+        
+        # Determine torch dtype
+        torch_dtype = torch.float16 if self.device == "cuda" else torch.float32
+        
+        # Load the base SDXL model
+        self.pipe = DiffusionPipeline.from_pretrained(
+            self.model_id,
+            torch_dtype=torch_dtype,
+            use_safetensors=True,
+            variant="fp16" if self.device == "cuda" else None
         )
         
         self.pipe = self.pipe.to(self.device)
         
         # Enable memory optimizations
         if self.device == "cuda":
-            self.pipe.enable_attention_slicing()
-            # self.pipe.enable_vae_slicing()  # Optional: saves more memory
+            if self.config.ENABLE_ATTENTION_SLICING:
+                self.pipe.enable_attention_slicing()
+            if self.config.ENABLE_VAE_SLICING:
+                self.pipe.enable_vae_slicing()
+            if self.config.ENABLE_CPU_OFFLOAD:
+                self.pipe.enable_model_cpu_offload()
+        
+        # Load refiner if enabled
+        self.refiner = None
+        if self.use_refiner:
+            print(f"🔧 Loading SDXL refiner model...")
+            self.refiner = DiffusionPipeline.from_pretrained(
+                self.config.SDXL_REFINER_MODEL,
+                text_encoder_2=self.pipe.text_encoder_2,
+                vae=self.pipe.vae,
+                torch_dtype=torch_dtype,
+                use_safetensors=True,
+                variant="fp16" if self.device == "cuda" else None
+            )
+            self.refiner = self.refiner.to(self.device)
+            
+            # Enable optimizations for refiner
+            if self.device == "cuda":
+                if self.config.ENABLE_ATTENTION_SLICING:
+                    self.refiner.enable_attention_slicing()
+                if self.config.ENABLE_VAE_SLICING:
+                    self.refiner.enable_vae_slicing()
         
         self.analyzer = SceneAnalyzer()
-        print("✅ Stable Diffusion model loaded successfully")
+        print("✅ SDXL model loaded successfully")
+    
+    def _load_style_presets(self):
+        """Load style presets from JSON file"""
+        presets_path = os.path.join(
+            os.path.dirname(__file__), '..', '..', 'prompts', 'style_presets.json'
+        )
+        try:
+            with open(presets_path, 'r', encoding='utf-8') as f:
+                self.style_presets = json.load(f)
+        except FileNotFoundError:
+            print(f"⚠️ Style presets not found at {presets_path}, using defaults")
+            self.style_presets = {
+                "cinematic": {
+                    "prompt_additions": "cinematic lighting, professional photography",
+                    "guidance_scale": 7.5,
+                    "steps": 40
+                }
+            }
+    
+    def _load_negative_prompts(self):
+        """Load negative prompts from file"""
+        neg_prompts_path = os.path.join(
+            os.path.dirname(__file__), '..', '..', 'prompts', 'negative_prompts.txt'
+        )
+        try:
+            with open(neg_prompts_path, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+                # Filter out comments and empty lines
+                prompt_lines = [
+                    line.strip() for line in lines 
+                    if line.strip() and not line.strip().startswith('#')
+                ]
+                self.default_negative_prompt = ', '.join(prompt_lines)
+        except FileNotFoundError:
+            print(f"⚠️ Negative prompts not found at {neg_prompts_path}, using defaults")
+            self.default_negative_prompt = (
+                "blurry, low quality, distorted, deformed, ugly, bad anatomy, "
+                "watermark, text, signature, horizontal format, landscape"
+            )
 
     def generate_keyframes(self, story_idea: StoryIdea) -> List[Scene]:
         """
@@ -116,12 +206,15 @@ class KeyframeGenerator:
         
         # Determine number of keyframes based on duration
         if duration < 5:
-            num_keyframes = 2  # start, end
+            num_keyframes = self.config.KEYFRAMES_SHORT_SCENE
         elif duration < 10:
-            num_keyframes = 3  # start, middle, end
+            num_keyframes = self.config.KEYFRAMES_MEDIUM_SCENE
         else:
-            # Add one keyframe per 4 seconds
-            num_keyframes = min(int(duration / 4) + 1, 6)
+            # Add one keyframe per 4 seconds for long scenes
+            num_keyframes = min(
+                int(duration / 4) + 1, 
+                self.config.MAX_KEYFRAMES_PER_SCENE
+            )
         
         keyframe_paths = []
         
@@ -149,29 +242,55 @@ class KeyframeGenerator:
                 continue
             
             try:
+                start_time = time.time()
+                
+                # Generate image with SDXL
                 image = self._generate_image(prompt)
                 
-                # Save image with metadata
-                image.save(filepath, "PNG")
+                generation_time = time.time() - start_time
+                
+                # Ensure proper resolution
+                if image.width != self.config.DEFAULT_WIDTH or image.height != self.config.DEFAULT_HEIGHT:
+                    image = scale_and_crop(
+                        image, 
+                        self.config.DEFAULT_WIDTH, 
+                        self.config.DEFAULT_HEIGHT
+                    )
+                
+                # Save image
+                image.save(filepath, self.config.IMAGE_FORMAT)
+                
+                # Create Keyframe object with metadata
+                keyframe = Keyframe(
+                    scene_id=scene_id,
+                    image_path=filepath,
+                    prompt=prompt,
+                    negative_prompt=self.default_negative_prompt,
+                    seed=self.config.SEED if self.config.SEED else -1,
+                    width=self.config.DEFAULT_WIDTH,
+                    height=self.config.DEFAULT_HEIGHT,
+                    steps=self.num_inference_steps,
+                    guidance_scale=self._get_guidance_scale(),
+                    style_preset=self.style_preset,
+                    generation_time=generation_time,
+                    keyframe_index=i,
+                    timestamp=timestamp,
+                    position=position,
+                    use_refiner=self.use_refiner,
+                    refiner_steps=self.config.DEFAULT_REFINER_STEPS if self.use_refiner else 0
+                )
                 
                 # Save metadata
-                metadata = {
-                    "scene_id": scene_id,
-                    "keyframe_index": i,
-                    "timestamp": timestamp,
-                    "position": position,
-                    "prompt": prompt
-                }
+                metadata_path = filepath.replace('.png', '.json').replace('.jpg', '.json')
+                keyframe.save_metadata(metadata_path)
                 
-                metadata_path = filepath.replace('.png', '.json')
-                with open(metadata_path, 'w', encoding='utf-8') as f:
-                    json.dump(metadata, f, indent=2)
-                
-                print(f"    ✅ Generated: {filename}")
+                print(f"    ✅ Generated: {filename} ({generation_time:.2f}s)")
                 keyframe_paths.append(filepath)
                 
             except Exception as e:
                 print(f"    ❌ Failed to generate {filename}: {e}")
+                import traceback
+                traceback.print_exc()
                 continue
         
         return keyframe_paths
@@ -203,17 +322,34 @@ class KeyframeGenerator:
             # Middle - balanced composition
             modifiers = "medium shot, natural transition, balanced composition"
         
-        # Add vertical format reminder
-        format_spec = "vertical format 9:16 aspect ratio, 1080x1920 resolution"
+        # Add style preset enhancements
+        style_additions = ""
+        if self.style_preset in self.style_presets:
+            style_additions = self.style_presets[self.style_preset].get("prompt_additions", "")
         
-        # Combine
-        full_prompt = f"{base_prompt}, {modifiers}, {format_spec}"
+        # Add quality boost keywords
+        quality_boost = self.config.QUALITY_BOOST_KEYWORDS
+        
+        # Add vertical format reminder
+        format_spec = self.config.FORMAT_SPECIFICATION
+        
+        # Combine all elements
+        full_prompt = f"{base_prompt}, {modifiers}, {style_additions}, {quality_boost}, {format_spec}"
         
         return full_prompt
+    
+    def _get_guidance_scale(self) -> float:
+        """Get guidance scale from style preset or config"""
+        if self.style_preset in self.style_presets:
+            return self.style_presets[self.style_preset].get(
+                "guidance_scale", 
+                self.config.DEFAULT_GUIDANCE_SCALE
+            )
+        return self.config.DEFAULT_GUIDANCE_SCALE
 
     def _generate_image(self, prompt: str) -> Image.Image:
         """
-        Generate a single image from a prompt
+        Generate a single image from a prompt using SDXL
         
         Args:
             prompt: Text prompt for image generation
@@ -221,30 +357,82 @@ class KeyframeGenerator:
         Returns:
             PIL Image object
         """
-        # Negative prompt to avoid common issues
-        negative_prompt = (
-            "blurry, low quality, distorted, deformed, ugly, bad anatomy, "
-            "watermark, text, signature, multiple people, crowd, "
-            "horizontal format, landscape, low resolution"
-        )
+        # Get generation parameters
+        guidance_scale = self._get_guidance_scale()
+        seed = self.config.SEED
         
-        # Generate image
+        # Create generator for reproducibility
+        generator = None
+        if seed is not None:
+            generator = torch.Generator(device=self.device).manual_seed(seed)
+        
+        # Generate with base model
         with torch.no_grad():
-            result = self.pipe(
-                prompt=prompt,
-                negative_prompt=negative_prompt,
-                num_inference_steps=self.num_inference_steps,
-                guidance_scale=7.5,
-                height=1920,  # Vertical format
-                width=1080,
-                generator=torch.Generator(device=self.device).manual_seed(42)
-            )
+            if self.use_refiner:
+                # Two-stage generation: base + refiner
+                # Generate latents with base model
+                base_output = self.pipe(
+                    prompt=prompt,
+                    negative_prompt=self.default_negative_prompt,
+                    num_inference_steps=self.num_inference_steps,
+                    guidance_scale=guidance_scale,
+                    height=self.config.DEFAULT_HEIGHT,
+                    width=self.config.DEFAULT_WIDTH,
+                    generator=generator,
+                    output_type="latent",  # Return latents for refiner
+                    denoising_end=0.8  # Stop at 80% for refiner to take over
+                )
+                
+                # Refine with refiner model
+                image = self.refiner(
+                    prompt=prompt,
+                    negative_prompt=self.default_negative_prompt,
+                    num_inference_steps=self.config.DEFAULT_REFINER_STEPS,
+                    guidance_scale=self.config.DEFAULT_REFINER_GUIDANCE_SCALE,
+                    image=base_output.images,
+                    denoising_start=0.8  # Start where base left off
+                ).images[0]
+            else:
+                # Single-stage generation with base model only
+                result = self.pipe(
+                    prompt=prompt,
+                    negative_prompt=self.default_negative_prompt,
+                    num_inference_steps=self.num_inference_steps,
+                    guidance_scale=guidance_scale,
+                    height=self.config.DEFAULT_HEIGHT,
+                    width=self.config.DEFAULT_WIDTH,
+                    generator=generator
+                )
+                image = result.images[0]
         
-        return result.images[0]
+        return image
 
+    def apply_style_preset(self, style_name: str):
+        """
+        Apply a style preset to the generator
+        
+        Args:
+            style_name: Name of the style preset to apply
+        """
+        if style_name in self.style_presets:
+            self.style_preset = style_name
+            
+            # Update steps if specified in preset
+            preset = self.style_presets[style_name]
+            if "steps" in preset:
+                self.num_inference_steps = preset["steps"]
+            
+            print(f"✨ Applied style preset: {style_name}")
+            print(f"   Description: {preset.get('description', 'N/A')}")
+        else:
+            print(f"⚠️ Style preset '{style_name}' not found. Available: {list(self.style_presets.keys())}")
+    
     def cleanup(self):
         """Clean up GPU memory"""
         if hasattr(self, 'pipe'):
             del self.pipe
+        if hasattr(self, 'refiner') and self.refiner is not None:
+            del self.refiner
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+            print("🧹 GPU memory cleaned up")
