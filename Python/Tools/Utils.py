@@ -25,8 +25,16 @@ def sanitize_filename(title):
 
 def convert_to_mp4(mp3_file: str, output_file: str):
     """
-    Converts an MP3 and a still image into a basic MP4 video.
-    Ensures video is valid length and resolution.
+    Converts an MP3 and a still image into a vertical MP4 video.
+    Optimized for Instagram Reels, TikTok, and YouTube Shorts.
+    
+    Specs:
+    - Resolution: 1080×1920 (9:16 vertical)
+    - Codec: H.264 (libx264)
+    - Bitrate: 8 Mbps (video)
+    - Frame Rate: 30 fps
+    - Pixel Format: yuv420p
+    - Audio: AAC 192k
     """
     render_start = time.time()
     success = False
@@ -46,6 +54,7 @@ def convert_to_mp4(mp3_file: str, output_file: str):
             log_error("Video Rendering", mp3_file, Exception(error_msg))
             return
 
+<<<<<<< HEAD:Tools/Utils.py
         try:
             duration = float(ffmpeg.probe(mp3_file)['format']['duration'])
             metrics['audio_duration'] = round(duration, 2)
@@ -116,3 +125,41 @@ def convert_to_mp4(mp3_file: str, output_file: str):
             error=error_msg,
             metrics=metrics
         )
+=======
+    try:
+        # Scale and pad image to 1080×1920 vertical format (9:16)
+        video_stream = (
+            ffmpeg
+            .input(img_path, loop=1, framerate=30, t=duration)
+            .filter('scale', 1080, 1920, force_original_aspect_ratio='decrease')
+            .filter('pad', 1080, 1920, '(ow-iw)/2', '(oh-ih)/2')
+        )
+
+        audio_stream = ffmpeg.input(mp3_file)
+
+        (
+            ffmpeg
+            .output(video_stream, audio_stream, output_file,
+                    vcodec='libx264',
+                    acodec='aac',
+                    audio_bitrate='192k',
+                    video_bitrate='8M',
+                    maxrate='10M',
+                    bufsize='10M',
+                    pix_fmt='yuv420p',
+                    shortest=None,
+                    r=30,
+                    t=duration)
+            .overwrite_output()
+            .run()
+        )
+
+        print(f"✅ Created MP4: {output_file} (1080×1920, 8 Mbps)")
+    except ffmpeg.Error as e:
+        print("❌ FFmpeg command failed.")
+        print("🔧 Command:", ' '.join(e.cmd) if hasattr(e, 'cmd') else '[unknown]')
+        if e.stderr:
+            print("🧵 stderr output:\n", e.stderr.decode(errors="ignore"))
+        else:
+            print("⚠️ No stderr available.")
+>>>>>>> master:Python/Tools/Utils.py
