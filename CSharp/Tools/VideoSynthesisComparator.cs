@@ -13,7 +13,7 @@ namespace StoryGenerator.Tools
     /// Utility for comparing different video synthesis approaches
     /// Helps determine the best method for your use case
     /// </summary>
-    public class VideoSynthesisComparator
+    public class VideoSynthesisComparator : Generators.IVideoSynthesisComparator
     {
         private readonly Generators.LTXVideoSynthesizer _ltxSynthesizer;
         private readonly Generators.KeyframeVideoSynthesizer _keyframeSynthesizer;

@@ -9,7 +9,7 @@ namespace StoryGenerator.Generators
     /// LTX-Video integration for generating short-form vertical videos (10-20 seconds)
     /// Recommended for TikTok, YouTube Shorts, and Instagram Reels
     /// </summary>
-    public class LTXVideoSynthesizer : VideoSynthesisBase
+    public class LTXVideoSynthesizer : VideoSynthesisBase, ISceneVideoSynthesizer
     {
         private readonly string _modelId = "Lightricks/LTX-Video";
         private readonly int _defaultWidth;
@@ -35,6 +35,18 @@ namespace StoryGenerator.Generators
         }
         
         /// <summary>
+        /// Generate video from text prompt (IVideoSynthesizer implementation)
+        /// </summary>
+        public async Task<bool> GenerateVideoAsync(
+            string prompt,
+            string outputPath,
+            int duration,
+            int? fps = null)
+        {
+            return await GenerateVideoAsync(prompt, outputPath, null, duration, fps);
+        }
+        
+        /// <summary>
         /// Generate video from text prompt and optional keyframe
         /// </summary>
         /// <param name="prompt">Text description for video generation</param>
@@ -46,8 +58,8 @@ namespace StoryGenerator.Generators
         public async Task<bool> GenerateVideoAsync(
             string prompt,
             string outputPath,
-            string keyframePath = null,
-            int duration = 10,
+            string keyframePath,
+            int duration,
             int? fps = null)
         {
             try

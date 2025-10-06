@@ -14,20 +14,37 @@ The video synthesis module provides implementations for generating videos from k
 ```
 CSharp/
 ├── Generators/
-│   ├── VideoSynthesisBase.cs          # Base class with common functionality
-│   ├── LTXVideoSynthesizer.cs         # LTX-Video implementation
-│   └── KeyframeVideoSynthesizer.cs    # SDXL + interpolation implementation
+│   ├── IVideoSynthesizer.cs              # Core interfaces for video synthesis
+│   ├── IVideoSynthesizerFactory.cs       # Factory interface and implementation
+│   ├── VideoSynthesisBase.cs             # Base class with common functionality
+│   ├── LTXVideoSynthesizer.cs            # LTX-Video implementation
+│   └── KeyframeVideoSynthesizer.cs       # SDXL + interpolation implementation
 ├── Models/
-│   └── VideoClip.cs                   # Video clip data models
+│   └── VideoClip.cs                      # Video clip data models
 ├── Tools/
-│   └── VideoSynthesisComparator.cs    # Comparison utility
-└── Examples/
-    └── VideoSynthesisExample.cs       # Usage examples
+│   └── VideoSynthesisComparator.cs       # Comparison utility
+├── Examples/
+│   └── VideoSynthesisExample.cs          # Usage examples
+├── INTERFACES_GUIDE.md                   # Interface documentation
+└── README_VIDEO_SYNTHESIS.md             # This file
 ```
 
 ## Components
 
-### 1. VideoSynthesisBase
+### 1. Interfaces
+
+**IVideoSynthesizer, ISceneVideoSynthesizer, IKeyframeVideoSynthesizer**
+- Core interfaces defining video synthesis contracts
+- Enable polymorphic usage and dependency injection
+- Support factory pattern and testability
+- See `INTERFACES_GUIDE.md` for detailed documentation
+
+**IVideoSynthesizerFactory**
+- Factory interface for creating synthesizer instances
+- Supports multiple synthesis methods
+- Centralized configuration and creation logic
+
+### 2. VideoSynthesisBase
 
 Base class providing common functionality for all video synthesis implementations:
 - Python script execution
@@ -81,7 +98,31 @@ Utility for comparing different approaches:
 
 ## Usage Examples
 
-### Example 1: Basic LTX-Video Generation
+### Example 1: Using Interfaces with Factory Pattern
+
+```csharp
+using StoryGenerator.Generators;
+
+// Create factory
+IVideoSynthesizerFactory factory = new VideoSynthesizerFactory();
+
+// Create synthesizer using factory
+IVideoSynthesizer synthesizer = factory.CreateSynthesizer(
+    VideoSynthesisMethod.LTXVideo,
+    width: 1080,
+    height: 1920,
+    fps: 30
+);
+
+// Use polymorphically
+await synthesizer.GenerateVideoAsync(
+    prompt: "A serene lake at sunset, camera panning right, cinematic",
+    outputPath: "output/video.mp4",
+    duration: 10
+);
+```
+
+### Example 2: Basic LTX-Video Generation
 
 ```csharp
 using StoryGenerator.Generators;

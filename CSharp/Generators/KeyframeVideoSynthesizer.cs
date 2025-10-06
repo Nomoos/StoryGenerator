@@ -9,7 +9,7 @@ namespace StoryGenerator.Generators
     /// <summary>
     /// Configuration for keyframe-based video synthesis using SDXL + frame interpolation
     /// </summary>
-    public class KeyframeVideoConfig
+    public class KeyframeVideoConfig : IVideoSynthesisConfig
     {
         /// <summary>
         /// Target frames per second for output video
@@ -45,6 +45,25 @@ namespace StoryGenerator.Generators
         /// Guidance scale for SDXL generation
         /// </summary>
         public double GuidanceScale { get; set; } = 7.5;
+        
+        /// <summary>
+        /// Validate configuration settings
+        /// </summary>
+        /// <returns>True if configuration is valid</returns>
+        public bool Validate()
+        {
+            if (TargetFps < 1 || TargetFps > 60)
+                return false;
+            if (Width < 256 || Height < 256)
+                return false;
+            if (KeyframesPerScene < 2 || KeyframesPerScene > 10)
+                return false;
+            if (InferenceSteps < 10 || InferenceSteps > 100)
+                return false;
+            if (GuidanceScale < 1.0 || GuidanceScale > 20.0)
+                return false;
+            return true;
+        }
     }
     
     /// <summary>
@@ -72,7 +91,7 @@ namespace StoryGenerator.Generators
     /// SDXL + Frame Interpolation video synthesis
     /// Provides highest quality keyframes with flexible interpolation
     /// </summary>
-    public class KeyframeVideoSynthesizer : VideoSynthesisBase
+    public class KeyframeVideoSynthesizer : VideoSynthesisBase, IKeyframeVideoSynthesizer
     {
         private readonly KeyframeVideoConfig _config;
         
@@ -86,6 +105,51 @@ namespace StoryGenerator.Generators
             string pythonPath = "python") : base(pythonPath)
         {
             _config = config ?? new KeyframeVideoConfig();
+        }
+        
+        /// <summary>
+        /// Generate video from text prompt (IVideoSynthesizer implementation)
+        /// </summary>
+        public async Task<bool> GenerateVideoAsync(
+            string prompt,
+            string outputPath,
+            int duration,
+            int? fps = null)
+        {
+            return await GenerateSceneAsync(prompt, outputPath, duration);
+        }
+        
+        /// <summary>
+        /// Generate video from text prompt with optional keyframe (IVideoSynthesizer implementation)
+        /// </summary>
+        public async Task<bool> GenerateVideoAsync(
+            string prompt,
+            string outputPath,
+            string keyframePath,
+            int duration,
+            int? fps = null)
+        {
+            // If keyframe provided, use it as the first keyframe
+            var keyframes = new List<string>();
+            if (!string.IsNullOrEmpty(keyframePath))
+            {
+                keyframes.Add(keyframePath);
+            }
+            
+            // Generate additional keyframes for the scene
+            var generatedKeyframes = await GenerateKeyframesAsync(prompt, null);
+            if (generatedKeyframes != null && generatedKeyframes.Any())
+            {
+                keyframes.AddRange(generatedKeyframes);
+            }
+            
+            if (keyframes.Count < 2)
+            {
+                // Fallback: generate scene without specific keyframe
+                return await GenerateSceneAsync(prompt, outputPath, duration);
+            }
+            
+            return await GenerateFromKeyframesAsync(keyframes, outputPath, duration);
         }
         
         /// <summary>
