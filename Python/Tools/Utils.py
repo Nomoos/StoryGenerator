@@ -11,6 +11,7 @@ REVISED_NAME = "Revised.txt"
 ENHANCED_NAME = "Revised_with_eleven_labs_tags.txt"
 VOICEOVER_PATH = os.path.join(STORY_ROOT, "3_VoiceOver")
 TITLES_PATH = os.path.join(STORY_ROOT, "4_Titles")
+VIDEOS_PATH = os.path.join(STORY_ROOT, "5_Videos")
 SUBTITLES_NAME = "Subtitles.txt"
 SUBTITLESWBW_NAME = "Subtitles_Word_By_Word.txt"
 RESOURCES_PATH = os.path.join(STORY_ROOT, "Resources")
@@ -21,6 +22,13 @@ def sanitize_filename(title):
 
 def convert_to_mp4(mp3_file: str, output_file: str):
     """
+<<<<<<< HEAD:Tools/Utils.py
+    Converts an MP3 and a still image into a basic MP4 video.
+    Ensures video is valid length and resolution.
+    
+    Note: This function is kept for backward compatibility.
+    Consider using Video.VideoRenderer for better error handling and features.
+=======
     Converts an MP3 and a still image into a vertical MP4 video.
     Optimized for Instagram Reels, TikTok, and YouTube Shorts.
     
@@ -31,6 +39,7 @@ def convert_to_mp4(mp3_file: str, output_file: str):
     - Frame Rate: 30 fps
     - Pixel Format: yuv420p
     - Audio: AAC 192k
+>>>>>>> master:Python/Tools/Utils.py
     """
     if not os.path.exists(mp3_file):
         print(f"❌ MP3 file not found: {mp3_file}")
