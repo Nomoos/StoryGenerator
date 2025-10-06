@@ -1,15 +1,45 @@
 import shutil
+import time
 
 import openai
 import os
 from Models.StoryIdea import StoryIdea
 from Tools.Utils import sanitize_filename, SCRIPTS_PATH, IDEAS_PATH
+from Tools.Monitor import logger, PerformanceMonitor, log_error, log_info
+from Tools.Retry import retry_with_exponential_backoff, with_circuit_breaker
+from Tools.Validator import OutputValidator
 
 openai.api_key = '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'
 
 class ScriptGenerator:
     def __init__(self, model="gpt-4o-mini"):
         self.model = model
+    
+    def _apply_personalization(self, text: str, personalization: dict) -> str:
+        """Apply personalization replacements to text."""
+        if not personalization:
+            return text
+        for key, value in personalization.items():
+            text = text.replace(f"{{{key}}}", value)
+        return text
+    
+    def _get_language_name(self, lang_code: str) -> str:
+        """Get full language name from code."""
+        languages = {
+            'en': 'English',
+            'es': 'Spanish',
+            'fr': 'French',
+            'de': 'German',
+            'it': 'Italian',
+            'pt': 'Portuguese',
+            'ja': 'Japanese',
+            'ko': 'Korean',
+            'zh': 'Chinese',
+            'ar': 'Arabic',
+            'hi': 'Hindi',
+            'ru': 'Russian'
+        }
+        return languages.get(lang_code, 'English')
 
     def _build_user_prompt(self, storyIdea: StoryIdea) -> str:
         narrator_type = storyIdea.narrator_type or "first-person"
@@ -18,6 +48,17 @@ class ScriptGenerator:
         # Optional goal
         if storyIdea.goal:
             prompt += f"Goal: {storyIdea.goal}\n\n"
+        
+        # Add language instruction
+        if hasattr(storyIdea, 'language') and storyIdea.language and storyIdea.language != "en":
+            prompt += f"Language: Write the story in {self._get_language_name(storyIdea.language)}\n\n"
+        
+        # Personalization instructions
+        if hasattr(storyIdea, 'personalization') and storyIdea.personalization:
+            prompt += "Personalization: "
+            for key, value in storyIdea.personalization.items():
+                prompt += f"Use '{value}' for {key}. "
+            prompt += "\n\n"
 
         # Append available fields
         for label, value in {
@@ -106,13 +147,61 @@ class ScriptGenerator:
                 """.strip()
 
     def generate_from_storyidea(self, storyIdea: StoryIdea) -> str:
-        messages = [
-            {"role": "system", "content": self._build_system_prompt(storyIdea)},
-            {"role": "user", "content": self._build_user_prompt(storyIdea)}
-        ]
-        response = openai.ChatCompletion.create(model=self.model, messages=messages)
-        script = response.choices[0].message.content.strip();
-        self.save_script_with_idea(storyIdea, script)
+        operation_start = time.time()
+        success = False
+        error_msg = None
+        metrics = {}
+        
+        try:
+            messages = [
+                {"role": "system", "content": self._build_system_prompt(storyIdea)},
+                {"role": "user", "content": self._build_user_prompt(storyIdea)}
+            ]
+            
+            response = self._call_openai_with_retry(messages)
+            script = response.choices[0].message.content.strip()
+            metrics["script_length"] = len(script)
+            metrics["word_count"] = len(script.split())
+            
+            self.save_script_with_idea(storyIdea, script)
+            
+            # Validate output
+            script_path = os.path.join(SCRIPTS_PATH, sanitize_filename(storyIdea.story_title), "Script.txt")
+            is_valid, validation_metrics = OutputValidator.validate_text_file(script_path, min_length=200)
+            metrics.update(validation_metrics)
+            
+            if not is_valid:
+                error_msg = "Generated script failed validation"
+                log_error("Script Validation", storyIdea.story_title, Exception(error_msg))
+            else:
+                success = True
+                log_info(f"✅ Script generated: {metrics['word_count']} words")
+            
+        except Exception as e:
+            error_msg = str(e)
+            log_error("Script Generation", storyIdea.story_title, e)
+            raise
+        finally:
+            duration = time.time() - operation_start
+            PerformanceMonitor.log_operation(
+                operation="Script_Generation",
+                story_title=storyIdea.story_title,
+                duration=duration,
+                success=success,
+                error=error_msg,
+                metrics=metrics
+            )
+    
+    @retry_with_exponential_backoff(
+        max_retries=3,
+        base_delay=2.0,
+        max_delay=30.0,
+        exceptions=(Exception,)
+    )
+    @with_circuit_breaker("openai")
+    def _call_openai_with_retry(self, messages):
+        """Call OpenAI API with retry logic and circuit breaker."""
+        return openai.ChatCompletion.create(model=self.model, messages=messages)
 
     def save_script_with_idea(self, idea: StoryIdea, script: str):
         script_path = os.path.join(SCRIPTS_PATH, sanitize_filename(idea.story_title))
