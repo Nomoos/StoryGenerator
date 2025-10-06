@@ -51,7 +51,7 @@ log_error("Script Generation", "Story Title", Exception("Error message"))
 #### View Metrics:
 
 ```bash
-python Tools/view_metrics.py
+python3 Tools/view_metrics.py
 ```
 
 This displays a summary of:
