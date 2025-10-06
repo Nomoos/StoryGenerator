@@ -163,7 +163,7 @@ def example_storyboard_validation():
     print(f"Validation Passed: {validation.validation_passed}")
     
     if validation.recommendations:
-        print("\\nRecommendations:")
+        print("\nRecommendations:")
         for rec in validation.recommendations:
             print(f"  - {rec}")
     
