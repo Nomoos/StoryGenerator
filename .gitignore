@@ -126,6 +126,14 @@ Stories/*
 __pycache__/
 *.pyc
 
+<<<<<<< HEAD
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+=======
 # Cache
 cache/
 *.cache
@@ -150,3 +158,4 @@ temp/
 # OS
 Thumbs.db
 .DS_Store
+>>>>>>> master
