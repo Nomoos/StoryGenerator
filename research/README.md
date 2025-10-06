@@ -202,15 +202,24 @@ Located in `/research/csharp/`:
 
 ### Core Components
 
+#### Interfaces
+
+The C# implementation follows interface-based design for better testability and dependency injection:
+
+- **`IOllamaClient`** - Interface for Ollama LLM operations
+- **`IWhisperClient`** - Interface for Whisper ASR operations
+- **`IFFmpegClient`** - Interface for FFmpeg media processing
+
 #### `OllamaClient.cs`
 - C# wrapper for Ollama CLI
+- Implements `IOllamaClient` interface
 - Async/await support
 - Chat completion format
 - Model management
 
 **Usage:**
 ```csharp
-var client = new OllamaClient(model: "llama2");
+IOllamaClient client = new OllamaClient(model: "llama2");
 var response = await client.GenerateAsync(
     prompt: "Tell me a story",
     system: "You are a storyteller",
@@ -219,14 +228,15 @@ var response = await client.GenerateAsync(
 ```
 
 #### `WhisperClient.cs`
-- C# interface for Whisper ASR
+- C# implementation for Whisper ASR
+- Implements `IWhisperClient` interface
 - Word-level timestamps
 - SRT generation
 - Language detection
 
 **Usage:**
 ```csharp
-var whisper = new WhisperClient(modelSize: "base");
+IWhisperClient whisper = new WhisperClient(modelSize: "base");
 var result = await whisper.TranscribeAsync("audio.mp3", language: "en");
 Console.WriteLine(result.Text);
 
@@ -236,13 +246,14 @@ await whisper.TranscribeToSrtAsync("audio.mp3", "subtitles.srt");
 
 #### `FFmpegClient.cs`
 - C# wrapper for FFmpeg/FFprobe
+- Implements `IFFmpegClient` interface
 - Audio normalization (LUFS)
 - Media file processing
 - Format conversion
 
 **Usage:**
 ```csharp
-var ffmpeg = new FFmpegClient();
+IFFmpegClient ffmpeg = new FFmpegClient();
 var result = await ffmpeg.NormalizeAudioAsync(
     inputPath: "input.mp3",
     outputPath: "output.mp3",
@@ -256,13 +267,21 @@ var info = await ffmpeg.GetAudioInfoAsync("audio.mp3");
 
 #### `Orchestrator.cs`
 - High-level pipeline orchestration
-- Coordinates all components
+- Coordinates all components via interfaces
 - End-to-end video generation
 - Batch processing
+- Dependency injection ready
 
 **Usage:**
 ```csharp
+// Default constructor creates concrete implementations
 var orchestrator = new Orchestrator();
+
+// Or inject custom implementations (useful for testing/mocking)
+IOllamaClient ollamaClient = new OllamaClient();
+IWhisperClient whisperClient = new WhisperClient();
+IFFmpegClient ffmpegClient = new FFmpegClient();
+var orchestrator = new Orchestrator(ollamaClient, whisperClient, ffmpegClient);
 
 // Generate complete story
 var story = await orchestrator.GenerateStoryAsync(
@@ -312,7 +331,8 @@ var videoResult = await orchestrator.CreateVideoAsync(
 2. **Modular**: Each component is independent and reusable
 3. **Async**: C# implementations use async/await for better performance
 4. **Type-Safe**: Strong typing for reliability
-5. **Extensible**: Easy to add new models or replace components
+5. **Interface-Based**: C# implementations use interfaces for dependency injection and testability
+6. **Extensible**: Easy to add new models or replace components
 
 ## Requirements
 

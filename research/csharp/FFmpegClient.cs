@@ -13,7 +13,7 @@ namespace StoryGenerator.Research
     /// Client for FFmpeg media processing operations.
     /// Research prototype for audio/video manipulation.
     /// </summary>
-    public class FFmpegClient
+    public class FFmpegClient : IFFmpegClient
     {
         private readonly string _ffmpegPath;
         private readonly string _ffprobePath;

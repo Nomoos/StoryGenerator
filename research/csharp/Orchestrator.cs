@@ -13,9 +13,9 @@ namespace StoryGenerator.Research
     /// </summary>
     public class Orchestrator
     {
-        private readonly OllamaClient _ollamaClient;
-        private readonly WhisperClient _whisperClient;
-        private readonly FFmpegClient _ffmpegClient;
+        private readonly IOllamaClient _ollamaClient;
+        private readonly IWhisperClient _whisperClient;
+        private readonly IFFmpegClient _ffmpegClient;
 
         /// <summary>
         /// Initialize the orchestrator with default clients.
@@ -35,9 +35,9 @@ namespace StoryGenerator.Research
         /// <param name="whisperClient">Whisper ASR client</param>
         /// <param name="ffmpegClient">FFmpeg media processing client</param>
         public Orchestrator(
-            OllamaClient ollamaClient,
-            WhisperClient whisperClient,
-            FFmpegClient ffmpegClient)
+            IOllamaClient ollamaClient,
+            IWhisperClient whisperClient,
+            IFFmpegClient ffmpegClient)
         {
             _ollamaClient = ollamaClient ?? throw new ArgumentNullException(nameof(ollamaClient));
             _whisperClient = whisperClient ?? throw new ArgumentNullException(nameof(whisperClient));

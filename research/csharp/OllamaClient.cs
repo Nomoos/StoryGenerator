@@ -11,7 +11,7 @@ namespace StoryGenerator.Research
     /// Client for interacting with Ollama local LLM service.
     /// Research prototype for local-only model orchestration.
     /// </summary>
-    public class OllamaClient
+    public class OllamaClient : IOllamaClient
     {
         private readonly string _model;
         private readonly string _baseUrl;

@@ -14,7 +14,7 @@ namespace StoryGenerator.Research
     /// Client for Whisper ASR (Automatic Speech Recognition).
     /// Research prototype for local-only speech-to-text transcription.
     /// </summary>
-    public class WhisperClient
+    public class WhisperClient : IWhisperClient
     {
         private readonly string _modelSize;
         private readonly string _device;
