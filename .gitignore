@@ -1,2 +1,6 @@
 Stories/*
 !Stories/.gitkeep
+logs/
+*.log
+__pycache__/
+*.pyc
