@@ -66,6 +66,33 @@ print(result["text"])
 asr.transcribe_to_srt("audio.mp3", "subtitles.srt")
 ```
 
+#### `whisper_subprocess.py` - Whisper Subprocess Wrapper
+- Command-line wrapper for faster-whisper
+- JSON-based communication for C# integration
+- Supports all faster-whisper features
+- Used by C# WhisperClient via subprocess
+
+**Key Features:**
+- JSON input/output for easy integration
+- Command-line interface
+- Automatic device detection (CPU/GPU)
+- Error handling with structured responses
+
+**Usage:**
+```bash
+# Transcribe audio
+python3 whisper_subprocess.py transcribe \
+  --audio-path audio.mp3 \
+  --model-size large-v3 \
+  --language en \
+  --word-timestamps
+
+# Detect language
+python3 whisper_subprocess.py detect_language \
+  --audio-path audio.mp3 \
+  --model-size base
+```
+
 #### `lufs_normalize.py` - FFmpeg LUFS Normalization
 - Professional audio normalization using EBU R128 standard
 - Two-pass normalization for accuracy
@@ -228,21 +255,46 @@ var response = await client.GenerateAsync(
 ```
 
 #### `WhisperClient.cs`
-- C# implementation for Whisper ASR
+- C# implementation for Whisper ASR using faster-whisper large-v3
 - Implements `IWhisperClient` interface
-- Word-level timestamps
-- SRT generation
-- Language detection
+- Uses subprocess to call Python faster-whisper implementation
+- Word-level timestamps with high precision
+- SRT and VTT subtitle generation
+- Language detection with confidence scores
+- Multiple model size support (tiny to large-v3)
+- GPU acceleration support
+
+**Features:**
+- Transcription with word timestamps
+- SRT subtitle generation
+- VTT subtitle generation  
+- Language auto-detection
+- Translation to English
+- Voice Activity Detection (VAD)
 
 **Usage:**
 ```csharp
-IWhisperClient whisper = new WhisperClient(modelSize: "base");
+IWhisperClient whisper = new WhisperClient(
+    modelSize: "large-v3",
+    device: "auto",
+    computeType: "float16"
+);
+
+// Transcribe with word timestamps
 var result = await whisper.TranscribeAsync("audio.mp3", language: "en");
 Console.WriteLine(result.Text);
 
-// Generate SRT
+// Generate SRT subtitles
 await whisper.TranscribeToSrtAsync("audio.mp3", "subtitles.srt");
+
+// Generate VTT subtitles
+await whisper.TranscribeToVttAsync("audio.mp3", "subtitles.vtt");
+
+// Detect language
+var (lang, confidence) = await whisper.DetectLanguageAsync("audio.mp3");
 ```
+
+**See Also:** [ASR_README.md](csharp/ASR_README.md) for detailed documentation
 
 #### `FFmpegClient.cs`
 - C# wrapper for FFmpeg/FFprobe
