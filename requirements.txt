@@ -33,3 +33,9 @@ typing_extensions==4.12.2
 tzdata==2024.2
 urllib3==2.2.3
 websockets==13.1
+torch>=2.0.0
+diffusers>=0.21.0
+whisperx>=3.0.0
+transformers>=4.40.0
+scipy>=1.10.0
+accelerate>=0.20.0
