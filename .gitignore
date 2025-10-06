@@ -12,48 +12,75 @@ Stories/*
 # Pattern: ignore all files except .gitkeep in each directory
 
 # Ideas, topics, titles, scores, final - pattern: {folder}/{gender}/{age}/
-ideas/**/*
-!ideas/**/.gitkeep
-
-topics/**/*
-!topics/**/.gitkeep
-
-titles/**/*
-!titles/**/.gitkeep
-
-scores/**/*
-!scores/**/.gitkeep
-
-final/**/*
-!final/**/.gitkeep
+# Ignore common content files but allow .gitkeep, .test files
+# Allow .test.* sample files for documentation
 
 # Scripts - pattern: scripts/{type}/{gender}/{age}/
-scripts/**/*
-!scripts/**/.gitkeep
+# Ignore common script files but allow .gitkeep, .test files
 
 # Voices - pattern: voices/{type}/{gender}/{age}/
-voices/**/*
-!voices/**/.gitkeep
+# Ignore common voice files but allow .gitkeep, .test files
 
 # Audio - pattern: audio/{type}/{gender}/{age}/
-audio/**/*
-!audio/**/.gitkeep
+# All files ignored except .gitkeep and .test
+audio/*/*/*/*
+!audio/*/*/*/*/.gitkeep
+!audio/*/*/*/*/.test
 
 # Subtitles - pattern: subtitles/{type}/{gender}/{age}/
-subtitles/**/*
-!subtitles/**/.gitkeep
+# All files ignored except .gitkeep, .test, and .test.* samples
+subtitles/*/*/*/*
+!subtitles/*/*/*/*/.gitkeep
+!subtitles/*/*/*/*/.test
+!subtitles/*/*/*/*/.test.srt
 
 # Scenes - pattern: scenes/{type}/{gender}/{age}/
-scenes/**/*
-!scenes/**/.gitkeep
+# All files ignored except .gitkeep, .test, and .test.* samples
+scenes/*/*/*/*
+!scenes/*/*/*/*/.gitkeep
+!scenes/*/*/*/*/.test
+!scenes/*/*/*/*/.test.json
 
 # Images - pattern: images/{type}/{gender}/{age}/
-images/**/*
-!images/**/.gitkeep
+# All files ignored except .gitkeep and .test
+images/*/*/*/*
+!images/*/*/*/*/.gitkeep
+!images/*/*/*/*/.test
 
 # Videos - pattern: videos/{type}/{gender}/{age}/
-videos/**/*
-!videos/**/.gitkeep
+# All files ignored except .gitkeep and .test
+videos/*/*/*/*
+!videos/*/*/*/*/.gitkeep
+!videos/*/*/*/*/.test
+
+# Explicit media file extensions (extra protection)
+*.mp3
+*.wav
+*.flac
+*.aac
+*.ogg
+*.m4a
+*.wma
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.svg
+*.webp
+*.ico
+*.tiff
+*.tif
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+*.webm
+*.m4v
+*.mpg
+*.mpeg
 
 # Research - pattern: research/{language}/
 research/**/*

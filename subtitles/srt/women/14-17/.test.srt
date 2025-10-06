@@ -1,0 +1,15 @@
+1
+00:00:00,000 --> 00:00:03,500
+Welcome to our story about innovation
+
+2
+00:00:03,500 --> 00:00:07,000
+This is a sample subtitle file for testing
+
+3
+00:00:07,000 --> 00:00:10,500
+It demonstrates the SRT format structure
+
+4
+00:00:10,500 --> 00:00:14,000
+Used for video subtitles and captions

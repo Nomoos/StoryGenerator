@@ -1,0 +1,13 @@
+{
+  "topic_id": "test_001",
+  "category": "technology",
+  "title": "The Future of AI",
+  "description": "Exploring how artificial intelligence is shaping our future",
+  "keywords": ["AI", "technology", "future", "innovation"],
+  "target_audience": {
+    "gender": "women",
+    "age_range": "10-13"
+  },
+  "difficulty_level": "beginner",
+  "estimated_duration": "5-7 minutes"
+}

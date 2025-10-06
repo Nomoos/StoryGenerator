@@ -1,0 +1,19 @@
+# Test Topic Example
+
+This is a sample topic file for testing purposes.
+
+Topic: The Future of AI
+Category: Technology
+Target: Girls aged 10-13
+
+## Description
+An engaging introduction to artificial intelligence concepts suitable for pre-teen girls.
+
+## Key Points
+- What is AI?
+- How AI helps us daily
+- Future possibilities
+- Getting started with AI
+
+## Note
+This folder contains test data. The .test file indicates this is a testing folder.

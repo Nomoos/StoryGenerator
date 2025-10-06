@@ -1,0 +1,13 @@
+{
+  "script_id": "script_test_001",
+  "title": "Introduction to Quantum Computing",
+  "type": "raw_local",
+  "word_count": 850,
+  "target_audience": {
+    "gender": "men",
+    "age_range": "24-30"
+  },
+  "script_content": "Welcome to our journey into quantum computing...\n\nQuantum computing represents a fundamental shift in how we process information. Unlike classical computers that use bits (0s and 1s), quantum computers use quantum bits or 'qubits'.\n\n[Script continues with educational content about quantum computing basics, applications, and future implications...]\n\nThis is a test/sample script to demonstrate the folder structure.",
+  "created_date": "2024-01-01",
+  "status": "draft"
+}
