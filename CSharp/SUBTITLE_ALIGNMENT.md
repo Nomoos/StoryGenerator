@@ -2,6 +2,39 @@
 
 This module provides functionality for aligning subtitles to audio using forced alignment (faster-whisper word timestamps) and mapping subtitle time ranges to shot IDs.
 
+## Projects
+
+### StoryGenerator.Research
+Contains the WhisperClient implementation for speech recognition and subtitle generation.
+- **IWhisperClient.cs** - Interface for Whisper ASR operations
+- **WhisperClient.cs** - Implementation using faster-whisper Python subprocess
+
+### StoryGenerator.Core
+Core library containing subtitle alignment and scene mapping services.
+- **Interfaces/ISubtitleAligner.cs** - Interface for subtitle alignment operations
+- **Models/SubtitleToShotMapping.cs** - Data models for subtitle-to-shot mappings
+- **Models/Shotlist.cs** - Shotlist and Shot data models
+- **Services/SubtitleAligner.cs** - Implementation of subtitle alignment and shot mapping
+
+### StoryGenerator.SubtitleAlignment.Example
+Console application demonstrating subtitle alignment and shot mapping.
+
+## Quick Start
+
+1. **Build the projects:**
+```bash
+cd CSharp
+dotnet build StoryGenerator.Research/StoryGenerator.Research.csproj
+dotnet build StoryGenerator.Core/StoryGenerator.Core.csproj
+dotnet build SubtitleAlignment.Example/StoryGenerator.SubtitleAlignment.Example.csproj
+```
+
+2. **Run the example:**
+```bash
+cd SubtitleAlignment.Example
+dotnet run -- path/to/audio.mp3 women 18-23 my_story_001
+```
+
 ## Features
 
 - **Forced Alignment**: Uses faster-whisper large-v3 for word-level timestamp precision (±50ms)

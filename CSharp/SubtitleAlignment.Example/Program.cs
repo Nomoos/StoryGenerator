@@ -5,19 +5,18 @@ using System.Threading.Tasks;
 using StoryGenerator.Core.Interfaces;
 using StoryGenerator.Core.Services;
 using StoryGenerator.Research;
+using System.Text.Json;
 
-namespace StoryGenerator.Examples
+/// <summary>
+/// Example demonstrating subtitle alignment and shot mapping functionality.
+/// Shows how to:
+/// 1. Generate aligned SRT/VTT files from audio using faster-whisper
+/// 2. Map subtitle time ranges to shot IDs
+/// 3. Save outputs to proper directory structure
+/// </summary>
+class Program
 {
-    /// <summary>
-    /// Example demonstrating subtitle alignment and shot mapping functionality.
-    /// Shows how to:
-    /// 1. Generate aligned SRT/VTT files from audio using faster-whisper
-    /// 2. Map subtitle time ranges to shot IDs
-    /// 3. Save outputs to proper directory structure
-    /// </summary>
-    public class SubtitleAlignmentExample
-    {
-        public static async Task Main(string[] args)
+    static async Task Main(string[] args)
         {
             Console.WriteLine("=== Subtitle Alignment and Shot Mapping Example ===\n");
 
@@ -115,9 +114,9 @@ namespace StoryGenerator.Examples
                 // Display mapping summary
                 Console.WriteLine("\n--- Mapping Summary ---");
                 var mappingJson = await File.ReadAllTextAsync(savedMappingPath);
-                var mapping = System.Text.Json.JsonSerializer.Deserialize<Core.Models.SubtitleToShotMapping>(
+                var mapping = JsonSerializer.Deserialize<StoryGenerator.Core.Models.SubtitleToShotMapping>(
                     mappingJson,
-                    new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
 
                 if (mapping != null)
@@ -154,11 +153,11 @@ namespace StoryGenerator.Examples
             }
         }
 
-        /// <summary>
-        /// Creates an example shotlist for demonstration purposes.
-        /// In a real scenario, this would come from a shotlist generator.
-        /// </summary>
-        private static Shotlist CreateExampleShotlist()
+    /// <summary>
+    /// Creates an example shotlist for demonstration purposes.
+    /// In a real scenario, this would come from a shotlist generator.
+    /// </summary>
+    static Shotlist CreateExampleShotlist()
         {
             return new Shotlist
             {
@@ -226,4 +225,3 @@ namespace StoryGenerator.Examples
             };
         }
     }
-}
