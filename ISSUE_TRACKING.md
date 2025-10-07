@@ -20,16 +20,16 @@ All issue templates are located in `.github/ISSUE_TEMPLATE/` and can be used whe
 
 | Stage | Template File | Component | Priority | Effort |
 |-------|---------------|-----------|----------|--------|
-| 1 | `01-environment-setup.yml` | Environment & Model Setup | High | 1-2 weeks |
-| 2 | `02-asr-enhancement.yml` | ASR Enhancement | Medium | 1 week |
-| 3 | `03-shotlist-generation.yml` | Shotlist Generation | High | 2 weeks |
-| 4 | `04-vision-guidance.yml` | Vision Guidance (Optional) | Low | 2 weeks |
-| 5 | `05-sdxl-keyframes.yml` | SDXL Keyframe Generation | High | 2 weeks |
-| 6 | `06-video-synthesis.yml` | Video Synthesis | High | 3 weeks |
-| 7 | `07-post-production.yml` | Post-Production | Medium | 1 week |
-| 8 | `08-pipeline-integration.yml` | Pipeline Integration | High | 2 weeks |
-| 9 | `09-csharp-implementation.yml` | C# Implementation | Low | 4+ weeks |
-| 10 | `10-documentation.yml` | Documentation | Medium | 2 weeks |
+| 1 | `01-environment-setup.md` | Environment & Model Setup | High | 1-2 weeks |
+| 2 | `02-asr-enhancement.md` | ASR Enhancement | Medium | 1 week |
+| 3 | `03-shotlist-generation.md` | Shotlist Generation | High | 2 weeks |
+| 4 | `04-vision-guidance.md` | Vision Guidance (Optional) | Low | 2 weeks |
+| 5 | `05-sdxl-keyframes.md` | SDXL Keyframe Generation | High | 2 weeks |
+| 6 | `06-video-synthesis.md` | Video Synthesis | High | 3 weeks |
+| 7 | `07-post-production.md` | Post-Production | Medium | 1 week |
+| 8 | `08-pipeline-integration.md` | Pipeline Integration | High | 2 weeks |
+| 9 | `09-csharp-implementation.md` | C# Implementation | Low | 4+ weeks |
+| 10 | `10-documentation.md` | Documentation | Medium | 2 weeks |
 
 ## 🏷️ Labels
 
