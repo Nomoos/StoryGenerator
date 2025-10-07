@@ -3,7 +3,7 @@ LTX Video generation for converting shots to video clips.
 Research prototype for text/image-to-video generation.
 """
 
-from typing import Optional, List, Union
+from typing import Optional, List, Union, Dict
 from pathlib import Path
 import random
 
