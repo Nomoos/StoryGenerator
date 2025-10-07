@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "created_at": "2025-10-07T12:14:04.050798",
+    "updated_at": "2025-10-07T12:14:26.341841",
+    "total_titles": 2
+  },
+  "titles": {
+    "women/18-23/example_title_001": {
+      "title_id": "example_title_001",
+      "segment": "women",
+      "age": "18-23",
+      "original_title": "5 Simple Ways to Stay Motivated",
+      "improved_title": "Why 5 Simple Ways to Stay Motivated?",
+      "slug": "why-5-simple-ways-to-stay-motivated",
+      "original_score": 63.5,
+      "improved_score": 72.5,
+      "improvement_pct": 14.173228346456693,
+      "is_changed": true,
+      "improved_at": "2025-10-07T12:14:04.050410"
+    },
+    "men/24-30/career_tips_001": {
+      "title_id": "career_tips_001",
+      "segment": "men",
+      "age": "24-30",
+      "original_title": "How to Advance Your Career",
+      "improved_title": "5 Things About How to Advance Your Career",
+      "slug": "5-things-about-how-to-advance-your-career",
+      "original_score": 68.0,
+      "improved_score": 79.25,
+      "improvement_pct": 16.544117647058822,
+      "is_changed": true,
+      "improved_at": "2025-10-07T12:14:26.341452"
+    }
+  }
+}
