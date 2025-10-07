@@ -12,11 +12,21 @@ public class PipelineCheckpoint
 
     public bool IsStepComplete(string stepName)
     {
+        if (string.IsNullOrWhiteSpace(stepName))
+        {
+            throw new ArgumentException("Step name cannot be empty", nameof(stepName));
+        }
+
         return CompletedSteps.ContainsKey(stepName) && CompletedSteps[stepName];
     }
 
     public void CompleteStep(string stepName, string? data = null)
     {
+        if (string.IsNullOrWhiteSpace(stepName))
+        {
+            throw new ArgumentException("Step name cannot be empty", nameof(stepName));
+        }
+
         CompletedSteps[stepName] = true;
         if (data != null)
         {
@@ -27,6 +37,11 @@ public class PipelineCheckpoint
 
     public string? GetStepData(string stepName)
     {
+        if (string.IsNullOrWhiteSpace(stepName))
+        {
+            throw new ArgumentException("Step name cannot be empty", nameof(stepName));
+        }
+
         return StepData.ContainsKey(stepName) ? StepData[stepName] : null;
     }
 }

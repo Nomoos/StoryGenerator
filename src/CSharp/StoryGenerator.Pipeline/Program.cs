@@ -40,8 +40,13 @@ class Program
             Console.WriteLine($"Story Root: {config.Paths.StoryRoot}");
             Console.WriteLine();
 
+            // Create services using dependency injection
+            var logger = new PipelineLogger(config.Logging);
+            var pythonExecutor = new Services.PythonExecutor(config, logger);
+            var checkpointManager = new Services.PipelineCheckpointManager(config, logger);
+            
             // Create and run orchestrator
-            var orchestrator = new PipelineOrchestrator(config);
+            var orchestrator = new PipelineOrchestrator(config, logger, pythonExecutor, checkpointManager);
             var outputPath = await orchestrator.RunFullPipelineAsync(storyTitle);
 
             Console.WriteLine();
