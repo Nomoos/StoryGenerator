@@ -140,7 +140,7 @@ python process_quality.py
 python process_quality.py Generator/topics/men/20-24 topics ideas
 
 # Check scores
-python process_quality.py Generator/scripts/raw_local/women/15-19 scripts/raw_local topics
+python process_quality.py Generator/data/raw_local/women/15-19 data/raw_local topics
 ```
 
 ## Configuration

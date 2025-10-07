@@ -22,9 +22,9 @@ This organization allows for targeted content generation and management based on
 - **/topics/{gender}/{age-bucket}/** - Topic classifications and categories
 
 #### 2. Script Generation
-- **/scripts/raw_local/{gender}/{age-bucket}/** - Initial raw scripts generated locally
-- **/scripts/iter_local/{gender}/{age-bucket}/** - Iteratively refined scripts
-- **/scripts/gpt_improved/{gender}/{age-bucket}/** - GPT-enhanced/improved scripts
+- **/data/raw_local/{gender}/{age-bucket}/** - Initial raw scripts generated locally
+- **/data/iter_local/{gender}/{age-bucket}/** - Iteratively refined scripts
+- **/data/gpt_improved/{gender}/{age-bucket}/** - GPT-enhanced/improved scripts
 
 #### 3. Scoring & Titles
 - **/scores/{gender}/{age-bucket}/** - Quality scores and metrics for generated content

@@ -116,7 +116,7 @@ The repository includes test examples in:
 - `topics/women/10-13/` - AI technology topic for pre-teen girls
 - `topics/men/14-17/` - Space exploration topic for teenage boys
 - `ideas/women/18-23/` - Mystery story idea for young adult women
-- `scripts/raw_local/men/24-30/` - Quantum computing script for adult men
+- `data/raw_local/men/24-30/` - Quantum computing script for adult men
 - `subtitles/srt/women/14-17/` - Sample SRT subtitle file
 
 ## See Also

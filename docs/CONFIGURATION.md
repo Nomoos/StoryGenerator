@@ -58,7 +58,7 @@ The StoryGenerator folder structure is now fully configurable through JSON confi
   },
   "folder_structure": {
     "content_folders": ["ideas", "topics", "titles", "scores"],
-    "script_folders": ["scripts/raw_local", "scripts/iter_local", "scripts/gpt_improved"],
+    "script_folders": ["data/raw_local", "data/iter_local", "data/gpt_improved"],
     ...
   }
 }
@@ -158,7 +158,7 @@ The test configuration (`audience_config.test.json`) is a minimal setup for test
 - Limited genders (70% men, 30% women)
 - Limited countries (80% US, 20% UK)
 - Limited age groups (20-24, 25-29, 30-34)
-- Limited folder structure (ideas, topics, scripts/raw_local)
+- Limited folder structure (ideas, topics, data/raw_local)
 
 Use this for:
 - Quick testing

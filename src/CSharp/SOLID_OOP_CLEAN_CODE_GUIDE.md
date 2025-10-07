@@ -826,7 +826,7 @@ public class ScriptFileManager
     // Methods use the reusable logic
     public async Task<string> SaveRawScriptAsync(string content, string segment, string age, string titleId)
     {
-        var path = BuildScriptPath("/scripts/raw_local", segment, age, titleId, "v0");
+        var path = BuildScriptPath("/data/raw_local", segment, age, titleId, "v0");
         await EnsureDirectoryExistsAsync(Path.GetDirectoryName(path));
         await File.WriteAllTextAsync(path, content);
         return path;
@@ -834,7 +834,7 @@ public class ScriptFileManager
     
     public async Task<string> SaveIteratedScriptAsync(string content, string segment, string age, string titleId, int version)
     {
-        var path = BuildScriptPath("/scripts/iter_local", segment, age, titleId, $"v{version}");
+        var path = BuildScriptPath("/data/iter_local", segment, age, titleId, $"v{version}");
         await EnsureDirectoryExistsAsync(Path.GetDirectoryName(path));
         await File.WriteAllTextAsync(path, content);
         return path;

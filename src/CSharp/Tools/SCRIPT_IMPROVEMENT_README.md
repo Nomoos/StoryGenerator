@@ -5,10 +5,10 @@ This tool improves scripts using GPT or local LLM (qwen2.5_14b) with iterative i
 ## Overview
 
 The script improvement process:
-1. Loads original scripts from `/scripts/raw_local/{segment}/{age}/`
+1. Loads original scripts from `/data/raw_local/{segment}/{age}/`
 2. Scores the script using an LLM-based rubric evaluation
 3. Generates improved versions (v2, v3, v4, etc.)
-4. Saves improved scripts to `/scripts/gpt_improved/{segment}/{age}/`
+4. Saves improved scripts to `/data/gpt_improved/{segment}/{age}/`
 5. Saves scores to `/scores/{segment}/{age}/`
 6. Continues iterating until improvement plateaus (< 2 points improvement)
 
@@ -127,9 +127,9 @@ var allResults = await scriptImprover.ImproveAllScriptsAsync();
 ## Output Structure
 
 ### Improved Scripts
-Saved to: `/scripts/gpt_improved/{segment}/{age}/{title_id}_{version}.md`
+Saved to: `/data/gpt_improved/{segment}/{age}/{title_id}_{version}.md`
 
-Example: `/scripts/gpt_improved/men/18-23/test_story_001_v2.md`
+Example: `/data/gpt_improved/men/18-23/test_story_001_v2.md`
 
 ### Score Files
 Saved to: `/scores/{segment}/{age}/{title_id}_script_{version}_score.json`
