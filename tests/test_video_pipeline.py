@@ -10,8 +10,8 @@ import tempfile
 import shutil
 from pathlib import Path
 
-# Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add src/Python directory to path
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src', 'Python'))
 
 from Video.VideoRenderer import VideoRenderer
 from Video.SceneComposer import SceneComposer
