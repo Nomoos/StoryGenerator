@@ -4,9 +4,10 @@ using YamlDotNet.Serialization.NamingConventions;
 namespace StoryGenerator.Pipeline.Config;
 
 /// <summary>
-/// Loads and manages pipeline configuration from YAML files
+/// Loads and manages pipeline configuration from YAML files.
+/// Follows Single Responsibility Principle - only handles configuration loading.
 /// </summary>
-public class ConfigLoader
+public static class ConfigLoader
 {
     private static readonly IDeserializer YamlDeserializer = new DeserializerBuilder()
         .WithNamingConvention(UnderscoredNamingConvention.Instance)
@@ -17,8 +18,16 @@ public class ConfigLoader
     /// </summary>
     /// <param name="configPath">Path to YAML configuration file</param>
     /// <returns>Loaded pipeline configuration</returns>
+    /// <exception cref="ArgumentException">Thrown when configPath is null or empty</exception>
+    /// <exception cref="FileNotFoundException">Thrown when configuration file doesn't exist</exception>
+    /// <exception cref="InvalidOperationException">Thrown when deserialization fails</exception>
     public static PipelineConfig LoadFromFile(string configPath)
     {
+        if (string.IsNullOrWhiteSpace(configPath))
+        {
+            throw new ArgumentException("Configuration path cannot be empty", nameof(configPath));
+        }
+
         if (!File.Exists(configPath))
         {
             throw new FileNotFoundException($"Configuration file not found: {configPath}");
@@ -56,8 +65,14 @@ public class ConfigLoader
     /// </summary>
     /// <param name="config">Configuration to validate</param>
     /// <returns>List of validation errors (empty if valid)</returns>
+    /// <exception cref="ArgumentNullException">Thrown when config is null</exception>
     public static List<string> Validate(PipelineConfig config)
     {
+        if (config == null)
+        {
+            throw new ArgumentNullException(nameof(config));
+        }
+
         var errors = new List<string>();
 
         // Validate paths
