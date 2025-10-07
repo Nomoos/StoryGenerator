@@ -62,6 +62,9 @@ data/titles/*/*/*
 !data/titles/*/*/*/.test.json
 !data/titles/*/*/*/.test.txt
 
+# Title registry - track this file
+!data/titles/title_registry.json
+
 data/scores/*/*/*
 !data/scores/*/*/*/.gitkeep
 !data/scores/*/*/*/.test
