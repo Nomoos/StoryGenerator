@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StoryGenerator.Models
 {
     /// <summary>
     /// Represents the result of scoring a script for quality and narrative cohesion.
     /// Contains rubric scores, narrative cohesion score, overall score, and feedback.
+    /// Implements ICloneable for the Prototype pattern to enable deep cloning.
     /// </summary>
-    public class ScriptScoringResult
+    public class ScriptScoringResult : ICloneable
     {
         /// <summary>
         /// Gets or sets the script version being scored (e.g., "v0", "v1").
@@ -75,13 +77,45 @@ namespace StoryGenerator.Models
         /// Gets or sets additional metadata about the scoring.
         /// </summary>
         public Dictionary<string, object> Metadata { get; set; } = new();
+
+        /// <summary>
+        /// Creates a deep clone of this scoring result.
+        /// Implements the Prototype pattern for creating independent copies.
+        /// </summary>
+        /// <returns>A new ScriptScoringResult instance with copied values</returns>
+        public object Clone()
+        {
+            return new ScriptScoringResult
+            {
+                Version = Version,
+                TitleId = TitleId,
+                Title = Title,
+                ScriptPath = ScriptPath,
+                TargetAudience = new AudienceSegment(TargetAudience.Gender, TargetAudience.Age),
+                ScoredAt = ScoredAt,
+                RubricScores = RubricScores.DeepClone(),
+                NarrativeCohesion = NarrativeCohesion,
+                OverallScore = OverallScore,
+                Feedback = Feedback,
+                AreasForImprovement = new List<string>(AreasForImprovement),
+                Strengths = new List<string>(Strengths),
+                Metadata = new Dictionary<string, object>(Metadata)
+            };
+        }
+
+        /// <summary>
+        /// Creates a strongly-typed deep clone of this scoring result.
+        /// </summary>
+        /// <returns>A new ScriptScoringResult instance with copied values</returns>
+        public ScriptScoringResult DeepClone() => (ScriptScoringResult)Clone();
     }
 
     /// <summary>
     /// Individual rubric scores for a script.
     /// Each criterion is scored 0-100.
+    /// Implements ICloneable for the Prototype pattern.
     /// </summary>
-    public class ScriptRubricScores
+    public class ScriptRubricScores : ICloneable
     {
         /// <summary>
         /// Hook and opening score (0-100).
@@ -130,5 +164,31 @@ namespace StoryGenerator.Models
         /// Measures how well the script works for text-to-speech/voiceover.
         /// </summary>
         public int VoiceSuitability { get; set; }
+
+        /// <summary>
+        /// Creates a deep clone of this rubric scores object.
+        /// Implements the Prototype pattern for creating independent copies.
+        /// </summary>
+        /// <returns>A new ScriptRubricScores instance with copied values</returns>
+        public object Clone()
+        {
+            return new ScriptRubricScores
+            {
+                HookQuality = HookQuality,
+                CharacterDevelopment = CharacterDevelopment,
+                PlotStructure = PlotStructure,
+                DialogueQuality = DialogueQuality,
+                EmotionalImpact = EmotionalImpact,
+                AudienceAlignment = AudienceAlignment,
+                Clarity = Clarity,
+                VoiceSuitability = VoiceSuitability
+            };
+        }
+
+        /// <summary>
+        /// Creates a strongly-typed deep clone of this rubric scores object.
+        /// </summary>
+        /// <returns>A new ScriptRubricScores instance with copied values</returns>
+        public ScriptRubricScores DeepClone() => (ScriptRubricScores)Clone();
     }
 }

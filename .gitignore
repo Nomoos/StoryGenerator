@@ -338,8 +338,12 @@ artifacts/
 *.pdb
 *.runtimeconfig.json
 *.deps.json
+<<<<<<< HEAD
 
 # Test output files
 test_story_*
 CSharp/Tests/SceneBeatsTest/bin/
 CSharp/Tests/SceneBeatsTest/obj/
+=======
+/CSharp/PostProductionTest/
+>>>>>>> copilot/align-subtitles-to-audio
