@@ -591,7 +591,3 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         except Exception as e:
             print(f"  ❌ Error generating metadata: {e}")
             return False
-            output_path
-        ]
-        
-        subprocess.run(cmd, check=True, capture_output=True)
