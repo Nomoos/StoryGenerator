@@ -18,6 +18,7 @@ This project automates the creation of emotional, dramatic vertical stories targ
 - **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common issues and solutions
 - **[docs/TITLE_IMPROVEMENT.md](docs/TITLE_IMPROVEMENT.md)** - Title variant generation and improvement guide
 - **[docs/TITLE_SCORING.md](docs/TITLE_SCORING.md)** - Title scoring system documentation
+- **[docs/VIDEO_QUALITY_CONTROL.md](docs/VIDEO_QUALITY_CONTROL.md)** - Video quality checks and QC reports
 
 ## 🏗️ Pipeline Architecture
 
@@ -446,6 +447,7 @@ See [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md) for detailed security procedu
 - 🎙️ **Voice Enhancement**: Add performance tags for realistic AI voices
 - 🔊 **Voice Generation**: Generate high-quality voiceovers using ElevenLabs
 - 📊 **Viral Potential Scoring**: Estimate engagement potential across platforms
+- ✅ **Video Quality Control**: Automated quality checks on final videos with comprehensive QC reports
 
 ---
 
