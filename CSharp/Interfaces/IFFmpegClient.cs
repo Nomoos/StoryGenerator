@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace StoryGenerator.Interfaces
         /// <param name="twoPass">Use two-pass normalization for better accuracy</param>
         /// <param name="sampleRate">Output sample rate in Hz</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Normalization result with metrics</returns>
+        /// <param name="returns">Normalization result with metrics</returns>
         Task<NormalizationResult> NormalizeAudioAsync(
             string inputPath,
             string outputPath,
@@ -72,5 +73,49 @@ namespace StoryGenerator.Interfaces
             string preset = "medium",
             int crf = 23,
             CancellationToken cancellationToken = default);
+    }
+
+    /// <summary>
+    /// Represents audio normalization result.
+    /// </summary>
+    public class NormalizationResult
+    {
+        public bool Success { get; set; }
+        public string Method { get; set; } = string.Empty;
+        public string OutputPath { get; set; } = string.Empty;
+        public LoudnessMeasurements? Measurements { get; set; }
+    }
+
+    /// <summary>
+    /// Represents loudness measurements.
+    /// </summary>
+    public class LoudnessMeasurements
+    {
+        [JsonPropertyName("input_i")]
+        public string InputI { get; set; } = string.Empty;
+
+        [JsonPropertyName("input_lra")]
+        public string InputLra { get; set; } = string.Empty;
+
+        [JsonPropertyName("input_tp")]
+        public string InputTp { get; set; } = string.Empty;
+
+        [JsonPropertyName("input_thresh")]
+        public string InputThresh { get; set; } = string.Empty;
+
+        [JsonPropertyName("target_offset")]
+        public string TargetOffset { get; set; } = string.Empty;
+    }
+
+    /// <summary>
+    /// Represents audio file information.
+    /// </summary>
+    public class AudioInfo
+    {
+        public double Duration { get; set; }
+        public int SampleRate { get; set; }
+        public int Channels { get; set; }
+        public string Codec { get; set; } = string.Empty;
+        public int BitRate { get; set; }
     }
 }

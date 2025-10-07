@@ -327,48 +327,4 @@ namespace StoryGenerator.Tools
             }
         }
     }
-
-    /// <summary>
-    /// Represents audio normalization result.
-    /// </summary>
-    public class NormalizationResult
-    {
-        public bool Success { get; set; }
-        public string Method { get; set; }
-        public string OutputPath { get; set; }
-        public LoudnessMeasurements Measurements { get; set; }
-    }
-
-    /// <summary>
-    /// Represents loudness measurements.
-    /// </summary>
-    public class LoudnessMeasurements
-    {
-        [JsonPropertyName("input_i")]
-        public string InputI { get; set; }
-
-        [JsonPropertyName("input_lra")]
-        public string InputLra { get; set; }
-
-        [JsonPropertyName("input_tp")]
-        public string InputTp { get; set; }
-
-        [JsonPropertyName("input_thresh")]
-        public string InputThresh { get; set; }
-
-        [JsonPropertyName("target_offset")]
-        public string TargetOffset { get; set; }
-    }
-
-    /// <summary>
-    /// Represents audio file information.
-    /// </summary>
-    public class AudioInfo
-    {
-        public double Duration { get; set; }
-        public int SampleRate { get; set; }
-        public int Channels { get; set; }
-        public string Codec { get; set; }
-        public int BitRate { get; set; }
-    }
 }
