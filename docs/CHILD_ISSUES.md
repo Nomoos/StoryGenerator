@@ -2,23 +2,37 @@
 
 This document contains templates for creating child issues for each component of the AI Video Pipeline.
 
+> **Note**: GitHub issue templates are now available in [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/). Use those when creating issues on GitHub. This document provides the full detailed templates for reference.
+
 ## 📚 Related Documentation
 
 - **[README.md](../README.md)** - Project overview and quick start
+- **[ISSUE_TRACKING.md](../ISSUE_TRACKING.md)** - Issue tracking system overview and workflow
 - **[PIPELINE.md](../PIPELINE.md)** - Detailed technical pipeline breakdown
 - **[docs/MODELS.md](MODELS.md)** - Comprehensive model documentation with Hugging Face references
 - **[docs/EXAMPLES.md](EXAMPLES.md)** - Input/output examples for all stages
 - **[docs/INSTALLATION.md](INSTALLATION.md)** - Setup instructions
 - **[docs/TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Common issues and solutions
+- **[.github/ISSUE_TEMPLATE/](../.github/ISSUE_TEMPLATE/)** - GitHub issue templates
 
 ## How to Use These Templates
 
-1. Copy the relevant template
+**For GitHub Issues** (Recommended):
+1. Go to the [Issues tab](https://github.com/Nomoos/StoryGenerator/issues)
+2. Click "New Issue"
+3. Select the appropriate stage template (Stage 1-10)
+4. Fill in any additional context
+5. Submit the issue
+
+**For Manual Copy-Paste**:
+1. Copy the relevant template from this document
 2. Create a new issue in GitHub
-3. Fill in the specific details
+3. Paste and fill in the specific details
 4. Link to parent issue: [AI Video Pipeline: Next Steps and Issue Tree](link-to-parent-issue)
 5. Add appropriate labels
 6. Assign to team members
+
+For more details on the issue tracking workflow, see [ISSUE_TRACKING.md](../ISSUE_TRACKING.md).
 
 ## Issue Tracking Overview
 
