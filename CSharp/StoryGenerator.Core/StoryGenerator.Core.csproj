@@ -1,15 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+<<<<<<< HEAD
+  <ItemGroup>
+    <ProjectReference Include="..\StoryGenerator.Research\StoryGenerator.Research.csproj" />
+  </ItemGroup>
+
+=======
+>>>>>>> copilot/generate-voiceover-audio
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+<<<<<<< HEAD
+=======
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
     <PackageReference Include="Polly" Version="8.6.4" />
     <PackageReference Include="System.Text.Json" Version="9.0.9" />
   </ItemGroup>
 
+>>>>>>> copilot/generate-voiceover-audio
 </Project>

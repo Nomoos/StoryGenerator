@@ -32,17 +32,24 @@ The complete pipeline consists of 10 major stages:
    - Optimized for spoken content with emotional hooks
    - Natural, conversational language
 
-3. **✅ Script Revision** (`Generators/GRevise.py`)
+3. **✅ Script Improvement** (C# Implementation - `CSharp/Tools/`)
+   - Iteratively improves scripts using GPT or local LLM (qwen2.5_14b)
+   - Scores scripts on 8 rubric criteria (Hook, Plot, Dialogue, etc.)
+   - Generates improved versions (v2, v3, v4) until quality plateaus
+   - Saves to `/scripts/gpt_improved/{segment}/{age}/{title_id}_v*.md`
+   - **[Quick Start Guide](SCRIPT_IMPROVEMENT_QUICKSTART.md)**
+
+4. **✅ Script Revision** (`Generators/GRevise.py`)
    - Polishes scripts for AI voice clarity
    - Removes awkward phrasing
    - Optimizes for ElevenLabs voice synthesis
 
-4. **✅ Voice Generation** (`Generators/GVoice.py`)
+5. **✅ Voice Generation** (`Generators/GVoice.py`)
    - ElevenLabs API integration (eleven_v3 model)
    - LUFS normalization for consistent audio levels
    - Silence trimming and padding
 
-5. **✅ ASR & Subtitles** (`Generators/GTitles.py`)
+6. **✅ ASR & Subtitles** (`Generators/GTitles.py`)
    - WhisperX for word-level alignment
    - Generates word-by-word SRT files
    - Aligns script to actual audio timing
