@@ -2,7 +2,7 @@ import os
 import json
 import subprocess
 import shutil
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict, Any
 from Models.StoryIdea import StoryIdea
 from Generators.GSceneAnalyzer import SceneAnalyzer
 from Tools.Utils import (
@@ -11,6 +11,9 @@ from Tools.Utils import (
     generate_title_id, get_final_export_path
 )
 from Tools.VideoEffects import VideoEffects
+from Tools.ExportRegistry import ExportRegistry
+from Tools.ThumbnailGenerator import ThumbnailGenerator
+from Tools.PlatformExporter import PlatformExporter
 
 
 class VideoCompositor:
@@ -38,6 +41,11 @@ class VideoCompositor:
         self.transition_duration = transition_duration
         self.apply_ken_burns = apply_ken_burns
         self.video_effects = VideoEffects()
+        
+        # Initialize new export tools
+        self.registry = ExportRegistry()
+        self.thumbnail_generator = ThumbnailGenerator(self.width, self.height)
+        self.platform_exporter = PlatformExporter()
 
     def compose_final_video(
         self,
@@ -591,3 +599,124 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         except Exception as e:
             print(f"  ❌ Error generating metadata: {e}")
             return False
+    
+    def export_with_enhancements(
+        self,
+        story_idea: StoryIdea,
+        source_video_path: str,
+        generate_multiple_thumbnails: bool = True,
+        generate_platform_metadata: bool = True,
+        thumbnail_options: int = 5,
+        register_in_registry: bool = True
+    ) -> Dict[str, Any]:
+        """
+        Enhanced export with all new features.
+        
+        Args:
+            story_idea: StoryIdea object
+            source_video_path: Path to source video
+            generate_multiple_thumbnails: Generate multiple thumbnail options
+            generate_platform_metadata: Generate platform-specific metadata
+            thumbnail_options: Number of thumbnail options to generate
+            register_in_registry: Register export in registry
+            
+        Returns:
+            Dictionary with all export paths and information
+        """
+        print(f"\n{'='*60}")
+        print(f"🚀 ENHANCED EXPORT: {story_idea.story_title}")
+        print(f"{'='*60}\n")
+        
+        # Get identifiers
+        segment = get_segment_from_gender(story_idea.narrator_gender)
+        age_group = get_age_group_from_potencial(story_idea.potencial)
+        title_id = generate_title_id(story_idea.story_title)
+        
+        # Get export directory
+        export_dir = os.path.join(os.path.dirname(
+            get_final_export_path(story_idea.story_title, segment, age_group, "")
+        ))
+        
+        result = {
+            "title_id": title_id,
+            "segment": segment,
+            "age_group": age_group,
+            "video_path": None,
+            "thumbnails": {},
+            "metadata": {},
+            "success": False
+        }
+        
+        try:
+            # 1. Standard export
+            print("1️⃣ Performing standard export...")
+            video_path, thumb_path, meta_path = self.export_final_video(
+                story_idea, source_video_path,
+                export_thumbnail=True,
+                export_metadata=True
+            )
+            result["video_path"] = video_path
+            result["thumbnails"]["default"] = thumb_path
+            result["metadata"]["default"] = meta_path
+            
+            # 2. Generate multiple thumbnail options
+            if generate_multiple_thumbnails and video_path:
+                print(f"\n2️⃣ Generating {thumbnail_options} thumbnail options...")
+                try:
+                    thumb_dir = os.path.join(export_dir, "thumbnails")
+                    options = self.thumbnail_generator.generate_multiple_options(
+                        video_path, thumb_dir, title_id, thumbnail_options
+                    )
+                    result["thumbnails"]["options"] = options
+                    print(f"  ✅ Generated {len(options)} thumbnail options")
+                except Exception as e:
+                    print(f"  ⚠️ Error generating thumbnail options: {e}")
+            
+            # 3. Generate platform-specific metadata
+            if generate_platform_metadata:
+                print(f"\n3️⃣ Generating platform-specific metadata...")
+                try:
+                    platform_dir = os.path.join(export_dir, "platforms")
+                    platform_files = self.platform_exporter.save_platform_metadata(
+                        story_idea, platform_dir
+                    )
+                    result["metadata"]["platforms"] = platform_files
+                    print(f"  ✅ Generated metadata for {len(platform_files)} platforms")
+                except Exception as e:
+                    print(f"  ⚠️ Error generating platform metadata: {e}")
+            
+            # 4. Register in export registry
+            if register_in_registry:
+                print(f"\n4️⃣ Registering in export registry...")
+                try:
+                    self.registry.register_export(
+                        title_id=title_id,
+                        title=story_idea.story_title,
+                        segment=segment,
+                        age_group=age_group,
+                        video_path=video_path,
+                        thumbnail_path=thumb_path,
+                        metadata_path=meta_path,
+                        additional_info={
+                            "theme": story_idea.theme,
+                            "tone": story_idea.tone,
+                            "language": story_idea.language,
+                            "thumbnail_options": len(result["thumbnails"].get("options", [])),
+                            "platform_metadata": len(result["metadata"].get("platforms", []))
+                        }
+                    )
+                except Exception as e:
+                    print(f"  ⚠️ Error registering export: {e}")
+            
+            result["success"] = True
+            
+            print(f"\n{'='*60}")
+            print(f"✅ ENHANCED EXPORT COMPLETE!")
+            print(f"{'='*60}\n")
+            
+        except Exception as e:
+            print(f"\n❌ Enhanced export failed: {e}")
+            result["error"] = str(e)
+        
+        return result
+
