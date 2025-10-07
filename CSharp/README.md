@@ -286,6 +286,52 @@ For issues and questions:
 ## ⚙️ Configuration Options
 
 Full configuration reference available in [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md#configuration).
+## ✨ Features (Implemented)
+
+### Video Post-Production 🎬
+
+**Status**: ✅ **Implemented and Ready**
+
+Complete video post-production pipeline for processing raw video segments into polished, social-media-ready content.
+
+**Features:**
+- ✅ Crop videos to 9:16 aspect ratio (1080×1920) at 30fps
+- ✅ Burn-in or soft subtitles from SRT files with safe text margins
+- ✅ Background music mixing with audio ducking during voiceover
+- ✅ Video concatenation with smooth transitions
+- ✅ Final encoding with H.264, 8Mbps bitrate, AAC audio
+- ✅ Automatic output path formatting: `/final/{segment}/{age}/{title_id}_draft.mp4`
+
+**Quick Start:**
+```csharp
+using StoryGenerator.Models;
+using StoryGenerator.Tools;
+
+var producer = new VideoPostProducer();
+var config = new VideoPostProductionConfig
+{
+    SegmentPaths = new List<string> { "video1.mp4", "video2.mp4" },
+    OutputPath = "final/tech/18-23/my_video_draft.mp4",
+    SrtPath = "subtitles.srt",
+    BackgroundMusicPath = "music.mp3",
+    Fps = 30,
+    MusicVolume = 0.2,
+    EnableDucking = true
+};
+
+string output = await producer.ProduceVideoAsync(config);
+```
+
+**Documentation:**
+- [Quick Start Guide](POST_PRODUCTION_QUICKSTART.md) - Get started in 5 minutes
+- [Complete Documentation](POST_PRODUCTION_CSHARP.md) - Full API reference and examples
+- [Example Code](Examples/VideoPostProductionExample.cs) - Working examples
+
+**Requirements:**
+- FFmpeg must be installed and available in PATH
+- .NET 8.0 or later
+
+## 💻 Development
 
 ## 💻 Development Prerequisites
 
@@ -329,8 +375,8 @@ Key differences to be aware of:
 
 ### Phase 1: Core Infrastructure
 - [ ] Set up solution structure
-- [ ] Implement core models
-- [ ] Create service interfaces
+- [x] Implement core models (VideoPostProductionConfig, VideoClip, etc.)
+- [x] Create service interfaces (IVideoPostProducer)
 - [ ] Set up dependency injection
 - [ ] Implement configuration system
 
@@ -340,6 +386,17 @@ Key differences to be aware of:
 - [ ] Port RevisionGenerator
 - [ ] Port EnhancementGenerator
 - [ ] Port VoiceGenerator
+- [x] **Implement VideoPostProducer** ✅
+
+### Phase 2.5: Video Post-Production ✅ **COMPLETED**
+- [x] Crop videos to 9:16 (1080×1920) at 30fps
+- [x] Add subtitle support (burn-in and soft subtitles)
+- [x] Background music mixing with ducking
+- [x] Video concatenation with transitions
+- [x] Safe text margins for subtitles
+- [x] Final encoding with target specifications
+- [x] Output path formatting (/final/{segment}/{age}/{title_id}_draft.mp4)
+- [x] Complete documentation and examples
 
 ### Phase 3: Testing & Quality
 - [ ] Unit tests for all components
