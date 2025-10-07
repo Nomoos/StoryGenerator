@@ -39,6 +39,9 @@ All essential pipeline functionality has been successfully implemented in C# wit
 | Video Synthesis | `GVideo.py` | `LTXVideoSynthesizer.cs` | `CSharp/Generators/` | ✅ Complete |
 | Video Interpolation | `GVideoInterpolator.py` | `KeyframeVideoSynthesizer.cs` | `CSharp/Generators/` | ✅ Complete |
 | Video Composition | `GVideoCompositor.py` | `PipelineOrchestrator` | `CSharp/StoryGenerator.Pipeline/` | ✅ Complete |
+| Incremental Improvement | `GIncrementalImprover.py` | **`IncrementalImprover.cs`** | `CSharp/Generators/` | ✅ **NEW** |
+| Vision Guidance | `GVision.py` | **`VisionGuidanceGenerator.cs`** | `CSharp/Generators/` | ✅ **NEW** |
+| Video Effects | `VideoEffects.py` | **`VideoEffectsService.cs`** | `CSharp/Generators/` | ✅ **NEW** |
 
 ### Core Services & Utilities
 
@@ -163,27 +166,43 @@ cd CSharp/StoryGenerator.Pipeline
 dotnet run -- --config ../../config/pipeline_config.yaml
 ```
 
-## Optional/Advanced Features
+## Advanced Features - NOW IMPLEMENTED ✅
 
-The following Python features are **not** essential for core functionality and have been deliberately excluded:
+The following Python features have now been fully implemented in C#:
 
-### ⚠️ GIncrementalImprover.py
+### ✅ GIncrementalImprover.py → IncrementalImprover.cs
 - **Purpose:** Iterative improvement system for videos
-- **Status:** Not implemented
-- **Rationale:** Advanced feature, not part of core pipeline
-- **Alternative:** Can be added later if needed
+- **Status:** ✅ **Complete** - `CSharp/Generators/IncrementalImprover.cs`
+- **Features:**
+  - Analyzes generated video quality
+  - Identifies issues in scene duration, descriptions, and keyframe coverage
+  - Suggests concrete improvements
+  - Uses GPT for advanced quality assessment based on user feedback
+  - Tracks improvement history with JSON serialization
+  - Calculates overall quality scores
+- **Implementation:** Native C# with OpenAI integration
 
-### ⚠️ GVision.py  
+### ✅ GVision.py → VisionGuidanceGenerator.cs
 - **Purpose:** Vision model integration (LLaVA, Phi-3.5-vision)
-- **Status:** Not implemented
-- **Rationale:** Requires PyTorch/Transformers, complex dependencies
-- **Alternative:** Can shell to Python if needed
+- **Status:** ✅ **Complete** - `CSharp/Generators/VisionGuidanceGenerator.cs`
+- **Features:**
+  - Image captioning using vision-language models
+  - Image quality assessment (technical, composition, clarity)
+  - Storyboard consistency validation across multiple images
+  - Supports multiple models: phi-3.5-vision, llava-onevision
+  - JSON-based result parsing
+- **Implementation:** Shells out to Python for vision model execution (PyTorch/Transformers requirement)
 
-### ⚠️ VideoEffects.py
-- **Purpose:** Advanced video effects (Ken Burns, etc.)
-- **Status:** Partial (basic effects exist)
-- **Rationale:** Can leverage ffmpeg via Python shell
-- **Alternative:** Use existing video composition pipeline
+### ✅ VideoEffects.py → VideoEffectsService.cs
+- **Purpose:** Advanced video effects (Ken Burns, transitions, filters)
+- **Status:** ✅ **Complete** - `CSharp/Generators/VideoEffectsService.cs`
+- **Features:**
+  - Ken Burns effect (zoom and pan on still images)
+  - Video transitions (fade, wipe, dissolve)
+  - Color grading filters (warm, cool, vintage, vibrant)
+  - Text overlays with positioning
+  - All effects via FFmpeg integration
+- **Implementation:** Native C# with FFmpeg shell execution
 
 ## Configuration
 
