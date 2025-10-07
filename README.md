@@ -36,7 +36,7 @@ The complete pipeline consists of 10 major stages:
    - Iteratively improves scripts using GPT or local LLM (qwen2.5_14b)
    - Scores scripts on 8 rubric criteria (Hook, Plot, Dialogue, etc.)
    - Generates improved versions (v2, v3, v4) until quality plateaus
-   - Saves to `data/scripts/gpt_improved/{segment}/{age}/{title_id}_v*.md`
+   - Saves to `data/gpt_improved/{segment}/{age}/{title_id}_v*.md`
    - **[Quick Start Guide](docs/SCRIPT_IMPROVEMENT_QUICKSTART.md)**
 
 4. **✅ Script Revision** (`Generators/GRevise.py`)

@@ -337,7 +337,7 @@ public class ScriptGenerator
 ```csharp
 // BAD
 if (score > 75) { }
-var path = "/scripts/raw_local";
+var path = "/data/raw_local";
 ```
 
 **Fix**: Use constants or configuration

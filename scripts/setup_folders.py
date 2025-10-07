@@ -51,7 +51,7 @@ def create_default_config():
         },
         "folder_structure": {
             "content_folders": ["ideas", "topics", "titles", "scores"],
-            "script_folders": ["scripts/raw_local"],
+            "script_folders": ["data/raw_local"],
             "simple_folders": ["config"]
         }
     }

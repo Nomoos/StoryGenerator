@@ -8,9 +8,9 @@ This document summarizes the C# interfaces and models created to support the scr
 
 The issue requested C# interfaces for:
 
-1. **Generate raw scripts** using local LLM, save in `/scripts/raw_local/{segment}/{age}/{title_id}.md`
+1. **Generate raw scripts** using local LLM, save in `/data/raw_local/{segment}/{age}/{title_id}.md`
 2. **Score scripts** using script_score.py (rubric + narrative cohesion), save in `/scores/{segment}/{age}/{title_id}_script_v0_score.json`
-3. **Apply feedback**, produce iterated script v1, save in `/scripts/iter_local/{segment}/{age}/{title_id}_v1.md`
+3. **Apply feedback**, produce iterated script v1, save in `/data/iter_local/{segment}/{age}/{title_id}_v1.md`
 4. **Score iterated script**, save in `/scores/.../{title_id}_script_v1_score.json`
 
 ## Files Created
@@ -79,8 +79,8 @@ The issue requested C# interfaces for:
    - Proper directory structure management
    - File naming conventions
    - **Key Methods:**
-     - `SaveRawScriptAsync()` - Save to /scripts/raw_local/
-     - `SaveIteratedScriptAsync()` - Save to /scripts/iter_local/
+     - `SaveRawScriptAsync()` - Save to /data/raw_local/
+     - `SaveIteratedScriptAsync()` - Save to /data/iter_local/
      - `LoadScriptAsync()` - Load script content
      - `SaveScriptScoreAsync()` - Save score JSON to /scores/
      - `LoadScriptScoreAsync()` - Load score from JSON
@@ -129,13 +129,13 @@ The interfaces support a complete 4-step workflow:
 
 ```
 1. ILocalScriptGenerator.GenerateRawScriptAsync()
-   ↓ Saves to: /scripts/raw_local/{segment}/{age}/{title_id}.md
+   ↓ Saves to: /data/raw_local/{segment}/{age}/{title_id}.md
 
 2. IScriptScorer.ScoreScriptAsync()
    ↓ Saves to: /scores/{segment}/{age}/{title_id}_script_v0_score.json
 
 3. IScriptIterator.IterateScriptAsync()
-   ↓ Saves to: /scripts/iter_local/{segment}/{age}/{title_id}_v1.md
+   ↓ Saves to: /data/iter_local/{segment}/{age}/{title_id}_v1.md
 
 4. IScriptScorer.ScoreScriptAsync()
    ↓ Saves to: /scores/{segment}/{age}/{title_id}_script_v1_score.json

@@ -16,7 +16,7 @@ This document describes the C# interfaces designed for the script generation, sc
 ┌────────────────────────────────────────────────────────────────┐
 │              1. Generate Raw Scripts (v0)                       │
 │         Using Local LLM (ILocalScriptGenerator)                │
-│    Save: /scripts/raw_local/{segment}/{age}/{title_id}.md     │
+│    Save: /data/raw_local/{segment}/{age}/{title_id}.md     │
 └────────────────────────┬───────────────────────────────────────┘
                          │
                          ▼
@@ -30,7 +30,7 @@ This document describes the C# interfaces designed for the script generation, sc
 ┌────────────────────────────────────────────────────────────────┐
 │           3. Apply Feedback & Iterate (v1)                      │
 │         Improve Script (IScriptIterator)                       │
-│  Save: /scripts/iter_local/{segment}/{age}/{title_id}_v1.md   │
+│  Save: /data/iter_local/{segment}/{age}/{title_id}_v1.md   │
 └────────────────────────┬───────────────────────────────────────┘
                          │
                          ▼
@@ -107,7 +107,7 @@ var script = await generator.GenerateRawScriptAsync(
 var scorer = serviceProvider.GetRequiredService<IScriptScorer>();
 var segment = new AudienceSegment("women", "18-23");
 var result = await scorer.ScoreScriptAsync(
-    scriptPath: "/scripts/raw_local/women/18-23/001.md",
+    scriptPath: "/data/raw_local/women/18-23/001.md",
     titleId: "001",
     version: "v0",
     targetAudience: segment
@@ -138,7 +138,7 @@ var result = await scorer.ScoreScriptAsync(
 ```csharp
 var iterator = serviceProvider.GetRequiredService<IScriptIterator>();
 var improvedScript = await iterator.IterateScriptAsync(
-    originalScriptPath: "/scripts/raw_local/women/18-23/001.md",
+    originalScriptPath: "/data/raw_local/women/18-23/001.md",
     scoringResult: scoreV0,
     targetVersion: "v1"
 );
@@ -152,8 +152,8 @@ var improvedScript = await iterator.IterateScriptAsync(
 **Purpose:** Manage script and score file I/O operations with proper directory structure.
 
 **Key Methods:**
-- `SaveRawScriptAsync()` - Save to /scripts/raw_local/
-- `SaveIteratedScriptAsync()` - Save to /scripts/iter_local/
+- `SaveRawScriptAsync()` - Save to /data/raw_local/
+- `SaveIteratedScriptAsync()` - Save to /data/iter_local/
 - `LoadScriptAsync()` - Load script content
 - `SaveScriptScoreAsync()` - Save score JSON to /scores/
 - `LoadScriptScoreAsync()` - Load score from JSON
@@ -198,7 +198,7 @@ var scriptPath = await fileManager.SaveRawScriptAsync(
     scriptVersion,
     baseScriptsPath: "/scripts"
 );
-// Returns: /scripts/raw_local/women/18-23/001.md
+// Returns: /data/raw_local/women/18-23/001.md
 
 // Save score
 var scorePath = await fileManager.SaveScriptScoreAsync(

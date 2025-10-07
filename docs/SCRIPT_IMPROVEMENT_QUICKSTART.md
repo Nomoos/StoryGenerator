@@ -34,16 +34,16 @@ ollama list
 
 Put your scripts in the appropriate directory:
 ```
-scripts/raw_local/{segment}/{age}/{title_id}.md
+data/raw_local/{segment}/{age}/{title_id}.md
 ```
 
 Example:
 ```bash
 # For men aged 18-23
-mkdir -p scripts/raw_local/men/18-23
+mkdir -p data/raw_local/men/18-23
 echo "# Your Story Title
 
-Your story content here..." > scripts/raw_local/men/18-23/my_story_001.md
+Your story content here..." > data/raw_local/men/18-23/my_story_001.md
 ```
 
 ### 3. Run the Improvement Process
@@ -72,8 +72,8 @@ dotnet run --project ../StoryGenerator.Pipeline/StoryGenerator.Pipeline.csproj -
 
 **Improved scripts are saved to:**
 ```
-scripts/gpt_improved/{segment}/{age}/{title_id}_v2.md
-scripts/gpt_improved/{segment}/{age}/{title_id}_v3.md
+data/gpt_improved/{segment}/{age}/{title_id}_v2.md
+data/gpt_improved/{segment}/{age}/{title_id}_v3.md
 ...
 ```
 
@@ -188,7 +188,7 @@ ollama serve
 - Review the feedback in the score files for specific guidance
 
 ### Scripts not found
-- Verify directory structure: `scripts/raw_local/{segment}/{age}/`
+- Verify directory structure: `data/raw_local/{segment}/{age}/`
 - Check file extension is `.md`
 - Ensure segment is "men" or "women" and age is valid range
 

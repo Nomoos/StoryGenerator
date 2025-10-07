@@ -246,9 +246,9 @@ def batch_process_pipeline(base_path="Generator", config=None):
         ("ideas", "trends"),
         ("topics", "ideas"),
         ("titles", "topics"),
-        ("scripts/raw_local", "topics"),
-        ("scripts/iter_local", "scripts/raw_local"),
-        ("scripts/gpt_improved", "scripts/iter_local"),
+        ("data/raw_local", "topics"),
+        ("data/iter_local", "data/raw_local"),
+        ("data/gpt_improved", "data/iter_local"),
     ]
     
     # Get audience configuration
