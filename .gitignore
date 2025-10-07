@@ -1,121 +1,154 @@
 # StoryGenerator - GitIgnore
 
 # =============================================================================
-# GENERATOR FOLDER - All generation-related artifacts organized under Generator/
+# REORGANIZED STRUCTURE - Updated for clean top-level organization
 # =============================================================================
 
-# Generator folder structure - Ignore all content by default
-Generator/
+# DATA FOLDER - All generation-related artifacts organized under data/
+# =============================================================================
+
+# Data folder structure - Ignore all content by default but keep structure
+data/Generator/
 
 # But keep directory structure with .gitkeep files
-!Generator/**/
-!Generator/**/.gitkeep
-!Generator/**/.test
-!Generator/**/.test.*
+!data/Generator/**/
+!data/Generator/**/.gitkeep
+!data/Generator/**/.test
+!data/Generator/**/.test.*
 
 # Trends in Generator - Keep structure and samples, ignore data files
-Generator/trends/raw/*
-!Generator/trends/raw/.gitkeep
-Generator/trends/processed/*
-!Generator/trends/processed/.gitkeep
-!Generator/trends/samples/
-!Generator/trends/README.md
+data/Generator/trends/raw/*
+!data/Generator/trends/raw/.gitkeep
+data/Generator/trends/processed/*
+!data/Generator/trends/processed/.gitkeep
+!data/Generator/trends/samples/
+!data/Generator/trends/README.md
 
 # Config in Generator
-!Generator/config/
-!Generator/config/*.json
+!data/Generator/config/
+!data/Generator/config/*.json
 
 # =============================================================================
-# LEGACY STRUCTURE - Old folders at root (deprecated, use Generator/ instead)
+# LEGACY STRUCTURE - Old folders at root (deprecated, use data/ instead)
 # =============================================================================
 
 # OUTPUT DIRECTORIES - Content files are ignored, structure is preserved
 # =============================================================================
 
-# Stories output directory (legacy)
-Stories/*
-!Stories/.gitkeep
+# Stories output directory
+data/Stories/*
+!data/Stories/.gitkeep
 
 # New organized folder structure - ignore content but keep structure
 # Pattern: ignore all files except .gitkeep in each directory
 
 # Ideas, topics, titles, scores, final - pattern: {folder}/{gender}/{age}/
 # Ignore all content except .gitkeep, .test, and .test.* files
-ideas/*/*/*
-!ideas/*/*/*/.gitkeep
-!ideas/*/*/*/.test
-!ideas/*/*/*/.test.json
-!ideas/*/*/*/.test.txt
+data/ideas/*/*/*
+!data/ideas/*/*/*/.gitkeep
+!data/ideas/*/*/*/.test
+!data/ideas/*/*/*/.test.json
+!data/ideas/*/*/*/.test.txt
 
-topics/*/*/*
-!topics/*/*/*/.gitkeep
-!topics/*/*/*/.test
-!topics/*/*/*/.test.json
-!topics/*/*/*/.test.txt
+data/topics/*/*/*
+!data/topics/*/*/*/.gitkeep
+!data/topics/*/*/*/.test
+!data/topics/*/*/*/.test.json
+!data/topics/*/*/*/.test.txt
 
-titles/*/*/*
-!titles/*/*/*/.gitkeep
-!titles/*/*/*/.test
-!titles/*/*/*/.test.json
-!titles/*/*/*/.test.txt
+data/titles/*/*/*
+!data/titles/*/*/*/.gitkeep
+!data/titles/*/*/*/.test
+!data/titles/*/*/*/.test.json
+!data/titles/*/*/*/.test.txt
 
-scores/*/*/*
-!scores/*/*/*/.gitkeep
-!scores/*/*/*/.test
-!scores/*/*/*/.test.json
-!scores/*/*/*/.test.txt
+data/scores/*/*/*
+!data/scores/*/*/*/.gitkeep
+!data/scores/*/*/*/.test
+!data/scores/*/*/*/.test.json
+!data/scores/*/*/*/.test.txt
 
-final/*/*/*
-!final/*/*/*/.gitkeep
-!final/*/*/*/.test
+data/final/*/*/*
+!data/final/*/*/*/.gitkeep
+!data/final/*/*/*/.test
 
 # Scripts - pattern: scripts/{type}/{gender}/{age}/
 # Ignore all content except .gitkeep, .test, and .test.* files
-scripts/*/*/*/*
-!scripts/*/*/*/*/.gitkeep
-!scripts/*/*/*/*/.test
-!scripts/*/*/*/*/.test.txt
-!scripts/*/*/*/*/.test.json
+data/scripts/*/*/*/*
+!data/scripts/*/*/*/*/.gitkeep
+!data/scripts/*/*/*/*/.test
+!data/scripts/*/*/*/*/.test.txt
+!data/scripts/*/*/*/*/.test.json
 
 # Voices - pattern: voices/{type}/{gender}/{age}/
 # Ignore all content except .gitkeep, .test, and .test.* files
-voices/*/*/*/*
-!voices/*/*/*/*/.gitkeep
-!voices/*/*/*/*/.test
-!voices/*/*/*/*/.test.json
-!voices/*/*/*/*/.test.txt
+data/voices/*/*/*/*
+!data/voices/*/*/*/*/.gitkeep
+!data/voices/*/*/*/*/.test
+!data/voices/*/*/*/*/.test.json
+!data/voices/*/*/*/*/.test.txt
 
 # Audio - pattern: audio/{type}/{gender}/{age}/
 # All files ignored except .gitkeep and .test
-audio/*/*/*/*
-!audio/*/*/*/*/.gitkeep
-!audio/*/*/*/*/.test
+data/audio/*/*/*/*
+!data/audio/*/*/*/*/.gitkeep
+!data/audio/*/*/*/*/.test
 
 # Subtitles - pattern: subtitles/{type}/{gender}/{age}/
 # All files ignored except .gitkeep, .test, and .test.* samples
-subtitles/*/*/*/*
-!subtitles/*/*/*/*/.gitkeep
-!subtitles/*/*/*/*/.test
-!subtitles/*/*/*/*/.test.srt
+data/subtitles/*/*/*/*
+!data/subtitles/*/*/*/*/.gitkeep
+!data/subtitles/*/*/*/*/.test
+!data/subtitles/*/*/*/*/.test.srt
 
 # Scenes - pattern: scenes/{type}/{gender}/{age}/
 # All files ignored except .gitkeep, .test, and .test.* samples
-scenes/*/*/*/*
-!scenes/*/*/*/*/.gitkeep
-!scenes/*/*/*/*/.test
-!scenes/*/*/*/*/.test.json
+data/scenes/*/*/*/*
+!data/scenes/*/*/*/*/.gitkeep
+!data/scenes/*/*/*/*/.test
+!data/scenes/*/*/*/*/.test.json
 
 # Images - pattern: images/{type}/{gender}/{age}/
 # All files ignored except .gitkeep and .test
-images/*/*/*/*
-!images/*/*/*/*/.gitkeep
-!images/*/*/*/*/.test
+data/images/*/*/*/*
+!data/images/*/*/*/*/.gitkeep
+!data/images/*/*/*/*/.test
 
 # Videos - pattern: videos/{type}/{gender}/{age}/
 # All files ignored except .gitkeep and .test
-videos/*/*/*/*
-!videos/*/*/*/*/.gitkeep
-!videos/*/*/*/*/.test
+data/videos/*/*/*/*
+!data/videos/*/*/*/*/.gitkeep
+!data/videos/*/*/*/*/.test
+
+# Trends - pattern: trends/{raw|processed|gender/age}/
+# Keep structure, sample files, and README, but ignore raw CSV and processed JSON
+data/trends/raw/*
+!data/trends/raw/.gitkeep
+data/trends/processed/*
+!data/trends/processed/.gitkeep
+!data/trends/samples/
+!data/trends/README.md
+data/trends/*/*/*
+!data/trends/*/*/*/.gitkeep
+!data/trends/*/*/*/.test
+
+# Config files (may contain sensitive data)
+data/config/**/*
+!data/config/**/.gitkeep
+!data/config/*.yaml
+!data/config/*.yml
+
+# ASSETS FOLDER - Media assets
+# =============================================================================
+# Ignore most media files but keep structure
+assets/audio/*
+!assets/audio/.gitkeep
+assets/images/*
+!assets/images/.gitkeep
+assets/videos/*
+!assets/videos/.gitkeep
+assets/scenes/*
+!assets/scenes/.gitkeep
 
 # Explicit media file extensions (extra protection)
 *.mp3
@@ -146,32 +179,14 @@ videos/*/*/*/*
 *.mpg
 *.mpeg
 
-# Research - pattern: research/{language}/
+# Research - pattern: src/research/{language}/
 # Keep markdown documentation, ignore research scripts and data
-research/**/*.py
-research/**/*.cs
-research/**/*.csv
-research/**/*.json
-!research/**/.gitkeep
-!research/**/*.md
-
-# Trends - pattern: trends/{raw|processed|gender/age}/
-# Keep structure, sample files, and README, but ignore raw CSV and processed JSON
-trends/raw/*
-!trends/raw/.gitkeep
-trends/processed/*
-!trends/processed/.gitkeep
-!trends/samples/
-!trends/README.md
-trends/*/*/*
-!trends/*/*/*/.gitkeep
-!trends/*/*/*/.test
-
-# Config files (may contain sensitive data)
-config/**/*
-!config/**/.gitkeep
-!config/*.yaml
-!config/*.yml
+src/research/**/*.py
+src/research/**/*.cs
+src/research/**/*.csv
+src/research/**/*.json
+!src/research/**/.gitkeep
+!src/research/**/*.md
 
 # =============================================================================
 # ENVIRONMENT & SECRETS

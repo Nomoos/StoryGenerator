@@ -7,7 +7,9 @@ import ffmpeg
 from Tools.Monitor import logger, PerformanceMonitor, log_error, log_info
 from Tools.Validator import OutputValidator
 
-STORY_ROOT = "C:\\Users\\hittl\\PROJECTS\\VideoMaking\\StoryGenerator\\Stories"
+# Get the root directory of the project (3 levels up from this file: src/Python/Tools/Utils.py)
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+STORY_ROOT = os.path.join(PROJECT_ROOT, "data", "Stories")
 IDEAS_PATH = os.path.join(STORY_ROOT, "0_Ideas")
 SCRIPTS_PATH = os.path.join(STORY_ROOT, "1_Scripts")
 REVISED_PATH = os.path.join(STORY_ROOT, "2_Revised")
