@@ -13,6 +13,8 @@ This project automates the creation of emotional, dramatic vertical stories targ
 - **[docs/MODELS.md](docs/MODELS.md)** - Comprehensive model documentation with Hugging Face references
 - **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples for all pipeline stages
 - **[docs/PIPELINE.md](docs/PIPELINE.md)** - Detailed pipeline breakdown and technical specifications
+- **[docs/MICROSTEP_VALIDATION.md](docs/MICROSTEP_VALIDATION.md)** - Microstep validation and progress tracking system
+- **[docs/MICROSTEP_VALIDATION_QUICKSTART.md](docs/MICROSTEP_VALIDATION_QUICKSTART.md)** - Quick reference for validation system
 - **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Issue tracking and task templates
 - **[docs/INSTALLATION.md](docs/INSTALLATION.md)** - Detailed setup instructions
 - **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common issues and solutions
