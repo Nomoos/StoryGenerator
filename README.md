@@ -265,8 +265,10 @@ This project uses a structured issue tracking system to manage the implementatio
 
 ### Documentation
 
+- **[ISSUE_TRACKING.md](ISSUE_TRACKING.md)** - Issue tracking system overview and workflow
 - **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Complete issue templates for all 10 pipeline stages
 - **[PIPELINE.md](PIPELINE.md)** - Technical breakdown with implementation status
+- **[.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/)** - GitHub issue templates (use when creating issues)
 
 ### 10 Major Pipeline Stages
 
@@ -303,12 +305,21 @@ This project uses a structured issue tracking system to manage the implementatio
 
 ### Creating Issues
 
-Use the templates in [docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md) to create GitHub issues for each component. Each template includes:
+**To create a new child issue**:
+1. Go to the [Issues tab](https://github.com/Nomoos/StoryGenerator/issues)
+2. Click "New Issue"
+3. Select the appropriate stage template (Stage 1-10)
+4. Fill in any additional context
+5. Submit the issue
+
+Each template includes:
 - Clear description and scope
 - Requirements (Must/Should/Nice to have)
 - Detailed subtasks
 - Success criteria
 - Dependencies and references
+
+For detailed information on the issue tracking workflow, see [ISSUE_TRACKING.md](ISSUE_TRACKING.md).
 
 ## 🔐 Security Notes
 
