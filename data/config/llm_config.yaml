@@ -1,0 +1,41 @@
+# LLM Configuration for Title Improvement
+# This file configures how the title improvement system generates variants
+
+# LLM Provider
+# Options: 'ollama' (local LLM) or 'openai' (GPT)
+provider: ollama
+
+# Model Configuration
+# For Ollama, use models like: qwen2.5:14b-instruct, llama3.1, mistral, etc.
+# For OpenAI, use: gpt-4, gpt-4-turbo, gpt-3.5-turbo, etc.
+model: qwen2.5:14b-instruct
+
+# Ollama Server Settings
+# Only used when provider is 'ollama'
+ollama_host: http://localhost:11434
+
+# Generation Parameters
+# Controls creativity and response length
+temperature: 0.7        # 0.0 = deterministic, 1.0 = very creative
+max_tokens: 200         # Maximum tokens in response
+
+# Variant Generation Settings
+# These settings affect how titles are improved
+variant_generation:
+  # Preferred title patterns to use
+  patterns:
+    - question       # "Why...?", "What If...?"
+    - numbered_list  # "5 Ways...", "7 Secrets..."
+    - curiosity_gap  # "You Won't Believe...", "The Truth About..."
+    - personal_story # "How I...", "My Experience..."
+    - authority      # "Everyone...", "Nobody Tells You..."
+  
+  # Target character length range
+  min_length: 40
+  max_length: 60
+  
+  # Optimization goals
+  optimize_for:
+    - clickability
+    - shareability
+    - clarity

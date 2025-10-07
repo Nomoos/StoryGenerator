@@ -16,6 +16,8 @@ This project automates the creation of emotional, dramatic vertical stories targ
 - **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Issue tracking and task templates
 - **[docs/INSTALLATION.md](docs/INSTALLATION.md)** - Detailed setup instructions
 - **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common issues and solutions
+- **[docs/TITLE_IMPROVEMENT.md](docs/TITLE_IMPROVEMENT.md)** - Title variant generation and improvement guide
+- **[docs/TITLE_SCORING.md](docs/TITLE_SCORING.md)** - Title scoring system documentation
 
 ## 🏗️ Pipeline Architecture
 
@@ -38,6 +40,14 @@ The complete pipeline consists of 10 major stages:
    - Generates improved versions (v2, v3, v4) until quality plateaus
    - Saves to `data/gpt_improved/{segment}/{age}/{title_id}_v*.md`
    - **[Quick Start Guide](docs/SCRIPT_IMPROVEMENT_QUICKSTART.md)**
+
+3.5. **✅ Title Improvement** (`scripts/title_improve.py`)
+   - Generates 5 improved title variants using GPT or local LLM
+   - Scores each variant using viral potential rubric
+   - Automatically selects best-performing title
+   - Saves to `data/titles/{segment}/{age}/{title_id}_improved.json`
+   - Maintains centralized title registry with slugs and change tracking
+   - **[Title Improvement Guide](docs/TITLE_IMPROVEMENT.md)**
 
 4. **✅ Script Revision** (`Generators/GRevise.py`)
    - Polishes scripts for AI voice clarity
