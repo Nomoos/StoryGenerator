@@ -338,3 +338,8 @@ artifacts/
 *.pdb
 *.runtimeconfig.json
 *.deps.json
+
+# Test output files
+test_story_*
+CSharp/Tests/SceneBeatsTest/bin/
+CSharp/Tests/SceneBeatsTest/obj/
