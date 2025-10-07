@@ -1,10 +1,15 @@
 import os
 import json
 import subprocess
-from typing import List, Optional
+import shutil
+from typing import List, Optional, Tuple
 from Models.StoryIdea import StoryIdea
 from Generators.GSceneAnalyzer import SceneAnalyzer
-from Tools.Utils import TITLES_PATH, sanitize_filename
+from Tools.Utils import (
+    TITLES_PATH, sanitize_filename, 
+    get_segment_from_gender, get_age_group_from_potencial,
+    generate_title_id, get_final_export_path
+)
 from Tools.VideoEffects import VideoEffects
 
 
@@ -104,6 +109,16 @@ class VideoCompositor:
                     pass
         
         print(f"✅ Final video created: {output_path}")
+        
+        # Step 6: Export to production directory with thumbnail and metadata
+        print("\n  6️⃣ Exporting to production directory...")
+        self.export_final_video(
+            story_idea=story_idea,
+            source_video_path=output_path,
+            export_thumbnail=True,
+            export_metadata=True
+        )
+        
         return output_path
 
     def _concatenate_video_segments(self, segments_dir: str, output_path: str):
@@ -382,6 +397,200 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             '-c:v', 'copy',
             '-c:a', 'aac',
             '-b:a', '192k',
+            output_path
+        ]
+        
+        subprocess.run(cmd, check=True, capture_output=True)
+
+    def export_final_video(
+        self,
+        story_idea: StoryIdea,
+        source_video_path: str,
+        export_thumbnail: bool = True,
+        export_metadata: bool = True
+    ) -> Tuple[str, str, str]:
+        """
+        Export final video to /final/{segment}/{age}/{title_id}.mp4 with thumbnail and metadata.
+        
+        Args:
+            story_idea: StoryIdea object with story information
+            source_video_path: Path to the composed final video
+            export_thumbnail: Whether to generate and export thumbnail
+            export_metadata: Whether to generate and export metadata JSON
+            
+        Returns:
+            Tuple of (video_path, thumbnail_path, metadata_path)
+        """
+        print(f"\n📦 Exporting final video to production directory...")
+        
+        # Extract segment and age group from story idea
+        segment = get_segment_from_gender(story_idea.narrator_gender)
+        age_group = get_age_group_from_potencial(story_idea.potencial)
+        title_id = generate_title_id(story_idea.story_title)
+        
+        print(f"  📊 Segment: {segment}")
+        print(f"  📊 Age Group: {age_group}")
+        print(f"  🆔 Title ID: {title_id}")
+        
+        # Define export paths
+        video_filename = f"{title_id}.mp4"
+        thumbnail_filename = f"{title_id}_thumbnail.jpg"
+        metadata_filename = f"{title_id}_metadata.json"
+        
+        export_video_path = get_final_export_path(
+            story_idea.story_title, segment, age_group, video_filename
+        )
+        export_thumbnail_path = get_final_export_path(
+            story_idea.story_title, segment, age_group, thumbnail_filename
+        )
+        export_metadata_path = get_final_export_path(
+            story_idea.story_title, segment, age_group, metadata_filename
+        )
+        
+        # Copy video to export location
+        print(f"  1️⃣ Copying video to: {export_video_path}")
+        shutil.copy2(source_video_path, export_video_path)
+        print(f"  ✅ Video exported successfully")
+        
+        # Generate and export thumbnail
+        thumbnail_path = None
+        if export_thumbnail:
+            print(f"  2️⃣ Generating thumbnail (1080x1920)...")
+            success = self._generate_thumbnail(export_video_path, export_thumbnail_path)
+            if success:
+                thumbnail_path = export_thumbnail_path
+                print(f"  ✅ Thumbnail exported: {export_thumbnail_path}")
+            else:
+                print(f"  ⚠️ Failed to generate thumbnail")
+        
+        # Generate and export metadata
+        metadata_path = None
+        if export_metadata:
+            print(f"  3️⃣ Generating metadata JSON...")
+            success = self._generate_metadata(
+                story_idea, export_metadata_path, title_id, segment, age_group
+            )
+            if success:
+                metadata_path = export_metadata_path
+                print(f"  ✅ Metadata exported: {export_metadata_path}")
+            else:
+                print(f"  ⚠️ Failed to generate metadata")
+        
+        print(f"\n✅ Export complete!")
+        print(f"  📹 Video: {export_video_path}")
+        if thumbnail_path:
+            print(f"  📸 Thumbnail: {thumbnail_path}")
+        if metadata_path:
+            print(f"  📄 Metadata: {metadata_path}")
+        
+        return export_video_path, thumbnail_path, metadata_path
+    
+    def _generate_thumbnail(self, video_path: str, output_path: str, 
+                          timestamp: float = 0.5) -> bool:
+        """
+        Generate thumbnail from video at specified timestamp.
+        
+        Args:
+            video_path: Path to video file
+            output_path: Path to save thumbnail
+            timestamp: Timestamp in seconds to extract frame
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            cmd = [
+                'ffmpeg', '-y',
+                '-ss', str(timestamp),
+                '-i', video_path,
+                '-vframes', '1',
+                '-vf', f'scale={self.width}:{self.height}',
+                '-q:v', '2',  # High quality JPEG
+                output_path
+            ]
+            
+            subprocess.run(cmd, check=True, capture_output=True)
+            return True
+            
+        except subprocess.CalledProcessError as e:
+            print(f"  ❌ FFmpeg error generating thumbnail: {e}")
+            return False
+        except Exception as e:
+            print(f"  ❌ Error generating thumbnail: {e}")
+            return False
+    
+    def _generate_metadata(
+        self,
+        story_idea: StoryIdea,
+        output_path: str,
+        title_id: str,
+        segment: str,
+        age_group: str
+    ) -> bool:
+        """
+        Generate metadata JSON file for the video.
+        
+        Args:
+            story_idea: StoryIdea object
+            output_path: Path to save metadata JSON
+            title_id: Unique title ID
+            segment: Segment (gender)
+            age_group: Target age group
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            # Generate tags from story attributes
+            tags = []
+            if story_idea.theme:
+                tags.append(story_idea.theme)
+            if story_idea.tone:
+                tags.append(story_idea.tone)
+            if story_idea.narrator_type:
+                tags.append(story_idea.narrator_type)
+            
+            # Add generic tags
+            tags.extend(['shorts', 'viral', 'story'])
+            
+            # Generate description
+            description = f"{story_idea.story_title}\n\n"
+            if story_idea.theme:
+                description += f"Theme: {story_idea.theme}\n"
+            if story_idea.tone:
+                description += f"Tone: {story_idea.tone}\n"
+            if story_idea.goal:
+                description += f"\n{story_idea.goal}\n"
+            
+            # Create metadata dictionary
+            metadata = {
+                "title_id": title_id,
+                "title": story_idea.story_title,
+                "description": description.strip(),
+                "tags": tags,
+                "segment": segment,
+                "age_group": age_group,
+                "narrator_gender": story_idea.narrator_gender,
+                "theme": story_idea.theme,
+                "tone": story_idea.tone,
+                "language": story_idea.language,
+                "potencial_score": story_idea.potencial.get("overall", 0),
+                "video_format": {
+                    "resolution": f"{self.width}x{self.height}",
+                    "aspect_ratio": "9:16",
+                    "format": "mp4"
+                }
+            }
+            
+            # Write metadata to JSON file
+            with open(output_path, 'w', encoding='utf-8') as f:
+                json.dump(metadata, f, indent=2, ensure_ascii=False)
+            
+            return True
+            
+        except Exception as e:
+            print(f"  ❌ Error generating metadata: {e}")
+            return False
             output_path
         ]
         
