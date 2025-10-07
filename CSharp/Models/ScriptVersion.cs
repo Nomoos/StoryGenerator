@@ -5,8 +5,9 @@ namespace StoryGenerator.Models
     /// <summary>
     /// Represents a version of a script with tracking information.
     /// Used to manage script iterations and improvements.
+    /// Implements ICloneable for the Prototype pattern to enable deep cloning.
     /// </summary>
-    public class ScriptVersion
+    public class ScriptVersion : ICloneable
     {
         /// <summary>
         /// Gets or sets the version identifier (e.g., "v0", "v1", "v2").
@@ -88,5 +89,34 @@ namespace StoryGenerator.Models
         /// </summary>
         /// <returns>Formatted version string</returns>
         public override string ToString() => $"{TitleId}_{Version} ({TargetAudience})";
+
+        /// <summary>
+        /// Creates a deep clone of this script version.
+        /// Implements the Prototype pattern for creating independent copies.
+        /// </summary>
+        /// <returns>A new ScriptVersion instance with copied values</returns>
+        public object Clone()
+        {
+            return new ScriptVersion
+            {
+                Version = Version,
+                TitleId = TitleId,
+                Title = Title,
+                Content = Content,
+                FilePath = FilePath,
+                TargetAudience = new AudienceSegment(TargetAudience.Gender, TargetAudience.Age),
+                CreatedAt = CreatedAt,
+                PreviousVersion = PreviousVersion,
+                Score = Score,
+                AppliedFeedback = AppliedFeedback,
+                GenerationSource = GenerationSource
+            };
+        }
+
+        /// <summary>
+        /// Creates a strongly-typed deep clone of this script version.
+        /// </summary>
+        /// <returns>A new ScriptVersion instance with copied values</returns>
+        public ScriptVersion DeepClone() => (ScriptVersion)Clone();
     }
 }

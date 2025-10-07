@@ -338,3 +338,4 @@ artifacts/
 *.pdb
 *.runtimeconfig.json
 *.deps.json
+/CSharp/PostProductionTest/
