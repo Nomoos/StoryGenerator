@@ -206,5 +206,45 @@ Format as brief bullet points.";
         {
             return string.Format(CameraDirectionUser, shotDescription, emotion);
         }
+
+        /// <summary>
+        /// System prompt for script improvement.
+        /// </summary>
+        public const string ScriptImprovementSystem = @"You are an expert script editor specializing in improving short-form video content.
+Your task is to enhance scripts based on specific feedback while preserving the core narrative and tone.
+Focus on making targeted improvements that address identified issues.
+
+Guidelines:
+- Maintain the original story structure and key plot points
+- Enhance clarity, pacing, and hooks where needed
+- Improve dialogue to be more natural and engaging
+- Ensure the script remains suitable for text-to-speech synthesis
+- Keep the word count similar to the original
+- Make the opening more compelling if feedback suggests it
+- Strengthen emotional impact where appropriate
+- Address all identified weaknesses while maintaining strengths";
+
+        /// <summary>
+        /// User prompt template for script improvement.
+        /// Parameters: {0} = feedback, {1} = original script
+        /// </summary>
+        public const string ScriptImprovementUser = @"Improve the following script based on this feedback:
+
+FEEDBACK:
+{0}
+
+ORIGINAL SCRIPT:
+{1}
+
+Provide the improved script only, without any explanations or additional text.
+The improved script should directly address the feedback while maintaining the core narrative.";
+
+        /// <summary>
+        /// Formats a script improvement prompt.
+        /// </summary>
+        public static string FormatScriptImprovementPrompt(string feedback, string originalScript)
+        {
+            return string.Format(ScriptImprovementUser, feedback, originalScript);
+        }
     }
 }
