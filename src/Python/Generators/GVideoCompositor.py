@@ -6,6 +6,7 @@ from Models.StoryIdea import StoryIdea
 from Generators.GSceneAnalyzer import SceneAnalyzer
 from Tools.Utils import TITLES_PATH, sanitize_filename
 from Tools.VideoEffects import VideoEffects
+from Tools.VideoQualityChecker import VideoQualityChecker
 
 
 class VideoCompositor:
@@ -15,7 +16,8 @@ class VideoCompositor:
     """
 
     def __init__(self, output_format: str = "mp4", enable_transitions: bool = True, 
-                 transition_duration: float = 0.5, apply_ken_burns: bool = False):
+                 transition_duration: float = 0.5, apply_ken_burns: bool = False,
+                 perform_quality_check: bool = True):
         """
         Initialize video compositor
         
@@ -24,6 +26,7 @@ class VideoCompositor:
             enable_transitions: Enable smooth transitions between clips (default: True)
             transition_duration: Duration of transitions in seconds (default: 0.5)
             apply_ken_burns: Apply Ken Burns effect to static images (default: False)
+            perform_quality_check: Perform quality check on final video (default: True)
         """
         self.output_format = output_format
         self.analyzer = SceneAnalyzer()
@@ -33,6 +36,8 @@ class VideoCompositor:
         self.transition_duration = transition_duration
         self.apply_ken_burns = apply_ken_burns
         self.video_effects = VideoEffects()
+        self.perform_quality_check = perform_quality_check
+        self.quality_checker = VideoQualityChecker() if perform_quality_check else None
 
     def compose_final_video(
         self,
@@ -104,6 +109,23 @@ class VideoCompositor:
                     pass
         
         print(f"✅ Final video created: {output_path}")
+        
+        # Perform quality check on final video
+        if self.perform_quality_check and self.quality_checker:
+            print("  6️⃣ Running quality check...")
+            title_id = sanitize_filename(story_idea.story_title)
+            qc_passed, qc_report = self.quality_checker.check_video_quality(
+                output_path,
+                title_id=title_id,
+                save_report=True
+            )
+            
+            if qc_passed:
+                print(f"  ✅ Quality check passed! Score: {qc_report['quality_score']}/100")
+            else:
+                print(f"  ⚠️ Quality check warnings detected. Score: {qc_report['quality_score']}/100")
+                print(f"     Check report at: {qc_report.get('report_path', 'N/A')}")
+        
         return output_path
 
     def _concatenate_video_segments(self, segments_dir: str, output_path: str):
