@@ -13,6 +13,7 @@ This project automates the creation of emotional, dramatic vertical stories targ
 - **[docs/MODELS.md](docs/MODELS.md)** - Comprehensive model documentation with Hugging Face references
 - **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples for all pipeline stages
 - **[docs/PIPELINE.md](docs/PIPELINE.md)** - Detailed pipeline breakdown and technical specifications
+- **[docs/VIDEO_EXPORT.md](docs/VIDEO_EXPORT.md)** - Video export and metadata generation guide
 - **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Issue tracking and task templates
 - **[docs/INSTALLATION.md](docs/INSTALLATION.md)** - Detailed setup instructions
 - **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common issues and solutions
@@ -63,6 +64,13 @@ The complete pipeline consists of 10 major stages:
    - WhisperX for word-level alignment
    - Generates word-by-word SRT files
    - Aligns script to actual audio timing
+
+7. **✅ Video Export & Metadata** (`Generators/GVideoCompositor.py`)
+   - Exports final videos to organized production directory
+   - Automatic thumbnail generation (1080×1920)
+   - Metadata JSON with title, description, tags, and targeting info
+   - Path structure: `/data/final/{segment}/{age}/{title_id}.{mp4|jpg|json}`
+   - **[Export Guide](docs/VIDEO_EXPORT.md)**
 
 ### Planned Implementation
 
