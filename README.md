@@ -12,7 +12,7 @@ This project automates the creation of emotional, dramatic vertical stories targ
 - **[README.md](README.md)** (this file) - Overview and quick start
 - **[docs/MODELS.md](docs/MODELS.md)** - Comprehensive model documentation with Hugging Face references
 - **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples for all pipeline stages
-- **[PIPELINE.md](PIPELINE.md)** - Detailed pipeline breakdown and technical specifications
+- **[docs/PIPELINE.md](docs/PIPELINE.md)** - Detailed pipeline breakdown and technical specifications
 - **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Issue tracking and task templates
 - **[docs/INSTALLATION.md](docs/INSTALLATION.md)** - Detailed setup instructions
 - **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common issues and solutions
@@ -32,12 +32,12 @@ The complete pipeline consists of 10 major stages:
    - Optimized for spoken content with emotional hooks
    - Natural, conversational language
 
-3. **✅ Script Improvement** (C# Implementation - `CSharp/Tools/`)
+3. **✅ Script Improvement** (C# Implementation - `src/CSharp/Tools/`)
    - Iteratively improves scripts using GPT or local LLM (qwen2.5_14b)
    - Scores scripts on 8 rubric criteria (Hook, Plot, Dialogue, etc.)
    - Generates improved versions (v2, v3, v4) until quality plateaus
-   - Saves to `/scripts/gpt_improved/{segment}/{age}/{title_id}_v*.md`
-   - **[Quick Start Guide](SCRIPT_IMPROVEMENT_QUICKSTART.md)**
+   - Saves to `data/scripts/gpt_improved/{segment}/{age}/{title_id}_v*.md`
+   - **[Quick Start Guide](docs/SCRIPT_IMPROVEMENT_QUICKSTART.md)**
 
 4. **✅ Script Revision** (`Generators/GRevise.py`)
    - Polishes scripts for AI voice clarity
@@ -185,19 +185,45 @@ For detailed examples of inputs and outputs at each pipeline stage, including:
 
 ## 📁 Project Structure
 
+The project follows a clean, organized structure:
+
 ```
 StoryGenerator/
-├── Generators/          # Core pipeline generators
-│   ├── GStoryIdeas.py  # Story idea generation
-│   ├── GScript.py      # Initial script generation
-│   ├── GRevise.py      # Script revision
-│   ├── GVoice.py       # Voice synthesis
-│   ├── GTitles.py      # Subtitle generation
-│   └── GEnhanceScript.py
-├── Models/              # Data models
-│   └── StoryIdea.py    # Story metadata model
-├── Tools/               # Utility functions
-│   └── Utils.py        # Path management, file utilities
+├── src/                    # Source code
+│   ├── Python/            # Python implementation
+│   │   ├── Generators/   # Core pipeline generators
+│   │   │   ├── GStoryIdeas.py  # Story idea generation
+│   │   │   ├── GScript.py      # Initial script generation
+│   │   │   ├── GRevise.py      # Script revision
+│   │   │   ├── GVoice.py       # Voice synthesis
+│   │   │   └── GTitles.py      # Subtitle generation
+│   │   ├── Models/       # Data models
+│   │   │   └── StoryIdea.py    # Story metadata model
+│   │   └── Tools/        # Utility functions
+│   │       └── Utils.py  # Path management, file utilities
+│   ├── CSharp/            # C# implementation
+│   │   ├── Generators/   # Video effects, compositing
+│   │   ├── Tools/        # Script improvement, FFmpeg
+│   │   └── Models/       # C# data models
+│   ├── Generator/         # Legacy generator code
+│   └── research/          # Research prototypes and experiments
+├── tests/                 # Test files
+├── scripts/               # Utility scripts and automation
+├── docs/                  # Documentation
+├── examples/              # Example scripts and demos
+├── data/                  # Generated content and data files
+│   ├── Stories/          # Story outputs (0_Ideas, 1_Scripts, etc.)
+│   ├── config/           # Configuration files
+│   ├── prompts/          # LLM prompts
+│   └── ...               # Other data directories
+├── assets/                # Media assets
+│   ├── audio/            # Audio files
+│   ├── images/           # Image assets
+│   ├── videos/           # Video files
+│   └── scenes/           # Scene data
+├── README.md              # This file
+├── QUICKSTART.md          # Quick start guide
+└── requirements.txt       # Python dependencies
 ├── Generation/          # Manual generation scripts
 │   └── Manual/         # Individual component tests
 └── Stories/            # Output directory (gitignored)
