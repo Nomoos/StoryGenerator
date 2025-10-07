@@ -13,6 +13,7 @@ namespace StoryGenerator.Tools
     /// <summary>
     /// Scores scripts based on rubric criteria and narrative cohesion.
     /// Uses LLM to evaluate script quality and provide detailed feedback.
+    /// Implements the Single Responsibility Principle - only handles script scoring.
     /// </summary>
     public class ScriptScorer : IScriptScorer
     {
@@ -20,6 +21,13 @@ namespace StoryGenerator.Tools
         private readonly IScriptFileManager _fileManager;
         private readonly string _scoringModel;
 
+        /// <summary>
+        /// Initializes a new instance of the ScriptScorer class.
+        /// </summary>
+        /// <param name="modelProvider">The LLM model provider for scoring</param>
+        /// <param name="fileManager">The file manager for loading scripts</param>
+        /// <param name="scoringModel">Optional model name to use for scoring</param>
+        /// <exception cref="ArgumentNullException">Thrown when required dependencies are null</exception>
         public ScriptScorer(ILLMModelProvider modelProvider, IScriptFileManager fileManager, string? scoringModel = null)
         {
             _modelProvider = modelProvider ?? throw new ArgumentNullException(nameof(modelProvider));
@@ -34,6 +42,15 @@ namespace StoryGenerator.Tools
             AudienceSegment targetAudience,
             CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(scriptPath))
+                throw new ArgumentException("Script path cannot be null or empty", nameof(scriptPath));
+            if (string.IsNullOrWhiteSpace(titleId))
+                throw new ArgumentException("Title ID cannot be null or empty", nameof(titleId));
+            if (string.IsNullOrWhiteSpace(version))
+                throw new ArgumentException("Version cannot be null or empty", nameof(version));
+            if (targetAudience == null)
+                throw new ArgumentNullException(nameof(targetAudience));
+
             var content = await _fileManager.LoadScriptAsync(scriptPath, cancellationToken);
             return await ScoreScriptContentAsync(content, titleId, version, targetAudience, cancellationToken);
         }
@@ -45,6 +62,14 @@ namespace StoryGenerator.Tools
             AudienceSegment targetAudience,
             CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(scriptContent))
+                throw new ArgumentException("Script content cannot be null or empty", nameof(scriptContent));
+            if (string.IsNullOrWhiteSpace(titleId))
+                throw new ArgumentException("Title ID cannot be null or empty", nameof(titleId));
+            if (string.IsNullOrWhiteSpace(version))
+                throw new ArgumentException("Version cannot be null or empty", nameof(version));
+            if (targetAudience == null)
+                throw new ArgumentNullException(nameof(targetAudience));
             var systemPrompt = @"You are an expert script evaluator specializing in short-form video content.
 You analyze scripts using a detailed rubric and provide constructive feedback for improvement.
 Your evaluations are objective, specific, and actionable.

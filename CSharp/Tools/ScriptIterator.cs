@@ -13,6 +13,7 @@ namespace StoryGenerator.Tools
     /// <summary>
     /// Iterates and improves scripts based on feedback.
     /// Takes scored scripts and produces improved versions using LLM.
+    /// Implements the Single Responsibility Principle - only handles script iteration.
     /// </summary>
     public class ScriptIterator : IScriptIterator
     {
@@ -20,6 +21,13 @@ namespace StoryGenerator.Tools
         private readonly IScriptFileManager _fileManager;
         private readonly string _iterationModel;
 
+        /// <summary>
+        /// Initializes a new instance of the ScriptIterator class.
+        /// </summary>
+        /// <param name="modelProvider">The LLM model provider for generating improvements</param>
+        /// <param name="fileManager">The file manager for loading scripts</param>
+        /// <param name="iterationModel">Optional model name to use for iteration</param>
+        /// <exception cref="ArgumentNullException">Thrown when required dependencies are null</exception>
         public ScriptIterator(ILLMModelProvider modelProvider, IScriptFileManager fileManager, string? iterationModel = null)
         {
             _modelProvider = modelProvider ?? throw new ArgumentNullException(nameof(modelProvider));
@@ -33,6 +41,13 @@ namespace StoryGenerator.Tools
             string targetVersion,
             CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(originalScriptPath))
+                throw new ArgumentException("Script path cannot be null or empty", nameof(originalScriptPath));
+            if (scoringResult == null)
+                throw new ArgumentNullException(nameof(scoringResult));
+            if (string.IsNullOrWhiteSpace(targetVersion))
+                throw new ArgumentException("Target version cannot be null or empty", nameof(targetVersion));
+
             var originalContent = await _fileManager.LoadScriptAsync(originalScriptPath, cancellationToken);
             
             var feedback = BuildIterationFeedback(scoringResult);
@@ -54,6 +69,16 @@ namespace StoryGenerator.Tools
             AudienceSegment targetAudience,
             CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(originalScriptPath))
+                throw new ArgumentException("Script path cannot be null or empty", nameof(originalScriptPath));
+            if (string.IsNullOrWhiteSpace(feedback))
+                throw new ArgumentException("Feedback cannot be null or empty", nameof(feedback));
+            if (string.IsNullOrWhiteSpace(titleId))
+                throw new ArgumentException("Title ID cannot be null or empty", nameof(titleId));
+            if (string.IsNullOrWhiteSpace(targetVersion))
+                throw new ArgumentException("Target version cannot be null or empty", nameof(targetVersion));
+            if (targetAudience == null)
+                throw new ArgumentNullException(nameof(targetAudience));
             var originalContent = await _fileManager.LoadScriptAsync(originalScriptPath, cancellationToken);
             
             var improvedContent = await ApplyImprovementsAsync(

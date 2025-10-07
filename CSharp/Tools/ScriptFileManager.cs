@@ -13,11 +13,15 @@ namespace StoryGenerator.Tools
     /// <summary>
     /// Manages script file I/O operations.
     /// Handles reading, writing, and organizing scripts in the proper directory structure.
+    /// Implements the Single Responsibility Principle - only handles file operations.
     /// </summary>
     public class ScriptFileManager : IScriptFileManager
     {
         private readonly JsonSerializerOptions _jsonOptions;
 
+        /// <summary>
+        /// Initializes a new instance of the ScriptFileManager class.
+        /// </summary>
         public ScriptFileManager()
         {
             _jsonOptions = new JsonSerializerOptions
@@ -32,6 +36,10 @@ namespace StoryGenerator.Tools
             string baseScriptsPath,
             CancellationToken cancellationToken = default)
         {
+            if (scriptVersion == null)
+                throw new ArgumentNullException(nameof(scriptVersion));
+            if (string.IsNullOrWhiteSpace(baseScriptsPath))
+                throw new ArgumentException("Base scripts path cannot be null or empty", nameof(baseScriptsPath));
             var directory = EnsureScriptDirectory(baseScriptsPath, scriptVersion.TargetAudience, "raw_local");
             var fileName = GenerateScriptFileName(scriptVersion.TitleId);
             var filePath = Path.Combine(directory, fileName);
@@ -47,6 +55,10 @@ namespace StoryGenerator.Tools
             string baseScriptsPath,
             CancellationToken cancellationToken = default)
         {
+            if (scriptVersion == null)
+                throw new ArgumentNullException(nameof(scriptVersion));
+            if (string.IsNullOrWhiteSpace(baseScriptsPath))
+                throw new ArgumentException("Base scripts path cannot be null or empty", nameof(baseScriptsPath));
             // Save to gpt_improved directory instead of iter_local
             var directory = EnsureScriptDirectory(baseScriptsPath, scriptVersion.TargetAudience, "gpt_improved");
             var fileName = GenerateScriptFileName(scriptVersion.TitleId, scriptVersion.Version);
@@ -62,6 +74,8 @@ namespace StoryGenerator.Tools
             string scriptPath,
             CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(scriptPath))
+                throw new ArgumentException("Script path cannot be null or empty", nameof(scriptPath));
             if (!File.Exists(scriptPath))
             {
                 throw new FileNotFoundException($"Script file not found: {scriptPath}");
@@ -75,6 +89,10 @@ namespace StoryGenerator.Tools
             string baseScoresPath,
             CancellationToken cancellationToken = default)
         {
+            if (scoringResult == null)
+                throw new ArgumentNullException(nameof(scoringResult));
+            if (string.IsNullOrWhiteSpace(baseScoresPath))
+                throw new ArgumentException("Base scores path cannot be null or empty", nameof(baseScoresPath));
             var directory = EnsureScoreDirectory(baseScoresPath, scoringResult.TargetAudience);
             var fileName = GenerateScoreFileName(scoringResult.TitleId, scoringResult.Version);
             var filePath = Path.Combine(directory, fileName);
@@ -89,6 +107,8 @@ namespace StoryGenerator.Tools
             string scorePath,
             CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(scorePath))
+                throw new ArgumentException("Score path cannot be null or empty", nameof(scorePath));
             if (!File.Exists(scorePath))
             {
                 throw new FileNotFoundException($"Score file not found: {scorePath}");
@@ -110,6 +130,10 @@ namespace StoryGenerator.Tools
             string pattern = "*.md",
             CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(directory))
+                throw new ArgumentException("Directory cannot be null or empty", nameof(directory));
+            if (string.IsNullOrWhiteSpace(pattern))
+                throw new ArgumentException("Pattern cannot be null or empty", nameof(pattern));
             if (!Directory.Exists(directory))
             {
                 return Task.FromResult(Enumerable.Empty<string>());
@@ -121,6 +145,12 @@ namespace StoryGenerator.Tools
 
         public string EnsureScriptDirectory(string basePath, AudienceSegment segment, string scriptType)
         {
+            if (string.IsNullOrWhiteSpace(basePath))
+                throw new ArgumentException("Base path cannot be null or empty", nameof(basePath));
+            if (segment == null)
+                throw new ArgumentNullException(nameof(segment));
+            if (string.IsNullOrWhiteSpace(scriptType))
+                throw new ArgumentException("Script type cannot be null or empty", nameof(scriptType));
             var directory = Path.Combine(basePath, "scripts", scriptType, segment.Gender, segment.Age);
             
             if (!Directory.Exists(directory))
@@ -133,6 +163,10 @@ namespace StoryGenerator.Tools
 
         public string EnsureScoreDirectory(string basePath, AudienceSegment segment)
         {
+            if (string.IsNullOrWhiteSpace(basePath))
+                throw new ArgumentException("Base path cannot be null or empty", nameof(basePath));
+            if (segment == null)
+                throw new ArgumentNullException(nameof(segment));
             var directory = Path.Combine(basePath, "scores", segment.Gender, segment.Age);
             
             if (!Directory.Exists(directory))
@@ -145,6 +179,8 @@ namespace StoryGenerator.Tools
 
         public string GenerateScriptFileName(string titleId, string? version = null)
         {
+            if (string.IsNullOrWhiteSpace(titleId))
+                throw new ArgumentException("Title ID cannot be null or empty", nameof(titleId));
             if (string.IsNullOrEmpty(version))
             {
                 return $"{titleId}.md";
@@ -155,6 +191,10 @@ namespace StoryGenerator.Tools
 
         public string GenerateScoreFileName(string titleId, string version)
         {
+            if (string.IsNullOrWhiteSpace(titleId))
+                throw new ArgumentException("Title ID cannot be null or empty", nameof(titleId));
+            if (string.IsNullOrWhiteSpace(version))
+                throw new ArgumentException("Version cannot be null or empty", nameof(version));
             return $"{titleId}_script_{version}_score.json";
         }
     }

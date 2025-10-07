@@ -13,6 +13,8 @@ namespace StoryGenerator.Tools
     /// <summary>
     /// Orchestrates the script improvement process.
     /// Improves scripts using GPT or local LLM, scores them, and iterates until improvement plateaus.
+    /// Implements the Facade pattern to provide a simple interface for complex script improvement operations.
+    /// Follows SOLID principles with dependency injection and single responsibility.
     /// </summary>
     public class ScriptImprover
     {
@@ -22,9 +24,27 @@ namespace StoryGenerator.Tools
         private readonly IScriptFileManager _fileManager;
         private readonly string _baseScriptsPath;
         private readonly string _baseScoresPath;
-        private const double ImprovementThreshold = 2.0; // Minimum improvement needed to continue iterating
-        private const int MaxIterations = 5; // Maximum v2, v3, v4, v5, v6
+        
+        /// <summary>
+        /// Minimum improvement threshold (in points) required to continue iterating.
+        /// </summary>
+        private const double ImprovementThreshold = 2.0;
+        
+        /// <summary>
+        /// Maximum number of iterations (v2, v3, v4, v5, v6).
+        /// </summary>
+        private const int MaxIterations = 5;
 
+        /// <summary>
+        /// Initializes a new instance of the ScriptImprover class.
+        /// </summary>
+        /// <param name="modelProvider">The LLM model provider</param>
+        /// <param name="scriptScorer">The script scorer for evaluation</param>
+        /// <param name="scriptIterator">The script iterator for improvements</param>
+        /// <param name="fileManager">The file manager for I/O operations</param>
+        /// <param name="baseScriptsPath">Base path for scripts directory</param>
+        /// <param name="baseScoresPath">Base path for scores directory</param>
+        /// <exception cref="ArgumentNullException">Thrown when required dependencies are null</exception>
         public ScriptImprover(
             ILLMModelProvider modelProvider,
             IScriptScorer scriptScorer,
@@ -48,6 +68,21 @@ namespace StoryGenerator.Tools
         /// <param name="titleId">The title ID</param>
         /// <param name="targetAudience">Target audience segment</param>
         /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>The best script version achieved</returns>
+        /// <exception cref="ArgumentException">Thrown when parameters are invalid</exception>
+        /// <exception cref="ArgumentNullException">Thrown when required parameters are null</exception>
+        public async Task<ScriptVersion> ImproveScriptAsync(
+            string originalScriptPath,
+            string titleId,
+            AudienceSegment targetAudience,
+            CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(originalScriptPath))
+                throw new ArgumentException("Script path cannot be null or empty", nameof(originalScriptPath));
+            if (string.IsNullOrWhiteSpace(titleId))
+                throw new ArgumentException("Title ID cannot be null or empty", nameof(titleId));
+            if (targetAudience == null)
+                throw new ArgumentNullException(nameof(targetAudience));
         /// <returns>The best script version achieved</returns>
         public async Task<ScriptVersion> ImproveScriptAsync(
             string originalScriptPath,
