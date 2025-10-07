@@ -3,12 +3,14 @@ using StoryGenerator.Pipeline.Config;
 namespace StoryGenerator.Pipeline.Core;
 
 /// <summary>
-/// Pipeline logger with configurable output
+/// Pipeline logger with configurable output.
+/// Implements IDisposable for proper resource cleanup.
 /// </summary>
-public class PipelineLogger
+public class PipelineLogger : IDisposable
 {
     private readonly LoggingConfig _config;
     private readonly StreamWriter? _fileWriter;
+    private bool _disposed;
 
     public PipelineLogger(LoggingConfig config)
     {
@@ -82,6 +84,22 @@ public class PipelineLogger
 
     public void Dispose()
     {
-        _fileWriter?.Dispose();
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposed)
+        {
+            return;
+        }
+
+        if (disposing)
+        {
+            _fileWriter?.Dispose();
+        }
+
+        _disposed = true;
     }
 }
