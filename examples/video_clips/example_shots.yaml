@@ -1,0 +1,17 @@
+shots:
+- image_path: examples/keyframes/shot_000.png
+  motion: slow zoom in
+  intensity: 0.3
+  duration: 10.0
+- image_path: examples/keyframes/shot_001.png
+  motion: pan right
+  intensity: 0.5
+  duration: 12.0
+- keyframes:
+  - examples/keyframes/shot_002_kf1.png
+  - examples/keyframes/shot_002_kf2.png
+  duration: 15.0
+metadata:
+  segment: tech
+  age: 18-23
+  title_id: ai_revolution_2024

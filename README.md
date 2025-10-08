@@ -14,11 +14,14 @@ This project automates the creation of emotional, dramatic vertical stories targ
 - **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples for all pipeline stages
 - **[docs/PIPELINE.md](docs/PIPELINE.md)** - Detailed pipeline breakdown and technical specifications
 - **[docs/VIDEO_EXPORT.md](docs/VIDEO_EXPORT.md)** - Video export and metadata generation guide
+- **[docs/MICROSTEP_VALIDATION.md](docs/MICROSTEP_VALIDATION.md)** - Microstep validation and progress tracking system
+- **[docs/MICROSTEP_VALIDATION_QUICKSTART.md](docs/MICROSTEP_VALIDATION_QUICKSTART.md)** - Quick reference for validation system
 - **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Issue tracking and task templates
 - **[docs/INSTALLATION.md](docs/INSTALLATION.md)** - Detailed setup instructions
 - **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common issues and solutions
 - **[docs/TITLE_IMPROVEMENT.md](docs/TITLE_IMPROVEMENT.md)** - Title variant generation and improvement guide
 - **[docs/TITLE_SCORING.md](docs/TITLE_SCORING.md)** - Title scoring system documentation
+- **[docs/VIDEO_QUALITY_CONTROL.md](docs/VIDEO_QUALITY_CONTROL.md)** - Video quality checks and QC reports
 
 ## 🏗️ Pipeline Architecture
 
@@ -454,6 +457,7 @@ See [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md) for detailed security procedu
 - 🎙️ **Voice Enhancement**: Add performance tags for realistic AI voices
 - 🔊 **Voice Generation**: Generate high-quality voiceovers using ElevenLabs
 - 📊 **Viral Potential Scoring**: Estimate engagement potential across platforms
+- ✅ **Video Quality Control**: Automated quality checks on final videos with comprehensive QC reports
 
 ---
 
@@ -580,10 +584,6 @@ For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMEN
 - **Security**: See [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md)
 
 ---
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 
 ## 📄 License
 
