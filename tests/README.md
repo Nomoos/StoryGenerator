@@ -60,8 +60,8 @@ ruff check .
 # Auto-fix linting issues
 ruff check --fix .
 
-# Type check
-mypy src --ignore-missing-imports
+# Type check (configuration is in pyproject.toml)
+mypy src
 ```
 
 ### C#

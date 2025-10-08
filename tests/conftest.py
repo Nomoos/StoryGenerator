@@ -5,7 +5,6 @@ This file is automatically loaded by pytest and provides fixtures
 that are available to all test modules.
 """
 
-import os
 import tempfile
 from pathlib import Path
 from typing import Generator
