@@ -11,6 +11,36 @@ These prototypes demonstrate how to integrate various AI models and media proces
 3. **Local-First**: Focus on running models locally without cloud dependencies
 4. **Educational**: Demonstrate best practices for working with AI models
 
+## Research Documents
+
+This directory also contains comprehensive research documents on various aspects of video content generation:
+
+### Content Strategy
+- **[YOUTUBE_CONTENT_STRATEGY.md](YOUTUBE_CONTENT_STRATEGY.md)** - Comprehensive research on YouTube content formats
+  - Short-form content (Shorts) pros and cons
+  - Long-form content pros and cons
+  - Aspect ratio comparison (16:9 vs 9:16)
+  - Hybrid strategies for maximizing reach and monetization
+  - Implementation recommendations for StoryGenerator
+
+### Video Synthesis
+- **[VIDEO_SYNTHESIS_RESEARCH.md](VIDEO_SYNTHESIS_RESEARCH.md)** - Research on video generation approaches
+  - LTX-Video for short-form content
+  - SDXL + Frame Interpolation for high-quality videos
+  - Implementation guides and C# examples
+
+### Platform & Trends
+- **[VIRAL_VIDEO_REQUIREMENTS.md](VIRAL_VIDEO_REQUIREMENTS.md)** - Specifications for viral video content
+  - Platform requirements and metadata
+  - Regions, languages, and localization
+  - Trend aggregation and scoring
+  - Database schema and storage
+
+- **[SOCIAL_PLATFORMS_TRENDS.md](SOCIAL_PLATFORMS_TRENDS.md)** - Social media trend collection research
+  - YouTube Data API integration
+  - TikTok and Instagram trend sources
+  - Multi-platform aggregation strategies
+
 ## Python Implementations
 
 Located in `/research/python/`:
