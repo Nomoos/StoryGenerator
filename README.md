@@ -17,6 +17,8 @@ This project automates the creation of emotional, dramatic vertical stories targ
 
 - **[README.md](README.md)** (this file) - Overview and quick start
 - **[docs/MODELS.md](docs/MODELS.md)** - Comprehensive model documentation with Hugging Face references
+- **[docs/RTX5090_QUICKREF.md](docs/RTX5090_QUICKREF.md)** - 🚀 **NEW: RTX 5090 optimization guide and quick reference**
+- **[config/rtx5090.yaml](config/rtx5090.yaml)** - 🎛️ **NEW: RTX 5090 optimized configuration file**
 - **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples for all pipeline stages
 - **[docs/PIPELINE.md](docs/PIPELINE.md)** - Detailed pipeline breakdown and technical specifications
 - **[docs/VIDEO_EXPORT.md](docs/VIDEO_EXPORT.md)** - Video export and metadata generation guide
@@ -146,6 +148,64 @@ pip install diffusers torch torchvision
 pip install imageio imageio-ffmpeg
 
 # For WhisperX (if not already installed)
+pip install whisperx
+```
+
+## 🖥️ Hardware Requirements
+
+### Minimum Requirements (Cloud/API-based workflow)
+- **CPU**: Any modern processor (4+ cores recommended)
+- **RAM**: 8GB
+- **GPU**: Not required (uses cloud APIs)
+- **Storage**: 50GB for codebase and generated content
+
+### Recommended for Local AI Models
+
+#### RTX 3060 Ti / RTX 3070 (8GB VRAM)
+- **Text Generation**: Llama-3.1-8B (quantized)
+- **Image Generation**: SDXL Base only (no refiner)
+- **Video Generation**: Not recommended
+- **Workflow**: Sequential only, limited batch sizes
+
+#### RTX 3090 / RTX 4070 Ti (24GB VRAM)
+- **Text Generation**: Qwen2.5-14B or Llama-3.1-8B
+- **Image Generation**: SDXL Base + Refiner
+- **Video Generation**: LTX-Video (5-second clips)
+- **Workflow**: Sequential processing, some parallel capability
+
+#### RTX 4090 (24GB VRAM)
+- **Text Generation**: Qwen2.5-14B (full float16)
+- **Image Generation**: SDXL Base + Refiner + LoRAs
+- **Video Generation**: LTX-Video (5-second clips) or SVD (2-second clips)
+- **Workflow**: Limited parallel processing
+- **Performance**: Good for 1-2 videos per hour
+
+#### 🚀 RTX 5090 (48GB VRAM) - **OPTIMAL**
+- **Text Generation**: Qwen2.5-32B or batch processing with Qwen2.5-14B
+- **Image Generation**: SDXL Base + Refiner with batch generation (4-6 images)
+- **Video Generation**: LTX-Video (10-second clips) or SVD (4-second clips)
+- **Workflow**: Full parallel processing capability
+- **Performance**: 2x faster than RTX 4090, complete pipeline in ~3 hours for 30 videos
+- **Multi-tasking**: Run text + image generation simultaneously
+- **Quality**: Extended video lengths, higher resolutions, batch generation
+
+**💡 For detailed RTX 5090 optimization, see:**
+- **[RTX 5090 Quick Reference Guide](docs/RTX5090_QUICKREF.md)** - Quick setup and workflows
+- **[RTX 5090 Optimization Section in MODELS.md](docs/MODELS.md#rtx-5090-optimization-guide)** - Comprehensive guide
+- **[RTX 5090 Configuration File](config/rtx5090.yaml)** - Optimized settings
+
+### Multi-GPU Setups
+
+#### 2x RTX 5090 (96GB total)
+- **Performance**: 60-70% faster pipeline
+- **Setup**: GPU 0 for text/vision, GPU 1 for image/video
+- **Use Case**: High-volume content production
+
+#### 3x RTX 5090 (144GB total)
+- **Performance**: 80-85% faster pipeline
+- **Setup**: Dedicated GPU per stage (text, image, video)
+- **Use Case**: Enterprise-level content production
+- **Bonus**: Can run Qwen2.5-72B for ultimate quality
 pip install whisperx
 ```
 

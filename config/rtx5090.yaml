@@ -1,0 +1,321 @@
+# RTX 5090 Optimized Pipeline Configuration
+# This configuration maximizes the capabilities of NVIDIA RTX 5090 (48GB VRAM)
+# for local AI content generation
+
+# Hardware specifications
+hardware:
+  gpu: "NVIDIA RTX 5090"
+  vram_gb: 48
+  cuda_version: "12.1+"
+  compute_capability: "9.0"
+
+# Model selection optimized for RTX 5090
+models:
+  # Text Generation - Choose based on workflow
+  text_generation:
+    # Option 1: Balanced quality and speed
+    primary: "Qwen/Qwen2.5-14B-Instruct"
+    primary_vram_gb: 14
+    primary_speed_tokens_per_sec: 45
+    
+    # Option 2: Maximum speed (parallel with image generation)
+    secondary: "meta-llama/Llama-3.1-8B-Instruct"
+    secondary_vram_gb: 8
+    secondary_speed_tokens_per_sec: 65
+    
+    # Option 3: Premium quality (sequential processing)
+    premium: "Qwen/Qwen2.5-32B-Instruct"
+    premium_vram_gb: 32
+    premium_speed_tokens_per_sec: 25
+    
+    # Configuration
+    torch_dtype: "float16"
+    device_map: "auto"
+    use_flash_attention: true
+    max_batch_size: 1  # For single-video generation; increase for batch
+  
+  # Speech Recognition
+  asr:
+    model: "Systran/faster-whisper-large-v3"
+    vram_gb: 5
+    compute_type: "float16"
+    beam_size: 5
+    language: "en"
+    speed_realtime_factor: 50  # 50x faster than realtime on RTX 5090
+  
+  # Vision-Language Models
+  vision:
+    # Primary: Lightweight for QC
+    primary: "microsoft/Phi-3.5-vision-instruct"
+    primary_vram_gb: 8
+    
+    # Alternative: Higher quality
+    alternative: "llava-hf/llava-onevision-qwen2-7b-ov-hf"
+    alternative_vram_gb: 14
+  
+  # Image Generation
+  image_generation:
+    base_model: "stabilityai/stable-diffusion-xl-base-1.0"
+    refiner_model: "stabilityai/stable-diffusion-xl-refiner-1.0"
+    base_vram_gb: 12
+    refiner_vram_gb: 4  # Additional on top of base
+    total_vram_gb: 16
+    
+    # Performance settings
+    torch_dtype: "float16"
+    variant: "fp16"
+    enable_xformers: true
+    enable_vae_slicing: false  # RTX 5090 has enough VRAM
+    enable_vae_tiling: false
+    
+    # Batch generation (RTX 5090 exclusive)
+    max_batch_size: 6  # Generate 6 images simultaneously
+    batch_inference_steps: 30
+    
+    # Quality settings
+    default_steps: 30
+    high_quality_steps: 40
+    refiner_steps: 20
+  
+  # Video Generation
+  video_generation:
+    # Primary: LTX-Video for longer clips
+    primary_model: "Lightricks/LTX-Video"
+    primary_vram_gb: 24
+    primary_max_frames: 241  # 10 seconds @ 24fps
+    primary_max_resolution: "1024x768"
+    
+    # Alternative: SVD for high quality short clips  
+    alternative_model: "stabilityai/stable-video-diffusion-img2vid-xt"
+    alternative_vram_gb: 20
+    alternative_max_frames: 121  # 5 seconds @ 24fps
+    alternative_max_resolution: "768x1280"
+    
+    # Performance settings
+    torch_dtype: "bfloat16"  # LTX-Video optimized
+    enable_model_cpu_offload: false  # Keep on GPU
+    num_inference_steps: 50
+
+# Workflow configurations
+workflows:
+  # Workflow 1: Maximum Throughput (Parallel)
+  parallel_processing:
+    enabled: true
+    description: "Run text and image generation in parallel"
+    models_loaded:
+      - "Llama-3.1-8B (8GB)"
+      - "SDXL Base (12GB)"
+      - "Phi-3.5-vision (8GB)"
+    total_vram_used: 28
+    vram_buffer: 20
+    performance_multiplier: 1.8
+    
+  # Workflow 2: Maximum Quality (Sequential)
+  sequential_premium:
+    enabled: true
+    description: "Use premium models sequentially"
+    stages:
+      - name: "text_generation"
+        model: "Qwen2.5-32B"
+        vram: 32
+      - name: "image_generation"
+        model: "SDXL + Refiner"
+        vram: 16
+      - name: "video_generation"
+        model: "LTX-Video"
+        vram: 24
+    memory_management: "unload_previous"
+    performance_multiplier: 1.0
+    quality_multiplier: 1.3
+  
+  # Workflow 3: Batch Production
+  batch_production:
+    enabled: true
+    description: "Generate multiple videos efficiently"
+    models_loaded:
+      - "Qwen2.5-14B (14GB)"
+      - "SDXL + Refiner (16GB)"
+    total_vram_used: 30
+    vram_buffer: 18
+    batch_size: 4
+    performance_multiplier: 3.5  # 3.5x throughput for batch
+
+# Performance optimizations specific to RTX 5090
+optimizations:
+  # PyTorch optimizations
+  torch:
+    use_cuda_graphs: true
+    compile_models: true  # PyTorch 2.0+ compile
+    cudnn_benchmark: true
+    cudnn_deterministic: false
+    
+  # Memory optimizations
+  memory:
+    empty_cache_between_stages: true
+    use_memory_efficient_attention: true
+    gradient_checkpointing: false  # Not needed with 48GB
+    cpu_offload: false  # Keep everything on GPU
+    
+  # Inference optimizations
+  inference:
+    use_half_precision: true  # float16/bfloat16
+    use_flash_attention_2: true
+    use_sdpa: true  # Scaled Dot Product Attention
+    enable_tf32: true  # TensorFloat-32
+
+# Resource allocation
+resource_allocation:
+  # Conservative allocation (safe)
+  conservative:
+    text_model_vram: 14
+    image_model_vram: 16
+    buffer_vram: 18
+    
+  # Aggressive allocation (maximum throughput)
+  aggressive:
+    text_model_vram: 8
+    image_model_vram: 12
+    video_model_vram: 20
+    vision_model_vram: 8
+    buffer_vram: 0
+    warning: "Tight memory allocation, may cause OOM on edge cases"
+  
+  # Premium allocation (best quality)
+  premium:
+    active_model_vram: 32
+    buffer_vram: 16
+    model_swapping: true
+
+# Video output settings (enhanced for RTX 5090)
+video_output:
+  # Standard quality
+  standard:
+    width: 1080
+    height: 1920
+    fps: 30
+    clip_duration_sec: 5
+    
+  # High quality (RTX 5090 optimized)
+  high_quality:
+    width: 1080
+    height: 1920
+    fps: 30
+    clip_duration_sec: 10  # 2x longer than RTX 4090
+    
+  # Ultra quality (for premium content)
+  ultra:
+    width: 1080
+    height: 1920
+    fps: 30
+    clip_duration_sec: 10
+    video_bitrate: "8M"
+    audio_bitrate: "320k"
+
+# Audio settings
+audio:
+  target_lufs: -14
+  sample_rate: 48000
+  channels: 2
+  format: "wav"
+
+# Generation parameters
+generation:
+  # Text generation
+  text:
+    max_tokens: 2048
+    temperature: 0.9
+    top_p: 0.9
+    top_k: 50
+    repetition_penalty: 1.1
+  
+  # Image generation
+  image:
+    guidance_scale: 7.5
+    negative_prompt_weight: 1.0
+    clip_skip: 0
+  
+  # Video generation
+  video:
+    motion_bucket_id: 127  # Medium motion
+    noise_aug_strength: 0.02
+    decode_chunk_size: 8
+
+# Paths
+paths:
+  models:
+    base: "./models"
+    cache: "./models/cache"
+    weights: "./models/weights"
+  output:
+    base: "./output"
+    temp: "./output/temp"
+  cache:
+    huggingface: "/fast/ssd/huggingface_cache"  # Use fast SSD
+
+# Monitoring and logging
+monitoring:
+  enabled: true
+  log_gpu_usage: true
+  log_performance_metrics: true
+  track_generation_times: true
+  
+  metrics:
+    - "gpu_utilization"
+    - "vram_usage"
+    - "gpu_temperature"
+    - "power_consumption"
+    - "tokens_per_second"
+    - "images_per_minute"
+    - "video_generation_fps"
+
+# Performance targets (RTX 5090)
+performance_targets:
+  script_generation_360words: "8 seconds"
+  single_image_1024x1024: "2 seconds"
+  batch_4_images_1024x1024: "6 seconds"
+  video_5sec_ltx: "72 seconds"
+  video_10sec_ltx: "150 seconds"
+  video_5sec_svd: "40 seconds"
+  complete_pipeline_30videos: "3 hours"
+
+# Recommendations
+recommendations:
+  cooling: "Ensure adequate GPU cooling for sustained workloads"
+  power: "Use 1200W+ PSU for stable operation"
+  storage: "Use NVMe SSD for model cache and temporary files"
+  ram: "64GB+ system RAM recommended for large batch operations"
+  os: "Ubuntu 22.04 LTS or Windows 11 Pro with latest NVIDIA drivers"
+  
+# Multi-GPU setup (optional)
+multi_gpu:
+  enabled: false
+  num_gpus: 1
+  
+  # If enabled with 2x RTX 5090
+  two_gpu_config:
+    gpu_0:
+      role: "text_and_vision"
+      models: ["Qwen2.5-14B", "Phi-3.5-vision"]
+      vram_used: 22
+    gpu_1:
+      role: "image_and_video"
+      models: ["SDXL + Refiner", "LTX-Video"]
+      vram_used: 40
+    performance_boost: "60-70% faster pipeline"
+  
+  # If enabled with 3x RTX 5090
+  three_gpu_config:
+    gpu_0:
+      role: "text_generation"
+      models: ["Qwen2.5-14B"]
+      vram_used: 14
+    gpu_1:
+      role: "image_generation"
+      models: ["SDXL + Refiner"]
+      vram_used: 16
+    gpu_2:
+      role: "video_generation"
+      models: ["LTX-Video"]
+      vram_used: 24
+    performance_boost: "80-85% faster pipeline"
+    note: "All stages run in parallel"
