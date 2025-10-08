@@ -50,10 +50,10 @@ Day 1:
 
 ## Success Criteria
 
-- [ ] All folder structures exist and follow conventions
-- [ ] Configuration files are valid and documented
-- [ ] C# projects build successfully
-- [ ] All schemas are defined and validated
+- [x] All folder structures exist and follow conventions
+- [x] Configuration files are valid and documented
+- [x] C# projects build successfully
+- [x] All schemas are defined and validated
 
 ## Next Steps
 

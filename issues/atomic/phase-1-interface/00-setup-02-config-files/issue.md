@@ -3,7 +3,7 @@
 **ID:** `00-setup-02`  
 **Priority:** P0 (Critical Path)  
 **Effort:** 2-3 hours  
-**Status:** Not Started
+**Status:** ✅ Complete
 
 ## Overview
 
@@ -20,11 +20,11 @@ Create the base configuration files (`pipeline.yaml` and `scoring.yaml`) that de
 
 ## Acceptance Criteria
 
-- [ ] `/config/pipeline.yaml` created with all required keys
-- [ ] `/config/scoring.yaml` created with viral scoring weights
-- [ ] YAML files are valid and parseable
-- [ ] Test script can load both configs
-- [ ] Documentation added to config files
+- [x] `/config/pipeline.yaml` created with all required keys
+- [x] `/config/scoring.yaml` created with viral scoring weights
+- [x] YAML files are valid and parseable
+- [x] Test script can load both configs
+- [x] Documentation added to config files
 
 ## Task Details
 
