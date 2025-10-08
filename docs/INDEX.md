@@ -109,7 +109,7 @@ Welcome to the StoryGenerator documentation! This index will help you find the i
 
 **Platform-specific research and recommendations:**
 
-- **[research/YOUTUBE_CONTENT_STRATEGY.md](../research/YOUTUBE_CONTENT_STRATEGY.md)** - YouTube content strategy (~920 lines)
+- **[research/YOUTUBE_CONTENT_STRATEGY.md](../research/YOUTUBE_CONTENT_STRATEGY.md)** - YouTube content strategy (~921 lines)
   - Short-form vs long-form content analysis
   - Pros and cons of YouTube Shorts
   - Pros and cons of traditional long-form videos
