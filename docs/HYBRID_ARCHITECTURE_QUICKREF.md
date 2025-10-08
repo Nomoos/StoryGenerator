@@ -2,7 +2,11 @@
 
 > **Quick decision guide**: When to use C#, when to use Python, and how to integrate them.
 
-## 🎯 Quick Decision Tree
+**Related Documents**:
+- [Full Comparison Analysis](./CSHARP_VS_PYTHON_COMPARISON.md) - Comprehensive comparison
+- [Visual Diagrams](./HYBRID_ARCHITECTURE_DIAGRAMS.md) - Flowcharts and architecture diagrams
+
+---
 
 ```
 Need to perform a task?

@@ -6,6 +6,8 @@ After extensive research and analysis of the StoryGenerator pipeline, this docum
 
 **Recommendation**: **Hybrid Architecture** with C# as the primary orchestration language and strategic Python integration for ML-heavy tasks.
 
+> **📊 Visual Guide**: For diagrams and flowcharts, see [HYBRID_ARCHITECTURE_DIAGRAMS.md](./HYBRID_ARCHITECTURE_DIAGRAMS.md)
+
 ---
 
 ## Table of Contents
@@ -17,6 +19,12 @@ After extensive research and analysis of the StoryGenerator pipeline, this docum
 5. [Implementation Roadmap](#implementation-roadmap)
 6. [Risk Assessment & Mitigation](#risk-assessment--mitigation)
 7. [Conclusion](#conclusion)
+8. [Appendix: Code Examples](#appendix-code-examples)
+
+**Related Documents**:
+- [Hybrid Architecture Quick Reference](./HYBRID_ARCHITECTURE_QUICKREF.md) - Quick decision guide
+- [Hybrid Architecture Diagrams](./HYBRID_ARCHITECTURE_DIAGRAMS.md) - Visual flowcharts
+- [C# Implementation Research](./CSHARP_RESEARCH.md) - Detailed research findings
 
 ---
 
