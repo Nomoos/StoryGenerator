@@ -1,0 +1,38 @@
+# Viral Scoring Configuration
+
+viral:
+  # Weights must sum to 1.0
+  novelty: 0.25      # Unique, surprising content
+  emotional: 0.25    # Emotional impact and resonance
+  clarity: 0.20      # Clear, easy to understand
+  replay: 0.15       # Rewatchability factor
+  share: 0.15        # Shareability and virality
+
+# Scoring thresholds
+thresholds:
+  excellent: 85      # Top-tier content
+  good: 70           # Solid, publishable
+  acceptable: 55     # Needs improvement
+  poor: 40           # Significant rework needed
+
+# Title scoring specifics
+title:
+  max_length: 100
+  min_length: 20
+  prefer_questions: true
+  bonus_keywords:
+    - "secret"
+    - "truth"
+    - "revealed"
+    - "shocking"
+    - "amazing"
+
+# Script scoring specifics
+script:
+  ideal_duration_seconds: 45
+  min_duration_seconds: 30
+  max_duration_seconds: 60
+  narrative_arc_weight: 0.3
+  pacing_weight: 0.2
+  hook_weight: 0.25
+  resolution_weight: 0.25
