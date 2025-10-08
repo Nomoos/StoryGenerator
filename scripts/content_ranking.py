@@ -22,16 +22,16 @@ import sys
 
 def load_config(config_path: str = None) -> Dict:
     """
-    Load pipeline configuration from YAML file.
+    Load scoring configuration from YAML file.
     
     Args:
-        config_path: Path to pipeline.yaml file
+        config_path: Path to scoring.yaml file
         
     Returns:
-        Configuration dictionary
+        Configuration dictionary with scoring weights
     """
     if config_path is None:
-        config_path = Path(__file__).parent.parent / "config" / "pipeline.yaml"
+        config_path = Path(__file__).parent.parent / "config" / "scoring.yaml"
     
     try:
         with open(config_path, 'r', encoding='utf-8') as f:
@@ -40,7 +40,15 @@ def load_config(config_path: str = None) -> Dict:
         return config
     except FileNotFoundError:
         print(f"⚠️  Config file not found: {config_path}, using defaults")
-        return {}
+        return {
+            'viral': {
+                'novelty': 0.25,
+                'emotional': 0.25,
+                'clarity': 0.20,
+                'replay': 0.15,
+                'share': 0.15,
+            }
+        }
     except Exception as e:
         print(f"❌ Error loading config: {e}")
         raise

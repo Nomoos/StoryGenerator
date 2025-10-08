@@ -54,8 +54,10 @@ python scripts/content_ranking.py --base-path /path/to/Generator
 ### Custom Config
 
 ```bash
-python scripts/content_ranking.py --config /path/to/config.yaml
+python scripts/content_ranking.py --config /path/to/scoring.yaml
 ```
+
+**Note**: The system loads scoring weights from `config/scoring.yaml` by default.
 
 ## Input Files
 
@@ -253,11 +255,9 @@ Examples demonstrate:
 
 ## Configuration
 
-### Pipeline Config (config/pipeline.yaml)
-
-Used for general pipeline settings (not ranking-specific).
-
 ### Scoring Config (config/scoring.yaml)
+
+The primary configuration file used by the ranking system:
 
 ```yaml
 viral:
@@ -275,6 +275,10 @@ thresholds:
 ```
 
 Customize these weights to adjust ranking behavior.
+
+### Pipeline Config (config/pipeline.yaml)
+
+Not used by the ranking system, but referenced by other pipeline components.
 
 ## Integration with Pipeline
 
