@@ -167,7 +167,7 @@ Week 2-3:
 
 ### By Phase
 - [x] Phase 1: Interface (3 tasks) ✅
-- [ ] Phase 2: Prototype (3 tasks)
+- [x] Phase 2: Prototype (3 tasks) ✅
 - [ ] Phase 3: Implementation (52 tasks)
 
 ### By Priority
