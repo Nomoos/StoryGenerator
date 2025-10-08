@@ -2,9 +2,21 @@
 
 Complete breakdown of the video generation pipeline into manageable, step-by-step issues.
 
+## 🎯 Two Approaches
+
+### 1. Sequential Steps (Original - 15 Large Steps)
+Comprehensive, step-by-step issues. Good for understanding the complete pipeline flow.
+
+### 2. **Atomic Tasks (NEW - 64 Independent Tasks) ⭐**
+**Recommended for teams!** Parallelizable 1-8 hour tasks optimized for concurrent execution.
+
+👉 **[View Atomic Tasks Directory](atomic/README.md)** - Start here for team collaboration
+
+---
+
 ## Overview
 
-This index organizes the entire StoryGenerator pipeline (from ideation to final export) into 14 distinct steps. Each step has its own directory with a detailed issue file.
+This index organizes the entire StoryGenerator pipeline (from ideation to final export) into 15 distinct sequential steps OR 64 atomic parallelizable tasks.
 
 ## 🎯 Quick Navigation
 
