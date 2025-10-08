@@ -347,11 +347,21 @@ public class PerformanceAnalyzer
     private double CalculateOutputScore(VideoStats stats)
     {
         // Similar to SourceStatsNormalizer but for output
+        
+        // View score (60% weight): Uses logarithmic scale
+        // Multiplier 12 gives: 100K views ≈ 60, 1M views ≈ 72, 10M views ≈ 96
+        // This rewards exponential growth while capping at 60 to leave room for other factors
         var viewScore = Math.Min(Math.Log10(stats.Views + 1) * 12, 60);
+        
+        // Like ratio bonus (20% weight)
         var likeRatio = stats.Dislikes > 0 
             ? stats.Likes / (double)(stats.Likes + stats.Dislikes) 
             : 1.0;
-        var likeBonus = likeRatio * 20;
+        var likeBonus = likeRatio * 20; // Perfect ratio (1.0) = 20 points
+        
+        // Engagement bonus (20% weight)
+        // Multiplier 0.2 means: 10% engagement rate = 2 points, 50% rate = 10 points
+        // Capped at 20 to ensure balanced scoring across all factors
         var engagementBonus = Math.Min(
             CalculateEngagementRate(stats) * 0.2, 
             20
