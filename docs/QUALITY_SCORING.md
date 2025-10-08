@@ -155,8 +155,11 @@ Different content types may have slightly different scoring emphasis. For exampl
 import sys
 from pathlib import Path
 
-# Add scripts directory to path
-sys.path.insert(0, str(Path(__file__).parent / "scripts"))
+# Note: Adjust path based on your location relative to the scripts directory
+# From project root:
+sys.path.insert(0, str(Path.cwd() / "scripts"))
+# From docs directory:
+# sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
 
 from process_quality import calculate_score
 
@@ -188,8 +191,11 @@ python scripts/process_quality.py
 import sys
 from pathlib import Path
 
-# Add scripts directory to path
-sys.path.insert(0, str(Path(__file__).parent / "scripts"))
+# Note: Adjust path based on your location relative to the scripts directory
+# From project root:
+sys.path.insert(0, str(Path.cwd() / "scripts"))
+# From docs directory:
+# sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
 
 from process_quality import assess_content_quality
 
@@ -284,15 +290,26 @@ The test suite validates:
 
 ### Adjusting Weights
 
-To emphasize different aspects of quality, modify `config/scoring.yaml`:
+To emphasize different aspects of quality, modify `config/scoring.yaml`.
 
+**Current default weights:**
 ```yaml
 viral:
-  novelty: 0.30      # Increased from 0.25 - more weight on uniqueness
+  novelty: 0.25
+  emotional: 0.25
+  clarity: 0.20
+  replay: 0.15
+  share: 0.15
+```
+
+**Example modification (emphasize novelty):**
+```yaml
+viral:
+  novelty: 0.35      # Increased from 0.25
   emotional: 0.20    # Decreased from 0.25
   clarity: 0.20      # Unchanged
   replay: 0.15       # Unchanged
-  share: 0.15        # Unchanged
+  share: 0.10        # Decreased from 0.15
 ```
 
 **Important**: Weights must sum to exactly 1.0 (or very close due to floating point).
