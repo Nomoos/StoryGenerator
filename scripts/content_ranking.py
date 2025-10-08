@@ -20,6 +20,24 @@ from typing import Dict, List, Optional
 import sys
 
 
+# Default scoring configuration (fallback if scoring.yaml is not found)
+DEFAULT_SCORING_CONFIG = {
+    'viral': {
+        'novelty': 0.25,
+        'emotional': 0.25,
+        'clarity': 0.20,
+        'replay': 0.15,
+        'share': 0.15,
+    },
+    'thresholds': {
+        'excellent': 85,
+        'good': 70,
+        'acceptable': 55,
+        'poor': 40,
+    }
+}
+
+
 def load_config(config_path: str = None) -> Dict:
     """
     Load scoring configuration from YAML file.
@@ -40,15 +58,7 @@ def load_config(config_path: str = None) -> Dict:
         return config
     except FileNotFoundError:
         print(f"⚠️  Config file not found: {config_path}, using defaults")
-        return {
-            'viral': {
-                'novelty': 0.25,
-                'emotional': 0.25,
-                'clarity': 0.20,
-                'replay': 0.15,
-                'share': 0.15,
-            }
-        }
+        return DEFAULT_SCORING_CONFIG
     except Exception as e:
         print(f"❌ Error loading config: {e}")
         raise
