@@ -1,10 +1,12 @@
-# AI Model Comparison for Game Design Research
+# AI Model Comparison for Game Design & Video Production
 
 ## Executive Summary
 
-This document provides comprehensive guidance for the BlueMarble team on selecting and using AI models for game design work. It compares local models (for fast iteration/sketching) versus cloud models (for high-quality fine-tuning), provides PC configuration recommendations, and offers practical workflows for different game design tasks.
+This document provides comprehensive guidance for the BlueMarble team on selecting and using AI models for game design and video production work. It compares local models (for fast iteration/sketching) versus cloud models (for high-quality fine-tuning), provides PC configuration recommendations, and offers practical workflows for different creative tasks including short-form and long-form video content pipelines.
 
 **Key Recommendation**: Use a hybrid approach with local models for 70-80% of work (drafting, iteration) and cloud models for the final 20-30% (polish, complex reasoning). This approach can save $150-300 per document compared to cloud-only workflows.
+
+**Video Production Addition**: Includes specialized recommendations for short video pipelines (<3 minutes for Instagram Reels, TikTok, YouTube Shorts) and long video pipelines (10-15 minutes), with audience-specific optimizations for 15-18 year old US Women and broader demographic appeal.
 
 ---
 
@@ -16,10 +18,11 @@ This document provides comprehensive guidance for the BlueMarble team on selecti
 4. [Cost Analysis](#cost-analysis)
 5. [Model Capabilities & Limitations](#model-capabilities--limitations)
 6. [Use Case Recommendations](#use-case-recommendations)
-7. [Practical Workflows](#practical-workflows)
-8. [Model Selection Decision Framework](#model-selection-decision-framework)
-9. [Setup Guides](#setup-guides)
-10. [Best Practices](#best-practices)
+7. [Video Production Pipeline Recommendations](#video-production-pipeline-recommendations)
+8. [Practical Workflows](#practical-workflows)
+9. [Model Selection Decision Framework](#model-selection-decision-framework)
+10. [Setup Guides](#setup-guides)
+11. [Best Practices](#best-practices)
 
 ---
 
@@ -663,6 +666,349 @@ Cloud models provide the highest quality output for final polish, complex reason
 
 ---
 
+## Video Production Pipeline Recommendations
+
+For content creators targeting social media platforms (Instagram Reels, TikTok, YouTube Shorts), the AI model selection depends heavily on video length, target audience, and production volume. This section provides specific recommendations for short-form and long-form video content pipelines.
+
+### Target Audience Considerations
+
+**Primary Target**: 15-18 year old US Women
+**Broader Goals**: Cross-demographic appeal, international markets
+
+**Content Characteristics for Target Audience**:
+- Fast-paced, attention-grabbing openings (hook within 2 seconds)
+- Relatable narratives and trending topics
+- Emotional resonance (humor, inspiration, drama)
+- Authentic tone (avoid overly formal or corporate language)
+- Visual variety and quick cuts
+- Music-driven pacing
+
+### Short Video Pipeline (Under 3 Minutes)
+
+**Target Platforms**: Instagram Reels, TikTok, YouTube Shorts
+**Optimal Length**: 30-90 seconds (sweet spot for engagement)
+**Production Volume**: High (5-20 videos per day)
+
+#### Recommended Model Pipeline
+
+**Stage 1: Trend Analysis & Topic Selection (5-10 minutes)**
+- **Model**: Local - Mistral 7B or Llama 3.1 8B
+- **Task**: Analyze trending topics, generate video concepts
+- **Workflow**:
+  ```
+  Input: Recent trends data (hashtags, topics, viral content)
+  Output: 20-50 video concept ideas with hooks
+  ```
+- **Why Local**: High volume of quick iterations, no API costs
+
+**Stage 2: Script Generation (2-5 minutes per script)**
+- **Model**: Local - Llama 3.1 8B (for drafts) → Cloud - GPT-4o (for final)
+- **Task**: Create 30-90 second scripts with strong hooks
+- **Workflow**:
+  ```
+  Local (Llama 3.1 8B):
+  - Generate 5-10 script variations
+  - Focus on hook, story arc, and call-to-action
+  - Target: 60-80 words for 30-60 second videos
+  
+  Cloud (GPT-4o):
+  - Polish best 2-3 scripts
+  - Optimize for emotional impact
+  - Ensure age-appropriate language
+  ```
+- **Cost per video**: $0.02-0.05
+- **Why Hybrid**: Local for volume, cloud for quality polish
+
+**Stage 3: Visual Planning (3-5 minutes per video)**
+- **Model**: Local - DeepSeek Coder or Llama 3.1 8B
+- **Task**: Generate shot lists, scene descriptions, visual prompts
+- **Workflow**:
+  ```
+  Input: Final script
+  Output: 
+  - 3-8 shot list with timing
+  - Visual style descriptions
+  - Image generation prompts (for SDXL/Midjourney)
+  - Transition suggestions
+  ```
+- **Why Local**: Structured output, fast iteration
+
+**Stage 4: Content Refinement (5-10 minutes per video)**
+- **Model**: Cloud - Claude 3.5 Sonnet (optional, for key content)
+- **Task**: Audience optimization, viral potential analysis
+- **Workflow**:
+  ```
+  Input: Script + visual plan
+  Output:
+  - Audience resonance score
+  - Suggested improvements for target demographic
+  - Hook optimization
+  - Trending element integration
+  ```
+- **Cost per video**: $0.05-0.15 (only for top 20% of content)
+- **Why Cloud**: Best understanding of audience psychology and trends
+
+**Stage 5: Hashtag & Metadata Generation (1-2 minutes per video)**
+- **Model**: Local - Mistral 7B
+- **Task**: Generate platform-optimized hashtags and descriptions
+- **Workflow**:
+  ```
+  Input: Final script + visual plan
+  Output:
+  - 20-30 relevant hashtags
+  - Platform-specific captions (Instagram, TikTok, YouTube)
+  - SEO-optimized title
+  ```
+- **Why Local**: High volume, formulaic task
+
+#### Pipeline Summary for Short Videos
+
+**Total Time per Video**: 15-30 minutes
+**Total Cost per Video**: $0.05-0.20
+**Recommended Daily Volume**: 10-15 videos with this pipeline
+
+**PC Configuration Recommendation**:
+- **Minimum**: Mid-Range setup (RTX 4060 Ti 16GB, 32GB RAM)
+- **Optimal**: High-End setup (RTX 4090, 64GB RAM)
+- **Reason**: Enables rapid local model iteration for high-volume production
+
+**Model Split**:
+- 85% Local (Llama 3.1 8B, Mistral 7B): Ideation, drafts, planning, metadata
+- 15% Cloud (GPT-4o, Claude 3.5): Final polish for top-performing content
+
+**Expected Monthly Costs**:
+- Local compute: ~$20-30 electricity
+- Cloud APIs: ~$30-60 (300-400 videos/month)
+- **Total**: $50-90/month for 300-400 video scripts
+
+### Long Video Pipeline (10-15 Minutes)
+
+**Target Platforms**: YouTube, IGTV, TikTok Series
+**Optimal Length**: 10-12 minutes (strong retention needed)
+**Production Volume**: Lower (1-3 videos per day)
+
+#### Recommended Model Pipeline
+
+**Stage 1: Research & Topic Deep-Dive (30-60 minutes)**
+- **Model**: Cloud - Gemini 1.5 Pro (2M token context) or Claude 3.5 Sonnet
+- **Task**: Deep research, trend analysis, competitive content review
+- **Workflow**:
+  ```
+  Input: Topic area, target keywords, audience data
+  Output:
+  - Comprehensive topic overview
+  - Key talking points (10-15 main points)
+  - Narrative arc structure
+  - Competitive differentiation angles
+  ```
+- **Cost per video**: $0.20-0.50
+- **Why Cloud**: Complex reasoning, large context needed for research synthesis
+
+**Stage 2: Detailed Outline & Structure (20-40 minutes)**
+- **Model**: Local - Llama 3.1 8B or 70B (if available)
+- **Task**: Create detailed 10-15 minute content outline
+- **Workflow**:
+  ```
+  Input: Research insights from Stage 1
+  Output:
+  - Minute-by-minute content breakdown
+  - Hook (first 15 seconds)
+  - 3-5 main segments with transitions
+  - Engagement points (questions, polls, CTAs)
+  - Conclusion and call-to-action
+  ```
+- **Why Local**: Iterative refinement, multiple variations
+
+**Stage 3: Script Writing - First Draft (1-2 hours)**
+- **Model**: Local - Llama 3.1 70B (dual RTX 5090) or Llama 3.1 8B
+- **Task**: Write full 10-15 minute script (1500-2000 words)
+- **Workflow**:
+  ```
+  Input: Detailed outline
+  Output:
+  - Complete script with dialogue/narration
+  - Timing markers
+  - Visual cue suggestions
+  - Personality/tone consistency
+  ```
+- **Why Local**: Long-form content generation, multiple drafts needed
+
+**Stage 4: Script Refinement - Multiple Passes (1-2 hours)**
+- **Model**: Local - Llama 3.1 8B/70B
+- **Task**: Iterate on pacing, engagement, and clarity
+- **Workflow**:
+  ```
+  Pass 1: Audience engagement optimization
+  Pass 2: Pacing and retention hooks
+  Pass 3: Language simplification for target age
+  Pass 4: Emotional beats and storytelling
+  ```
+- **Why Local**: High iteration count, no API costs
+
+**Stage 5: Final Polish & Audience Optimization (30-60 minutes)**
+- **Model**: Cloud - Claude 3.5 Sonnet (best for creative quality)
+- **Task**: Premium quality polish, viral potential maximization
+- **Workflow**:
+  ```
+  Input: Best local draft (from 3-5 iterations)
+  Output:
+  - Professionally polished script
+  - Optimized for 15-18 female demographic
+  - Broader appeal elements integrated
+  - Hook and retention optimization
+  - Trending language and references
+  ```
+- **Cost per video**: $0.30-0.80
+- **Why Cloud**: Highest quality for long-form content that requires strong retention
+
+**Stage 6: Visual Production Planning (30-45 minutes)**
+- **Model**: Local - CodeLlama 13B or DeepSeek Coder
+- **Task**: Detailed shot list, b-roll planning, graphics timeline
+- **Workflow**:
+  ```
+  Input: Final polished script
+  Output:
+  - Shot-by-shot breakdown (50-100 shots)
+  - B-roll requirements list
+  - Graphics/text overlay timeline
+  - Music cue suggestions
+  - Transition specifications
+  ```
+- **Why Local**: Technical/structured task
+
+**Stage 7: SEO & Metadata Optimization (15-30 minutes)**
+- **Model**: Cloud - GPT-4o (for keyword research + optimization)
+- **Task**: YouTube SEO, thumbnail concepts, descriptions
+- **Workflow**:
+  ```
+  Input: Final script + video concept
+  Output:
+  - SEO-optimized title (5 variations)
+  - 3-5 thumbnail concepts with text overlay ideas
+  - Full video description with timestamps
+  - 15-20 strategic tags
+  - Pin comment text
+  ```
+- **Cost per video**: $0.10-0.20
+- **Why Cloud**: Best for SEO strategy and keyword optimization
+
+#### Pipeline Summary for Long Videos
+
+**Total Time per Video**: 4-7 hours (content creation only)
+**Total Cost per Video**: $0.60-1.50
+**Recommended Daily Volume**: 1-2 videos with this pipeline
+
+**PC Configuration Recommendation**:
+- **Minimum**: High-End setup (RTX 4090, 64GB RAM)
+- **Optimal**: Dual RTX 5090 (64GB VRAM) for Llama 3.1 70B full precision
+- **Reason**: Long-form content benefits from highest-quality local models
+
+**Model Split**:
+- 70% Local (Llama 3.1 70B/8B, CodeLlama): Research, drafts, iteration, planning
+- 30% Cloud (Claude 3.5, GPT-4o): Final polish, SEO optimization
+
+**Expected Monthly Costs**:
+- Local compute: ~$40-60 electricity (heavy GPU usage)
+- Cloud APIs: ~$40-70 (40-60 videos/month)
+- **Total**: $80-130/month for 40-60 long-form video scripts
+
+### Audience-Specific Optimizations
+
+#### For 15-18 Year Old US Women
+
+**Language Patterns**:
+- Use conversational, authentic tone
+- Incorporate trending slang (but not excessively)
+- Avoid condescending or preachy language
+- Use inclusive, empowering messaging
+
+**Content Themes** (High Engagement):
+- Self-care and mental health
+- Relationships and friendship dynamics
+- School and college life
+- Fashion and beauty trends
+- Social justice and activism
+- Entertainment (music, shows, celebrities)
+- Life advice and "adulting" tips
+
+**Hook Strategies**:
+- Start with a relatable problem or question
+- Use pattern interrupts ("Wait, what?")
+- Promise value delivery ("Here's why...")
+- Create curiosity gaps ("You won't believe...")
+
+**Model Recommendation for Audience Optimization**:
+- **Best**: Claude 3.5 Sonnet (understands nuanced demographics)
+- **Alternative**: GPT-4o (good for trend integration)
+- **Local Option**: Llama 3.1 70B (if using dual RTX 5090)
+
+#### For Broader Appeal
+
+**Cross-Demographic Elements**:
+- Universal emotional themes (inspiration, humor, surprise)
+- Educational value with entertainment
+- Multi-generational relevance
+- Cultural sensitivity and inclusivity
+
+**Model Recommendation**:
+- Use Claude 3.5 Sonnet for final pass to ensure broad appeal
+- A/B test content with both narrow and broad hooks
+
+### Production Workflow Decision Matrix
+
+| Video Length | Daily Volume | Best Local Model | Cloud Model Usage | Monthly Cost | PC Tier |
+|--------------|--------------|------------------|-------------------|--------------|---------|
+| <1 min | 15-20 | Mistral 7B | 10-15% (GPT-4o) | $40-70 | Mid-Range |
+| 1-3 min | 10-15 | Llama 3.1 8B | 15-20% (GPT-4o/Claude 3.5) | $50-90 | Mid-Range |
+| 3-5 min | 5-8 | Llama 3.1 8B | 20-25% (Claude 3.5) | $60-100 | High-End |
+| 5-10 min | 2-4 | Llama 3.1 8B/70B | 25-30% (Claude 3.5) | $70-120 | High-End |
+| 10-15 min | 1-2 | Llama 3.1 70B | 30-35% (Claude 3.5) | $80-130 | Dual RTX 5090 |
+
+### Quality vs. Volume Trade-offs
+
+**High Volume, Good Quality** (Short Videos):
+- Use Llama 3.1 8B for 90% of content
+- Reserve GPT-4o for top 10-20% of videos
+- Focus on quantity with baseline quality
+- **Best for**: Testing hooks, finding viral formats
+
+**Medium Volume, High Quality** (Medium Videos):
+- Use Llama 3.1 8B for drafts, GPT-4o or Claude 3.5 for polish
+- 75% local, 25% cloud split
+- **Best for**: Consistent audience building
+
+**Low Volume, Premium Quality** (Long Videos):
+- Use Llama 3.1 70B (dual RTX 5090) for drafts
+- Claude 3.5 Sonnet for final polish
+- 70% local, 30% cloud split
+- **Best for**: Flagship content, subscriber retention
+
+### Key Recommendations
+
+1. **For Short-Form Content** (Under 3 min):
+   - Prioritize speed and volume over perfection
+   - Use Mistral 7B or Llama 3.1 8B for rapid iteration
+   - Cloud polish only for top-performing concepts
+   - Mid-Range PC sufficient (RTX 4060 Ti 16GB)
+
+2. **For Long-Form Content** (10-15 min):
+   - Prioritize quality and retention
+   - Use Llama 3.1 70B (dual RTX 5090) for best local results
+   - Claude 3.5 Sonnet for final polish (essential)
+   - High-End or Workstation PC recommended
+
+3. **For Target Audience** (15-18 US Women):
+   - Use Claude 3.5 Sonnet for audience optimization pass
+   - Test content with both narrow and broad appeal
+   - Monitor engagement metrics to refine model prompts
+
+4. **Cost Optimization**:
+   - Invest in dual RTX 5090 if producing 30+ long-form videos/month
+   - Break-even point: ~6-8 months vs cloud-only workflow
+   - For short-form: Mid-range PC + selective cloud usage is optimal
+
+---
+
 ## Practical Workflows
 
 ### Workflow 1: Two-Stage Approach (Recommended)
@@ -1192,7 +1538,7 @@ As an experienced RPG game designer, create a comprehensive quest design documen
 
 ## Conclusion
 
-The optimal approach for game design work is a **hybrid workflow** using local models for 70-80% of work (drafting, iteration, brainstorming) and cloud models for the final 20-30% (polish, refinement, quality assurance).
+The optimal approach for both game design and video production work is a **hybrid workflow** using local models for 70-80% of work (drafting, iteration, brainstorming) and cloud models for the final 20-30% (polish, refinement, quality assurance).
 
 ### Quick Reference
 
@@ -1202,13 +1548,18 @@ The optimal approach for game design work is a **hybrid workflow** using local m
 **Best Value Setup**: RTX 4090 24GB + Claude 3.5 API
 **Ultimate Setup**: Dual RTX 5090 (64GB VRAM) - near-complete independence from cloud APIs
 
+**For Short-Form Video** (<3 min): Mistral 7B + GPT-4o selective polish
+**For Long-Form Video** (10-15 min): Llama 3.1 70B + Claude 3.5 final polish
+
 ### Key Takeaways
 
-1. **Hardware Investment**: Mid-range GPU (16GB VRAM) provides best value
+1. **Hardware Investment**: Mid-range GPU (16GB VRAM) provides best value for most workflows
 2. **Cost Savings**: Hybrid approach saves 60-75% vs cloud-only
 3. **Quality**: Hybrid approach matches cloud-only quality
 4. **Flexibility**: Local models provide unlimited iteration
 5. **Privacy**: Local models keep sensitive data secure
+6. **Video Production**: Match model tier to video length and production volume
+7. **Audience Targeting**: Use Claude 3.5 for demographic-specific optimization
 
 ### Next Steps
 
