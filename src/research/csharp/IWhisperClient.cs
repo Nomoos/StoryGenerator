@@ -68,5 +68,11 @@ namespace StoryGenerator.Research
         Task<(string Language, double Confidence)> DetectLanguageAsync(
             string audioPath,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get list of available Whisper models.
+        /// </summary>
+        /// <returns>List of model names</returns>
+        Task<List<string>> GetAvailableModelsAsync();
     }
 }

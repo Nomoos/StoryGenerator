@@ -548,39 +548,4 @@ namespace StoryGenerator.Research
         [JsonPropertyName("confidence")]
         public double Confidence { get; set; }
     }
-
-    /// <summary>
-    /// Represents a transcription result.
-    /// </summary>
-    public class TranscriptionResult
-    {
-        public string Text { get; set; }
-        public string Language { get; set; }
-        public double LanguageProbability { get; set; }
-        public List<TranscriptionSegment> Segments { get; set; }
-        public List<WordTimestamp> Words { get; set; }
-    }
-
-    /// <summary>
-    /// Represents a transcription segment.
-    /// </summary>
-    public class TranscriptionSegment
-    {
-        public int Id { get; set; }
-        public double Start { get; set; }
-        public double End { get; set; }
-        public string Text { get; set; }
-        public double? Confidence { get; set; }
-    }
-
-    /// <summary>
-    /// Represents a word with timestamp.
-    /// </summary>
-    public class WordTimestamp
-    {
-        public string Word { get; set; }
-        public double Start { get; set; }
-        public double End { get; set; }
-        public double Confidence { get; set; }
-    }
 }
