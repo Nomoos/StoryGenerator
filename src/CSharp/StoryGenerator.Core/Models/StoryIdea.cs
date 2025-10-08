@@ -163,6 +163,30 @@ public class StoryIdea
     public ViralPotential Potential { get; set; } = new();
 
     /// <summary>
+    /// Gets or sets optional reference to source content statistics.
+    /// Used when the story idea originated from specific platform content (Reddit, YouTube, etc.).
+    /// Enables tracking input quality and comparing with output performance.
+    /// </summary>
+    [JsonPropertyName("source_stats")]
+    public SourceStats? SourceStats { get; set; }
+
+    /// <summary>
+    /// Gets or sets title suggestions with scores.
+    /// List of alternative titles ranked by viral potential.
+    /// Allows A/B testing and selection of the best performing title.
+    /// </summary>
+    [JsonPropertyName("title_suggestions")]
+    public List<ScoredString>? TitleSuggestions { get; set; }
+
+    /// <summary>
+    /// Gets or sets scored tags/themes for the story.
+    /// Helps with categorization, trend alignment, and SEO optimization.
+    /// Tags ranked by relevance and viral potential.
+    /// </summary>
+    [JsonPropertyName("scored_tags")]
+    public List<ScoredString>? ScoredTags { get; set; }
+
+    /// <summary>
     /// Calculates the overall viral potential score based on key metrics.
     /// </summary>
     public int CalculateOverallPotential()
