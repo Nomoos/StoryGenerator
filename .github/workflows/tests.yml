@@ -1,0 +1,116 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop, "copilot/**" ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  python-tests:
+    name: Python Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+      
+      - name: Lint with ruff
+        run: |
+          python -m ruff check . --output-format=github
+        continue-on-error: true
+      
+      - name: Format check with black
+        run: |
+          python -m black --check --diff .
+        continue-on-error: true
+      
+      - name: Type check with mypy
+        run: |
+          python -m mypy src --ignore-missing-imports
+        continue-on-error: true
+      
+      - name: Run tests with pytest
+        run: |
+          pytest --cov=src --cov-report=xml --cov-report=term-missing --cov-fail-under=70 -v
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+          flags: python
+          name: python-${{ matrix.python-version }}
+        if: matrix.python-version == '3.12'
+
+  csharp-tests:
+    name: C# Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      
+      - name: Restore dependencies
+        run: dotnet restore src/CSharp/StoryGenerator.sln
+      
+      - name: Build
+        run: dotnet build src/CSharp/StoryGenerator.sln --configuration Release --no-restore
+      
+      - name: Run tests
+        run: dotnet test src/CSharp/StoryGenerator.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage/**/coverage.cobertura.xml
+          flags: csharp
+          name: csharp
+
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install Python tools
+        run: |
+          pip install black ruff mypy
+      
+      - name: Check Python formatting (black)
+        run: black --check .
+        continue-on-error: true
+      
+      - name: Lint Python (ruff)
+        run: ruff check .
+        continue-on-error: true
+      
+      - name: Type check Python (mypy)
+        run: mypy src --ignore-missing-imports
+        continue-on-error: true
