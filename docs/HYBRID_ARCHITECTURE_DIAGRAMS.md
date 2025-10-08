@@ -525,5 +525,5 @@ Docker Container
 ---
 
 **Document Version**: 1.0  
-**Last Updated**: 2024-01-09  
+**Last Updated**: 2025-10-08  
 **Purpose**: Visual supplement to CSHARP_VS_PYTHON_COMPARISON.md

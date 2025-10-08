@@ -93,7 +93,8 @@ var result = await _pythonExecutor.ExecuteAsync(
 ```python
 # Python does ML inference
 def main():
-    args = json.load(sys.argv[1])
+    with open(sys.argv[2], 'r') as f:  # --input <file>
+        args = json.load(f)
     images = generate_with_sdxl(args['prompts'])
     print(json.dumps({"images": images}))
 ```
@@ -197,6 +198,6 @@ This approach leverages the strengths of both languages while avoiding their wea
 
 ---
 
-**Research Completed**: 2024-01-09  
+**Research Completed**: 2025-10-08  
 **Status**: Final Recommendation  
 **Next Steps**: Proceed with Phase 2 and 3 implementation following the hybrid architecture
