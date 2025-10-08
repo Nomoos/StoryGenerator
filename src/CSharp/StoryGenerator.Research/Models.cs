@@ -150,9 +150,50 @@ namespace StoryGenerator.Research
         public bool TwoPass { get; set; }
 
         /// <summary>
+        /// Normalization method used.
+        /// </summary>
+        public string Method { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Detailed loudness measurements.
+        /// </summary>
+        public LoudnessMeasurements? Measurements { get; set; }
+
+        /// <summary>
         /// Error message if normalization failed.
         /// </summary>
         public string? ErrorMessage { get; set; }
+    }
+
+    /// <summary>
+    /// Represents loudness measurements from FFmpeg loudnorm.
+    /// </summary>
+    public class LoudnessMeasurements
+    {
+        /// <summary>
+        /// Input integrated loudness.
+        /// </summary>
+        public string InputI { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Input loudness range.
+        /// </summary>
+        public string InputLra { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Input true peak.
+        /// </summary>
+        public string InputTp { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Input threshold.
+        /// </summary>
+        public string InputThresh { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Target offset.
+        /// </summary>
+        public string TargetOffset { get; set; } = string.Empty;
     }
 
     /// <summary>
@@ -217,6 +258,15 @@ namespace StoryGenerator.Research
         public int Bitrate { get; set; }
 
         /// <summary>
+        /// Bitrate in bits per second (alternate property name).
+        /// </summary>
+        public int BitRate
+        {
+            get => Bitrate;
+            set => Bitrate = value;
+        }
+
+        /// <summary>
         /// Audio codec name.
         /// </summary>
         public string Codec { get; set; } = string.Empty;
@@ -269,13 +319,48 @@ namespace StoryGenerator.Research
     public class AudioProcessingResult
     {
         /// <summary>
-        /// Transcription result.
+        /// Whether processing was successful.
         /// </summary>
-        public TranscriptionResult Transcription { get; set; } = new();
+        public bool Success { get; set; }
 
         /// <summary>
-        /// Normalized audio result.
+        /// Path to normalized audio file.
         /// </summary>
-        public NormalizationResult NormalizedAudio { get; set; } = new();
+        public string NormalizedAudioPath { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Transcribed text.
+        /// </summary>
+        public string TranscriptionText { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Path to subtitle file (if generated).
+        /// </summary>
+        public string SubtitlePath { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Detected language.
+        /// </summary>
+        public string Language { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Audio duration in seconds.
+        /// </summary>
+        public double Duration { get; set; }
+
+        /// <summary>
+        /// When processing was completed.
+        /// </summary>
+        public DateTime ProcessedAt { get; set; }
+
+        /// <summary>
+        /// Transcription result (detailed).
+        /// </summary>
+        public TranscriptionResult? Transcription { get; set; }
+
+        /// <summary>
+        /// Normalized audio result (detailed).
+        /// </summary>
+        public NormalizationResult? NormalizedAudio { get; set; }
     }
 }

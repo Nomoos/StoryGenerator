@@ -76,6 +76,7 @@ namespace StoryGenerator.Research.Tests
                 .Setup(x => x.TranscribeAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<bool>(),
                     It.IsAny<CancellationToken>()))
@@ -94,7 +95,7 @@ namespace StoryGenerator.Research.Tests
                     It.IsAny<double>(),
                     It.IsAny<double>(),
                     It.IsAny<bool>(),
-                    It.IsAny<int?>(),
+                    It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new NormalizationResult
                 {

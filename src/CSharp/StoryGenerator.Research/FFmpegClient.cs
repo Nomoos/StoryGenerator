@@ -324,49 +324,136 @@ namespace StoryGenerator.Research
                 throw new Exception($"Failed to execute {fileName}: {ex.Message}", ex);
             }
         }
+
+        /// <summary>
+        /// Crop video to specified dimensions.
+        /// </summary>
+        public async Task<VideoProcessingResult> CropVideoAsync(
+            string inputPath,
+            string outputPath,
+            int width,
+            int height,
+            string position = "center",
+            CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                // Calculate crop position
+                var cropFilter = position switch
+                {
+                    "center" => $"crop={width}:{height}",
+                    "top" => $"crop={width}:{height}:0:0",
+                    "bottom" => $"crop={width}:{height}:0:ih-{height}",
+                    _ => $"crop={width}:{height}"
+                };
+
+                var args = $"-i \"{inputPath}\" -vf \"{cropFilter}\" -c:a copy \"{outputPath}\"";
+                await ExecuteFFmpegAsync(args, cancellationToken);
+
+                return new VideoProcessingResult
+                {
+                    Success = true,
+                    OutputPath = outputPath,
+                    Width = width,
+                    Height = height
+                };
+            }
+            catch (Exception ex)
+            {
+                return new VideoProcessingResult
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message
+                };
+            }
+        }
+
+        /// <summary>
+        /// Encode video with specific codec and settings.
+        /// </summary>
+        public async Task<VideoProcessingResult> EncodeVideoAsync(
+            string inputPath,
+            string outputPath,
+            string codec = "libx264",
+            string preset = "medium",
+            int crf = 23,
+            CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var args = $"-i \"{inputPath}\" -c:v {codec} -preset {preset} -crf {crf} -c:a copy \"{outputPath}\"";
+                await ExecuteFFmpegAsync(args, cancellationToken);
+
+                return new VideoProcessingResult
+                {
+                    Success = true,
+                    OutputPath = outputPath
+                };
+            }
+            catch (Exception ex)
+            {
+                return new VideoProcessingResult
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message
+                };
+            }
+        }
+
+        /// <summary>
+        /// Get media file information.
+        /// </summary>
+        public async Task<MediaInfo> GetMediaInfoAsync(
+            string filePath,
+            CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var args = $"-v quiet -print_format json -show_format -show_streams \"{filePath}\"";
+                var output = await ExecuteFFprobeAsync(args, cancellationToken);
+
+                // Parse JSON output (simplified for prototype)
+                return new MediaInfo
+                {
+                    Duration = 0, // Would parse from JSON
+                    HasAudio = true,
+                    HasVideo = true
+                };
+            }
+            catch
+            {
+                return new MediaInfo();
+            }
+        }
+
+        /// <summary>
+        /// Extract audio from video (overload to return VideoProcessingResult).
+        /// </summary>
+        public async Task<VideoProcessingResult> ExtractAudioAsync(
+            string videoPath,
+            string audioPath,
+            int sampleRate = 48000,
+            CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                await ExtractAudioAsync(videoPath, audioPath, "pcm_s16le", $"{sampleRate}", cancellationToken);
+                
+                return new VideoProcessingResult
+                {
+                    Success = true,
+                    OutputPath = audioPath
+                };
+            }
+            catch (Exception ex)
+            {
+                return new VideoProcessingResult
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message
+                };
+            }
+        }
     }
 
-    /// <summary>
-    /// Represents audio normalization result.
-    /// </summary>
-    public class NormalizationResult
-    {
-        public bool Success { get; set; }
-        public string Method { get; set; }
-        public string OutputPath { get; set; }
-        public LoudnessMeasurements Measurements { get; set; }
-    }
-
-    /// <summary>
-    /// Represents loudness measurements.
-    /// </summary>
-    public class LoudnessMeasurements
-    {
-        [JsonPropertyName("input_i")]
-        public string InputI { get; set; }
-
-        [JsonPropertyName("input_lra")]
-        public string InputLra { get; set; }
-
-        [JsonPropertyName("input_tp")]
-        public string InputTp { get; set; }
-
-        [JsonPropertyName("input_thresh")]
-        public string InputThresh { get; set; }
-
-        [JsonPropertyName("target_offset")]
-        public string TargetOffset { get; set; }
-    }
-
-    /// <summary>
-    /// Represents audio file information.
-    /// </summary>
-    public class AudioInfo
-    {
-        public double Duration { get; set; }
-        public int SampleRate { get; set; }
-        public int Channels { get; set; }
-        public string Codec { get; set; }
-        public int BitRate { get; set; }
-    }
 }

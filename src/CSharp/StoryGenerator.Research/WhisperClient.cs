@@ -463,6 +463,28 @@ namespace StoryGenerator.Research
             // For Unix-like systems
             return $"\"{arg.Replace("\"", "\\\"")}\"";
         }
+
+        /// <summary>
+        /// Get list of available Whisper models.
+        /// </summary>
+        public async Task<List<string>> GetAvailableModelsAsync()
+        {
+            // Standard faster-whisper models
+            return await Task.FromResult(new List<string>
+            {
+                "tiny",
+                "tiny.en",
+                "base",
+                "base.en",
+                "small",
+                "small.en",
+                "medium",
+                "medium.en",
+                "large-v1",
+                "large-v2",
+                "large-v3"
+            });
+        }
     }
 
     /// <summary>
