@@ -24,6 +24,7 @@
     <ProjectReference Include="..\StoryGenerator.Core\StoryGenerator.Core.csproj" />
     <ProjectReference Include="..\StoryGenerator.Generators\StoryGenerator.Generators.csproj" />
     <ProjectReference Include="../StoryGenerator.Pipeline/StoryGenerator.Pipeline.csproj" />
+    <ProjectReference Include="..\StoryGenerator.Data\StoryGenerator.Data.csproj" />
   </ItemGroup>
 
 </Project>
