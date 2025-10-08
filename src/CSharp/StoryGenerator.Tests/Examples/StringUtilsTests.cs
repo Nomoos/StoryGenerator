@@ -40,4 +40,28 @@ public class StringUtilsTests
         Assert.Equal(expected, result);
         Assert.Equal(maxLength, result.Length);
     }
+
+    [Fact]
+    public void TruncateWithEllipsis_NullText_ThrowsArgumentNullException()
+    {
+        // Arrange
+        string? text = null;
+        int maxLength = 10;
+
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => StringUtils.TruncateWithEllipsis(text!, maxLength));
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    [InlineData(-10)]
+    public void TruncateWithEllipsis_InvalidMaxLength_ThrowsArgumentException(int maxLength)
+    {
+        // Arrange
+        string text = "Test text";
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => StringUtils.TruncateWithEllipsis(text, maxLength));
+    }
 }
