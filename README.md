@@ -5,9 +5,16 @@ An AI-driven video content pipeline that integrates ASR, LLM, vision, and genera
 
 > **⚠️ IMPORTANT NOTICE**: The Python implementation is now **OBSOLETE** and maintained only as a **historic reference**. 
 > 
-> **All new development should use the C# implementation** located in `src/CSharp/`. The Python code in `src/Python/` will remain available for reference purposes but is no longer recommended for active use.
+> **All new development should use the C# implementation** located in `src/CSharp/`. The Python code in `obsolete/Python/` will remain available for reference purposes but is no longer recommended for active use.
 > 
 > See the [C# Migration Guide](src/CSharp/MIGRATION_GUIDE.md) for migration instructions and current implementation status.
+
+## 🔬 Architecture Research
+
+For comprehensive analysis of technology choices:
+- **[C# vs Python vs Hybrid Comparison](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Complete analysis with decision matrix
+- **[Hybrid Architecture Quick Reference](docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Quick guide for developers
+- **[C# Implementation Research](docs/CSHARP_RESEARCH.md)** - Detailed research findings
 
 ## 🎯 Project Overview
 

@@ -1,5 +1,9 @@
 # C# Implementation Research & Strategy
 
+> **📌 NEW: For comprehensive analysis of C# vs Python vs Hybrid approaches, see:**
+> - **[CSHARP_VS_PYTHON_COMPARISON.md](./CSHARP_VS_PYTHON_COMPARISON.md)** - Complete comparison with decision matrix
+> - **[HYBRID_ARCHITECTURE_QUICKREF.md](./HYBRID_ARCHITECTURE_QUICKREF.md)** - Quick reference guide
+
 ## Overview
 
 This document outlines the research findings and recommended strategy for implementing the StoryGenerator pipeline in C#/.NET, based on the comprehensive documentation in `docs/MODELS.md`, `docs/EXAMPLES.md`, and `PIPELINE.md`.
