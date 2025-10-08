@@ -2,9 +2,11 @@
 
 ## 📋 Overview
 
-The StoryGenerator repository has been reorganized to support **two separate implementations**:
-- **C# Implementation** (Primary/Preferred) - Located in `CSharp/`
-- **Python Implementation** (Legacy/Alternative) - Located in `Python/`
+The StoryGenerator repository has been reorganized with the Python implementation marked as **OBSOLETE**:
+- **C# Implementation** (Primary/Active) - Located in `src/CSharp/` - **Actively developed**
+- **Python Implementation** (⚠️ OBSOLETE) - Located in `src/Python/` - **Historic reference only**
+
+**IMPORTANT**: The Python implementation is no longer maintained and should not be used for new development. All active development has moved to C#.
 
 ## 🔄 What Changed
 
@@ -46,90 +48,72 @@ StoryGenerator/
 
 ## 🎯 Why This Change?
 
-1. **Separation of Concerns**: Keep C# and Python implementations separate
-2. **C# Preference**: Makes it clear that C# is the preferred implementation
-3. **Easier Maintenance**: Changes to one implementation don't affect the other
-4. **Better Organization**: Clearer project structure
-5. **Future-Proof**: Room for additional implementations if needed
+1. **Python Obsolescence**: Python implementation is no longer maintained - C# is the only active version
+2. **Performance & Type Safety**: C# provides better performance, compile-time error detection, and maintainability
+3. **Single Implementation Focus**: Consolidating development efforts on C# implementation
+4. **Historic Preservation**: Python code preserved for reference while C# implementation completes
+5. **Clear Direction**: Makes it unambiguous that C# is the path forward
 
 ## 🚀 Migration Guide
 
-### For Existing Users (Python)
+### ⚠️ IMPORTANT: Python is OBSOLETE
 
-If you have an existing setup, you need to update your paths:
+The Python implementation is no longer recommended for any use:
 
-**Old Commands:**
+**DO NOT USE Python for:**
+- ❌ New projects
+- ❌ Production deployments
+- ❌ Active development
+- ❌ Feature additions
+
+**Python code is only for:**
+- ✅ Historic reference
+- ✅ Understanding original architecture
+- ✅ Comparing implementations during C# development
+
+### For New Users
+
+**Start with C#:**
 ```bash
-cd StoryGenerator
-python -m Generators.GStoryIdeas
+cd StoryGenerator/src/CSharp
+# Follow setup in src/CSharp/MIGRATION_GUIDE.md
 ```
 
-**New Commands:**
+### For Existing Python Users
+
+**Migrate to C#:**
+1. Review [src/CSharp/MIGRATION_GUIDE.md](../src/CSharp/MIGRATION_GUIDE.md)
+2. Check current C# implementation status
+3. Plan migration based on features you need
+4. Stop using Python implementation
+
+**If you must reference old Python code:**
 ```bash
-cd StoryGenerator/Python
-python -m Generators.GStoryIdeas
+# Python code remains at src/Python/ for reference only
+cd StoryGenerator/src/Python
+# DO NOT use for new development
 ```
 
-### Import Path Changes
+## 🔧 Development Workflow Changes
 
-**Old (root-level imports):**
-```python
-from Generators.GStoryIdeas import StoryIdeasGenerator
-from Models.StoryIdea import StoryIdea
-from Tools.Utils import sanitize_filename
-```
+### C# Development (Active - Recommended)
 
-**New (same imports, but run from Python/ directory):**
-```python
-# No changes needed if you run from Python/ directory
-from Generators.GStoryIdeas import StoryIdeasGenerator
-from Models.StoryIdea import StoryIdea
-from Tools.Utils import sanitize_filename
-```
-
-### Virtual Environment
-
-If you had a virtual environment at the root, you can:
-
-**Option 1: Move it**
 ```bash
-mv venv Python/venv
-cd Python
+cd StoryGenerator/src/CSharp
+# Follow setup instructions in MIGRATION_GUIDE.md
+dotnet build
+dotnet run --project StoryGenerator.CLI
+```
+
+### Python Development (⚠️ OBSOLETE - Reference Only)
+
+**DO NOT use Python for active development.** The workflow below is documented for historic reference only:
+
+```bash
+# OBSOLETE - For reference only
+cd StoryGenerator/src/Python
 source venv/bin/activate
-```
-
-**Option 2: Create a new one**
-```bash
-cd Python
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-### Environment Variables
-
-The `.env` file location has two options:
-
-**Option 1: Keep at root (recommended)**
-```bash
-# .env file at: StoryGenerator/.env
-# Shared by both implementations
-```
-
-**Option 2: Separate .env files**
-```bash
-# StoryGenerator/Python/.env
-# StoryGenerator/CSharp/.env (when available)
-```
-
-For Python, if you keep `.env` at root, update your code to load from parent directory:
-```python
-from pathlib import Path
-from dotenv import load_dotenv
-
-# Load .env from parent directory
-env_path = Path(__file__).parent.parent / '.env'
-load_dotenv(env_path)
+python Generation/Manual/MIdea.py  # DO NOT USE
 ```
 
 ## 📁 File Mappings
@@ -138,47 +122,41 @@ load_dotenv(env_path)
 |-------------|--------------|
 | `Generators/` | `Python/Generators/` |
 | `Models/` | `Python/Models/` |
-| `Tools/` | `Python/Tools/` |
-| `Generation/` | `Python/Generation/` |
-| `requirements.txt` | `Python/requirements.txt` |
-| `requirements-dev.txt` | `Python/requirements-dev.txt` |
-| `pyproject.toml` | `Python/pyproject.toml` |
-| N/A | `CSharp/` (new) |
+| `Tools/` | `src/Python/Tools/` (OBSOLETE) |
+| `Generation/` | `src/Python/Generation/` (OBSOLETE) |
+| `requirements.txt` | `src/Python/requirements.txt` (OBSOLETE) |
+| `requirements-dev.txt` | `src/Python/requirements-dev.txt` (OBSOLETE) |
+| `pyproject.toml` | `src/Python/pyproject.toml` (OBSOLETE) |
+| N/A | `src/CSharp/` (ACTIVE) |
 
 ## 🔧 Development Workflow Changes
 
-### Python Development
-
-**Before:**
-```bash
-cd StoryGenerator
-source venv/bin/activate
-pip install -r requirements.txt
-python Generation/Manual/MIdea.py
-```
-
-**After:**
-```bash
-cd StoryGenerator/Python
-source venv/bin/activate
-pip install -r requirements.txt
-python Generation/Manual/MIdea.py
-```
-
-### C# Development (Coming Soon)
+### C# Development (Active - Recommended)
 
 ```bash
-cd StoryGenerator/CSharp
+cd StoryGenerator/src/CSharp
+# Follow setup instructions in MIGRATION_GUIDE.md
 dotnet build
 dotnet run --project StoryGenerator.CLI
+```
+
+### Python Development (⚠️ OBSOLETE - Reference Only)
+
+**DO NOT use Python for active development.** The workflow below is documented for historic reference only:
+
+```bash
+# OBSOLETE - For reference only
+cd StoryGenerator/src/Python
+source venv/bin/activate
+python Generation/Manual/MIdea.py  # DO NOT USE
 ```
 
 ## 📝 Documentation Updates
 
 All documentation files remain at the root level:
-- `README.md` - Updated to reflect new structure
-- `QUICKSTART.md` - Updated for Python in subdirectory
-- `ARCHITECTURE.md` - Remains valid
+- `README.md` - Updated to mark Python as OBSOLETE
+- `docs/REORGANIZATION_GUIDE.md` - Updated with obsolescence notice
+- `src/CSharp/MIGRATION_GUIDE.md` - C# implementation guide
 - `SECURITY_CHECKLIST.md` - Unchanged
 - Other docs - Mostly unchanged
 

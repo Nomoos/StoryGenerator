@@ -1,3 +1,18 @@
+"""
+⚠️ OBSOLETE - DO NOT USE
+==========================
+
+This Python implementation is OBSOLETE and maintained only as historic reference.
+
+**DO NOT USE FOR NEW DEVELOPMENT**
+
+All active development has moved to C#: src/CSharp/
+
+This file will be removed once the C# implementation is 100% complete.
+
+See: src/CSharp/MIGRATION_GUIDE.md for current implementation status
+"""
+
 import os
 from elevenlabs import ElevenLabs, Voice, VoiceSettings, save
 import shutil

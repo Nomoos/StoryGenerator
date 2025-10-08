@@ -1,8 +1,20 @@
-# Quick Start Guide - StoryGenerator (Python)
+# ⚠️ OBSOLETE - Quick Start Guide (Python - Historic Reference)
 
-This guide will get you up and running with the Python implementation of StoryGenerator in 15 minutes.
+> **⚠️ CRITICAL WARNING**
+> 
+> This guide is for the **OBSOLETE Python implementation** and is preserved only for historic reference.
+> 
+> **DO NOT USE THIS FOR NEW DEVELOPMENT**
+> 
+> **Use the C# implementation instead**: See [src/CSharp/MIGRATION_GUIDE.md](src/CSharp/MIGRATION_GUIDE.md)
 
-> **Note**: This guide is for the **Python implementation**. For C# (when available), see [CSharp/README.md](CSharp/README.md).
+---
+
+# Quick Start Guide - StoryGenerator (Python - OBSOLETE)
+
+This guide documents the obsolete Python implementation setup. **Do not follow these instructions for new projects.**
+
+> **Note**: This guide is for the **OBSOLETE Python implementation**. For the active C# implementation, see [src/CSharp/MIGRATION_GUIDE.md](src/CSharp/MIGRATION_GUIDE.md).
 
 ## Prerequisites
 
