@@ -17,7 +17,7 @@ Parallelizable 1-8 hour tasks optimized for team collaboration. Multiple develop
 ## Directory Structure
 
 ```
-docs/issues/
+issues/
 ├── README.md (this file)
 ├── INDEX.md (index of all issues)
 ├── QUICKSTART.md (usage guide)

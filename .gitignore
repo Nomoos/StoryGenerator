@@ -386,3 +386,11 @@ src/Generator/*/*/*/*.jpg
 # Keep test files for examples
 !src/Generator/*/*/*/.test
 !src/Generator/*/*/*/.test.*
+
+# ==============================================================================
+# OBSOLETE FOLDER - Archived Python implementation (kept for reference)
+# ==============================================================================
+# Python artifacts in obsolete folder
+obsolete/Python/**/__pycache__/
+obsolete/Python/**/*.pyc
+obsolete/Python/**/*.pyo

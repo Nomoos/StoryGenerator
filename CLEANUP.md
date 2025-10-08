@@ -68,7 +68,7 @@
 ## 3) Standard Directory Layout (keep top level clean)
 
 **Allowed top‑level items (adjust to your stack):**  
-`src/`, `tests/`, `docs/`, `scripts/`, `assets/`, `.github/`, `.gitignore`, `.gitattributes`, `.editorconfig`, `README.md`, `LICENSE`, one project manifest (`package.json` or `pyproject.toml` or `pom.xml`/`build.gradle`).
+`src/`, `tests/`, `docs/`, `scripts/`, `assets/`, `examples/`, `data/`, `issues/`, `obsolete/`, `.github/`, `.gitignore`, `.gitattributes`, `.editorconfig`, `README.md`, `LICENSE`, one project manifest (`package.json` or `pyproject.toml` or `pom.xml`/`build.gradle`).
 
 - [ ] **Create folders.**
   ```bash
@@ -324,7 +324,7 @@ mkdir -p scripts
 cat > scripts/check-clean-root.sh <<'SH'
 #!/usr/bin/env bash
 set -euo pipefail
-allowed_regex='^(\.git|\.gitignore|\.gitattributes|\.editorconfig|README\.md|LICENSE|QUICKSTART\.md|CLEANUP\.md|package\.json|pyproject\.toml|pom\.xml|build\.gradle|requirements\.txt|\.env\.example|src|tests|docs|scripts|assets|examples|data|\.github|\.idea)$'
+allowed_regex='^(\.git|\.gitignore|\.gitattributes|\.editorconfig|README\.md|LICENSE|QUICKSTART\.md|CLEANUP\.md|package\.json|pyproject\.toml|pom\.xml|build\.gradle|requirements\.txt|\.env\.example|src|tests|docs|scripts|assets|examples|data|issues|obsolete|\.github|\.idea)$'
 bad=0
 while IFS= read -r entry; do
   base="$(basename "$entry")"
