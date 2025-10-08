@@ -1,6 +1,7 @@
 import os
 import re
 import time
+import hashlib
 
 import ffmpeg
 
@@ -21,10 +22,98 @@ VIDEOS_PATH = os.path.join(STORY_ROOT, "5_Videos")
 SUBTITLES_NAME = "Subtitles.txt"
 SUBTITLESWBW_NAME = "Subtitles_Word_By_Word.txt"
 RESOURCES_PATH = os.path.join(STORY_ROOT, "Resources")
+FINAL_PATH = os.path.join(PROJECT_ROOT, "data", "final")
 
 def sanitize_filename(title):
     """Sanitize the title for safe filename usage."""
     return re.sub(r'[\\/*?:"<>|]', "", title).strip().replace(" ", "_")
+
+def get_segment_from_gender(gender: str) -> str:
+    """
+    Get segment name from gender.
+    
+    Args:
+        gender: Gender string (e.g., 'F', 'Female', 'M', 'Male')
+    
+    Returns:
+        Segment name: 'women' or 'men'
+    """
+    gender_normalized = gender.lower() if gender else ""
+    if gender_normalized in ['f', 'female', 'woman', 'women']:
+        return "women"
+    elif gender_normalized in ['m', 'male', 'man', 'men']:
+        return "men"
+    else:
+        return "women"  # Default to women if not specified
+
+def get_age_group_from_potencial(potencial: dict) -> str:
+    """
+    Get primary age group from potencial scores.
+    
+    Args:
+        potencial: Potencial dictionary from StoryIdea
+    
+    Returns:
+        Age group string (e.g., '18-23', '24-30')
+    """
+    if not potencial or 'age_groups' not in potencial:
+        return "18-23"  # Default age group
+    
+    age_groups = potencial['age_groups']
+    if not age_groups:
+        return "18-23"
+    
+    # Find the age group with highest score
+    max_score = -1
+    best_age_group = "18-23"
+    
+    age_mapping = {
+        "10_15": "10-13",
+        "15_20": "14-17",
+        "20_25": "18-23",
+        "25_30": "24-30",
+        "30_50": "24-30",
+        "50_70": "24-30"
+    }
+    
+    for age_key, score in age_groups.items():
+        if score > max_score:
+            max_score = score
+            best_age_group = age_mapping.get(age_key, "18-23")
+    
+    return best_age_group
+
+def generate_title_id(story_title: str) -> str:
+    """
+    Generate a unique ID for a story title.
+    
+    Args:
+        story_title: Story title string
+    
+    Returns:
+        Unique ID based on title hash (8 characters)
+    """
+    # Create hash of title for unique ID
+    title_hash = hashlib.md5(story_title.encode('utf-8')).hexdigest()[:8]
+    return title_hash
+
+def get_final_export_path(story_title: str, segment: str, age_group: str, 
+                         filename: str) -> str:
+    """
+    Get the full path for exporting final video, thumbnail, or metadata.
+    
+    Args:
+        story_title: Story title
+        segment: Segment name ('women' or 'men')
+        age_group: Age group string (e.g., '18-23')
+        filename: Filename (e.g., '{title_id}.mp4', '{title_id}_thumbnail.jpg')
+    
+    Returns:
+        Full path to export location
+    """
+    export_dir = os.path.join(FINAL_PATH, segment, age_group)
+    os.makedirs(export_dir, exist_ok=True)
+    return os.path.join(export_dir, filename)
 
 def convert_to_mp4(mp3_file: str, output_file: str, use_ken_burns: bool = False, 
                    video_style: str = "cinematic", background_music: str = None):

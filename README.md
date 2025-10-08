@@ -13,6 +13,7 @@ This project automates the creation of emotional, dramatic vertical stories targ
 - **[docs/MODELS.md](docs/MODELS.md)** - Comprehensive model documentation with Hugging Face references
 - **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples for all pipeline stages
 - **[docs/PIPELINE.md](docs/PIPELINE.md)** - Detailed pipeline breakdown and technical specifications
+- **[docs/VIDEO_EXPORT.md](docs/VIDEO_EXPORT.md)** - Video export and metadata generation guide
 - **[docs/MICROSTEP_VALIDATION.md](docs/MICROSTEP_VALIDATION.md)** - Microstep validation and progress tracking system
 - **[docs/MICROSTEP_VALIDATION_QUICKSTART.md](docs/MICROSTEP_VALIDATION_QUICKSTART.md)** - Quick reference for validation system
 - **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Issue tracking and task templates
@@ -66,6 +67,13 @@ The complete pipeline consists of 10 major stages:
    - WhisperX for word-level alignment
    - Generates word-by-word SRT files
    - Aligns script to actual audio timing
+
+7. **✅ Video Export & Metadata** (`Generators/GVideoCompositor.py`)
+   - Exports final videos to organized production directory
+   - Automatic thumbnail generation (1080×1920)
+   - Metadata JSON with title, description, tags, and targeting info
+   - Path structure: `/data/final/{segment}/{age}/{title_id}.{mp4|jpg|json}`
+   - **[Export Guide](docs/VIDEO_EXPORT.md)**
 
 ### Planned Implementation
 
@@ -576,10 +584,6 @@ For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMEN
 - **Security**: See [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md)
 
 ---
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 
 ## 📄 License
 

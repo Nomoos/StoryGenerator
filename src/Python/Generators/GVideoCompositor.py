@@ -1,11 +1,19 @@
 import os
 import json
 import subprocess
-from typing import List, Optional
+import shutil
+from typing import List, Optional, Tuple, Dict, Any
 from Models.StoryIdea import StoryIdea
 from Generators.GSceneAnalyzer import SceneAnalyzer
-from Tools.Utils import TITLES_PATH, sanitize_filename
+from Tools.Utils import (
+    TITLES_PATH, sanitize_filename, 
+    get_segment_from_gender, get_age_group_from_potencial,
+    generate_title_id, get_final_export_path
+)
 from Tools.VideoEffects import VideoEffects
+from Tools.ExportRegistry import ExportRegistry
+from Tools.ThumbnailGenerator import ThumbnailGenerator
+from Tools.PlatformExporter import PlatformExporter
 from Tools.VideoQualityChecker import VideoQualityChecker
 
 
@@ -36,6 +44,11 @@ class VideoCompositor:
         self.transition_duration = transition_duration
         self.apply_ken_burns = apply_ken_burns
         self.video_effects = VideoEffects()
+        
+        # Initialize new export tools
+        self.registry = ExportRegistry()
+        self.thumbnail_generator = ThumbnailGenerator(self.width, self.height)
+        self.platform_exporter = PlatformExporter()
         self.perform_quality_check = perform_quality_check
         self.quality_checker = VideoQualityChecker() if perform_quality_check else None
 
@@ -110,6 +123,14 @@ class VideoCompositor:
         
         print(f"✅ Final video created: {output_path}")
         
+        # Step 6: Export to production directory with thumbnail and metadata
+        print("\n  6️⃣ Exporting to production directory...")
+        self.export_final_video(
+            story_idea=story_idea,
+            source_video_path=output_path,
+            export_thumbnail=True,
+            export_metadata=True
+        )
         # Perform quality check on final video
         if self.perform_quality_check and self.quality_checker:
             print("  6️⃣ Running quality check...")
@@ -408,3 +429,314 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         ]
         
         subprocess.run(cmd, check=True, capture_output=True)
+
+    def export_final_video(
+        self,
+        story_idea: StoryIdea,
+        source_video_path: str,
+        export_thumbnail: bool = True,
+        export_metadata: bool = True
+    ) -> Tuple[str, str, str]:
+        """
+        Export final video to /final/{segment}/{age}/{title_id}.mp4 with thumbnail and metadata.
+        
+        Args:
+            story_idea: StoryIdea object with story information
+            source_video_path: Path to the composed final video
+            export_thumbnail: Whether to generate and export thumbnail
+            export_metadata: Whether to generate and export metadata JSON
+            
+        Returns:
+            Tuple of (video_path, thumbnail_path, metadata_path)
+        """
+        print(f"\n📦 Exporting final video to production directory...")
+        
+        # Extract segment and age group from story idea
+        segment = get_segment_from_gender(story_idea.narrator_gender)
+        age_group = get_age_group_from_potencial(story_idea.potencial)
+        title_id = generate_title_id(story_idea.story_title)
+        
+        print(f"  📊 Segment: {segment}")
+        print(f"  📊 Age Group: {age_group}")
+        print(f"  🆔 Title ID: {title_id}")
+        
+        # Define export paths
+        video_filename = f"{title_id}.mp4"
+        thumbnail_filename = f"{title_id}_thumbnail.jpg"
+        metadata_filename = f"{title_id}_metadata.json"
+        
+        export_video_path = get_final_export_path(
+            story_idea.story_title, segment, age_group, video_filename
+        )
+        export_thumbnail_path = get_final_export_path(
+            story_idea.story_title, segment, age_group, thumbnail_filename
+        )
+        export_metadata_path = get_final_export_path(
+            story_idea.story_title, segment, age_group, metadata_filename
+        )
+        
+        # Copy video to export location
+        print(f"  1️⃣ Copying video to: {export_video_path}")
+        shutil.copy2(source_video_path, export_video_path)
+        print(f"  ✅ Video exported successfully")
+        
+        # Generate and export thumbnail
+        thumbnail_path = None
+        if export_thumbnail:
+            print(f"  2️⃣ Generating thumbnail (1080x1920)...")
+            success = self._generate_thumbnail(export_video_path, export_thumbnail_path)
+            if success:
+                thumbnail_path = export_thumbnail_path
+                print(f"  ✅ Thumbnail exported: {export_thumbnail_path}")
+            else:
+                print(f"  ⚠️ Failed to generate thumbnail")
+        
+        # Generate and export metadata
+        metadata_path = None
+        if export_metadata:
+            print(f"  3️⃣ Generating metadata JSON...")
+            success = self._generate_metadata(
+                story_idea, export_metadata_path, title_id, segment, age_group
+            )
+            if success:
+                metadata_path = export_metadata_path
+                print(f"  ✅ Metadata exported: {export_metadata_path}")
+            else:
+                print(f"  ⚠️ Failed to generate metadata")
+        
+        print(f"\n✅ Export complete!")
+        print(f"  📹 Video: {export_video_path}")
+        if thumbnail_path:
+            print(f"  📸 Thumbnail: {thumbnail_path}")
+        if metadata_path:
+            print(f"  📄 Metadata: {metadata_path}")
+        
+        return export_video_path, thumbnail_path, metadata_path
+    
+    def _generate_thumbnail(self, video_path: str, output_path: str, 
+                          timestamp: float = 0.5) -> bool:
+        """
+        Generate thumbnail from video at specified timestamp.
+        
+        Args:
+            video_path: Path to video file
+            output_path: Path to save thumbnail
+            timestamp: Timestamp in seconds to extract frame
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            cmd = [
+                'ffmpeg', '-y',
+                '-ss', str(timestamp),
+                '-i', video_path,
+                '-vframes', '1',
+                '-vf', f'scale={self.width}:{self.height}',
+                '-q:v', '2',  # High quality JPEG
+                output_path
+            ]
+            
+            subprocess.run(cmd, check=True, capture_output=True)
+            return True
+            
+        except subprocess.CalledProcessError as e:
+            print(f"  ❌ FFmpeg error generating thumbnail: {e}")
+            return False
+        except Exception as e:
+            print(f"  ❌ Error generating thumbnail: {e}")
+            return False
+    
+    def _generate_metadata(
+        self,
+        story_idea: StoryIdea,
+        output_path: str,
+        title_id: str,
+        segment: str,
+        age_group: str
+    ) -> bool:
+        """
+        Generate metadata JSON file for the video.
+        
+        Args:
+            story_idea: StoryIdea object
+            output_path: Path to save metadata JSON
+            title_id: Unique title ID
+            segment: Segment (gender)
+            age_group: Target age group
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            # Generate tags from story attributes
+            tags = []
+            if story_idea.theme:
+                tags.append(story_idea.theme)
+            if story_idea.tone:
+                tags.append(story_idea.tone)
+            if story_idea.narrator_type:
+                tags.append(story_idea.narrator_type)
+            
+            # Add generic tags
+            tags.extend(['shorts', 'viral', 'story'])
+            
+            # Generate description
+            description = f"{story_idea.story_title}\n\n"
+            if story_idea.theme:
+                description += f"Theme: {story_idea.theme}\n"
+            if story_idea.tone:
+                description += f"Tone: {story_idea.tone}\n"
+            if story_idea.goal:
+                description += f"\n{story_idea.goal}\n"
+            
+            # Create metadata dictionary
+            metadata = {
+                "title_id": title_id,
+                "title": story_idea.story_title,
+                "description": description.strip(),
+                "tags": tags,
+                "segment": segment,
+                "age_group": age_group,
+                "narrator_gender": story_idea.narrator_gender,
+                "theme": story_idea.theme,
+                "tone": story_idea.tone,
+                "language": story_idea.language,
+                "potencial_score": story_idea.potencial.get("overall", 0),
+                "video_format": {
+                    "resolution": f"{self.width}x{self.height}",
+                    "aspect_ratio": "9:16",
+                    "format": "mp4"
+                }
+            }
+            
+            # Write metadata to JSON file
+            with open(output_path, 'w', encoding='utf-8') as f:
+                json.dump(metadata, f, indent=2, ensure_ascii=False)
+            
+            return True
+            
+        except Exception as e:
+            print(f"  ❌ Error generating metadata: {e}")
+            return False
+    
+    def export_with_enhancements(
+        self,
+        story_idea: StoryIdea,
+        source_video_path: str,
+        generate_multiple_thumbnails: bool = True,
+        generate_platform_metadata: bool = True,
+        thumbnail_options: int = 5,
+        register_in_registry: bool = True
+    ) -> Dict[str, Any]:
+        """
+        Enhanced export with all new features.
+        
+        Args:
+            story_idea: StoryIdea object
+            source_video_path: Path to source video
+            generate_multiple_thumbnails: Generate multiple thumbnail options
+            generate_platform_metadata: Generate platform-specific metadata
+            thumbnail_options: Number of thumbnail options to generate
+            register_in_registry: Register export in registry
+            
+        Returns:
+            Dictionary with all export paths and information
+        """
+        print(f"\n{'='*60}")
+        print(f"🚀 ENHANCED EXPORT: {story_idea.story_title}")
+        print(f"{'='*60}\n")
+        
+        # Get identifiers
+        segment = get_segment_from_gender(story_idea.narrator_gender)
+        age_group = get_age_group_from_potencial(story_idea.potencial)
+        title_id = generate_title_id(story_idea.story_title)
+        
+        # Get export directory
+        export_dir = os.path.join(os.path.dirname(
+            get_final_export_path(story_idea.story_title, segment, age_group, "")
+        ))
+        
+        result = {
+            "title_id": title_id,
+            "segment": segment,
+            "age_group": age_group,
+            "video_path": None,
+            "thumbnails": {},
+            "metadata": {},
+            "success": False
+        }
+        
+        try:
+            # 1. Standard export
+            print("1️⃣ Performing standard export...")
+            video_path, thumb_path, meta_path = self.export_final_video(
+                story_idea, source_video_path,
+                export_thumbnail=True,
+                export_metadata=True
+            )
+            result["video_path"] = video_path
+            result["thumbnails"]["default"] = thumb_path
+            result["metadata"]["default"] = meta_path
+            
+            # 2. Generate multiple thumbnail options
+            if generate_multiple_thumbnails and video_path:
+                print(f"\n2️⃣ Generating {thumbnail_options} thumbnail options...")
+                try:
+                    thumb_dir = os.path.join(export_dir, "thumbnails")
+                    options = self.thumbnail_generator.generate_multiple_options(
+                        video_path, thumb_dir, title_id, thumbnail_options
+                    )
+                    result["thumbnails"]["options"] = options
+                    print(f"  ✅ Generated {len(options)} thumbnail options")
+                except Exception as e:
+                    print(f"  ⚠️ Error generating thumbnail options: {e}")
+            
+            # 3. Generate platform-specific metadata
+            if generate_platform_metadata:
+                print(f"\n3️⃣ Generating platform-specific metadata...")
+                try:
+                    platform_dir = os.path.join(export_dir, "platforms")
+                    platform_files = self.platform_exporter.save_platform_metadata(
+                        story_idea, platform_dir
+                    )
+                    result["metadata"]["platforms"] = platform_files
+                    print(f"  ✅ Generated metadata for {len(platform_files)} platforms")
+                except Exception as e:
+                    print(f"  ⚠️ Error generating platform metadata: {e}")
+            
+            # 4. Register in export registry
+            if register_in_registry:
+                print(f"\n4️⃣ Registering in export registry...")
+                try:
+                    self.registry.register_export(
+                        title_id=title_id,
+                        title=story_idea.story_title,
+                        segment=segment,
+                        age_group=age_group,
+                        video_path=video_path,
+                        thumbnail_path=thumb_path,
+                        metadata_path=meta_path,
+                        additional_info={
+                            "theme": story_idea.theme,
+                            "tone": story_idea.tone,
+                            "language": story_idea.language,
+                            "thumbnail_options": len(result["thumbnails"].get("options", [])),
+                            "platform_metadata": len(result["metadata"].get("platforms", []))
+                        }
+                    )
+                except Exception as e:
+                    print(f"  ⚠️ Error registering export: {e}")
+            
+            result["success"] = True
+            
+            print(f"\n{'='*60}")
+            print(f"✅ ENHANCED EXPORT COMPLETE!")
+            print(f"{'='*60}\n")
+            
+        except Exception as e:
+            print(f"\n❌ Enhanced export failed: {e}")
+            result["error"] = str(e)
+        
+        return result
+
