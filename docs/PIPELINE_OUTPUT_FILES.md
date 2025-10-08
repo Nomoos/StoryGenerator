@@ -21,10 +21,11 @@ Where:
 ### 02-content-01: Reddit Scraper
 **Output Directory**: `Generator/sources/reddit/{gender}/{age_bucket}/`
 **Files Created**:
-- `reddit_post_{id}.json` - Raw Reddit post data
-  - Contains: title, selftext, score, num_comments, created_utc, url, subreddit
+- `{YYYYMMDD}_reddit_stories.json` - Daily scraped Reddit stories
+  - Contains: segment, age_bucket, subreddits, total_scraped, after_filtering, selected, scraped_at, stories array
+  - Stories include: id, title, text, url, upvotes, num_comments, created_utc, subreddit, author, awards, is_self, top_comments
   - Format: JSON
-  - Example: `reddit_post_abc123.json`
+  - Example: `20240115_reddit_stories.json`
 
 ### 02-content-02: Alternative Sources
 **Output Directory**: `Generator/sources/{quora|twitter}/{gender}/{age_bucket}/`
