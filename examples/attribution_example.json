@@ -1,0 +1,17 @@
+{
+  "content_id": "abc123xyz",
+  "source_url": "https://reddit.com/r/relationships/comments/abc123xyz/story_title",
+  "author": "throwaway_user123",
+  "source_type": "reddit",
+  "license": "Reddit User Agreement - Fair Use for Transformative Works",
+  "date_scraped": "2024-01-15T10:30:00Z",
+  "usage_rights": "Transformative use for creative storytelling. Original attribution preserved.",
+  "attribution_generated": "2024-01-15T10:35:00Z",
+  "subreddit": "relationships",
+  "additional_info": {
+    "title": "My partner did something unexpected",
+    "upvotes": 1250,
+    "num_comments": 340,
+    "awards": 5
+  }
+}
