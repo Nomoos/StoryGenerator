@@ -1249,4 +1249,4 @@ The optimal approach for game design work is a **hybrid workflow** using local m
 **Document Version**: 1.0  
 **Last Updated**: October 2024  
 **Maintained By**: BlueMarble Team  
-**Contact**: [Your Contact Information]
+**For Questions**: Open an issue in the StoryGenerator repository
