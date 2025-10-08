@@ -11,10 +11,14 @@ An AI-driven video content pipeline that integrates ASR, LLM, vision, and genera
 
 ## 🔬 Architecture Research
 
-For comprehensive analysis of technology choices:
-- **[C# vs Python vs Hybrid Comparison](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Complete analysis with decision matrix
+**Complete research on C# vs Python vs Hybrid approach for each pipeline stage:**
+- **[Research Summary](docs/RESEARCH_SUMMARY.md)** - Start here for overview and navigation
+- **[C# vs Python Comparison](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Complete analysis with decision matrix
 - **[Hybrid Architecture Quick Reference](docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Quick guide for developers
+- **[Architecture Diagrams](docs/HYBRID_ARCHITECTURE_DIAGRAMS.md)** - Visual flowcharts and diagrams
 - **[C# Implementation Research](docs/CSHARP_RESEARCH.md)** - Detailed research findings
+
+**Key Finding**: Hybrid architecture recommended - C# for orchestration (7/11 stages), Python for ML inference (4/11 stages)
 
 ## 🎯 Project Overview
 
