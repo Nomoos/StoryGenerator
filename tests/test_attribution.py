@@ -7,6 +7,7 @@ Tests attribution metadata creation, file generation, and processing.
 
 import json
 import tempfile
+import shutil
 import unittest
 from pathlib import Path
 from datetime import datetime
@@ -42,6 +43,11 @@ class TestAttributionGenerator(unittest.TestCase):
             "author": "test_user",
             "awards": 2
         }
+    
+    def tearDown(self):
+        """Clean up test fixtures."""
+        if Path(self.temp_dir).exists():
+            shutil.rmtree(self.temp_dir)
     
     def test_determine_license_reddit(self):
         """Test license determination for Reddit sources."""
@@ -193,6 +199,11 @@ class TestAttributionIntegration(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures."""
         self.temp_dir = tempfile.mkdtemp()
+    
+    def tearDown(self):
+        """Clean up test fixtures."""
+        if Path(self.temp_dir).exists():
+            shutil.rmtree(self.temp_dir)
     
     def test_full_workflow(self):
         """Test complete workflow from scraped data to attribution files."""
