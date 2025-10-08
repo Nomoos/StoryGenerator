@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides a visual representation of the reorganized atomic issues structure. All 64 tasks are organized into 3 phases following the principle: **Interface → Prototype → Implementation**.
+This document provides a visual representation of the reorganized atomic issues structure. All 58 tasks are organized into 3 phases following the principle: **Interface → Prototype → Implementation**.
 
 ## 🎯 Three-Phase Model
 
@@ -12,24 +12,24 @@ This document provides a visual representation of the reorganized atomic issues 
 │                    (Define the "what")                          │
 │                                                                 │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐         │
-│  │ Repo         │  │ Config       │  │ Python/C#    │         │
-│  │ Structure    │→ │ Files        │→ │ Environments │         │
+│  │ Repo         │  │ Config       │  │ C#           │         │
+│  │ Structure    │→ │ Files        │→ │ Projects     │         │
 │  └──────────────┘  └──────────────┘  └──────────────┘         │
 │                                                                 │
-│  4 tasks • 1-2 days • 2-4 developers                           │
+│  3 tasks • 1-2 days • 2-3 developers                           │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────────┐
 │                    PHASE 2: PROTOTYPE                           │
 │                   (Validate the "how")                          │
 │                                                                 │
-│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐          │
-│  │ Ollama  │  │ Whisper │  │ FFmpeg  │  │ SDXL/   │          │
-│  │ Client  │  │ Client  │  │ Client  │  │ LTX     │          │
-│  └─────────┘  └─────────┘  └─────────┘  └─────────┘          │
-│  Python + C# implementations in parallel                       │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │
+│  │ C# Ollama   │  │ C# Whisper  │  │ C# FFmpeg   │            │
+│  │ Client      │  │ Client      │  │ Wrapper     │            │
+│  └─────────────┘  └─────────────┘  └─────────────┘            │
+│  C# implementations only                                        │
 │                                                                 │
-│  8 tasks • 2-3 days • 4-8 developers                           │
+│  3 tasks • 1-2 days • 3 developers                             │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────────┐
@@ -118,9 +118,9 @@ This document provides a visual representation of the reorganized atomic issues 
 
 ### By Phase
 ```
-Phase 1: ████ 4 tasks (6%)
-Phase 2: ████████ 8 tasks (13%)
-Phase 3: ████████████████████████████████████████████████████ 52 tasks (81%)
+Phase 1: ███ 3 tasks (5%)
+Phase 2: ███ 3 tasks (5%)
+Phase 3: ████████████████████████████████████████████████████ 52 tasks (90%)
 ```
 
 ### By Priority
@@ -198,20 +198,14 @@ Week 2
 ```
 issues/atomic/
 │
-├── phase-1-interface/                    [4 tasks]
+├── phase-1-interface/                    [3 tasks]
 │   ├── README.md                         (Phase guide)
 │   ├── 00-setup-01-repo-structure/
 │   ├── 00-setup-02-config-files/
-│   ├── 00-setup-03-python-env/
 │   └── 00-setup-04-csharp-projects/
 │
-├── phase-2-prototype/                    [8 tasks]
+├── phase-2-prototype/                    [3 tasks]
 │   ├── README.md                         (Phase guide)
-│   ├── 01-research-01-ollama-client/
-│   ├── 01-research-02-whisper-client/
-│   ├── 01-research-03-ffmpeg-client/
-│   ├── 01-research-04-sdxl-client/
-│   ├── 01-research-05-ltx-client/
 │   ├── 01-research-06-csharp-ollama/
 │   ├── 01-research-07-csharp-whisper/
 │   └── 01-research-08-csharp-ffmpeg/
@@ -356,4 +350,4 @@ New: issues/atomic/phase-3-implementation/content-pipeline/02-content-01-reddit-
 
 **Last Updated:** 2025-01-01  
 **Structure Version:** 2.0 (Phase-Based)  
-**Total Issues:** 64 (4 + 8 + 52)
+**Total Issues:** 58 (3 + 3 + 52)

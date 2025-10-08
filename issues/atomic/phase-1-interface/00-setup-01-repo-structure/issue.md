@@ -3,7 +3,7 @@
 **ID:** `00-setup-01`  
 **Priority:** P0 (Critical Path)  
 **Effort:** 1-2 hours  
-**Status:** Not Started
+**Status:** ✅ Complete
 
 ## Overview
 
@@ -19,12 +19,12 @@ Create the complete folder structure for the StoryGenerator pipeline according t
 
 ## Acceptance Criteria
 
-- [ ] All folders created under `/Generator/` directory
-- [ ] Folder structure matches specification exactly
-- [ ] Age buckets: `10-13`, `14-17`, `18-23`
-- [ ] Gender segments: `women`, `men`
-- [ ] Verification script runs successfully
-- [ ] README.md created in root Generator folder
+- [x] All folders created under `/Generator/` directory
+- [x] Folder structure matches specification exactly
+- [x] Age buckets: `10-13`, `14-17`, `18-23`
+- [x] Gender segments: `women`, `men`
+- [x] Verification script runs successfully
+- [x] README.md created in root Generator folder
 
 ## Task Details
 

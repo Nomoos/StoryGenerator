@@ -1,0 +1,58 @@
+# StoryGenerator Pipeline Configuration
+
+models:
+  # Local LLM for content generation
+  llm: qwen2_5_14b  # Options: qwen2_5_14b | llama3_1_8b
+  
+  # Vision model for image understanding (optional)
+  vision: llava_onevision_7b  # Options: llava_onevision_7b | phi_3_5_vision
+  
+  # Text-to-speech engine
+  tts: local_tts_engine_name  # TODO: Define specific TTS model
+  
+  # Automatic speech recognition
+  asr: faster-whisper-large-v3
+  
+  # Image generation
+  image: sdxl_base_refiner
+  
+  # Video generation
+  video: ltx_video_2b  # Options: ltx_video_2b | ltx_video_13b | stable_video_diffusion
+
+video:
+  width: 1080
+  height: 1920
+  fps: 30
+  safe_margins_pct:
+    top: 8
+    bottom: 10
+
+audio:
+  target_lufs: -14
+  sample_rate: 48000
+
+seeds:
+  image: 1234
+  video: 5678
+  llm: 42
+
+paths:
+  weights: ./models/weights
+  cache: ./models/cache
+  tmp: ./tmp
+
+switches:
+  use_ltx: true
+  use_interpolation: false
+
+# API Keys (use environment variables in production)
+apis:
+  reddit:
+    client_id: ${REDDIT_CLIENT_ID}
+    client_secret: ${REDDIT_CLIENT_SECRET}
+    user_agent: "StoryGenerator/1.0"
+  
+  youtube:
+    api_key: ${YOUTUBE_API_KEY}
+  
+  # Add other API configs as needed
