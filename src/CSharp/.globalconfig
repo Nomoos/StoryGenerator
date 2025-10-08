@@ -1,0 +1,56 @@
+is_global = true
+
+# StyleCop Analyzer Rules Configuration
+# Disable verbose rules that don't add significant value
+
+# SA1101: Prefix local calls with this - disabled (not required in modern C#)
+dotnet_diagnostic.SA1101.severity = none
+
+# SA1116-SA1117: Parameter placement - disabled (handled by formatting tools)
+dotnet_diagnostic.SA1116.severity = none
+dotnet_diagnostic.SA1117.severity = none
+
+# SA1413: Use trailing comma - disabled (optional style preference)
+dotnet_diagnostic.SA1413.severity = none
+
+# SA1503: Braces should not be omitted - warning (good practice but allow some flexibility)
+dotnet_diagnostic.SA1503.severity = suggestion
+
+# SA1407: Arithmetic expressions precedence - warning (good practice)
+dotnet_diagnostic.SA1407.severity = warning
+
+# SA0001: XML comments - disabled for now (will enable after adding docs)
+dotnet_diagnostic.SA0001.severity = none
+
+# SA1633: File header - disabled (not using file headers)
+dotnet_diagnostic.SA1633.severity = none
+
+# SA1600-SA1602: Documentation - disabled for internal/private members
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1601.severity = none
+dotnet_diagnostic.SA1602.severity = none
+
+# Keep important rules enabled
+# SA1309: Field names should not begin with underscore
+dotnet_diagnostic.SA1309.severity = warning
+
+# SA1000-SA1028: Spacing rules
+dotnet_diagnostic.SA1000.severity = warning
+dotnet_diagnostic.SA1001.severity = warning
+dotnet_diagnostic.SA1028.severity = warning
+
+# Code Analysis Rules
+# CA1031: Do not catch general exception types
+dotnet_diagnostic.CA1031.severity = suggestion
+
+# CA1062: Validate arguments of public methods
+dotnet_diagnostic.CA1062.severity = warning
+
+# CA1303: Do not pass literals as localized parameters
+dotnet_diagnostic.CA1303.severity = none
+
+# CA1848: Use LoggerMessage delegates
+dotnet_diagnostic.CA1848.severity = suggestion
+
+# CA2007: Do not directly await a Task (library code only)
+dotnet_diagnostic.CA2007.severity = none
