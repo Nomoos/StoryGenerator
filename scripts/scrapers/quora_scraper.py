@@ -121,11 +121,20 @@ class QuoraScraper(BaseScraper):
         # MOCK DATA - In production, this would actually scrape Quora
         # This demonstrates the expected data structure
         
+        # Validate search_term
+        if not search_term or not search_term.strip():
+            return []
+        
+        # Safe URL construction
+        search_parts = search_term.split()
+        first_term = search_parts[0] if search_parts else "question"
+        url_safe_term = search_term.replace(' ', '-')
+        
         mock_questions = [
             {
                 "id": f"quora_{hash(search_term)}_{i}",
-                "title": f"How do I deal with {search_term.split()[0]} in my life?",
-                "url": f"{self.base_url}/How-do-I-deal-with-{search_term.replace(' ', '-')}-{i}",
+                "title": f"How do I deal with {first_term} in my life?",
+                "url": f"{self.base_url}/How-do-I-deal-with-{url_safe_term}-{i}",
                 "question_text": f"I'm struggling with {search_term}. What should I do?",
                 "views": 10000 + (i * 1000),
                 "followers": 50 + (i * 10),

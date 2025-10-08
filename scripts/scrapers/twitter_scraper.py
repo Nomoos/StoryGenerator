@@ -126,11 +126,19 @@ class TwitterScraper(BaseScraper):
         # MOCK DATA - In production, this would use Twitter API v2
         # This demonstrates the expected data structure
         
+        # Validate query
+        if not query or not query.strip():
+            return []
+        
+        # Safe extraction for hashtag
+        query_parts = query.split()
+        first_term = query_parts[0] if query_parts else "story"
+        
         mock_threads = [
             {
                 "id": f"twitter_{hash(query)}_{i}",
                 "thread_id": f"thread_{i}_{int(time.time())}",
-                "title": f"A thread about {query.split()[0]}",
+                "title": f"A thread about {first_term}",
                 "url": f"https://twitter.com/user/status/{1234567890 + i}",
                 "author": f"@storyteller{i}",
                 "author_followers": 10000 + (i * 1000),
@@ -147,7 +155,7 @@ class TwitterScraper(BaseScraper):
                     "replies": 100 + (i * 20),
                     "views": 50000 + (i * 5000)
                 },
-                "hashtags": ["#thread", "#story", query.split()[0]],
+                "hashtags": ["#thread", "#story", first_term],
                 "source": "twitter"
             }
             for i in range(min(limit, 10))
