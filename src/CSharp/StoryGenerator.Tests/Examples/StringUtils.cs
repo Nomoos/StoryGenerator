@@ -14,7 +14,13 @@ public static class StringUtils
     /// <returns>Truncated text with ellipsis if needed, or original text if shorter than maxLength.</returns>
     public static string TruncateWithEllipsis(string text, int maxLength)
     {
-        // Minimal implementation to pass the test
-        return text;
+        if (text.Length <= maxLength)
+        {
+            return text;
+        }
+
+        const string ellipsis = "...";
+        int truncateLength = maxLength - ellipsis.Length;
+        return text.Substring(0, truncateLength) + ellipsis;
     }
 }
