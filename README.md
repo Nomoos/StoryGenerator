@@ -12,6 +12,7 @@ An AI-driven video content pipeline that integrates ASR, LLM, vision, and genera
 ## 🔬 Architecture Research
 
 **Complete research on C# vs Python vs Hybrid approach for each pipeline stage:**
+- **[Technology Stack Final](docs/TECHNOLOGY_STACK_FINAL.md)** - **Complete recommended stack (C# + Python + SQLite)**
 - **[Research Summary](docs/RESEARCH_SUMMARY.md)** - Start here for overview and navigation
 - **[C# vs Python Comparison](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Complete analysis with decision matrix
 - **[Hybrid Architecture Quick Reference](docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Quick guide for developers
