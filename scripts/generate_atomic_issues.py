@@ -171,7 +171,7 @@ After completion:
 
 def main():
     """Generate all atomic issue files."""
-    base_path = Path("issues/atomic")
+    base_path = Path("docs/issues/atomic")
     base_path.mkdir(parents=True, exist_ok=True)
     
     for task in ATOMIC_TASKS:

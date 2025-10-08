@@ -7,7 +7,7 @@ This guide helps you navigate and use the individual issue files for the StoryGe
 The main issue has been broken down into **14 separate, detailed issue files**, organized by pipeline step:
 
 ```
-issues/
+docs/issues/
 ├── README.md              # Directory overview
 ├── INDEX.md               # Complete navigation index
 ├── step-00-research/      # Research prototypes (Python & C#)
@@ -31,7 +31,7 @@ issues/
 ### 1. Start with the INDEX.md
 
 ```bash
-cat issues/INDEX.md
+cat docs/issues/INDEX.md
 ```
 
 This provides:
@@ -43,7 +43,7 @@ This provides:
 ### 2. Navigate to a Specific Step
 
 ```bash
-cd issues/step-01-ideas/
+cd docs/issues/step-01-ideas/
 cat issue.md
 ```
 
@@ -178,12 +178,12 @@ Each issue links to:
 
 ### View all steps
 ```bash
-cat issues/INDEX.md
+cat docs/issues/INDEX.md
 ```
 
 ### Work on a specific step
 ```bash
-cd issues/step-01-ideas/
+cd docs/issues/step-01-ideas/
 cat issue.md
 # Follow the checklist...
 ```
@@ -221,7 +221,7 @@ cat src/Generator/ideas/women/18-23/progress.md
 ## 🤝 Working with @copilot
 
 When you need help:
-- Reference the issue: "Based on issues/step-02-viral-score/issue.md..."
+- Reference the issue: "Based on docs/issues/step-02-viral-score/issue.md..."
 - Ask specific questions: "How should I structure the title_score.json?"
 - Request validation: "@copilot check"
 - Get suggestions: "What's the next step after this?"
@@ -230,10 +230,10 @@ When you need help:
 
 ```bash
 # 1. Check what to work on
-cat issues/INDEX.md
+cat docs/issues/INDEX.md
 
 # 2. Navigate to step
-cd issues/step-02-viral-score/
+cd docs/issues/step-02-viral-score/
 
 # 3. Read the full issue
 cat issue.md
@@ -278,11 +278,11 @@ For each step to be complete:
 
 ```bash
 # Start with research prototypes
-cd issues/step-00-research/
+cd docs/issues/step-00-research/
 cat issue.md
 
 # Or jump to content generation
-cd issues/step-01-ideas/
+cd docs/issues/step-01-ideas/
 cat issue.md
 ```
 
