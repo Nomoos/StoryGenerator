@@ -3,6 +3,12 @@
 
 An AI-driven video content pipeline that integrates ASR, LLM, vision, and generative models to create engaging short-form vertical videos for TikTok, YouTube Shorts, and Instagram Reels.
 
+> **⚠️ IMPORTANT NOTICE**: The Python implementation is now **OBSOLETE** and maintained only as a **historic reference**. 
+> 
+> **All new development should use the C# implementation** located in `src/CSharp/`. The Python code in `src/Python/` will remain available for reference purposes but is no longer recommended for active use.
+> 
+> See the [C# Migration Guide](src/CSharp/MIGRATION_GUIDE.md) for migration instructions and current implementation status.
+
 ## 🎯 Project Overview
 
 This project automates the creation of emotional, dramatic vertical stories targeting viewers aged 10-30 in the US, Canada, and Australia. The pipeline transforms story ideas into complete videos with voiceovers, subtitles, and visual content.
@@ -385,35 +391,28 @@ AI-powered story generation pipeline for creating engaging short-form video cont
 
 This repository contains **two implementations** of the StoryGenerator:
 
-### 📌 **C# Implementation** (Primary/Preferred)
-Located in `CSharp/` - Modern, type-safe implementation with better performance and cross-platform support.
+### 📌 **C# Implementation** (Primary/Active)
+Located in `src/CSharp/` - Modern, type-safe implementation with better performance and cross-platform support. **This is the actively developed version.**
 
-### 📌 **Python Implementation** (Legacy/Alternative)
-Located in `Python/` - Original implementation, fully functional and maintained.
+### 📌 **Python Implementation** (⚠️ OBSOLETE - Historic Reference Only)
+Located in `src/Python/` - Original implementation preserved for reference purposes. **DO NOT USE FOR NEW DEVELOPMENT.** This code is no longer maintained and exists only as a historic reference for understanding the project's evolution.
 
 ---
 
 ## 🚀 Quick Start
 
-### C# Version (Recommended)
+### C# Version (Recommended - Active Development)
 ```bash
-cd CSharp
-# Setup instructions coming soon
+cd src/CSharp
+# See src/CSharp/README.md for setup instructions
 ```
 
-### Python Version
-```bash
-cd Python
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-cp ../.env.example .env
-# Edit .env with your API keys
-```
+### Python Version (⚠️ OBSOLETE - Do Not Use)
+The Python implementation is preserved for historic reference only and should not be used for new development.
 
-For detailed setup instructions, see:
-- **C#**: [CSharp/README.md](CSharp/README.md) *(coming soon)*
-- **Python**: [Python/README.md](Python/README.md)
+For detailed setup instructions for C#, see:
+- **C#**: [src/CSharp/MIGRATION_GUIDE.md](src/CSharp/MIGRATION_GUIDE.md)
+- **Python (Reference Only)**: [src/Python/README.md](src/Python/README.md)
 
 ---
 
@@ -516,17 +515,18 @@ StoryGenerator/
 
 | Feature | C# | Python |
 |---------|-----|--------|
-| **Status** | 🚧 In Development | ✅ Ready |
+| **Status** | ✅ Active Development | ⚠️ **OBSOLETE** |
 | **Performance** | ⚡ Faster | 🐌 Slower |
 | **Type Safety** | ✅ Strong typing | ⚠️ Dynamic |
 | **Async Support** | ✅ Native | ⚠️ Added complexity |
 | **Deployment** | 📦 Single binary | 🐍 Requires interpreter |
 | **IDE Support** | ✅ Excellent | ✅ Good |
-| **Learning Curve** | 📈 Moderate | 📈 Easy |
+| **Maintenance** | ✅ Active | ❌ **No longer maintained** |
 
 **Recommendation**: 
-- **For Production**: Wait for C# implementation
-- **For Development/Testing**: Use Python implementation now
+- **For Production**: Use C# implementation (currently in development)
+- **For Development/Testing**: Use C# implementation
+- **Python**: Historic reference only - DO NOT use for new development
 
 ---
 
@@ -534,44 +534,48 @@ StoryGenerator/
 
 ### Contributing
 
-Contributions are welcome for both implementations!
+Contributions are welcome for the C# implementation!
 
 **For C# development**:
-- Coming soon
+- See [src/CSharp/README.md](src/CSharp/README.md) for setup instructions
+- Follow [src/CSharp/MIGRATION_GUIDE.md](src/CSharp/MIGRATION_GUIDE.md) for architecture patterns
 
-**For Python development**:
-```bash
-cd Python
-pip install -r requirements-dev.txt
-black .                    # Format code
-pylint Generators/         # Lint code
-pytest                     # Run tests (when available)
-```
+**Python implementation**:
+- ⚠️ The Python code is OBSOLETE and no longer accepting contributions
+- Python code remains only as historic reference
 
 ---
 
 ## 🔄 Migration from Python to C#
 
-Migration guidance will be provided when the C# implementation is complete.
+**The Python implementation is now OBSOLETE.** All development has moved to C#.
+
+For complete migration guidance and current C# implementation status, see:
+- [src/CSharp/MIGRATION_GUIDE.md](src/CSharp/MIGRATION_GUIDE.md)
+- [src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md](src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md)
+
+Current C# Implementation Status:
+- ✅ Phase 1: Core Infrastructure (100% Complete)
+- ✅ Phase 2: API Providers (100% Complete)  
+- 🔄 Phase 3: Generators (In Progress)
+- 📋 Phase 4: Pipeline Orchestration (Planned)
 
 ---
 
 ## 📈 Roadmap
 
-### C# Implementation
-- [ ] Port core generators to C#
-- [ ] Implement async/await patterns
+### C# Implementation (Active Development)
+- [x] Core infrastructure and models
+- [x] API provider integrations (OpenAI, ElevenLabs)
+- [ ] Complete remaining generators
 - [ ] Add comprehensive unit tests
 - [ ] Create CLI interface
 - [ ] Build NuGet packages
 - [ ] Add web API
 
-### Python Implementation
-- [x] Existing functionality
-- [ ] Add unit tests
-- [ ] Improve error handling
-- [ ] Add logging system
-- [ ] Create CLI interface
+### Python Implementation (⚠️ OBSOLETE - No longer maintained)
+- The Python implementation is preserved for historic reference only
+- No further development or maintenance planned
 
 For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMENTS.md).
 
@@ -607,6 +611,6 @@ For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMEN
 
 ---
 
-**Note**: This repository was recently reorganized to support both C# and Python implementations. The C# version is under development and will become the primary implementation.
+**Note**: This repository has been reorganized with the Python implementation marked as OBSOLETE. The C# implementation in `src/CSharp/` is now the primary and only actively maintained version. Python code remains available for historic reference only.
 
 **Remember**: Always keep your API keys secure and never commit them to version control!
