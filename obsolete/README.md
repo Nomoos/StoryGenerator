@@ -27,6 +27,30 @@ Documentation specific to the Python implementation, including:
 - `PYTHON_OBSOLETE_NOTICE.md` - Official deprecation notice
 - `python-code-removal/` - Issue tracking for Python code removal
 
+### Python Issues (`issues/`)
+
+Issue tracking files for the obsolete Python-based implementation plan, including:
+- **Sequential step issues** (`step-00` through `step-14`) - Comprehensive Python implementation plans
+- **Python-specific atomic tasks** - Research prototypes for Python implementations
+
+See `issues/README.md` for details on archived issues.
+
+**Current Issues:** Active C# implementation issues are in the main `issues/` directory.
+
+### Python Research (`research/python/`)
+
+Research prototypes and scripts created for the Python implementation:
+- LLM integration scripts (llm_call.py)
+- Image generation (sdxl_keyframe.py)
+- Video generation (ltx_generate.py)
+- Audio processing (lufs_normalize.py)
+- Subtitle tools (srt_tools.py)
+- Frame interpolation (interpolation.py)
+
+See `research/README.md` for details on archived research files.
+
+**Current Research:** Active research (including C#-compatible Python scripts) is in the main `research/` directory.
+
 ## Migration Guide
 
 If you were using the Python version:
@@ -52,4 +76,8 @@ This code is kept for:
 ---
 
 **Last Updated:** 2025-10-08  
-**Archived From:** `src/Python/` and `docs/` (Python-specific)
+**Archived From:** 
+- `src/Python/` - Python implementation
+- `docs/` - Python-specific documentation
+- `issues/step-XX/` - Python-based sequential issues
+- `research/python/` - Python research prototypes (partial)

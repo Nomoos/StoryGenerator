@@ -1,81 +1,41 @@
 # Issues Index - StoryGenerator Pipeline
 
-Complete breakdown of the video generation pipeline into manageable, step-by-step issues.
+Complete breakdown of the C# video generation pipeline into manageable, atomic tasks.
 
-## 🎯 Two Approaches
+## 🎯 Approach
 
-### 1. Sequential Steps (Original - 15 Large Steps)
-Comprehensive, step-by-step issues. Good for understanding the complete pipeline flow.
-
-### 2. **Atomic Tasks - Phase-Based (64 Tasks) ⭐ RECOMMENDED**
-**Recommended for teams!** Parallelizable 1-8 hour tasks organized into 3 phases:
+### **Atomic Tasks - Phase-Based (64 Tasks) ⭐ RECOMMENDED**
+Parallelizable 1-8 hour tasks organized into 3 phases:
 
 - **Phase 1: Interface** (4 tasks) - Define configs, schemas, and structure
-- **Phase 2: Prototype** (8 tasks) - Research and validate all integrations
+- **Phase 2: Prototype** (3 tasks) - Research and validate C# integrations
 - **Phase 3: Implementation** (52 tasks in 13 groups) - Build production pipeline
 
 👉 **[View Atomic Tasks Directory](atomic/README.md)** - Start here for team collaboration
 
 Each phase builds on the previous, ensuring clear dependencies and reduced rework.
 
----
+> **Note:** The Python-based sequential step issues (step-00 through step-14) have been archived to `obsolete/issues/` as they represent the obsolete Python implementation plan.
 
-## Overview
+## 🎯 C# Implementation Issues
 
-This index organizes the entire StoryGenerator pipeline (from ideation to final export) into 15 distinct sequential steps OR 64 atomic parallelizable tasks.
-
-## 🎯 Quick Navigation
-
-| Step | Name | Status | Priority | Directory |
+| Type | Name | Status | Priority | Directory |
 |------|------|--------|----------|-----------|
-| 0 | Research Prototypes | Not Started | High | [step-00-research/](step-00-research/) |
-| 1 | Ideas → Topics → Titles | Not Started | High | [step-01-ideas/](step-01-ideas/) |
-| 2 | Viral Score (Titles) | Not Started | High | [step-02-viral-score/](step-02-viral-score/) |
-| 3 | Raw Script → Iterate | Not Started | High | [step-03-raw-script/](step-03-raw-script/) |
-| 4 | Improve Script (GPT/Local) | Not Started | High | [step-04-improve-script/](step-04-improve-script/) |
-| 5 | Improve Title (GPT/Local) | Not Started | Medium | [step-05-improve-title/](step-05-improve-title/) |
-| 6 | Scene Planning | Not Started | High | [step-06-scene-planning/](step-06-scene-planning/) |
-| 7 | Voiceover | Not Started | High | [step-07-voiceover/](step-07-voiceover/) |
-| 8 | Subtitle Timing | Not Started | High | [step-08-subtitle-timing/](step-08-subtitle-timing/) |
-| 9 | Key Images (SDXL) | Not Started | High | [step-09-key-images/](step-09-key-images/) |
-| 10 | Video Generation | Not Started | High | [step-10-video-generation/](step-10-video-generation/) |
-| 11 | Post-Production | Not Started | High | [step-11-post-production/](step-11-post-production/) |
-| 12 | Quality Checks | Not Started | High | [step-12-quality-checks/](step-12-quality-checks/) |
-| 13 | Final Export | Not Started | High | [step-13-final-export/](step-13-final-export/) |
-| 14 | Platform Distribution & Analytics | Not Started | Medium | [step-14-distribution-analytics/](step-14-distribution-analytics/) |
+| Roadmap | C# Master Roadmap | Active | High | [csharp-master-roadmap/](csharp-master-roadmap/) |
+| Phase 3 | Complete Generators | Not Started | P0 | [csharp-phase3-complete-generators/](csharp-phase3-complete-generators/) |
+| Phase 4 | Pipeline Orchestration | Planned | P1 | [csharp-phase4-pipeline-orchestration/](csharp-phase4-pipeline-orchestration/) |
+| Phase 5 | Video Generators | Planned | P1 | [csharp-video-generators/](csharp-video-generators/) |
 
-## 📊 Pipeline Flow
+For detailed atomic task breakdown, see [atomic/README.md](atomic/README.md).
 
-```
-Step 0: Research Prototypes (Setup)
-    ↓
-Step 1: Ideas → Topics → Titles (Reddit Stories + Alternative Sources)
-    ↓
-Step 2: Viral Score (Title Selection)
-    ↓
-Step 3: Raw Script → Iterate (Script v0, v1)
-    ↓
-Step 4: Improve Script (Script v2+)
-    ↓
-Step 5: Improve Title (Title Variants)
-    ↓
-Step 6: Scene Planning (Shots + Draft Subtitles)
-    ↓
-Step 7: Voiceover (Audio Generation + Normalization)
-    ↓
-Step 8: Subtitle Timing (Forced Alignment)
-    ↓
-Step 9: Key Images (SDXL Keyframes)
-    ↓
-Step 10: Video Generation (LTX/Interpolation)
-    ↓
-Step 11: Post-Production (Assembly + Effects)
-    ↓
-Step 12: Quality Checks (QC Reports)
-    ↓
-Step 13: Final Export (Platform-Ready Files)
-    ↓
-Step 14: Platform Distribution & Analytics (Upload + Performance Tracking)
+## 📜 Obsolete Python Issues (Archived)
+
+The Python-based sequential step issues (step-00 through step-14) have been moved to `obsolete/issues/` for historical reference. They represented the original Python implementation plan which is no longer maintained.
+
+To view the archived Python issues:
+```bash
+cd obsolete/issues/
+ls step-*
 ```
 
 ## 🎬 Target Audience Segments

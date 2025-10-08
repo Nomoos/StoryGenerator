@@ -1,13 +1,10 @@
 # Issues Directory
 
-This directory contains individual issue files organized by pipeline steps. Each step has been broken down into **separate, manageable issues** with two organization approaches.
+This directory contains issue tracking for the C# implementation of StoryGenerator.
 
-## 🎯 Choose Your Approach
+## 🎯 Organization Approach
 
-### Option 1: Sequential Steps (15 Large Issues)
-Traditional step-by-step breakdown. Each step is comprehensive and covers multiple tasks.
-
-### Option 2: **Atomic Tasks - Phase-Based (64 Tasks) ⭐ RECOMMENDED**
+### **Atomic Tasks - Phase-Based (64 Tasks) ⭐ RECOMMENDED**
 Organized into 3 phases: **Interface → Prototype → Implementation**
 
 Parallelizable 1-8 hour tasks optimized for team collaboration. Multiple developers can work simultaneously within each phase.
@@ -16,10 +13,12 @@ Parallelizable 1-8 hour tasks optimized for team collaboration. Multiple develop
 
 #### Phase Structure:
 - **Phase 1: Interface** (4 tasks) - Define configs and structure
-- **Phase 2: Prototype** (8 tasks) - Research and validate integrations  
+- **Phase 2: Prototype** (3 tasks) - Research and validate C# integrations  
 - **Phase 3: Implementation** (52 tasks) - Build production pipeline
 
 Each phase builds on the previous, ensuring clear dependencies and incremental value delivery.
+
+> **Note:** The Python-based sequential step issues (step-00 through step-14) have been moved to `obsolete/issues/` as the C# implementation is now the primary codebase.
 
 ---
 
@@ -31,10 +30,10 @@ issues/
 ├── INDEX.md (index of all issues)
 ├── QUICKSTART.md (usage guide)
 │
-├── atomic/ ⭐ NEW: 64 tasks in 3 phases (Interface → Prototype → Implementation)
+├── atomic/ ⭐ C# Implementation: 64 tasks in 3 phases
 │   ├── README.md (phase-based workflow guide)
 │   ├── phase-1-interface/ (4 tasks - configs & structure)
-│   ├── phase-2-prototype/ (8 tasks - research & validation)
+│   ├── phase-2-prototype/ (3 tasks - C# research & validation)
 │   └── phase-3-implementation/ (52 tasks in 13 groups)
 │       ├── content-pipeline/
 │       ├── idea-generation/
@@ -50,34 +49,25 @@ issues/
 │       ├── distribution/
 │       └── analytics/
 │
-├── step-00-research/      # Research Prototypes (Local Only)
-├── step-01-ideas/         # Ideas → Topics → Titles
-├── step-02-viral-score/   # Viral Score (Titles)
-├── step-03-raw-script/    # Raw Script → Score → Iterate
-├── step-04-improve-script/# Improve Script by GPT/Local
-├── step-05-improve-title/ # Improve Title by GPT/Local
-├── step-06-scene-planning/# Scene Planning
-├── step-07-voiceover/     # Voiceover
-├── step-08-subtitle-timing/# Subtitle Timing
-├── step-09-key-images/    # Key Images per Scene (SDXL)
-├── step-10-video-generation/# Video Generation
-├── step-11-post-production/# Post-Production
-├── step-12-quality-checks/# Quality Checks
-├── step-13-final-export/  # Final Export
-└── step-14-distribution-analytics/ # Platform Distribution & Analytics
+├── csharp-master-roadmap/         # C# Implementation Master Roadmap
+├── csharp-phase3-complete-generators/  # C# Phase 3 Tasks
+├── csharp-phase4-pipeline-orchestration/  # C# Phase 4 Tasks
+└── csharp-video-generators/       # C# Video Generation Tasks
 ```
+
+**Obsolete Issues** (Python-based sequential steps) are now in `obsolete/issues/step-XX/`
 
 ## Usage
 
-### For Solo Developers (Sequential)
-1. Navigate to the specific step directory you want to work on
-2. Read the issue file(s) in that directory
-3. Follow the checklist and acceptance criteria
-4. Comment `@copilot check` in the issue when you complete a task
-
-### For Teams (Atomic/Phase-Based) ⭐
+### For C# Development (Atomic/Phase-Based) ⭐
 1. **Review** [atomic/README.md](atomic/README.md) for phase-based workflow
 2. **Start with Phase 1** (Interface) - Define structure and configs
+3. **Then Phase 2** (Prototype) - Validate C# integrations
+4. **Finally Phase 3** (Implementation) - Build production pipeline
+5. Comment `@copilot check` when completing tasks
+
+### For Historical Reference (Python Steps)
+Python-based sequential step issues have been moved to `obsolete/issues/step-XX/` for historical reference only. They are no longer actively maintained.
 3. **Move to Phase 2** (Prototype) - Validate all integrations
 4. **Execute Phase 3** (Implementation) - Build production pipeline in 13 groups
 5. **Track** progress using MicrostepValidator per task
