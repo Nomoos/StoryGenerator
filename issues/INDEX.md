@@ -170,6 +170,8 @@ Create proof-of-concept implementations for:
 - Video generation (LTX-Video)
 - Audio normalization (FFmpeg)
 
+**💡 RTX 5090 Optimization**: See [docs/MODELS.md#rtx-5090-optimization-guide](../docs/MODELS.md#rtx-5090-optimization-guide) for optimal local model configurations and performance targets.
+
 [View Issue →](step-00-research/issue.md)
 
 ---
