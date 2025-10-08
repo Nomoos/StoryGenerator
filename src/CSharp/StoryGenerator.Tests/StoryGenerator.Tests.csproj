@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StoryGenerator.Core\StoryGenerator.Core.csproj" />
     <ProjectReference Include="..\StoryGenerator.Generators\StoryGenerator.Generators.csproj" />
     <ProjectReference Include="../StoryGenerator.Pipeline/StoryGenerator.Pipeline.csproj" />
   </ItemGroup>

@@ -16,6 +16,7 @@ This project automates the creation of emotional, dramatic vertical stories targ
 ## 📚 Documentation
 
 - **[README.md](README.md)** (this file) - Overview and quick start
+- **[docs/IDEA_COLLECTOR.md](docs/IDEA_COLLECTOR.md)** - 🆕 Idea Collector system for gathering and transforming content sources
 - **[docs/MODELS.md](docs/MODELS.md)** - Comprehensive model documentation with Hugging Face references
 - **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples for all pipeline stages
 - **[docs/PIPELINE.md](docs/PIPELINE.md)** - Detailed pipeline breakdown and technical specifications
@@ -34,6 +35,13 @@ This project automates the creation of emotional, dramatic vertical stories targ
 The complete pipeline consists of 10 major stages:
 
 ### Currently Implemented
+
+0. **✅ Idea Collection** (C# Implementation - `src/CSharp/StoryGenerator.Core/`)
+   - 🆕 Framework for collecting story ideas from multiple sources (Reddit, Instagram, TikTok)
+   - Transforms source material into original ideas (never copies content directly)
+   - Centralized registry with viral potential scoring across demographics
+   - Source validation to ensure copyright compliance
+   - **[Idea Collector Documentation](docs/IDEA_COLLECTOR.md)**
 
 1. **✅ Story Idea Generation** (`Generators/GStoryIdeas.py`)
    - Generates story concepts with metadata
