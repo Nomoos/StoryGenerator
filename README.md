@@ -16,6 +16,9 @@ An AI-driven video content pipeline that integrates ASR, LLM, vision, and genera
 - **[C# vs Python Comparison](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Complete analysis with decision matrix
 - **[Hybrid Architecture Quick Reference](docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Quick guide for developers
 - **[Architecture Diagrams](docs/HYBRID_ARCHITECTURE_DIAGRAMS.md)** - Visual flowcharts and diagrams
+- **[Database Recommendations](docs/DATABASE_RECOMMENDATIONS.md)** - PostgreSQL + S3/Blob storage strategy
+- **[C++ Integration Analysis](docs/CPP_INTEGRATION_ANALYSIS.md)** - Why C++ is not recommended
+- **[Repository Structure](docs/REPOSITORY_STRUCTURE.md)** - Recommended project organization
 - **[C# Implementation Research](docs/CSHARP_RESEARCH.md)** - Detailed research findings
 
 **Key Finding**: Hybrid architecture recommended - C# for orchestration (7/11 stages), Python for ML inference (4/11 stages)
