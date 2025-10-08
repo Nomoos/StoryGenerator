@@ -5,9 +5,25 @@ An AI-driven video content pipeline that integrates ASR, LLM, vision, and genera
 
 > **⚠️ IMPORTANT NOTICE**: The Python implementation is now **OBSOLETE** and maintained only as a **historic reference**. 
 > 
-> **All new development should use the C# implementation** located in `src/CSharp/`. The Python code in `src/Python/` will remain available for reference purposes but is no longer recommended for active use.
+> **All new development should use the C# implementation** located in `src/CSharp/`. The Python code in `obsolete/Python/` will remain available for reference purposes but is no longer recommended for active use.
 > 
 > See the [C# Migration Guide](src/CSharp/MIGRATION_GUIDE.md) for migration instructions and current implementation status.
+
+## 🔬 Architecture Research
+
+**Complete research on C# vs Python vs Hybrid approach for each pipeline stage:**
+- **[Technology Stack Final](docs/TECHNOLOGY_STACK_FINAL.md)** - **Complete recommended stack (C# + Python + SQLite)**
+- **[Research Summary](docs/RESEARCH_SUMMARY.md)** - Start here for overview and navigation
+- **[C# vs Python Comparison](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Complete analysis with decision matrix
+- **[Hybrid Architecture Quick Reference](docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Quick guide for developers
+- **[Architecture Diagrams](docs/HYBRID_ARCHITECTURE_DIAGRAMS.md)** - Visual flowcharts and diagrams
+- **[Local Storage Strategy](docs/LOCAL_STORAGE_STRATEGY.md)** - SQLite + file system (simple, recommended)
+- **[Database Recommendations](docs/DATABASE_RECOMMENDATIONS.md)** - PostgreSQL + S3/Blob (enterprise)
+- **[C++ Integration Analysis](docs/CPP_INTEGRATION_ANALYSIS.md)** - Why C++ is not recommended
+- **[Repository Structure](docs/REPOSITORY_STRUCTURE.md)** - Recommended project organization
+- **[C# Implementation Research](docs/CSHARP_RESEARCH.md)** - Detailed research findings
+
+**Key Finding**: Hybrid architecture recommended - C# for orchestration (7/11 stages), Python for ML inference (4/11 stages)
 
 ## 🎯 Project Overview
 
