@@ -4,11 +4,6 @@ namespace StoryGenerator.Tests.Examples;
 /// Immutable user profile record.
 /// Demonstrates C# best practices: using records for DTOs/value objects.
 /// </summary>
-/// <param name="Username">Unique username for the user.</param>
-/// <param name="Email">User's email address.</param>
-/// <param name="FullName">User's full name.</param>
-/// <param name="CreatedAt">Timestamp of profile creation.</param>
-/// <param name="Bio">Optional biography text.</param>
 public record UserProfile
 {
     /// <summary>
@@ -38,8 +33,9 @@ public record UserProfile
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserProfile"/> record.
+    /// Private constructor to enforce use of factory method.
     /// </summary>
-    public UserProfile()
+    private UserProfile()
     {
     }
 
@@ -70,7 +66,7 @@ public record UserProfile
             throw new ArgumentException("Username must be at least 3 characters", nameof(username));
         }
 
-        if (!email.Contains('@'))
+        if (!IsValidEmail(email))
         {
             throw new ArgumentException("Invalid email address", nameof(email));
         }
@@ -101,4 +97,27 @@ public record UserProfile
     /// </summary>
     /// <returns>True if bio is set and not empty, false otherwise.</returns>
     public bool HasBio() => !string.IsNullOrWhiteSpace(Bio);
+
+    /// <summary>
+    /// Validates an email address using MailAddress constructor.
+    /// </summary>
+    /// <param name="email">The email address to validate.</param>
+    /// <returns>True if the email is valid, false otherwise.</returns>
+    private static bool IsValidEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            return false;
+        }
+
+        try
+        {
+            var mailAddress = new System.Net.Mail.MailAddress(email);
+            return mailAddress.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
