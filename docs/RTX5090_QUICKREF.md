@@ -54,13 +54,13 @@ image_pipe = StableDiffusionXLPipeline.from_pretrained(
 
 ### 2. Maximum Quality (Sequential)
 **Best for**: Premium content  
-**Models**: Switch between Qwen-32B (32GB) → SDXL+Refiner (16GB) → LTX-Video (24GB)  
+**Models**: Switch between Qwen-14B (14GB) → SDXL+Refiner (16GB) → LTX-Video (24GB)  
 **VRAM Used**: One at a time (sequential)  
-**Quality**: 1.3x better output
+**Quality**: 1.2x better output
 
 ```python
-# Stage 1: Premium text (32GB)
-model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-32B-Instruct", ...)
+# Stage 1: Quality text (14GB)
+model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-14B-Instruct", ...)
 script = model.generate(...)
 del model; torch.cuda.empty_cache()
 
@@ -189,7 +189,6 @@ pipe.enable_vae_tiling(False)
 |----------|-------|------|-------|
 | Fast iteration | Llama-3.1-8B | 8GB | 65 tok/s |
 | Balanced | Qwen2.5-14B | 14GB | 45 tok/s |
-| Best quality | Qwen2.5-32B | 32GB | 25 tok/s |
 
 ### Image Generation
 | Use Case | Model | VRAM | Speed |

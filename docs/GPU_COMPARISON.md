@@ -117,7 +117,7 @@ Estimated time to generate 30 complete videos (script + images + video + post-pr
 - **Limitations**: Some memory constraints, 5s max video clips
 
 ### Professional Studio / Agency
-**Recommended**: ⭐ **RTX 5090** (48GB) or Multi-GPU
+**Recommended**: ⭐ **RTX 5090** (32GB) or Multi-GPU
 - **Cost**: $2,000-6,000
 - **Capability**: Premium models, full parallel processing, batch generation
 - **Best For**: 100+ videos/month, high quality requirements, team workflows
@@ -131,7 +131,7 @@ Estimated time to generate 30 complete videos (script + images + video + post-pr
 
 ### Text Generation Models
 
-| Model | Size | RTX 3090 (24GB) | RTX 4090 (24GB) | RTX 5090 (48GB) |
+| Model | Size | RTX 3090 (24GB) | RTX 4090 (24GB) | RTX 5090 (32GB) |
 |-------|------|-----------------|-----------------|-----------------|
 | Llama-3.1-8B | 8B | ✅ float16 | ✅ float16 | ✅ float16 + batch |
 | Qwen2.5-14B | 14B | ✅ float16 | ✅ float16 | ✅ float16 + batch |
@@ -140,7 +140,7 @@ Estimated time to generate 30 complete videos (script + images + video + post-pr
 
 ### Image Generation Models
 
-| Model | VRAM | RTX 3090 (24GB) | RTX 4090 (24GB) | RTX 5090 (48GB) |
+| Model | VRAM | RTX 3090 (24GB) | RTX 4090 (24GB) | RTX 5090 (32GB) |
 |-------|------|-----------------|-----------------|-----------------|
 | SDXL Base | 12GB | ✅ Single | ✅ Single | ✅ Batch (4-6x) |
 | SDXL + Refiner | 16GB | ✅ Sequential | ✅ Sequential | ✅ Batch (2-4x) |

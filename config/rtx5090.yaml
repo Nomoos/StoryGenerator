@@ -154,7 +154,7 @@ optimizations:
   memory:
     empty_cache_between_stages: true
     use_memory_efficient_attention: true
-    gradient_checkpointing: false  # Not needed with 48GB
+    gradient_checkpointing: false  # Not needed for most models on 32GB
     cpu_offload: false  # Keep everything on GPU
     
   # Inference optimizations
