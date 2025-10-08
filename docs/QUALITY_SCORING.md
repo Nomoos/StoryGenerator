@@ -152,6 +152,12 @@ Different content types may have slightly different scoring emphasis. For exampl
 ### Scoring Individual Content
 
 ```python
+import sys
+from pathlib import Path
+
+# Add scripts directory to path
+sys.path.insert(0, str(Path(__file__).parent / "scripts"))
+
 from process_quality import calculate_score
 
 content_data = {
@@ -179,6 +185,12 @@ python scripts/process_quality.py
 ### Getting Individual Metrics
 
 ```python
+import sys
+from pathlib import Path
+
+# Add scripts directory to path
+sys.path.insert(0, str(Path(__file__).parent / "scripts"))
+
 from process_quality import assess_content_quality
 
 scores = assess_content_quality(content_data, "idea")
@@ -276,14 +288,14 @@ To emphasize different aspects of quality, modify `config/scoring.yaml`:
 
 ```yaml
 viral:
-  novelty: 0.30      # Increased from 0.25
-  emotional: 0.25
-  clarity: 0.20
-  replay: 0.10       # Decreased from 0.15
-  share: 0.15
+  novelty: 0.30      # Increased from 0.25 - more weight on uniqueness
+  emotional: 0.20    # Decreased from 0.25
+  clarity: 0.20      # Unchanged
+  replay: 0.15       # Unchanged
+  share: 0.15        # Unchanged
 ```
 
-Weights must sum to 1.0.
+**Important**: Weights must sum to exactly 1.0 (or very close due to floating point).
 
 ### Adjusting Thresholds
 

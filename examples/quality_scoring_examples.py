@@ -84,11 +84,8 @@ def example_detailed_metrics():
     print(f"  Replay:      {metrics['replay']:.1f}/100  (rewatchability)")
     print(f"  Share:       {metrics['share']:.1f}/100  (viral potential)")
     
-    # Calculate weighted score
-    config = load_scoring_config()
-    weights = config.get("viral", {})
-    
-    final_score = sum(metrics[m] * weights.get(m, 0) for m in metrics)
+    # Calculate weighted score using the same function the system uses
+    final_score = calculate_score(content)
     print(f"\n🎯 Final Score: {final_score:.1f}/100")
 
 
