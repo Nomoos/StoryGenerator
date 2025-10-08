@@ -4,6 +4,10 @@
 
 This document provides comprehensive database recommendations for storing ideas, text content, and media assets in the StoryGenerator pipeline.
 
+> **🏠 For Local/Simplified Deployment**: See [LOCAL_STORAGE_STRATEGY.md](./LOCAL_STORAGE_STRATEGY.md) for a simpler approach using SQLite + local file system (zero external dependencies, 5-minute setup).
+
+> **☁️ This Document**: Covers enterprise/cloud deployment with PostgreSQL + Object Storage (for distributed systems, multiple servers).
+
 ## Database Strategy by Content Type
 
 ### 1. Text Content Storage (Ideas, Scripts, Metadata)

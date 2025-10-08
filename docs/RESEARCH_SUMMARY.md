@@ -164,12 +164,20 @@ This research has produced seven comprehensive documents:
 ### Additional Analysis Documents
 
 ### 5. [DATABASE_RECOMMENDATIONS.md](./DATABASE_RECOMMENDATIONS.md)
-**400+ lines** - Database strategy
+**400+ lines** - Enterprise database strategy
 - PostgreSQL for text content and metadata
 - S3/Azure Blob for media files
 - Redis for caching
 - Schema design with code examples
 - Storage estimates and cost analysis
+
+### 5b. [LOCAL_STORAGE_STRATEGY.md](./LOCAL_STORAGE_STRATEGY.md)
+**600+ lines** - Simplified local storage (NEW)
+- SQLite for text content (single file, zero setup)
+- Local file system for media files
+- No external services required
+- Simple backup strategy
+- Perfect for single-machine deployment
 
 ### 6. [CPP_INTEGRATION_ANALYSIS.md](./CPP_INTEGRATION_ANALYSIS.md)
 **450+ lines** - C/C++ evaluation
@@ -201,7 +209,10 @@ This research has produced seven comprehensive documents:
 **Implementing a feature?**
 → Use the decision tree in [HYBRID_ARCHITECTURE_QUICKREF.md](./HYBRID_ARCHITECTURE_QUICKREF.md#-quick-decision-tree)
 
-**Setting up database?**
+**Setting up database (local)?**
+→ See [LOCAL_STORAGE_STRATEGY.md](./LOCAL_STORAGE_STRATEGY.md) (Simple, recommended)
+
+**Setting up database (enterprise)?**
 → See [DATABASE_RECOMMENDATIONS.md](./DATABASE_RECOMMENDATIONS.md)
 
 **Considering C/C++?**
