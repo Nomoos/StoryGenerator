@@ -31,7 +31,7 @@ This index organizes the entire StoryGenerator pipeline (from ideation to final 
 ```
 Step 0: Research Prototypes (Setup)
     ↓
-Step 1: Ideas → Topics → Titles (Content Generation)
+Step 1: Ideas → Topics → Titles (Reddit Stories + Alternative Sources)
     ↓
 Step 2: Viral Score (Title Selection)
     ↓
