@@ -1,154 +1,245 @@
-# Atomic Issues - Parallel Execution
+# Atomic Issues - Phase-Based Organization
 
-This directory contains **62 atomic, independently executable issues** that can be worked on in parallel.
+This directory contains **64 atomic, independently executable issues** organized into **3 phases**: Interface → Prototype → Implementation.
+
+## 🎯 Phase-Based Approach
+
+### Why Phases?
+
+The pipeline follows a natural progression:
+1. **Interface** - Define the "what" (configs, schemas, structure)
+2. **Prototype** - Validate the "how" (research, POC, integration patterns)
+3. **Implementation** - Build the "real thing" (production pipeline)
+
+This approach ensures:
+- ✅ Clear dependencies and blockers
+- ✅ Reduced rework (validate before building)
+- ✅ Better team coordination
+- ✅ Incremental value delivery
 
 ## Structure
 
-Each atomic issue is a self-contained task that can be completed by a single person in 1-8 hours.
-
 ```
 atomic/
-├── 00-setup-01-repo-structure/        # P0 - Setup repo folders
-├── 00-setup-02-config-files/          # P0 - Create YAML configs
-├── 00-setup-03-python-env/            # P0 - Python environment setup
-├── 00-setup-04-csharp-projects/       # P0 - C# project structure
-├── 01-research-01-ollama-client/      # P0 - Ollama LLM client
-├── 01-research-02-whisper-client/     # P0 - Whisper ASR client
-├── 01-research-03-ffmpeg-client/      # P0 - FFmpeg media client
-├── 01-research-04-sdxl-client/        # P1 - SDXL image client
-├── 01-research-05-ltx-client/         # P1 - LTX video client
-├── 02-content-01-reddit-scraper/      # P0 - Reddit story mining
-├── 02-content-02-alt-sources/         # P1 - Alternative sources
-├── 02-content-03-quality-scorer/      # P1 - Story quality assessment
-├── 03-ideas-01-reddit-adaptation/     # P1 - Adapt Reddit stories
-├── 03-ideas-02-llm-generation/        # P1 - Generate original ideas
-├── 03-ideas-03-clustering/            # P1 - Cluster ideas into topics
-├── 03-ideas-04-title-generation/      # P1 - Generate titles from topics
-├── 04-scoring-01-title-scorer/        # P1 - Score titles for viral potential
-├── 04-scoring-02-voice-recommendation/# P1 - Recommend voice (F/M)
-├── 04-scoring-03-top-selection/       # P1 - Select top 5 titles
-├── 05-script-01-raw-generation/       # P1 - Generate raw scripts
-├── 05-script-02-script-scorer/        # P1 - Score scripts
-├── 05-script-03-iteration/            # P1 - Iterate scripts locally
-├── 05-script-04-gpt-improvement/      # P1 - Improve with GPT/local
-├── 05-script-05-title-improvement/    # P1 - Improve titles
-├── 06-scenes-01-beat-sheet/           # P1 - Create beat sheets
-├── 06-scenes-02-shotlist/             # P1 - Generate shot lists
-├── 06-scenes-03-draft-subtitles/      # P1 - Draft subtitle lines
-├── 07-audio-01-tts-generation/        # P1 - Generate voiceover
-├── 07-audio-02-normalization/         # P1 - Normalize audio LUFS
-├── 08-subtitles-01-forced-alignment/  # P1 - Time subtitles to audio
-├
-
-://08-subtitles-02-scene-mapping/      # P1 - Map subtitles to shots
-├── 09-images-01-prompt-builder/       # P1 - Build SDXL prompts
-├── 09-images-02-keyframe-gen-a/       # P1 - Generate keyframes batch A
-├── 09-images-03-keyframe-gen-b/       # P2 - Generate keyframes batch B
-├── 09-images-04-selection/            # P2 - Select best keyframes
-├── 10-video-01-ltx-generation/        # P1 - Generate LTX video clips
-├── 10-video-02-interpolation/         # P2 - Interpolate keyframes
-├── 10-video-03-variant-selection/     # P2 - Choose video variant
-├── 11-post-01-crop-resize/            # P1 - Crop to 9:16
-├── 11-post-02-subtitle-burn/          # P1 - Burn/soft subtitles
-├── 11-post-03-bgm-sfx/                # P2 - Add background music/SFX
-├── 11-post-04-concatenation/          # P1 - Concatenate shots
-├── 11-post-05-transitions/            # P2 - Add transitions
-├── 12-qc-01-device-preview/           # P1 - Test on devices
-├── 12-qc-02-sync-check/               # P1 - Check subtitle sync
-├── 12-qc-03-quality-report/           # P1 - Generate QC report
-├── 13-export-01-final-encode/         # P1 - Export final video
-├── 13-export-02-thumbnail/            # P1 - Generate thumbnail
-├── 13-export-03-metadata/             # P1 - Create metadata JSON
-├── 14-dist-01-youtube-upload/         # P2 - Upload to YouTube
-├── 14-dist-02-tiktok-upload/          # P2 - Upload to TikTok
-├── 14-dist-03-instagram-upload/       # P2 - Upload to Instagram
-├── 14-dist-04-facebook-upload/        # P2 - Upload to Facebook
-├── 15-analytics-01-collection/        # P2 - Collect analytics
-├── 15-analytics-02-monetization/      # P2 - Track revenue
-├── 15-analytics-03-performance/       # P2 - Evaluate performance
-└── 15-analytics-04-optimization/      # P2 - Generate recommendations
+├── phase-1-interface/          ⭐ Define interfaces & configs (4 tasks)
+│   ├── 00-setup-01-repo-structure/
+│   ├── 00-setup-02-config-files/
+│   ├── 00-setup-03-python-env/
+│   └── 00-setup-04-csharp-projects/
+│
+├── phase-2-prototype/          ⭐ Research & validation (8 tasks)
+│   ├── 01-research-01-ollama-client/
+│   ├── 01-research-02-whisper-client/
+│   ├── 01-research-03-ffmpeg-client/
+│   ├── 01-research-04-sdxl-client/
+│   ├── 01-research-05-ltx-client/
+│   ├── 01-research-06-csharp-ollama/
+│   ├── 01-research-07-csharp-whisper/
+│   └── 01-research-08-csharp-ffmpeg/
+│
+└── phase-3-implementation/     ⭐ Production pipeline (52 tasks in 13 groups)
+    ├── content-pipeline/       (6 tasks) - Content sourcing & quality
+    ├── idea-generation/        (7 tasks) - Ideas, topics, titles
+    ├── script-development/     (5 tasks) - Script generation & refinement
+    ├── scene-planning/         (3 tasks) - Beat sheets, shots, subtitles
+    ├── audio-production/       (2 tasks) - Voiceover & normalization
+    ├── subtitle-creation/      (2 tasks) - Timing & mapping
+    ├── image-generation/       (4 tasks) - SDXL keyframe generation
+    ├── video-production/       (3 tasks) - LTX & interpolation
+    ├── post-production/        (6 tasks) - Assembly & effects
+    ├── quality-control/        (3 tasks) - Testing & validation
+    ├── export-delivery/        (3 tasks) - Final encoding & thumbnails
+    ├── distribution/           (4 tasks) - Platform uploads
+    └── analytics/              (4 tasks) - Performance tracking
 ```
 
-## Priority Levels
+## 📋 Phase Breakdown
 
-- **P0 (Critical Path)**: Must complete first, ~15 tasks
-- **P1 (Core Pipeline)**: Main content pipeline, ~30 tasks
-- **P2 (Distribution)**: Publishing and analytics, ~17 tasks
+### Phase 1: Interface (4 tasks, 1-2 days)
+**👉 [View Phase 1 Details](phase-1-interface/README.md)**
 
-## Parallel Execution Waves
+Define the foundational structure before any implementation:
+- Repository folder structure
+- Configuration files (YAML schemas)
+- Python environment setup
+- C# project structure
 
-### Wave 1: Foundation (P0 - 7-10 tasks can run in parallel)
-1. Setup tasks (00-setup-*)
-2. Research prototypes (01-research-*)
-3. Reddit scraper (02-content-01)
+**Priority:** P0 - Critical Path  
+**Team Size:** 2-4 developers
 
-**Estimated time**: 1-2 days with 10 developers
+---
 
-### Wave 2: Content Pipeline (P1 - 15-20 tasks can run in parallel)
-1. Content collection (02-content-*)
-2. Ideas & titles (03-ideas-*, 04-scoring-*)
-3. Scripts (05-script-*)
-4. Scenes & audio (06-scenes-*, 07-audio-*)
-5. Images & video (09-images-*, 10-video-*)
+### Phase 2: Prototype (8 tasks, 2-3 days)
+**👉 [View Phase 2 Details](phase-2-prototype/README.md)**
 
-**Estimated time**: 3-5 days with 20 developers
+Build proof-of-concept implementations for all integrations:
+- Python clients: Ollama, Whisper, FFmpeg, SDXL, LTX
+- C# clients: Ollama, Whisper, FFmpeg
 
-### Wave 3: Production & Distribution (P1/P2 - 10-15 tasks can run in parallel)
-1. Subtitles (08-subtitles-*)
-2. Post-production (11-post-*)
-3. QC & export (12-qc-*, 13-export-*)
-4. Distribution & analytics (14-dist-*, 15-analytics-*)
+**Priority:** P0 - Critical Path  
+**Team Size:** 4-8 developers  
+**Parallelization:** High - all 8 tasks can run simultaneously
 
-**Estimated time**: 2-3 days with 15 developers
+---
 
-## Task Dependencies
+### Phase 3: Implementation (52 tasks, 8-12 days)
+**👉 [View Phase 3 Details](phase-3-implementation/README.md)**
 
-Each issue file includes:
-- **Dependencies**: Which tasks must complete first
-- **Blocks**: Which tasks are waiting on this one
-- **Effort**: Estimated hours (1-8)
-- **Priority**: P0, P1, or P2
-- **Acceptance Criteria**: Clear definition of done
+Build the complete production pipeline across 13 logical groups:
 
-## Usage
+#### 3.1 Content Pipeline (6 tasks, 2-3 days)
+Source and process raw content for video ideas.
+**[View Group →](phase-3-implementation/content-pipeline/README.md)**
 
-1. **Review the dependency graph** in `../INDEX.md`
-2. **Assign tasks** based on team skills and availability
-3. **Start with P0 tasks** in parallel
-4. **Progress to P1** as P0 completes
-5. **Finish with P2** distribution tasks
-6. **Track progress** using MicrostepValidator per task
+#### 3.2 Idea Generation (7 tasks, 2-3 days)
+Transform content into video titles and concepts.
+**[View Group →](phase-3-implementation/idea-generation/README.md)**
 
-## Example: Parallel Team of 10
+#### 3.3 Script Development (5 tasks, 2-3 days)
+Generate and refine video scripts.
+**[View Group →](phase-3-implementation/script-development/README.md)**
 
-**Day 1:**
-- Dev 1-2: Setup tasks (00-setup-*)
-- Dev 3-4: Ollama + Whisper clients (01-research-01, 01-research-02)
-- Dev 5-6: FFmpeg + SDXL clients (01-research-03, 01-research-04)
-- Dev 7-8: Reddit scraper (02-content-01)
-- Dev 9-10: Quality scorer (02-content-03)
+#### 3.4 Scene Planning (3 tasks, 1-2 days)
+Break scripts into scenes and shots.
+**[View Group →](phase-3-implementation/scene-planning/README.md)**
 
-**Day 2-3:**
-- Dev 1-2: Ideas generation (03-ideas-*)
-- Dev 3-4: Title scoring (04-scoring-*)
-- Dev 5-6: Script generation (05-script-*)
-- Dev 7-8: Audio pipeline (07-audio-*)
-- Dev 9-10: Image generation (09-images-*)
+#### 3.5 Audio Production (2 tasks, 1-2 days)
+Generate and process voiceovers.
+**[View Group →](phase-3-implementation/audio-production/README.md)**
 
-**Day 4:**
-- Dev 1-3: Video generation (10-video-*)
-- Dev 4-6: Post-production (11-post-*)
-- Dev 7-9: QC & Export (12-qc-*, 13-export-*)
-- Dev 10: Documentation
+#### 3.6 Subtitle Creation (2 tasks, 1 day)
+Create precisely timed subtitles.
+**[View Group →](phase-3-implementation/subtitle-creation/README.md)**
 
-**Result**: Complete pipeline in 4-5 days vs 4-6 weeks sequentially!
+#### 3.7 Image Generation (4 tasks, 2-3 days)
+Generate keyframe images for videos.
+**[View Group →](phase-3-implementation/image-generation/README.md)**
 
-## Notes
+#### 3.8 Video Production (3 tasks, 2-3 days)
+Generate video clips from images.
+**[View Group →](phase-3-implementation/video-production/README.md)**
 
-- Each task is designed for **1 person, 1-8 hours**
-- Tasks with shared dependencies should coordinate
-- Use feature branches: `feature/atomic-{task-id}`
-- Daily standups to sync on blockers
-- MicrostepValidator tracks granular progress
+#### 3.9 Post-Production (6 tasks, 2-3 days)
+Assemble and enhance final videos.
+**[View Group →](phase-3-implementation/post-production/README.md)**
 
-See individual `issue.md` files for detailed requirements.
+#### 3.10 Quality Control (3 tasks, 1-2 days)
+Validate video quality before export.
+**[View Group →](phase-3-implementation/quality-control/README.md)**
+
+#### 3.11 Export & Delivery (3 tasks, 1 day)
+Prepare final deliverables.
+**[View Group →](phase-3-implementation/export-delivery/README.md)**
+
+#### 3.12 Distribution (4 tasks, 1-2 days)
+Upload to social media platforms.
+**[View Group →](phase-3-implementation/distribution/README.md)**
+
+#### 3.13 Analytics (4 tasks, 1-2 days)
+Track performance and optimize.
+**[View Group →](phase-3-implementation/analytics/README.md)**
+
+---
+
+## 🚀 Execution Strategy
+
+### Sequential Phase Approach
+Execute phases in order to minimize risk:
+
+```
+Week 1:
+├── Days 1-2: Phase 1 (Interface)
+└── Days 3-5: Phase 2 (Prototype)
+
+Week 2-3:
+└── Days 6-17: Phase 3 (Implementation)
+    ├── Wave 1: Content Pipeline + Idea Generation
+    ├── Wave 2: Script through Subtitle Creation
+    ├── Wave 3: Image through Post-Production
+    └── Wave 4: QC through Analytics
+```
+
+### Parallel Execution Within Phases
+
+**Phase 1:** Limited parallelism (4 tasks, dependencies)  
+**Phase 2:** High parallelism (8 tasks, minimal dependencies)  
+**Phase 3:** Very high parallelism (13 groups, 52 tasks)
+
+### Team Size Recommendations
+
+- **Small Team (5 devs):** Sequential phases, limited parallel groups
+- **Medium Team (10 devs):** Parallel phases 1-2, 3-4 groups in Phase 3
+- **Large Team (20 devs):** Full parallelization across all phases
+
+## 📊 Progress Tracking
+
+### By Phase
+- [ ] Phase 1: Interface (4 tasks)
+- [ ] Phase 2: Prototype (8 tasks)
+- [ ] Phase 3: Implementation (52 tasks)
+
+### By Priority
+- **P0 (Critical):** ~15 tasks - Must complete first
+- **P1 (Core):** ~35 tasks - Main pipeline functionality
+- **P2 (Enhancement):** ~14 tasks - Distribution and optimization
+
+## 🎯 Success Criteria
+
+### Phase 1 Complete When:
+- All folder structures exist
+- All config files are valid
+- Python and C# environments build successfully
+
+### Phase 2 Complete When:
+- All prototypes call external services successfully
+- Integration patterns documented
+- Performance benchmarks available
+
+### Phase 3 Complete When:
+- End-to-end pipeline generates videos
+- All quality checks pass
+- Videos upload to all platforms
+- Analytics collection functioning
+
+## 📚 Key Documentation
+
+- **This File:** Overall phase organization
+- **Phase README files:** Detailed phase execution guides
+- **Group README files:** Specific task group details
+- **Individual issue.md:** Granular task requirements
+
+## 💡 Usage Tips
+
+1. **Start with Phase 1:** Don't skip ahead - foundational work is critical
+2. **Complete Phase 2 fully:** Prototypes save time in Phase 3
+3. **Use feature branches:** `feature/phase-{1,2,3}-{task-id}`
+4. **Daily standups:** Coordinate within phases and groups
+5. **MicrostepValidator:** Track granular progress per task
+
+## 🔄 Migration from Old Structure
+
+If you were using the old flat structure:
+- Old task IDs remain the same
+- Tasks now organized by phase and group
+- All issue.md files preserved without changes
+- Update your documentation references to new paths
+
+## 📈 Estimated Timeline
+
+**With 10 Developers:**
+- Phase 1: 1-2 days
+- Phase 2: 2-3 days
+- Phase 3: 8-12 days
+- **Total: 11-17 days** (vs 40+ days sequential)
+
+**With 20 Developers:**
+- Phase 1: 1 day
+- Phase 2: 1-2 days
+- Phase 3: 5-8 days
+- **Total: 7-11 days** (vs 40+ days sequential)
+
+---
+
+**Last Updated:** 2025-01-01  
+**Structure Version:** 2.0 (Phase-Based)  
+**Total Issues:** 64 (4 + 8 + 52)

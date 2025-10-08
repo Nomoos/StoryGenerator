@@ -7,10 +7,16 @@ Complete breakdown of the video generation pipeline into manageable, step-by-ste
 ### 1. Sequential Steps (Original - 15 Large Steps)
 Comprehensive, step-by-step issues. Good for understanding the complete pipeline flow.
 
-### 2. **Atomic Tasks (NEW - 64 Independent Tasks) ⭐**
-**Recommended for teams!** Parallelizable 1-8 hour tasks optimized for concurrent execution.
+### 2. **Atomic Tasks - Phase-Based (64 Tasks) ⭐ RECOMMENDED**
+**Recommended for teams!** Parallelizable 1-8 hour tasks organized into 3 phases:
+
+- **Phase 1: Interface** (4 tasks) - Define configs, schemas, and structure
+- **Phase 2: Prototype** (8 tasks) - Research and validate all integrations
+- **Phase 3: Implementation** (52 tasks in 13 groups) - Build production pipeline
 
 👉 **[View Atomic Tasks Directory](atomic/README.md)** - Start here for team collaboration
+
+Each phase builds on the previous, ensuring clear dependencies and reduced rework.
 
 ---
 

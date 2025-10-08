@@ -7,10 +7,19 @@ This directory contains individual issue files organized by pipeline steps. Each
 ### Option 1: Sequential Steps (15 Large Issues)
 Traditional step-by-step breakdown. Each step is comprehensive and covers multiple tasks.
 
-### Option 2: **Atomic Tasks (64 Independent Issues) ⭐ RECOMMENDED**
-Parallelizable 1-8 hour tasks optimized for team collaboration. Multiple developers can work simultaneously.
+### Option 2: **Atomic Tasks - Phase-Based (64 Tasks) ⭐ RECOMMENDED**
+Organized into 3 phases: **Interface → Prototype → Implementation**
+
+Parallelizable 1-8 hour tasks optimized for team collaboration. Multiple developers can work simultaneously within each phase.
 
 👉 **[Start with Atomic Tasks](atomic/README.md)** for faster completion
+
+#### Phase Structure:
+- **Phase 1: Interface** (4 tasks) - Define configs and structure
+- **Phase 2: Prototype** (8 tasks) - Research and validate integrations  
+- **Phase 3: Implementation** (52 tasks) - Build production pipeline
+
+Each phase builds on the previous, ensuring clear dependencies and incremental value delivery.
 
 ---
 
@@ -22,14 +31,24 @@ issues/
 ├── INDEX.md (index of all issues)
 ├── QUICKSTART.md (usage guide)
 │
-├── atomic/ ⭐ NEW: 64 parallelizable tasks
-│   ├── README.md (parallel workflow guide)
-│   ├── 00-setup-01-repo-structure/
-│   ├── 00-setup-02-config-files/
-│   ├── 01-research-01-ollama-client/
-│   ├── 02-content-01-reddit-scraper/
-│   ├── ... (59 more atomic tasks)
-│   └── 15-analytics-04-optimization/
+├── atomic/ ⭐ NEW: 64 tasks in 3 phases (Interface → Prototype → Implementation)
+│   ├── README.md (phase-based workflow guide)
+│   ├── phase-1-interface/ (4 tasks - configs & structure)
+│   ├── phase-2-prototype/ (8 tasks - research & validation)
+│   └── phase-3-implementation/ (52 tasks in 13 groups)
+│       ├── content-pipeline/
+│       ├── idea-generation/
+│       ├── script-development/
+│       ├── scene-planning/
+│       ├── audio-production/
+│       ├── subtitle-creation/
+│       ├── image-generation/
+│       ├── video-production/
+│       ├── post-production/
+│       ├── quality-control/
+│       ├── export-delivery/
+│       ├── distribution/
+│       └── analytics/
 │
 ├── step-00-research/      # Research Prototypes (Local Only)
 ├── step-01-ideas/         # Ideas → Topics → Titles
@@ -56,20 +75,24 @@ issues/
 3. Follow the checklist and acceptance criteria
 4. Comment `@copilot check` in the issue when you complete a task
 
-### For Teams (Atomic/Parallel) ⭐
-1. **Review** [atomic/README.md](atomic/README.md) for parallel workflow
-2. **Assign** tasks from different priority waves to team members
-3. **Execute** tasks in parallel (P0 → P1 → P2)
-4. **Track** progress using MicrostepValidator per task
-5. **Complete** pipeline 5-10x faster than sequential
+### For Teams (Atomic/Phase-Based) ⭐
+1. **Review** [atomic/README.md](atomic/README.md) for phase-based workflow
+2. **Start with Phase 1** (Interface) - Define structure and configs
+3. **Move to Phase 2** (Prototype) - Validate all integrations
+4. **Execute Phase 3** (Implementation) - Build production pipeline in 13 groups
+5. **Track** progress using MicrostepValidator per task
+6. **Complete** pipeline 5-10x faster than sequential with proper phasing
 
-## Parallel Execution Benefits
+## Phase-Based Execution Benefits
 
-- **10 developers**: Complete in ~4-5 days (vs 4-6 weeks sequential)
-- **Clear dependencies**: Know exactly what can run in parallel
-- **Granular progress**: Track 64 atomic completions instead of 15
-- **Resource optimization**: Match task difficulty to developer skills
-- **Flexible scheduling**: Pause/resume individual tasks independently
+- **Clear progression**: Interface → Prototype → Implementation
+- **Reduced rework**: Validate before building full implementation
+- **Better coordination**: Teams work within logical phase boundaries
+- **10 developers**: Complete in ~11-17 days (vs 4-6 weeks sequential)
+- **20 developers**: Complete in ~7-11 days with full parallelization
+- **Granular progress**: Track 64 atomic completions across 3 phases
+- **Resource optimization**: Match task difficulty to developer skills within each phase
+- **Flexible scheduling**: Pause/resume entire phases or individual groups independently
 
 ## Related Documentation
 
