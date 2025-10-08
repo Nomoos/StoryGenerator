@@ -287,4 +287,29 @@ public class ViralPotential
         { "woman", 0 },
         { "man", 0 }
     };
+
+    /// <summary>
+    /// Calculates the overall viral potential score from all category scores.
+    /// Takes the average of all non-zero scores across platforms, regions, age groups, and gender.
+    /// </summary>
+    /// <returns>The calculated overall score (0-100).</returns>
+    public int CalculateOverall()
+    {
+        var allScores = new List<int>();
+
+        // Add all platform scores
+        allScores.AddRange(Platforms.Values.Where(v => v > 0));
+
+        // Add all region scores
+        allScores.AddRange(Regions.Values.Where(v => v > 0));
+
+        // Add all age group scores
+        allScores.AddRange(AgeGroups.Values.Where(v => v > 0));
+
+        // Add all gender scores
+        allScores.AddRange(Gender.Values.Where(v => v > 0));
+
+        // Return average if we have scores, otherwise 0
+        return allScores.Count > 0 ? (int)Math.Round(allScores.Average()) : 0;
+    }
 }
