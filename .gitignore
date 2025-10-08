@@ -356,12 +356,33 @@ artifacts/
 *.pdb
 *.runtimeconfig.json
 *.deps.json
-<<<<<<< HEAD
 
 # Test output files
 test_story_*
 CSharp/Tests/SceneBeatsTest/bin/
 CSharp/Tests/SceneBeatsTest/obj/
-=======
 /CSharp/PostProductionTest/
->>>>>>> copilot/align-subtitles-to-audio
+
+# =============================================================================
+# SRC/GENERATOR - Microstep artifacts and validation outputs
+# =============================================================================
+
+# Ignore all generated artifacts in src/Generator but keep structure
+src/Generator/*/*/*/*.json
+src/Generator/*/*/*/*.yaml
+src/Generator/*/*/*/*.yml
+src/Generator/*/*/*/*.md
+src/Generator/*/*/*/*.txt
+src/Generator/*/*/*/*.mp3
+src/Generator/*/*/*/*.wav
+src/Generator/*/*/*/*.mp4
+src/Generator/*/*/*/*.srt
+src/Generator/*/*/*/*.png
+src/Generator/*/*/*/*.jpg
+
+# But keep .gitkeep files
+!src/Generator/*/*/*/.gitkeep
+
+# Keep test files for examples
+!src/Generator/*/*/*/.test
+!src/Generator/*/*/*/.test.*
