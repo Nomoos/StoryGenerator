@@ -394,3 +394,6 @@ src/Generator/*/*/*/*.jpg
 obsolete/Python/**/__pycache__/
 obsolete/Python/**/*.pyc
 obsolete/Python/**/*.pyo
+src/Generator/scores/women/18-23/content_scores_2025-01-15.json
+src/Generator/scores/women/18-23/content_deduped_2025-01-15.json
+src/Generator/scores/women/18-23/dedup_report_2025-01-15.json
