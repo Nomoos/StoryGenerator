@@ -64,7 +64,7 @@ Local models excel at rapid iteration, brainstorming, and drafting. They're perf
   - Strong reasoning abilities
   - Excellent context understanding
 - **Limitations**:
-  - Requires high-end GPU setup
+  - Requires high-end GPU setup (single RTX 5090 for Q4, dual RTX 5090 for full precision)
   - Slower inference than smaller models
   - Not feasible for budget/mid-range PCs
 - **Download**: Via Ollama (`ollama pull llama3.1:70b`)
@@ -370,13 +370,14 @@ Cloud models provide the highest quality output for final polish, complex reason
 **Target**: Maximum local model performance, cloud models only for specific needs
 
 **Hardware**:
-- **CPU**: AMD Threadripper 7970X or Intel Xeon W-3400
+- **CPU**: AMD Threadripper 7970X or Intel Xeon W-3400 or AMD Ryzen 9 7950X3D
 - **RAM**: 128GB+ DDR5
-- **GPU**: RTX 4090 (24GB VRAM) x2 or RTX 5090 (32GB VRAM)
+- **GPU**: RTX 4090 (24GB VRAM) x2 or RTX 5090 (32GB VRAM) or RTX 5090 (32GB VRAM) x2
 - **Storage**: 4TB+ NVMe SSD RAID
 
 **Recommended Models**:
-- Local: Llama 3.1 70B, Qwen 2.5 32B, CodeLlama 34B (full precision or Q4)
+- **Single RTX 5090**: Llama 3.1 70B, Qwen 2.5 32B, CodeLlama 34B (full precision or Q4)
+- **Dual RTX 5090 (64GB total)**: Llama 3.1 70B (full precision), Qwen 2.5 72B, Mixtral 8x22B, CodeLlama 70B
 - Cloud: Claude 3 Opus (only for critical creative work)
 
 **Workflow**:
@@ -384,6 +385,8 @@ Cloud models provide the highest quality output for final polish, complex reason
 - Use Claude 3 Opus for final 5-10% polish on critical content
 
 **Expected Cost**: $10-30/month in API costs
+
+**Note**: Dual RTX 5090 setup (64GB VRAM) enables running the largest open-source models at full precision, making cloud models nearly optional for most game design tasks.
 
 ---
 
@@ -1197,6 +1200,7 @@ The optimal approach for game design work is a **hybrid workflow** using local m
 **Best Cloud Model**: Claude 3.5 Sonnet (best creative quality)
 **Best Budget Setup**: RTX 4060 Ti 16GB + GPT-4o API
 **Best Value Setup**: RTX 4090 24GB + Claude 3.5 API
+**Ultimate Setup**: Dual RTX 5090 (64GB VRAM) - near-complete independence from cloud APIs
 
 ### Key Takeaways
 
