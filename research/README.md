@@ -2,6 +2,16 @@
 
 This directory contains research prototypes for local-only model orchestration and media processing.
 
+## 🔬 Architecture Decision Documents
+
+**NEW: Comprehensive analysis of C# vs Python vs Hybrid approaches:**
+- **[../docs/CSHARP_VS_PYTHON_COMPARISON.md](../docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Complete comparison with decision matrix and stage-by-stage recommendations
+- **[../docs/HYBRID_ARCHITECTURE_QUICKREF.md](../docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Quick reference guide for developers
+
+**Key Recommendation**: **Hybrid Architecture** with C# as primary orchestration language and strategic Python integration for ML-heavy tasks (ASR, SDXL, LTX-Video).
+
+---
+
 ## Purpose
 
 These prototypes demonstrate how to integrate various AI models and media processing tools for video generation pipelines. They serve as:
