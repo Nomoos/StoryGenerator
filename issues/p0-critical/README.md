@@ -10,6 +10,32 @@ This folder contains critical priority issues that must be completed immediately
 
 ## Current Issues
 
+### Security Issues (URGENT)
+
+#### security-api-keys
+**Status:** 🔴 NOT STARTED ⚠️ CRITICAL  
+**Effort:** 2-4 hours  
+**Description:** Remove exposed API keys from source code. Multiple API keys are hardcoded directly in source files, creating a critical security vulnerability.
+
+**Must Complete:**
+- [ ] Revoke ALL exposed API keys immediately
+- [ ] Implement environment variable management
+- [ ] Update all code to read from environment variables
+
+[View Issue →](security-api-keys/issue.md)
+
+#### security-file-paths
+**Status:** 🔴 NOT STARTED  
+**Effort:** 3-5 hours  
+**Description:** Fix hard-coded Windows-specific file paths. Current paths prevent cross-platform development and team collaboration.
+
+**Must Complete:**
+- [ ] Remove all hardcoded absolute paths
+- [ ] Implement platform-independent path handling
+- [ ] Support Windows, macOS, and Linux
+
+[View Issue →](security-file-paths/issue.md)
+
 ### C# Implementation
 
 #### csharp-phase3-complete-generators
@@ -85,17 +111,33 @@ This folder contains critical priority issues that must be completed immediately
 
 ---
 
-**Total P0 Issues:** 2 major tasks ✅ COMPLETE  
-**Estimated Effort:** 20-30 hours  
-**Actual Effort:** ~4 hours (verification and documentation)  
-**Status:** ✅ ALL P0 ISSUES COMPLETE  
-**Next Priority:** Move to P1-High issues
+**Total P0 Issues:** 4 major tasks  
+**Estimated Effort:** 25-40 hours  
+**Status:** 🔴 2 URGENT SECURITY ISSUES + 2 COMPLETE  
 
-## P0 Completion Summary
+### Issue Breakdown:
+1. 🔴 **Security: API Keys** - NOT STARTED ⚠️ CRITICAL URGENCY
+2. 🔴 **Security: File Paths** - NOT STARTED
+3. ✅ **C# Phase 3 Generators** - COMPLETE
+4. ✅ **Reddit Story Scraper** - COMPLETE
 
-Both P0 critical issues have been completed:
+**Next Priority:** Complete security issues immediately, then move to P1-High issues
 
+## P0 Status Summary
+
+### Completed Issues (2/4)
 1. ✅ **C# Phase 3 Generators** - All 6 text-to-audio generators implemented and verified
 2. ✅ **Reddit Story Scraper** - Complete with documentation and testing
+
+### Outstanding Security Issues (2/4) ⚠️
+1. 🔴 **API Key Security** - IMMEDIATE ACTION REQUIRED
+   - API keys exposed in source code
+   - Must revoke and move to environment variables
+   - Blocks production deployment
+
+2. 🔴 **File Path Portability** - HIGH PRIORITY
+   - Windows-specific hardcoded paths
+   - Prevents cross-platform development
+   - Blocks team collaboration
 
 See [P0_COMPLETION_SUMMARY.md](./P0_COMPLETION_SUMMARY.md) for detailed completion report.
