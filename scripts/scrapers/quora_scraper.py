@@ -10,7 +10,12 @@ from typing import List, Dict, Optional
 import time
 from datetime import datetime
 import re
-from base_scraper import BaseScraper
+
+# Support both relative and absolute imports
+try:
+    from .base_scraper import BaseScraper
+except ImportError:
+    from base_scraper import BaseScraper
 
 # Optional dependencies - only needed for actual scraping
 try:

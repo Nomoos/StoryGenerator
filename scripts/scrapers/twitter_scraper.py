@@ -10,7 +10,12 @@ import os
 from typing import List, Dict, Optional
 import time
 from datetime import datetime, timedelta
-from base_scraper import BaseScraper
+
+# Support both relative and absolute imports
+try:
+    from .base_scraper import BaseScraper
+except ImportError:
+    from base_scraper import BaseScraper
 
 # Note: tweepy would be imported here in a real implementation
 # import tweepy
