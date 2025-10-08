@@ -105,6 +105,35 @@ Welcome to the StoryGenerator documentation! This index will help you find the i
    - Security architecture
    - Future recommendations
 
+### Content Strategy Research
+
+**Platform-specific research and recommendations:**
+
+- **[research/YOUTUBE_CONTENT_STRATEGY.md](../research/YOUTUBE_CONTENT_STRATEGY.md)** - YouTube content strategy (~920 lines)
+  - Short-form vs long-form content analysis
+  - Pros and cons of YouTube Shorts
+  - Pros and cons of traditional long-form videos
+  - 16:9 vs 9:16 aspect ratio comparison
+  - Hybrid strategies (Shorts-to-Long funnel)
+  - Technical specifications for both formats
+  - Implementation recommendations for StoryGenerator
+  - Decision matrix and best practices
+
+- **[research/VIDEO_SYNTHESIS_RESEARCH.md](../research/VIDEO_SYNTHESIS_RESEARCH.md)** - Video synthesis approaches
+  - LTX-Video for short-form content
+  - SDXL + Frame Interpolation for quality
+  - C# integration examples
+
+- **[research/VIRAL_VIDEO_REQUIREMENTS.md](../research/VIRAL_VIDEO_REQUIREMENTS.md)** - Viral video specifications
+  - Platform requirements
+  - Trend scoring and aggregation
+  - Multi-region support
+
+- **[research/SOCIAL_PLATFORMS_TRENDS.md](../research/SOCIAL_PLATFORMS_TRENDS.md)** - Social media trend collection
+  - YouTube Data API integration
+  - TikTok and Instagram strategies
+  - Multi-platform aggregation
+
 ## 🛠️ Configuration Files
 
 **Setup and development tools:**
