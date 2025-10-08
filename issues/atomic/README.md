@@ -1,6 +1,6 @@
 # Atomic Issues - Phase-Based Organization
 
-This directory contains **64 atomic, independently executable issues** organized into **3 phases**: Interface → Prototype → Implementation.
+This directory contains **63 atomic, independently executable issues** organized into **3 phases**: Interface → Prototype → Implementation.
 
 ## 🎯 Phase-Based Approach
 
@@ -21,10 +21,9 @@ This approach ensures:
 
 ```
 atomic/
-├── phase-1-interface/          ⭐ Define interfaces & configs (4 tasks)
+├── phase-1-interface/          ⭐ Define interfaces & configs (3 tasks)
 │   ├── 00-setup-01-repo-structure/
 │   ├── 00-setup-02-config-files/
-│   ├── 00-setup-03-python-env/
 │   └── 00-setup-04-csharp-projects/
 │
 ├── phase-2-prototype/          ⭐ Research & validation (8 tasks)
@@ -55,17 +54,16 @@ atomic/
 
 ## 📋 Phase Breakdown
 
-### Phase 1: Interface (4 tasks, 1-2 days)
+### Phase 1: Interface (3 tasks, 1-2 days)
 **👉 [View Phase 1 Details](phase-1-interface/README.md)**
 
 Define the foundational structure before any implementation:
 - Repository folder structure
 - Configuration files (YAML schemas)
-- Python environment setup
 - C# project structure
 
 **Priority:** P0 - Critical Path  
-**Team Size:** 2-4 developers
+**Team Size:** 2-3 developers
 
 ---
 
@@ -161,7 +159,7 @@ Week 2-3:
 
 ### Parallel Execution Within Phases
 
-**Phase 1:** Limited parallelism (4 tasks, dependencies)  
+**Phase 1:** Limited parallelism (3 tasks, dependencies)  
 **Phase 2:** High parallelism (8 tasks, minimal dependencies)  
 **Phase 3:** Very high parallelism (13 groups, 52 tasks)
 
@@ -174,7 +172,7 @@ Week 2-3:
 ## 📊 Progress Tracking
 
 ### By Phase
-- [ ] Phase 1: Interface (4 tasks)
+- [ ] Phase 1: Interface (3 tasks)
 - [ ] Phase 2: Prototype (8 tasks)
 - [ ] Phase 3: Implementation (52 tasks)
 
@@ -242,4 +240,4 @@ If you were using the old flat structure:
 
 **Last Updated:** 2025-01-01  
 **Structure Version:** 2.0 (Phase-Based)  
-**Total Issues:** 64 (4 + 8 + 52)
+**Total Issues:** 63 (3 + 8 + 52)
