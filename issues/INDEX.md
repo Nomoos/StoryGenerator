@@ -18,19 +18,33 @@ Completed and verified tasks:
 - Phase 1: Interface setup (3 tasks)
 - Phase 2: C# prototypes (3 tasks)
 
-### 🔴 P0 - Critical Priority (8 tasks - Active)
+### 🔴 P0 - Critical Priority (10 tasks - 2 URGENT + 2 Complete)
 **Location:** [`p0-critical/`](p0-critical/README.md)
 
-**Must complete first.** Blockers for all other work:
-- csharp-phase3-complete-generators (Complete remaining generators)
-- content-pipeline (Reddit scraper + quality control)
+**URGENT Security Issues (Must complete first):**
+- 🔴 security-api-keys - Remove exposed API keys (CRITICAL ⚠️)
+- 🔴 security-file-paths - Fix hardcoded file paths
 
-**Estimated Effort:** 20-30 hours
+**Completed:**
+- ✅ csharp-phase3-complete-generators (Complete remaining generators)
+- ✅ content-pipeline (Reddit scraper + quality control)
 
-### 🟡 P1 - High Priority (42 tasks - Next)
+**Estimated Effort:** 25-40 hours (5-9 hours remaining for security)
+
+### 🟡 P1 - High Priority (50 tasks - Next)
 **Location:** [`p1-high/`](p1-high/README.md)
 
-**Core pipeline implementation.** Start after P0:
+**New Architecture & Code Quality Issues (8 tasks):**
+- architecture-openai-api (2-3 hours) - Update deprecated API
+- architecture-decoupling (12-16 hours) - Decouple components
+- code-quality-error-handling (6-8 hours) - Add error handling
+- code-quality-code-style (3-4 hours) - Standardize style
+- code-quality-input-validation (4-5 hours) - Add validation
+- infrastructure-testing (8-10 hours) - Setup testing
+- infrastructure-configuration (4-6 hours) - Config management
+- infrastructure-logging (3-4 hours) - Logging system
+
+**Core pipeline implementation (42 tasks):**
 - Pipeline orchestration
 - Idea generation (7 tasks)
 - Script development (5 tasks)
@@ -43,17 +57,26 @@ Completed and verified tasks:
 - Quality control (3 tasks)
 - Export & delivery (3 tasks)
 
-**Estimated Effort:** 120-200 hours (many can run in parallel)
+**Estimated Effort:** 160-250 hours (40-50 hours for new issues + 120-200 hours for pipeline)
 
-### 🟢 P2 - Medium Priority (9 tasks - Future)
+### 🟢 P2 - Medium Priority (16 tasks - Future)
 **Location:** [`p2-medium/`](p2-medium/README.md)
 
-**Publishing and analytics.** Begin after core pipeline works:
+**New Feature Issues (7 tasks):**
+- features-cli (8-10 hours) - CLI interface
+- features-documentation (10-12 hours) - Comprehensive docs
+- features-version-control (6-8 hours) - Content versioning
+- features-performance-monitoring (5-6 hours) - Performance tracking
+- features-cost-tracking (4-5 hours) - Cost monitoring
+- features-caching (6-7 hours) - Response caching
+- features-async-processing (10-12 hours) - Parallel processing
+
+**Publishing and analytics (9 tasks):**
 - Video generation advanced features
 - Platform distribution (4 tasks)
 - Analytics & optimization (4 tasks)
 
-**Estimated Effort:** 60-80 hours
+**Estimated Effort:** 110-135 hours (50-55 hours for new features + 60-80 hours for publishing)
 
 > **Note:** The Python-based sequential step issues (step-00 through step-14) have been archived to `obsolete/issues/` as they represent the obsolete Python implementation plan.
 
@@ -62,23 +85,35 @@ Completed and verified tasks:
 | Priority | Count | Estimated Effort | Location |
 |----------|-------|------------------|----------|
 | ✅ **Resolved** | 6 tasks | ~30 hours (done) | [resolved/](resolved/) |
-| 🔴 **P0 Critical** | 8 tasks | 20-30 hours | [p0-critical/](p0-critical/) |
-| 🟡 **P1 High** | 42 tasks | 120-200 hours | [p1-high/](p1-high/) |
-| 🟢 **P2 Medium** | 9 tasks | 60-80 hours | [p2-medium/](p2-medium/) |
+| 🔴 **P0 Critical** | 10 tasks | 25-40 hours | [p0-critical/](p0-critical/) |
+| 🟡 **P1 High** | 50 tasks | 160-250 hours | [p1-high/](p1-high/) |
+| 🟢 **P2 Medium** | 16 tasks | 110-135 hours | [p2-medium/](p2-medium/) |
 | **Master Roadmap** | Overview | N/A | [csharp-master-roadmap/](csharp-master-roadmap/) |
 
-**Total:** 65 tasks | 200-310 hours remaining effort
+**Total:** 82 tasks | 295-425 hours remaining effort (includes 17 new architecture/quality issues)
 
 ## 📋 Detailed Breakdown by Priority
 
 ### P0 - Critical (Must Complete First)
-1. **csharp-phase3-complete-generators** - Complete remaining C# generators
+1. 🔴 **security-api-keys** - Remove exposed API keys (URGENT ⚠️)
+2. 🔴 **security-file-paths** - Fix hardcoded file paths
+3. ✅ **csharp-phase3-complete-generators** - Complete remaining C# generators (DONE)
+4. ✅ **content-pipeline/02-content-01-reddit-scraper** - Reddit content scraping (DONE)
 2. **content-pipeline/02-content-01-reddit-scraper** - Reddit content scraping (P0)
 3. **content-pipeline/** - 5 additional content tasks (P1, but grouped with P0)
 
 ### P1 - High (Core Pipeline)
-1. **csharp-phase4-pipeline-orchestration** - Full pipeline integration
-2. **idea-generation/** - 7 tasks (story idea generation)
+1. **New Architecture & Code Quality** (8 tasks):
+   - architecture-openai-api
+   - architecture-decoupling
+   - code-quality-error-handling
+   - code-quality-code-style
+   - code-quality-input-validation
+   - infrastructure-testing
+   - infrastructure-configuration
+   - infrastructure-logging
+2. **csharp-phase4-pipeline-orchestration** - Full pipeline integration
+3. **idea-generation/** - 7 tasks (story idea generation)
 3. **script-development/** - 5 tasks (script creation & refinement)
 4. **scene-planning/** - 3 tasks (visual storyboard)
 5. **audio-production/** - 2 tasks (TTS & normalization)
@@ -90,9 +125,17 @@ Completed and verified tasks:
 11. **export-delivery/** - 3 tasks (final output)
 
 ### P2 - Medium (Publishing & Analytics)
-1. **csharp-video-generators** - Advanced video features
-2. **distribution/** - 4 tasks (YouTube, TikTok, Instagram, Facebook)
-3. **analytics/** - 4 tasks (metrics, performance, optimization)
+1. **New Features** (7 tasks):
+   - features-cli
+   - features-documentation
+   - features-version-control
+   - features-performance-monitoring
+   - features-cost-tracking
+   - features-caching
+   - features-async-processing
+2. **csharp-video-generators** - Advanced video features
+3. **distribution/** - 4 tasks (YouTube, TikTok, Instagram, Facebook)
+4. **analytics/** - 4 tasks (metrics, performance, optimization)
 
 ## 🔄 Development Workflow
 

@@ -2,11 +2,63 @@
 
 **Priority Level:** P2 (Medium)  
 **Status:** Future Work  
-**Focus:** Publishing, analytics, and optimization
+**Focus:** Publishing, analytics, optimization, and advanced features
 
 ## Overview
 
 This folder contains medium priority issues for platform distribution, analytics tracking, and advanced features. These should be implemented after core P0 and P1 functionality is complete.
+
+## New Feature Issues
+
+### CLI and UX
+
+#### features-cli
+**Status:** NOT STARTED  
+**Effort:** 8-10 hours  
+**Description:** Create user-friendly CLI interface for easy pipeline usage.
+[View Issue →](features-cli/issue.md)
+
+### Documentation
+
+#### features-documentation
+**Status:** NOT STARTED  
+**Effort:** 10-12 hours  
+**Description:** Add comprehensive documentation with setup guides and API reference.
+[View Issue →](features-documentation/issue.md)
+
+### Content Management
+
+#### features-version-control
+**Status:** NOT STARTED  
+**Effort:** 6-8 hours  
+**Description:** Implement version control for generated content.
+[View Issue →](features-version-control/issue.md)
+
+### Monitoring and Optimization
+
+#### features-performance-monitoring
+**Status:** NOT STARTED  
+**Effort:** 5-6 hours  
+**Description:** Track generation times and identify bottlenecks.
+[View Issue →](features-performance-monitoring/issue.md)
+
+#### features-cost-tracking
+**Status:** NOT STARTED  
+**Effort:** 4-5 hours  
+**Description:** Track API costs for OpenAI and ElevenLabs.
+[View Issue →](features-cost-tracking/issue.md)
+
+#### features-caching
+**Status:** NOT STARTED  
+**Effort:** 6-7 hours  
+**Description:** Add caching to avoid redundant API calls.
+[View Issue →](features-caching/issue.md)
+
+#### features-async-processing
+**Status:** NOT STARTED  
+**Effort:** 10-12 hours  
+**Description:** Implement parallel video generation.
+[View Issue →](features-async-processing/issue.md)
 
 ## Current Issues
 

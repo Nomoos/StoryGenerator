@@ -1,12 +1,76 @@
 # P1 - High Priority Issues
 
 **Priority Level:** P1 (High)  
-**Status:** Next in Queue  
-**Focus:** Core pipeline implementation
+**Status:** Ready to Start (after P0 security issues)  
+**Focus:** Core pipeline implementation + Architecture improvements
 
 ## Overview
 
-This folder contains high priority issues that should be completed after P0 critical tasks. These represent core functionality needed for the complete video generation pipeline.
+This folder contains high-priority issues that form the core pipeline implementation and critical architecture improvements. These tasks should be started after P0 critical issues are complete. Many of these tasks can be worked on in parallel once dependencies are met.
+
+## New Architecture & Code Quality Issues
+
+### Architecture Improvements
+
+#### architecture-openai-api
+**Status:** NOT STARTED  
+**Effort:** 2-3 hours  
+**Description:** Update deprecated OpenAI API usage to new SDK v1.0+ format.
+
+[View Issue →](architecture-openai-api/issue.md)
+
+#### architecture-decoupling
+**Status:** NOT STARTED  
+**Effort:** 12-16 hours  
+**Description:** Decouple components for better testability and maintainability.
+
+[View Issue →](architecture-decoupling/issue.md)
+
+### Code Quality Improvements
+
+#### code-quality-error-handling
+**Status:** NOT STARTED  
+**Effort:** 6-8 hours  
+**Description:** Add comprehensive error handling with retry logic.
+
+[View Issue →](code-quality-error-handling/issue.md)
+
+#### code-quality-code-style
+**Status:** NOT STARTED  
+**Effort:** 3-4 hours  
+**Description:** Standardize code style with Black and flake8.
+
+[View Issue →](code-quality-code-style/issue.md)
+
+#### code-quality-input-validation
+**Status:** NOT STARTED  
+**Effort:** 4-5 hours  
+**Description:** Add input validation using Pydantic.
+
+[View Issue →](code-quality-input-validation/issue.md)
+
+### Infrastructure
+
+#### infrastructure-testing
+**Status:** NOT STARTED  
+**Effort:** 8-10 hours  
+**Description:** Set up testing infrastructure with pytest.
+
+[View Issue →](infrastructure-testing/issue.md)
+
+#### infrastructure-configuration
+**Status:** NOT STARTED  
+**Effort:** 4-6 hours  
+**Description:** Implement configuration management.
+
+[View Issue →](infrastructure-configuration/issue.md)
+
+#### infrastructure-logging
+**Status:** NOT STARTED  
+**Effort:** 3-4 hours  
+**Description:** Add structured logging system.
+
+[View Issue →](infrastructure-logging/issue.md)
 
 ## Current Issues
 
