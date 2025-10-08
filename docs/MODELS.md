@@ -238,7 +238,7 @@ text = tokenizer.apply_chat_template(
 - VRAM: ~28GB (float16)
 - VRAM with quantization: ~14GB (int8) / ~7GB (int4)
 - GPU: NVIDIA RTX 3090/4090 or better
-- **RTX 5090 Recommended**: 48GB VRAM enables full float16 with headroom for batching
+- **RTX 5090 Optimal**: 32GB VRAM enables full float16 with some headroom
 
 **Performance**:
 - Context length: 32K tokens
@@ -472,14 +472,14 @@ video_frames = pipe(
 - VRAM: ~24GB (bfloat16)
 - GPU: RTX 3090/4090 or better
 - Fast storage for video frames
-- **RTX 5090 Recommended**: 48GB VRAM enables higher resolution and longer clips
+- **RTX 5090 Optimal**: 32GB VRAM enables higher resolution and longer clips
 
 **Performance**:
 - Generation time: ~2-3 minutes per 5-second clip (RTX 4090)
 - **Generation time: ~1-1.5 minutes per 5-second clip (RTX 5090)** - 2x faster
 - Resolution: Up to 768x512 (standard), **up to 1024x768 on RTX 5090**
 - Frame rate: 24fps, **up to 30fps on RTX 5090**
-- **RTX 5090**: Can generate 10-second clips without memory issues
+- **RTX 5090**: Can generate 8-second clips with good memory management
 
 **Implementation Status**: 🔄 Planned for Phase 6
 
@@ -536,15 +536,15 @@ frames = pipe(
 
 ## RTX 5090 Optimization Guide
 
-The NVIDIA RTX 5090 represents a breakthrough for local AI content generation with its 48GB of VRAM, enabling workflows previously only possible on enterprise hardware or in the cloud.
+The NVIDIA RTX 5090 represents a significant upgrade for local AI content generation with its 32GB of VRAM, providing 33% more memory than the RTX 4090 and enabling improved workflows for content creators.
 
 ### Why RTX 5090 for AI Content Generation?
 
 **Key Advantages**:
-- **48GB VRAM**: 2x the memory of RTX 4090, enabling larger models and batch processing
+- **32GB VRAM**: 33% more memory than RTX 4090 (24GB), enabling better workflows
 - **Enhanced Performance**: ~60-80% faster inference across text, image, and video models
-- **Multi-Model Capability**: Run multiple models simultaneously without swapping
-- **Higher Quality Output**: Support for higher resolutions, longer videos, and larger batch sizes
+- **Improved Multi-Model Capability**: Run more models with less swapping
+- **Better Quality Output**: Support for higher resolutions and longer videos
 - **Cost Effective**: One-time hardware cost vs ongoing cloud API fees
 
 ### Recommended Model Stack for RTX 5090
@@ -555,12 +555,13 @@ The NVIDIA RTX 5090 represents a breakthrough for local AI content generation wi
 |-----------|-------|------|---------|
 | **Text Generation** | Qwen2.5-14B-Instruct | ~14GB | Script generation, ideation |
 | **Text Generation (Alt)** | Llama-3.1-8B-Instruct | ~8GB | Faster iteration, lower VRAM |
-| **Text Generation (Premium)** | Qwen2.5-32B-Instruct | ~32GB | Highest quality scripts |
 | **Speech Recognition** | faster-whisper-large-v3 | ~5GB | Audio transcription, timing |
 | **Vision Analysis** | Phi-3.5-vision | ~8GB | Scene validation, QC |
 | **Image Generation** | SDXL Base + Refiner | ~16GB | Keyframe generation |
 | **Video Generation** | LTX-Video | ~24GB | Video synthesis |
 | **Video Generation (Alt)** | Stable Video Diffusion | ~20GB | High-quality short clips |
+
+**Note**: For 32GB VRAM, careful memory management and sequential processing may be required for larger workflows.
 
 ### Optimal Workflows for RTX 5090
 
@@ -569,19 +570,17 @@ The NVIDIA RTX 5090 represents a breakthrough for local AI content generation wi
 
 ```python
 # Configuration: Load lightweight models in parallel
-# Text (8GB) + Images (16GB) + Vision (8GB) = ~32GB used, 16GB free
+# Text (8GB) + Images (12GB) = ~20GB used, 12GB free
 
 # Step 1: Load all models at startup
 text_model = load_llama_8b()      # 8GB
 image_pipe = load_sdxl_base()     # 12GB  
-vision_model = load_phi_vision()   # 8GB
-whisper_model = load_whisper()     # 5GB
-# Total: ~33GB, 15GB buffer
+# Total: ~20GB, 12GB buffer
 
 # Step 2: Process in parallel
 with concurrent_execution():
     script = text_model.generate(topic)           # 2s on RTX 5090
-    images = image_pipe(prompts, batch_size=4)    # 6s for 4 images
+    images = image_pipe(prompts, batch_size=2)    # 4.5s for 2 images
     audio = generate_tts(script)                  # Separate process
     
 # Step 3: Sequential video generation
@@ -593,15 +592,15 @@ videos = ltx_video.generate(images, audio)        # 1.2min per 5-sec clip
 
 ```python
 # Configuration: Use premium models sequentially
-# Qwen-32B (32GB) OR SDXL+Refiner (16GB) OR LTX-Video (24GB)
+# Qwen-14B (14GB) OR SDXL+Refiner (16GB) OR LTX-Video (24GB)
 
-# Step 1: Premium text generation
-text_model = load_qwen_32b()  # 32GB - Best quality scripts
+# Step 1: Quality text generation
+text_model = load_qwen_14b()  # 14GB
 script = text_model.generate(
     prompt,
-    max_tokens=4096,
+    max_tokens=2048,
     temperature=0.9
-)  # ~12s on RTX 5090
+)  # ~8s on RTX 5090
 
 # Unload text model, load image pipeline
 del text_model
@@ -626,10 +625,10 @@ videos = []
 for img in images:
     video = video_pipe(
         image=img,
-        num_frames=241,    # 10 seconds
+        num_frames=193,    # 8 seconds
         height=1024,       # High resolution
         width=768,
-        steps=60           # Higher quality
+        steps=50           # Good quality
     )  # ~2min per clip on RTX 5090
     videos.append(video)
 ```
@@ -638,55 +637,57 @@ for img in images:
 **Goal**: Generate multiple videos efficiently
 
 ```python
-# Configuration: Balanced approach with batch generation
-# Qwen-14B (14GB) + SDXL+Refiner (16GB) = 30GB, 18GB free
+# Configuration: Balanced approach with some batching
+# Qwen-14B (14GB) + SDXL Base (12GB) = 26GB, 6GB free
 
 # Load persistent models
 text_model = load_qwen_14b()        # 14GB
-sdxl_pipe = load_sdxl_with_refiner()  # 16GB
-# Total: 30GB, 18GB buffer
+sdxl_pipe = load_sdxl_base()        # 12GB
+# Total: 26GB, 6GB buffer
 
-# Generate multiple scripts in parallel (batch)
+# Generate multiple scripts in sequence
 topics = ["topic1", "topic2", "topic3", "topic4"]
-scripts = text_model.generate_batch(topics)  # ~15s for 4 scripts
+scripts = []
+for topic in topics:
+    script = text_model.generate(topic)  # ~8s each
+    scripts.append(script)
 
-# Generate all keyframes in batches
+# Generate keyframes in small batches
 all_images = []
 for script in scripts:
     prompts = extract_scene_prompts(script)
-    # Generate 4 images at a time
+    # Generate 2 images at a time
     images = sdxl_pipe(
-        prompt=prompts[:4],
-        num_inference_steps=30,
-        use_refiner=True
-    )  # ~8s for 4 refined images
+        prompt=prompts[:2],
+        num_inference_steps=30
+    )  # ~4.5s for 2 images
     all_images.extend(images)
 
-# Unload image models for video generation
+# Unload image model for video generation
 del sdxl_pipe
 torch.cuda.empty_cache()
 
-# Generate videos (one at a time due to VRAM)
-video_pipe = load_svd()  # 20GB
+# Generate videos (one at a time)
+video_pipe = load_ltx_video()  # 24GB
 for images_set in all_images:
     video = video_pipe(
         image=images_set,
         num_frames=121  # 5 seconds
-    )  # ~40s per clip
+    )  # ~1.2min per clip
 ```
 
 ### RTX 5090 Performance Targets
 
-Based on the 48GB VRAM and enhanced performance:
+Based on the 32GB VRAM and enhanced performance:
 
 | Task | RTX 4090 | RTX 5090 | Improvement |
 |------|----------|----------|-------------|
 | **360-word Script** | 15s | 8s | 1.9x faster |
 | **Single Image (SDXL)** | 3.5s | 2.0s | 1.75x faster |
-| **4 Images (Batch)** | N/A* | 6.0s | Batch enabled |
+| **2 Images (Batch)** | N/A* | 4.5s | Batch enabled |
 | **5-sec Video (LTX)** | 2.5min | 1.2min | 2.1x faster |
-| **10-sec Video (LTX)** | N/A* | 2.5min | Extended length |
-| **Pipeline (30 videos)** | ~6 hours | ~3 hours | 2x faster |
+| **8-sec Video (LTX)** | N/A* | 2.0min | Extended length |
+| **Pipeline (30 videos)** | ~6 hours | ~3.5 hours | 1.7x faster |
 
 \* Not feasible on RTX 4090 due to VRAM constraints
 
@@ -694,39 +695,38 @@ Based on the 48GB VRAM and enhanced performance:
 
 **Conservative (Safe)**:
 - Text Model: 14GB (Qwen2.5-14B)
-- Image Model: 16GB (SDXL + Refiner)
-- Buffer: 18GB
-- Total: 48GB
+- Image Model: 12GB (SDXL Base)
+- Buffer: 6GB
+- Total: 32GB
 
 **Aggressive (Maximum Throughput)**:
 - Text Model: 8GB (Llama-3.1-8B)
 - Image Model: 12GB (SDXL Base only)
 - Video Model: 20GB (SVD, loaded when needed)
-- Vision Model: 8GB (Phi-3.5)
 - Buffer: 0GB (tight but functional)
 
-**Premium (Best Quality)**:
-- Single Model at a time: 32GB (Qwen2.5-32B or enhanced video)
-- Buffer: 16GB
-- Sequential workflow with model swapping
+**Premium (Best Quality, Sequential)**:
+- Single Model at a time: 24GB (LTX-Video or SDXL+Refiner)
+- Buffer: 8GB
+- Sequential workflow with model swapping required
 
 ### Multi-GPU Considerations
 
 With multiple RTX 5090s, you can:
 
-**2x RTX 5090 (96GB total)**:
+**2x RTX 5090 (64GB total)**:
 - Run text generation on GPU 0
 - Run image generation on GPU 1
 - Parallel processing of entire pipeline
 - **Pipeline time reduction**: 60-70%
 
-**3x RTX 5090 (144GB total)**:
+**3x RTX 5090 (96GB total)**:
 - GPU 0: Text generation (14GB)
 - GPU 1: Image generation (16GB)  
 - GPU 2: Video generation (24GB)
 - All stages run simultaneously
 - **Pipeline time reduction**: 80-85%
-- Can also run Qwen2.5-72B model for ultimate quality
+- Can also run larger models with multi-GPU
 
 ### Cost Analysis
 
@@ -760,7 +760,7 @@ Assumptions:
 
 For optimal RTX 5090 AI content generation:
 
-- [ ] **GPU**: NVIDIA RTX 5090 (48GB VRAM)
+- [ ] **GPU**: NVIDIA RTX 5090 (32GB VRAM)
 - [ ] **CPU**: AMD Ryzen 9 7950X or Intel i9-13900K (16+ cores)
 - [ ] **RAM**: 64GB DDR5 (128GB recommended for very large models)
 - [ ] **Storage**: 2TB+ NVMe SSD (for models and generated content)
@@ -789,7 +789,7 @@ python -c "import torch; print(f'CUDA Available: {torch.cuda.is_available()}'); 
 # Expected output:
 # CUDA Available: True
 # GPU: NVIDIA GeForce RTX 5090
-# VRAM: 48.0 GB
+# VRAM: 32.0 GB
 
 # 4. Test with a quick model load
 python -c "from transformers import AutoModelForCausalLM; import torch; model = AutoModelForCausalLM.from_pretrained('Qwen/Qwen2.5-14B-Instruct', torch_dtype=torch.float16, device_map='auto'); print('Model loaded successfully!')"
@@ -865,8 +865,8 @@ model = AutoModelForCausalLM.from_pretrained(
 
 | Model | Resolution | VRAM | Quality | Time (4090) | Time (5090) | Batch (5090) |
 |-------|------------|------|---------|-------------|-------------|--------------|
-| SDXL Base | 1024x1024 | ~12GB | ⭐⭐⭐⭐⭐ | ⚡⚡⚡ (3.5s) | ⚡⚡⚡⚡⚡ (2.0s) | 4-6 images |
-| SDXL + Refiner | 1024x1024 | ~16GB | ⭐⭐⭐⭐⭐+ | ⚡⚡ (6.2s) | ⚡⚡⚡⚡ (3.5s) | 2-4 images |
+| SDXL Base | 1024x1024 | ~12GB | ⭐⭐⭐⭐⭐ | ⚡⚡⚡ (3.5s) | ⚡⚡⚡⚡⚡ (2.0s) | 2 images |
+| SDXL + Refiner | 1024x1024 | ~16GB | ⭐⭐⭐⭐⭐+ | ⚡⚡ (6.2s) | ⚡⚡⚡⚡ (3.5s) | Sequential |
 
 ### Video Generation Models
 
@@ -953,7 +953,7 @@ model = AutoModelForCausalLM.from_pretrained(
 4. **For RTX 5090 (Optimal Local Setup)**:
    - **Text Generation**: Use Qwen2.5-14B (float16) with batch processing
    - **Image Generation**: SDXL Base + Refiner + multiple LoRAs concurrently
-   - **Video Generation**: LTX-Video for 10-second clips or SVD for high quality 4-second clips
+   - **Video Generation**: LTX-Video for 8-second clips or SVD for high quality short clips
    - **Multi-tasking**: Run script generation + image generation simultaneously
    - **Batch Processing**: Generate 4-8 images in parallel for style variations
    - **Enhanced Quality**: Use larger models (Qwen2.5-32B) or higher resolution outputs
@@ -980,7 +980,7 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 ```
 
-**For High VRAM (24-48GB) - RTX 4090**:
+**For High VRAM (24-32GB) - RTX 4090/5090**:
 ```python
 # Use float16 with larger models
 model = AutoModelForCausalLM.from_pretrained(
@@ -990,11 +990,11 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 ```
 
-**For RTX 5090 (48GB VRAM) - Optimal Configuration**:
+**For RTX 5090 (32GB VRAM) - Optimal Configuration**:
 ```python
-# Option 1: Maximum quality single model
+# Option 1: Maximum quality with careful memory management
 model = AutoModelForCausalLM.from_pretrained(
-    "Qwen/Qwen2.5-32B-Instruct",  # Larger model for better quality
+    "Qwen/Qwen2.5-14B-Instruct",
     torch_dtype=torch.float16,
     device_map="auto"
 )
@@ -1007,28 +1007,30 @@ pipe = StableDiffusionXLPipeline.from_pretrained(
     use_safetensors=True
 ).to("cuda")
 
-# Generate multiple images in parallel
+# Generate 2 images in parallel
 images = pipe(
-    prompt=[prompt1, prompt2, prompt3, prompt4],
+    prompt=[prompt1, prompt2],
     num_inference_steps=30,
     guidance_scale=7.5
 ).images
 
-# Option 3: Multi-model pipeline (run models concurrently)
-# Load both text and image models simultaneously
+# Option 3: Multi-model pipeline with sequential loading
+# Load text model first (14GB)
 text_model = AutoModelForCausalLM.from_pretrained(
     "Qwen/Qwen2.5-14B-Instruct",
     torch_dtype=torch.float16,
-    device_map="cuda:0"  # Uses ~14GB
+    device_map="cuda:0"
 )
+
+# After text generation, unload and load image model
+del text_model
+torch.cuda.empty_cache()
 
 image_pipe = StableDiffusionXLPipeline.from_pretrained(
     "stabilityai/stable-diffusion-xl-base-1.0",
     torch_dtype=torch.float16,
     variant="fp16",
-).to("cuda:0")  # Additional ~16GB, total ~30GB
-
-# Still have 18GB headroom for refiner or video generation
+).to("cuda:0")  # 12GB
 
 # Option 4: Video generation with optimal settings
 video_pipe = LTXPipeline.from_pretrained(
@@ -1036,13 +1038,13 @@ video_pipe = LTXPipeline.from_pretrained(
     torch_dtype=torch.bfloat16
 ).to("cuda")
 
-# Generate longer clips with higher resolution
+# Generate longer clips with good settings
 video_frames = video_pipe(
     prompt=text_prompt,
     image=keyframe_image,
-    num_frames=241,  # 10 seconds at 24fps (vs 5 seconds on RTX 4090)
-    height=768,      # Higher resolution
-    width=1024,      # Higher resolution  
+    num_frames=193,  # 8 seconds at 24fps
+    height=768,
+    width=1024,
     num_inference_steps=50
 ).frames[0]
 ```
@@ -1051,7 +1053,7 @@ video_frames = video_pipe(
 
 ### RTX 5090 Optimization Strategies
 
-The NVIDIA RTX 5090 with 48GB VRAM opens up new possibilities for local AI workflows:
+The NVIDIA RTX 5090 with 32GB VRAM enables significantly improved local AI workflows:
 
 #### 1. **Parallel Pipeline Processing**
 Run multiple models simultaneously for faster end-to-end generation:
@@ -1115,7 +1117,7 @@ Generate higher quality and longer video clips:
 video_frames = video_pipe(
     prompt=scene_description,
     image=keyframe,
-    num_frames=241,        # 10 seconds
+    num_frames=193,        # 8 seconds
     height=1024,           # Full HD height
     width=768,             # Vertical video
     num_inference_steps=60, # Higher quality
@@ -1146,29 +1148,29 @@ refined = refiner(prompt=prompt, image=image).images[0]
 #### 6. **Recommended RTX 5090 Workflow**
 Optimal setup for complete video generation:
 ```python
-# Pipeline configuration for RTX 5090
+# Pipeline configuration for RTX 5090 (32GB)
 PIPELINE_CONFIG = {
     "text_generation": {
         "model": "Qwen/Qwen2.5-14B-Instruct",
         "vram_usage": "~14GB",
         "batch_size": 1,
-        "parallel": True
+        "parallel": False  # Sequential for memory management
     },
     "image_generation": {
-        "model": "SDXL Base + Refiner",
-        "vram_usage": "~16GB",
-        "batch_size": 4,  # 4 images at once
-        "parallel": True
+        "model": "SDXL Base",
+        "vram_usage": "~12GB",
+        "batch_size": 2,  # 2 images at once
+        "parallel": True  # Can run with text
     },
     "video_generation": {
         "model": "LTX-Video",
         "vram_usage": "~24GB",
-        "duration": "10 seconds",
+        "duration": "8 seconds",
         "resolution": "1024x768",
-        "parallel": False  # Run after images
+        "parallel": False  # Run after other stages
     },
-    "total_vram": "~30GB active + 18GB buffer",
-    "workflow": "script + images parallel, then video"
+    "total_vram": "~26GB active + 6GB buffer",
+    "workflow": "text then images (some parallel), then video sequential"
 }
 ```
 

@@ -1,6 +1,6 @@
 # RTX 5090 Quick Reference Guide
 
-Quick reference for optimizing StoryGenerator on NVIDIA RTX 5090 (48GB VRAM).
+Quick reference for optimizing StoryGenerator on NVIDIA RTX 5090 (32GB VRAM).
 
 ## 🎯 Quick Setup
 
@@ -22,7 +22,7 @@ pip install faster-whisper openai
 ### Verify GPU
 ```bash
 nvidia-smi
-# Should show: RTX 5090, 48GB VRAM
+# Should show: RTX 5090, 32GB VRAM
 
 python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0))"
 # Should output: True, NVIDIA GeForce RTX 5090
@@ -32,9 +32,9 @@ python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_
 
 ### 1. Maximum Throughput (Parallel)
 **Best for**: High-volume content production  
-**Models**: Llama-3.1-8B (8GB) + SDXL Base (12GB) + Phi-3.5 (8GB)  
-**VRAM Used**: 28GB + 20GB buffer  
-**Speed**: 1.8x faster than sequential
+**Models**: Llama-3.1-8B (8GB) + SDXL Base (12GB)  
+**VRAM Used**: 20GB + 12GB buffer  
+**Speed**: 1.6x faster than sequential
 
 ```python
 # Load all models at startup
@@ -77,9 +77,9 @@ videos = video_pipe.generate(...)
 
 ### 3. Batch Production (Balanced)
 **Best for**: Moderate volume, good quality  
-**Models**: Qwen-14B (14GB) + SDXL+Refiner (16GB)  
-**VRAM Used**: 30GB + 18GB buffer  
-**Efficiency**: 3.5x throughput for batches
+**Models**: Qwen-14B (14GB) + SDXL Base (12GB)  
+**VRAM Used**: 26GB + 6GB buffer  
+**Efficiency**: 2.5x throughput for batches
 
 ```python
 # Load persistent models
@@ -100,10 +100,10 @@ for script in scripts:
 |------|----------|----------|---------|
 | Script (360 words) | 15s | 8s | 1.9x |
 | Image (1024x1024) | 3.5s | 2.0s | 1.75x |
-| Batch 4 Images | N/A | 6.0s | Batch enabled |
+| Batch 2 Images | N/A | 4.5s | Batch enabled |
 | Video 5s (LTX) | 2.5min | 1.2min | 2.1x |
-| Video 10s (LTX) | N/A | 2.5min | Extended |
-| Full Pipeline (30 videos) | ~6 hrs | ~3 hrs | 2x |
+| Video 8s (LTX) | N/A | 2.0min | Extended |
+| Full Pipeline (30 videos) | ~6 hrs | ~3.5 hrs | 1.7x |
 
 ## 🎛️ Configuration Quick Switch
 
@@ -276,13 +276,13 @@ model = AutoModelForCausalLM.from_pretrained(
 
 ## 🎯 Best Practices Summary
 
-1. **Always use float16/bfloat16** - No need for quantization on 48GB
+1. **Always use float16/bfloat16** - Optimal for 32GB VRAM
 2. **Enable xFormers** - Memory efficient attention
 3. **Enable torch.compile** - Significant speedup (PyTorch 2.0+)
 4. **Monitor VRAM** - Use nvidia-smi or nvtop
 5. **Clear cache between stages** - torch.cuda.empty_cache()
 6. **Use fast storage** - NVMe SSD for model cache
-7. **Batch when possible** - Especially for images
+7. **Sequential for large models** - 32GB requires careful memory management
 8. **Profile your workflow** - Find bottlenecks
 9. **Keep drivers updated** - Latest NVIDIA drivers for best performance
 10. **Adequate cooling** - GPU will run hot under sustained load
@@ -298,5 +298,5 @@ Monthly costs (30 videos/week):
 ---
 
 **Last Updated**: 2024-10-08  
-**Hardware**: NVIDIA RTX 5090 (48GB VRAM)  
+**Hardware**: NVIDIA RTX 5090 (32GB VRAM)  
 **Software**: PyTorch 2.1+, CUDA 12.1+

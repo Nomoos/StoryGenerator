@@ -230,7 +230,7 @@ Users can now:
 
 ## Conclusion
 
-These improvements provide comprehensive guidance for leveraging the NVIDIA RTX 5090's 48GB VRAM for local AI content generation. The documentation covers:
+These improvements provide comprehensive guidance for leveraging the NVIDIA RTX 5090's 32GB VRAM for local AI content generation. The documentation covers:
 
 ✅ **Performance metrics** - Concrete benchmarks for all tasks
 ✅ **Workflow strategies** - Three optimized approaches for different use cases  
@@ -241,13 +241,13 @@ These improvements provide comprehensive guidance for leveraging the NVIDIA RTX 
 ✅ **Multi-GPU options** - Scaling strategies for enterprise use
 
 The RTX 5090's capabilities enable:
-- **2x faster pipelines** compared to RTX 4090
-- **Extended video lengths** (10s vs 5s)
-- **Batch processing** (4-6 images simultaneously)
-- **Premium models** (32B parameter LLMs)
-- **Parallel workflows** (text + image generation simultaneously)
+- **1.7-2x faster pipelines** compared to RTX 4090
+- **Extended video lengths** (8s vs 5s)
+- **Some batch processing** (2 images simultaneously)
+- **Better memory headroom** than 24GB cards
+- **Improved workflows** with careful memory management
 
-This represents a significant advancement in local AI content generation capability and cost-effectiveness.
+This represents a solid advancement in local AI content generation capability and cost-effectiveness with 33% more VRAM than the RTX 4090.
 
 ---
 

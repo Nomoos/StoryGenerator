@@ -1,11 +1,11 @@
 # RTX 5090 Optimized Pipeline Configuration
-# This configuration maximizes the capabilities of NVIDIA RTX 5090 (48GB VRAM)
+# This configuration maximizes the capabilities of NVIDIA RTX 5090 (32GB VRAM)
 # for local AI content generation
 
 # Hardware specifications
 hardware:
   gpu: "NVIDIA RTX 5090"
-  vram_gb: 48
+  vram_gb: 32
   cuda_version: "12.1+"
   compute_capability: "9.0"
 
@@ -105,10 +105,9 @@ workflows:
     models_loaded:
       - "Llama-3.1-8B (8GB)"
       - "SDXL Base (12GB)"
-      - "Phi-3.5-vision (8GB)"
-    total_vram_used: 28
-    vram_buffer: 20
-    performance_multiplier: 1.8
+    total_vram_used: 20
+    vram_buffer: 12
+    performance_multiplier: 1.6
     
   # Workflow 2: Maximum Quality (Sequential)
   sequential_premium:
@@ -116,8 +115,8 @@ workflows:
     description: "Use premium models sequentially"
     stages:
       - name: "text_generation"
-        model: "Qwen2.5-32B"
-        vram: 32
+        model: "Qwen2.5-14B"
+        vram: 14
       - name: "image_generation"
         model: "SDXL + Refiner"
         vram: 16
@@ -127,6 +126,7 @@ workflows:
     memory_management: "unload_previous"
     performance_multiplier: 1.0
     quality_multiplier: 1.3
+    note: "Sequential processing required for 32GB VRAM"
   
   # Workflow 3: Batch Production
   batch_production:
@@ -134,11 +134,12 @@ workflows:
     description: "Generate multiple videos efficiently"
     models_loaded:
       - "Qwen2.5-14B (14GB)"
-      - "SDXL + Refiner (16GB)"
-    total_vram_used: 30
-    vram_buffer: 18
-    batch_size: 4
-    performance_multiplier: 3.5  # 3.5x throughput for batch
+      - "SDXL Base (12GB)"
+    total_vram_used: 26
+    vram_buffer: 6
+    batch_size: 2
+    performance_multiplier: 2.5  # 2.5x throughput for batch
+    note: "Reduced batch size for 32GB VRAM"
 
 # Performance optimizations specific to RTX 5090
 optimizations:
@@ -168,23 +169,23 @@ resource_allocation:
   # Conservative allocation (safe)
   conservative:
     text_model_vram: 14
-    image_model_vram: 16
-    buffer_vram: 18
+    image_model_vram: 12
+    buffer_vram: 6
     
   # Aggressive allocation (maximum throughput)
   aggressive:
     text_model_vram: 8
     image_model_vram: 12
     video_model_vram: 20
-    vision_model_vram: 8
     buffer_vram: 0
-    warning: "Tight memory allocation, may cause OOM on edge cases"
+    warning: "Tight memory allocation for 32GB, may cause OOM on edge cases"
   
-  # Premium allocation (best quality)
+  # Premium allocation (best quality, sequential)
   premium:
-    active_model_vram: 32
-    buffer_vram: 16
+    active_model_vram: 24
+    buffer_vram: 8
     model_swapping: true
+    note: "Sequential processing required for larger models on 32GB"
 
 # Video output settings (enhanced for RTX 5090)
 video_output:
@@ -200,14 +201,14 @@ video_output:
     width: 1080
     height: 1920
     fps: 30
-    clip_duration_sec: 10  # 2x longer than RTX 4090
+    clip_duration_sec: 8  # Extended compared to RTX 4090
     
   # Ultra quality (for premium content)
   ultra:
     width: 1080
     height: 1920
     fps: 30
-    clip_duration_sec: 10
+    clip_duration_sec: 8
     video_bitrate: "8M"
     audio_bitrate: "320k"
 
@@ -272,11 +273,11 @@ monitoring:
 performance_targets:
   script_generation_360words: "8 seconds"
   single_image_1024x1024: "2 seconds"
-  batch_4_images_1024x1024: "6 seconds"
+  batch_2_images_1024x1024: "4.5 seconds"
   video_5sec_ltx: "72 seconds"
-  video_10sec_ltx: "150 seconds"
+  video_8sec_ltx: "120 seconds"
   video_5sec_svd: "40 seconds"
-  complete_pipeline_30videos: "3 hours"
+  complete_pipeline_30videos: "3.5 hours"
 
 # Recommendations
 recommendations:
@@ -300,7 +301,8 @@ multi_gpu:
     gpu_1:
       role: "image_and_video"
       models: ["SDXL + Refiner", "LTX-Video"]
-      vram_used: 40
+      vram_used: 28
+    total_vram: "64GB"
     performance_boost: "60-70% faster pipeline"
   
   # If enabled with 3x RTX 5090
@@ -317,5 +319,6 @@ multi_gpu:
       role: "video_generation"
       models: ["LTX-Video"]
       vram_used: 24
+    total_vram: "96GB"
     performance_boost: "80-85% faster pipeline"
     note: "All stages run in parallel"

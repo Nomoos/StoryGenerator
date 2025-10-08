@@ -181,14 +181,14 @@ pip install whisperx
 - **Workflow**: Limited parallel processing
 - **Performance**: Good for 1-2 videos per hour
 
-#### 🚀 RTX 5090 (48GB VRAM) - **OPTIMAL**
-- **Text Generation**: Qwen2.5-32B or batch processing with Qwen2.5-14B
-- **Image Generation**: SDXL Base + Refiner with batch generation (4-6 images)
-- **Video Generation**: LTX-Video (10-second clips) or SVD (4-second clips)
-- **Workflow**: Full parallel processing capability
-- **Performance**: 2x faster than RTX 4090, complete pipeline in ~3 hours for 30 videos
-- **Multi-tasking**: Run text + image generation simultaneously
-- **Quality**: Extended video lengths, higher resolutions, batch generation
+#### 🚀 RTX 5090 (32GB VRAM) - **OPTIMAL**
+- **Text Generation**: Qwen2.5-14B with good headroom
+- **Image Generation**: SDXL Base + Refiner or batch generation (2 images)
+- **Video Generation**: LTX-Video (8-second clips) or SVD (short clips)
+- **Workflow**: Some parallel processing capability
+- **Performance**: 1.7-2x faster than RTX 4090, pipeline in ~3.5 hours for 30 videos
+- **Multi-tasking**: Run text + image generation with careful memory management
+- **Quality**: Extended video lengths, higher resolutions compared to 24GB cards
 
 **💡 For detailed RTX 5090 optimization, see:**
 - **[RTX 5090 Quick Reference Guide](docs/RTX5090_QUICKREF.md)** - Quick setup and workflows
@@ -197,16 +197,16 @@ pip install whisperx
 
 ### Multi-GPU Setups
 
-#### 2x RTX 5090 (96GB total)
+#### 2x RTX 5090 (64GB total)
 - **Performance**: 60-70% faster pipeline
 - **Setup**: GPU 0 for text/vision, GPU 1 for image/video
 - **Use Case**: High-volume content production
 
-#### 3x RTX 5090 (144GB total)
+#### 3x RTX 5090 (96GB total)
 - **Performance**: 80-85% faster pipeline
 - **Setup**: Dedicated GPU per stage (text, image, video)
 - **Use Case**: Enterprise-level content production
-- **Bonus**: Can run Qwen2.5-72B for ultimate quality
+- **Bonus**: Can run larger models with multi-GPU configurations
 pip install whisperx
 ```
 

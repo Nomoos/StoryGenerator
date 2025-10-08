@@ -12,7 +12,7 @@ Complete comparison of NVIDIA GPUs for StoryGenerator pipeline performance.
 | RTX 4070 Ti | 12GB | 7,680 | 240 (4th gen) | 285W | $800 |
 | RTX 4080 | 16GB | 9,728 | 304 (4th gen) | 320W | $1,200 |
 | RTX 4090 | 24GB | 16,384 | 512 (4th gen) | 450W | $1,600 |
-| **RTX 5090** | **48GB** | **21,760** | **680 (5th gen)** | **575W** | **~$2,000** |
+| **RTX 5090** | **32GB** | **21,760** | **680 (5th gen)** | **575W** | **~$2,000** |
 
 ## 🚀 Performance Comparison
 
@@ -34,8 +34,7 @@ Complete comparison of NVIDIA GPUs for StoryGenerator pipeline performance.
 | RTX 3090 | SDXL Base + Refiner | 1 | 7.5s | 30s | Sequential only |
 | RTX 4090 | SDXL Base + Refiner | 1 | 6.2s | 24.8s | Better performance |
 | **RTX 5090** | **SDXL Base + Refiner** | **1** | **3.5s** | **14s** | **Individual gen** |
-| **RTX 5090** | **SDXL Base** | **4** | **2.0s** | **6.0s** | **Batch generation** |
-| **RTX 5090** | **SDXL Base + Refiner** | **2** | **3.5s** | **8.0s** | **Batch with refiner** |
+| **RTX 5090** | **SDXL Base** | **2** | **2.0s** | **4.5s** | **Batch generation** |
 
 ### Video Generation
 
@@ -46,9 +45,8 @@ Complete comparison of NVIDIA GPUs for StoryGenerator pipeline performance.
 | RTX 4090 | LTX-Video | 5s | 768x512 | 2.5min | ✅ Good |
 | RTX 4090 | SVD | 2s | 576x1024 | 1.5min | ✅ Good |
 | **RTX 5090** | **LTX-Video** | **5s** | **768x512** | **1.2min** | ✅ **Fast** |
-| **RTX 5090** | **LTX-Video** | **10s** | **1024x768** | **2.5min** | ✅ **Extended** |
+| **RTX 5090** | **LTX-Video** | **8s** | **1024x768** | **2.0min** | ✅ **Extended** |
 | **RTX 5090** | **SVD** | **2s** | **768x1280** | **40s** | ✅ **Very fast** |
-| **RTX 5090** | **SVD** | **4s** | **768x1280** | **2.0min** | ✅ **Longer clips** |
 
 ## 🎬 Complete Pipeline (30 Videos)
 
@@ -59,10 +57,10 @@ Estimated time to generate 30 complete videos (script + images + video + post-pr
 | RTX 3090 | Sequential | ~12 hours | Tight memory, many model swaps |
 | RTX 4090 | Sequential | ~6 hours | Better performance, still sequential |
 | RTX 4090 | Limited Parallel | ~5 hours | Some overlap possible |
-| **RTX 5090** | **Parallel** | **~3 hours** | **Text + Images concurrent** |
-| **RTX 5090** | **Batch** | **~2.5 hours** | **Batch image generation** |
-| **2x RTX 5090** | **Multi-GPU** | **~1.8 hours** | **Dedicated GPUs per stage** |
-| **3x RTX 5090** | **Multi-GPU** | **~1.5 hours** | **All stages parallel** |
+| **RTX 5090** | **Parallel** | **~3.5 hours** | **Text + Images concurrent** |
+| **RTX 5090** | **Batch** | **~3 hours** | **Batch image generation** |
+| **2x RTX 5090** | **Multi-GPU** | **~2 hours** | **Dedicated GPUs per stage** |
+| **3x RTX 5090** | **Multi-GPU** | **~1.7 hours** | **All stages parallel** |
 
 ## 💰 Cost Analysis
 
@@ -151,12 +149,12 @@ Estimated time to generate 30 complete videos (script + images + video + post-pr
 
 ### Video Generation Models
 
-| Model | Config | RTX 3090 (24GB) | RTX 4090 (24GB) | RTX 5090 (48GB) |
+| Model | Config | RTX 3090 (24GB) | RTX 4090 (24GB) | RTX 5090 (32GB) |
 |-------|--------|-----------------|-----------------|-----------------|
 | LTX-Video | 5s, 768x512 | ⚠️ Tight memory | ✅ Good | ✅ Excellent |
-| LTX-Video | 10s, 1024x768 | ❌ OOM | ❌ OOM | ✅ Feasible |
+| LTX-Video | 8s, 1024x768 | ❌ OOM | ❌ OOM | ✅ Feasible |
 | SVD | 2s, 576x1024 | ✅ Good | ✅ Good | ✅ Very fast |
-| SVD | 4s, 768x1280 | ❌ OOM | ⚠️ Tight | ✅ Comfortable |
+| SVD | 4s, 768x1280 | ❌ OOM | ⚠️ Tight | ⚠️ Possible but tight |
 
 ## ⚡ Performance Multipliers
 
@@ -164,11 +162,11 @@ Relative performance compared to RTX 3090 baseline:
 
 | Task | RTX 3090 | RTX 4090 | RTX 5090 | RTX 5090 Advantage |
 |------|----------|----------|----------|-------------------|
-| Text Generation | 1.0x | 1.2x | **2.3x** | Batch + faster inference |
+| Text Generation | 1.0x | 1.2x | **2.3x** | Faster inference |
 | Image Generation (single) | 1.0x | 1.2x | **1.8x** | Faster per image |
-| Image Generation (batch) | N/A | Limited | **3.5x** | Batch of 4-6 images |
-| Video Generation | 1.0x | 1.8x | **3.0x** | 2x speed + 2x length |
-| Full Pipeline | 1.0x | 2.0x | **4.0x** | Parallel + batch |
+| Image Generation (batch) | N/A | Limited | **2.2x** | Batch of 2 images |
+| Video Generation | 1.0x | 1.8x | **2.5x** | 2x speed + extended length |
+| Full Pipeline | 1.0x | 2.0x | **3.4x** | Parallel processing |
 
 ## 🎨 Quality Multipliers
 
@@ -176,11 +174,11 @@ Output quality improvements (subjective, 1.0 = baseline):
 
 | Aspect | RTX 3090 | RTX 4090 | RTX 5090 |
 |--------|----------|----------|----------|
-| Text Quality | 1.0x | 1.0x | **1.2x** (access to 32B models) |
+| Text Quality | 1.0x | 1.0x | **1.0x** (same models fit) |
 | Image Resolution | 1.0x | 1.0x | **1.0x** (same max resolution) |
-| Image Refinement | 0.9x (limited) | 1.0x | **1.1x** (refiner + LoRAs) |
-| Video Duration | 0.8x (tight) | 1.0x (5s) | **2.0x** (10s clips) |
-| Video Resolution | 1.0x | 1.0x | **1.3x** (higher res enabled) |
+| Image Refinement | 0.9x (limited) | 1.0x | **1.0x** (refiner fits) |
+| Video Duration | 0.8x (tight) | 1.0x (5s) | **1.6x** (8s clips) |
+| Video Resolution | 1.0x | 1.0x | **1.2x** (higher res enabled) |
 
 ## 📝 Decision Matrix
 
@@ -202,12 +200,11 @@ Output quality improvements (subjective, 1.0 = baseline):
 - ✅ You're a professional or studio
 - ✅ ROI timeline is 6-12 months
 - ✅ Generating 60+ videos/month
-- ✅ Need maximum quality and flexibility
-- ✅ Want 10-second clips
-- ✅ Need batch processing
+- ✅ Need faster performance than RTX 4090
+- ✅ Want 8-second clips
+- ✅ Need some parallel processing capability
 - ✅ Want future-proof hardware
 - ✅ Planning to expand operations
-- ✅ Multiple team members sharing resources
 
 ### Choose Multi-GPU (2-3x RTX 5090) if:
 - ✅ Enterprise/Agency operations
@@ -221,20 +218,22 @@ Output quality improvements (subjective, 1.0 = baseline):
 
 **For Serious Content Creators**: 
 
-The **NVIDIA RTX 5090** is the clear choice for professional AI content generation in 2024-2025:
+The **NVIDIA RTX 5090** is a strong choice for professional AI content generation in 2024-2025:
 
-1. **Performance**: 2-4x faster than RTX 4090 depending on workflow
-2. **Capability**: Unlocks premium models and workflows impossible on 24GB cards
-3. **Future-Proof**: Sufficient headroom for next-generation models
+1. **Performance**: 1.7-2.5x faster than RTX 4090 depending on workflow
+2. **Capability**: Better than 24GB cards but requires careful memory management
+3. **Future-Proof**: 32GB provides good headroom for current models
 4. **ROI**: Break-even in 6-12 months for regular content creators
-5. **Quality**: Access to best models for each stage
+5. **Quality**: Access to better models than smaller GPUs
 
-**The 48GB of VRAM is the game-changer** - it's not just about speed, it's about what becomes possible:
-- Run Qwen2.5-32B for ultimate text quality
-- Generate 6 images in parallel instead of 1
-- Create 10-second video clips instead of 5
-- Run text + image generation simultaneously
-- No more model swapping and memory management headaches
+**The 32GB of VRAM provides solid improvements** over 24GB cards:
+- Run Qwen2.5-14B with more headroom
+- Generate 2 images in parallel instead of 1
+- Create 8-second video clips instead of 5
+- Run text + image generation with some parallelism
+- Better memory headroom than RTX 4090
+
+**Note**: For truly extensive parallel processing or 32B+ models, consider multi-GPU setups.
 
 ---
 
