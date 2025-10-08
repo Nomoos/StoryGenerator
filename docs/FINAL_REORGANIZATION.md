@@ -40,13 +40,24 @@ The Python implementation has been moved to an `obsolete/` folder since:
 
 Python-specific documentation has been moved alongside the Python code in the obsolete folder.
 
-### 4. Updated Root Guard
+### 4. Research Moved to Top Level
+
+**Before:** `src/research/`  
+**After:** `research/` (at repository root)
+
+Research and prototype code has been moved to the top level for better visibility and separation from production source code. This includes:
+- C# research implementations
+- Python research scripts
+- Research documentation
+
+### 5. Updated Root Guard
 
 The root guard script (`scripts/check-clean-root.sh`) has been updated to allow the new folder structure:
 - `issues/` - Issue tracking and task breakdown
 - `obsolete/` - Archived code and documentation
+- `research/` - Research and prototypes
 
-### 5. Updated Documentation
+### 6. Updated Documentation
 
 - `CLEANUP.md` - Updated with new allowed top-level items
 - `issues/README.md` - Updated path references
@@ -65,11 +76,11 @@ StoryGenerator/
 ├── examples/         # Example files and starting work directory
 ├── issues/           # Issue tracking and task breakdown
 ├── obsolete/         # Archived Python code and docs
+├── research/         # Research and prototypes
 ├── scripts/          # Utility scripts
 ├── src/              # Source code
 │   ├── CSharp/       # C# implementation (active)
-│   ├── Generator/    # Generator modules
-│   └── research/     # Research and prototypes
+│   └── Generator/    # Generator modules
 ├── tests/            # Test files
 ├── .editorconfig     # Editor configuration
 ├── .env.example      # Environment variables template
@@ -93,6 +104,11 @@ StoryGenerator/
 - **Preservation:** Keeps historical implementation for reference
 - **Clean Separation:** Active code in `src/`, archived code in `obsolete/`
 
+### Research at Top Level
+- **Visibility:** Research code is distinct from production code
+- **Accessibility:** Easier to find experimental and prototype implementations
+- **Separation of Concerns:** Production code in `src/`, research in `research/`
+
 ### Clean Top Level
 - **Maintainability:** Easier to navigate the project
 - **Standards:** Follows industry best practices
@@ -106,7 +122,8 @@ If you were working with the old structure:
 
 1. **Python code:** Now in `obsolete/Python/` (read-only reference)
 2. **Issues:** Now in `issues/` instead of `docs/issues/`
-3. **C# code:** Still in `src/CSharp/` (no change)
+3. **Research code:** Now in `research/` instead of `src/research/`
+4. **C# code:** Still in `src/CSharp/` (no change)
 
 ### For Documentation Links
 
