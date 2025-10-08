@@ -1,25 +1,60 @@
 # Issues Directory
 
-This directory contains individual issue files organized by pipeline steps. Each step has been broken down into **separate, manageable issues** with two organization approaches.
+This directory contains issue tracking for the C# implementation of StoryGenerator, organized by priority and status for optimal workflow management.
 
-## 🎯 Choose Your Approach
+## 🎯 Organization by Priority & Status
 
-### Option 1: Sequential Steps (15 Large Issues)
-Traditional step-by-step breakdown. Each step is comprehensive and covers multiple tasks.
+Issues are organized following **best practices** and **test-driven development (TDD)** principles:
 
-### Option 2: **Atomic Tasks - Phase-Based (64 Tasks) ⭐ RECOMMENDED**
-Organized into 3 phases: **Interface → Prototype → Implementation**
+### ✅ Resolved Issues
+**Location:** `resolved/`
 
-Parallelizable 1-8 hour tasks optimized for team collaboration. Multiple developers can work simultaneously within each phase.
+Completed tasks with ✅ Complete status. Moved here to keep active issues focused on current work.
+- **Phase 1:** 3/3 tasks complete (Interface & setup)
+- **Phase 2:** 3/3 tasks complete (C# prototypes)
 
-👉 **[Start with Atomic Tasks](atomic/README.md)** for faster completion
+👉 **[View Resolved Issues](resolved/README.md)**
 
-#### Phase Structure:
-- **Phase 1: Interface** (4 tasks) - Define configs and structure
-- **Phase 2: Prototype** (8 tasks) - Research and validate integrations  
-- **Phase 3: Implementation** (52 tasks) - Build production pipeline
+### 🔴 P0 - Critical Priority
+**Location:** `p0-critical/`
 
-Each phase builds on the previous, ensuring clear dependencies and incremental value delivery.
+**Must complete immediately.** Blockers for other work. Focus all resources here first.
+- C# Phase 3 generator completion
+- Content pipeline foundation (Reddit scraper)
+
+👉 **[View P0 Critical Issues](p0-critical/README.md)**
+
+### 🟡 P1 - High Priority
+**Location:** `p1-high/`
+
+**Next in queue.** Core pipeline implementation tasks. Start after P0 completion.
+- Pipeline orchestration
+- 41 implementation tasks across 10 groups
+- Idea generation → Scripts → Scenes → Audio → Video → Export
+
+👉 **[View P1 High Priority Issues](p1-high/README.md)**
+
+### 🟢 P2 - Medium Priority
+**Location:** `p2-medium/`
+
+**Future work.** Publishing, analytics, and optimization. Begin after core pipeline works.
+- Platform distribution (YouTube, TikTok, Instagram, Facebook)
+- Analytics and performance tracking
+- Advanced video features
+
+👉 **[View P2 Medium Priority Issues](p2-medium/README.md)**
+
+## 📊 Status Overview
+
+| Priority | Status | Task Count | Estimated Effort |
+|----------|--------|------------|------------------|
+| ✅ Resolved | Complete | 6 tasks | ~30 hours (done) |
+| 🔴 P0 Critical | Active | 8 tasks | 20-30 hours |
+| 🟡 P1 High | Next | 42 tasks | 120-200 hours |
+| 🟢 P2 Medium | Planned | 9 tasks | 60-80 hours |
+| **Total** | | **65 tasks** | **200-310 hours** |
+
+> **Note:** The Python-based sequential step issues (step-00 through step-14) have been moved to `obsolete/issues/` as the C# implementation is now the primary codebase.
 
 ---
 
@@ -28,56 +63,111 @@ Each phase builds on the previous, ensuring clear dependencies and incremental v
 ```
 issues/
 ├── README.md (this file)
-├── INDEX.md (index of all issues)
-├── QUICKSTART.md (usage guide)
+├── INDEX.md (issue index)
+├── QUICKSTART.md (getting started guide)
 │
-├── atomic/ ⭐ NEW: 64 tasks in 3 phases (Interface → Prototype → Implementation)
-│   ├── README.md (phase-based workflow guide)
-│   ├── phase-1-interface/ (4 tasks - configs & structure)
-│   ├── phase-2-prototype/ (8 tasks - research & validation)
-│   └── phase-3-implementation/ (52 tasks in 13 groups)
-│       ├── content-pipeline/
-│       ├── idea-generation/
-│       ├── script-development/
-│       ├── scene-planning/
-│       ├── audio-production/
-│       ├── subtitle-creation/
-│       ├── image-generation/
-│       ├── video-production/
-│       ├── post-production/
-│       ├── quality-control/
-│       ├── export-delivery/
-│       ├── distribution/
-│       └── analytics/
+├── resolved/ ✅ Completed issues (6 tasks)
+│   ├── phase-1-interface/ (Setup complete)
+│   └── phase-2-prototype/ (Prototypes complete)
 │
-├── step-00-research/      # Research Prototypes (Local Only)
-├── step-01-ideas/         # Ideas → Topics → Titles
-├── step-02-viral-score/   # Viral Score (Titles)
-├── step-03-raw-script/    # Raw Script → Score → Iterate
-├── step-04-improve-script/# Improve Script by GPT/Local
-├── step-05-improve-title/ # Improve Title by GPT/Local
-├── step-06-scene-planning/# Scene Planning
-├── step-07-voiceover/     # Voiceover
-├── step-08-subtitle-timing/# Subtitle Timing
-├── step-09-key-images/    # Key Images per Scene (SDXL)
-├── step-10-video-generation/# Video Generation
-├── step-11-post-production/# Post-Production
-├── step-12-quality-checks/# Quality Checks
-├── step-13-final-export/  # Final Export
-└── step-14-distribution-analytics/ # Platform Distribution & Analytics
+├── p0-critical/ 🔴 Critical priority (8 tasks, ~20-30 hours)
+│   ├── csharp-phase3-complete-generators/
+│   └── content-pipeline/
+│
+├── p1-high/ 🟡 High priority (42 tasks, ~120-200 hours)
+│   ├── csharp-phase4-pipeline-orchestration/
+│   ├── idea-generation/
+│   ├── script-development/
+│   ├── scene-planning/
+│   ├── audio-production/
+│   ├── subtitle-creation/
+│   ├── image-generation/
+│   ├── video-production/
+│   ├── post-production/
+│   ├── quality-control/
+│   └── export-delivery/
+│
+├── p2-medium/ 🟢 Medium priority (9 tasks, ~60-80 hours)
+│   ├── csharp-video-generators/
+│   ├── distribution/
+│   └── analytics/
+│
+├── atomic/ (Legacy phase organization - kept for reference)
+│   ├── README.md
+│   ├── phase-1-interface/ (empty - moved to resolved/)
+│   └── phase-2-prototype/ (empty - moved to resolved/)
+│
+└── csharp-master-roadmap/ (Overall project roadmap)
 ```
+
+**Priority-Based Organization:** Issues are now organized by priority (P0, P1, P2) rather than phase, enabling better focus on critical path items and supporting test-driven development practices.
 
 ## Usage
 
-### For Solo Developers (Sequential)
-1. Navigate to the specific step directory you want to work on
-2. Read the issue file(s) in that directory
-3. Follow the checklist and acceptance criteria
-4. Comment `@copilot check` in the issue when you complete a task
+### Priority-Based Development Workflow
 
-### For Teams (Atomic/Phase-Based) ⭐
-1. **Review** [atomic/README.md](atomic/README.md) for phase-based workflow
-2. **Start with Phase 1** (Interface) - Define structure and configs
+#### 1. Start with P0 - Critical Priority 🔴
+```bash
+cd issues/p0-critical/
+# Review README.md for overview
+# Pick a task and follow TDD practices
+```
+
+**Focus:** Complete ALL P0 tasks before moving to P1. These are blockers.
+
+#### 2. Move to P1 - High Priority 🟡
+```bash
+cd issues/p1-high/
+# Review task groups
+# Many tasks can be parallelized
+```
+
+**Focus:** Core pipeline implementation. Can work on multiple groups simultaneously.
+
+#### 3. Tackle P2 - Medium Priority 🟢
+```bash
+cd issues/p2-medium/
+# Platform distribution
+# Analytics and optimization
+```
+
+**Focus:** Publishing and analytics features after core pipeline works.
+
+### Test-Driven Development (TDD) Workflow
+
+For each task:
+1. **Read acceptance criteria** in issue.md
+2. **Write tests first** (Red phase)
+   ```bash
+   # Create test file
+   # Define expected behavior
+   # Run tests - they should fail
+   ```
+3. **Implement minimal code** (Green phase)
+   ```bash
+   # Write just enough code to pass tests
+   # Keep it simple
+   ```
+4. **Refactor and improve** (Refactor phase)
+   ```bash
+   # Clean up code
+   # Improve design
+   # Tests still pass
+   ```
+5. **Document and review**
+   ```bash
+   # Add XML documentation
+   # Submit for peer review
+   ```
+
+### Resolved Issues (Historical Reference)
+
+For completed work and examples:
+```bash
+cd issues/resolved/
+# View completed implementations
+# Use as reference for similar tasks
+```
 3. **Move to Phase 2** (Prototype) - Validate all integrations
 4. **Execute Phase 3** (Implementation) - Build production pipeline in 13 groups
 5. **Track** progress using MicrostepValidator per task

@@ -64,6 +64,28 @@ The root guard script (`scripts/check-clean-root.sh`) has been updated to allow 
 - `obsolete/README.md` - Created to explain the obsolete folder purpose
 - `.gitignore` - Added section for obsolete folder artifacts
 
+### 7. Python Issues and Research Further Archived (2025-10-08 Update)
+
+**Additional Python-specific items moved to obsolete:**
+
+**Issues:**
+- **Before:** `issues/step-00-research/` through `issues/step-14-distribution-analytics/`
+- **After:** `obsolete/issues/step-XX/`
+
+All sequential Python-based implementation issues have been archived to `obsolete/issues/` as they represented the Python implementation plan which is no longer maintained. Active C# implementation tracking remains in `issues/atomic/` and `issues/csharp-*/`.
+
+**Research:**
+- **Before:** Multiple Python research scripts in `research/python/`
+- **After:** Most moved to `obsolete/research/python/`
+
+Python research files created for the obsolete Python implementation have been archived:
+- `llm_call.py`, `asr_whisper.py`, `sdxl_keyframe.py`, `ltx_generate.py`
+- `lufs_normalize.py`, `srt_tools.py`, `interpolation.py`
+
+**Active files kept in `research/python/`:**
+- `whisper_subprocess.py` - Used by C# WhisperClient via subprocess
+- `test_whisper_integration.py` - Tests for whisper integration
+
 ## Current Top-Level Structure
 
 ```

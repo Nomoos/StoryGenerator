@@ -15,62 +15,15 @@ These prototypes demonstrate how to integrate various AI models and media proces
 
 Located in `/research/python/`:
 
-### Core Components
+> **Note:** Most Python research files have been moved to `obsolete/research/python/` as they were part of the obsolete Python implementation. Only files actively used by the C# implementation remain here.
 
-#### `llm_call.py` - Ollama CLI Wrapper
-- Wrapper for local LLM inference using Ollama
-- Supports both generation and chat completion
-- Command-line interface to Ollama models
-- Example models: Llama2, Mistral, etc.
-
-**Key Features:**
-- Simple text generation
-- Chat message format support
-- Model listing and downloading
-- Temperature and token control
-
-**Usage:**
-```python
-from llm_call import OllamaClient
-
-client = OllamaClient(model="llama2")
-response = client.generate(
-    prompt="Write a story about a robot",
-    system="You are a creative writer",
-    temperature=0.8
-)
-```
-
-#### `asr_whisper.py` - Faster-Whisper ASR
-- Speech-to-text transcription using faster-whisper
-- Word-level timestamp alignment
-- SRT subtitle generation
-- Language detection
-
-**Key Features:**
-- Multiple model sizes (tiny to large-v3)
-- Word-level timestamps
-- Automatic SRT generation
-- Language auto-detection
-- GPU acceleration support
-
-**Usage:**
-```python
-from asr_whisper import WhisperASR
-
-asr = WhisperASR(model_size="base")
-result = asr.transcribe("audio.mp3", language="en")
-print(result["text"])
-
-# Generate SRT subtitles
-asr.transcribe_to_srt("audio.mp3", "subtitles.srt")
-```
+### Active Components (Used by C#)
 
 #### `whisper_subprocess.py` - Whisper Subprocess Wrapper
 - Command-line wrapper for faster-whisper
 - JSON-based communication for C# integration
 - Supports all faster-whisper features
-- Used by C# WhisperClient via subprocess
+- **Used by C# WhisperClient via subprocess**
 
 **Key Features:**
 - JSON input/output for easy integration
@@ -93,131 +46,23 @@ python3 whisper_subprocess.py detect_language \
   --model-size base
 ```
 
-#### `lufs_normalize.py` - FFmpeg LUFS Normalization
-- Professional audio normalization using EBU R128 standard
-- Two-pass normalization for accuracy
-- Audio metadata extraction
-- Batch processing support
+#### `test_whisper_integration.py` - Whisper Integration Tests
+- Test script to verify whisper_subprocess.py functionality
+- Validates transcription and language detection
+- Used for integration testing with C# WhisperClient
 
-**Key Features:**
-- LUFS-based loudness normalization
-- Two-pass accurate normalization
-- Audio file information extraction
-- Batch processing
+### Obsolete Components (Archived)
 
-**Usage:**
-```python
-from lufs_normalize import LUFSNormalizer
+The following Python research files have been moved to `obsolete/research/python/` as they were part of the Python implementation research and are no longer actively used:
 
-normalizer = LUFSNormalizer(target_lufs=-16.0)
-result = normalizer.normalize(
-    "input.mp3",
-    "output.mp3",
-    two_pass=True
-)
-```
-
-#### `srt_tools.py` - SRT Subtitle Tools
-- Parse, build, and manipulate SRT subtitle files
-- Merge multiple SRT files
-- Adjust timing and synchronization
-- Convert between SRT and JSON formats
-
-**Key Features:**
-- SRT parsing and generation
-- Subtitle merging
-- Timing adjustments
-- Format conversion (SRT ↔ JSON)
-- Statistics extraction
-
-**Usage:**
-```python
-from srt_tools import SRTTools
-
-# Parse SRT
-entries = SRTTools.parse_srt("input.srt")
-
-# Merge files
-SRTTools.merge_srt_files(
-    ["part1.srt", "part2.srt"],
-    "merged.srt",
-    time_offsets=[0.0, 30.0]
-)
-
-# Convert to JSON
-SRTTools.srt_to_json("input.srt", "output.json")
-```
-
-#### `sdxl_keyframe.py` - SDXL Image Generation
-- Text-to-image generation using Stable Diffusion XL
-- Generate video keyframes from descriptions
-- Style presets for consistent look
-- Batch generation support
-
-**Key Features:**
-- SDXL base + refiner support
-- Multiple style presets
-- Seed control for reproducibility
-- Keyframe sequence generation
-- Memory optimization
-
-**Usage:**
-```python
-from sdxl_keyframe import SDXLKeyframeGenerator
-
-gen = SDXLKeyframeGenerator(use_refiner=False)
-image = gen.generate_keyframe(
-    prompt="A sunset over mountains",
-    width=1024,
-    height=768,
-    seed=42,
-    output_path="keyframe.png"
-)
-```
-
-#### `ltx_generate.py` - Video Generation
-- Image-to-video generation
-- Shot-to-clip conversion
-- Motion control and camera movement
-- Batch video generation
-
-**Key Features:**
-- Image-to-video (animate static images)
-- Motion intensity control
-- Ken Burns effects
-- Multi-clip generation
-
-**Usage:**
-```python
-from ltx_generate import LTXVideoGenerator
-
-gen = LTXVideoGenerator(fps=24)
-video = gen.image_to_video(
-    image_path="keyframe.png",
-    output_path="clip.mp4",
-    motion_bucket_id=127
-)
-```
-
-#### `interpolation.py` - Frame Interpolation
-- AI-based frame interpolation for smooth video
-- Support for RIFE, DAIN, and FILM models
-- Increase framerate (e.g., 24fps → 60fps)
-- Batch processing
-
-**Key Features:**
-- Multiple interpolation methods
-- FPS upscaling
-- FFmpeg fallback for basic interpolation
-- Batch video processing
-
-**Usage:**
-```python
-from interpolation import VideoInterpolator
-
-interpolator = VideoInterpolator(method="rife")
-interpolator.interpolate_video(
-    "input.mp4",
+- `llm_call.py` - Ollama CLI wrapper (C# now uses OllamaClient.cs directly)
+- `asr_whisper.py` - Faster-Whisper ASR library (C# uses whisper_subprocess.py instead)
+- `sdxl_keyframe.py` - SDXL image generation (C# generates inline Python scripts)
+- `ltx_generate.py` - Video generation (C# generates inline Python scripts)
+- `lufs_normalize.py` - Audio normalization (C# uses FFmpeg directly)
+- `srt_tools.py` - SRT subtitle tools (C# has native implementations)
+- `interpolation.py` - Frame interpolation (C# generates inline Python scripts)
+- `README_VIDEO_CLIPS.md` - Documentation for video clip generation
     "output_60fps.mp4",
     target_fps=60
 )

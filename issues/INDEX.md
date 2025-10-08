@@ -1,82 +1,147 @@
 # Issues Index - StoryGenerator Pipeline
 
-Complete breakdown of the video generation pipeline into manageable, step-by-step issues.
+Complete breakdown of the C# video generation pipeline into manageable, priority-organized tasks following test-driven development best practices.
 
-## 🎯 Two Approaches
+## 🎯 Priority-Based Organization
 
-### 1. Sequential Steps (Original - 15 Large Steps)
-Comprehensive, step-by-step issues. Good for understanding the complete pipeline flow.
+Issues are organized by **priority** and **status** rather than sequential phases, enabling:
+- ✅ **Focus on critical path** - Work on what matters most
+- ✅ **Better resource allocation** - Prioritize team efforts
+- ✅ **Faster delivery** - Ship critical features first
+- ✅ **TDD practices** - Test-first development workflow
+- ✅ **Clear dependencies** - Know what blocks what
 
-### 2. **Atomic Tasks - Phase-Based (64 Tasks) ⭐ RECOMMENDED**
-**Recommended for teams!** Parallelizable 1-8 hour tasks organized into 3 phases:
+### ✅ Resolved Issues (6 tasks - Complete)
+**Location:** [`resolved/`](resolved/README.md)
 
-- **Phase 1: Interface** (4 tasks) - Define configs, schemas, and structure
-- **Phase 2: Prototype** (8 tasks) - Research and validate all integrations
-- **Phase 3: Implementation** (52 tasks in 13 groups) - Build production pipeline
+Completed and verified tasks:
+- Phase 1: Interface setup (3 tasks)
+- Phase 2: C# prototypes (3 tasks)
 
-👉 **[View Atomic Tasks Directory](atomic/README.md)** - Start here for team collaboration
+### 🔴 P0 - Critical Priority (8 tasks - Active)
+**Location:** [`p0-critical/`](p0-critical/README.md)
 
-Each phase builds on the previous, ensuring clear dependencies and reduced rework.
+**Must complete first.** Blockers for all other work:
+- csharp-phase3-complete-generators (Complete remaining generators)
+- content-pipeline (Reddit scraper + quality control)
 
----
+**Estimated Effort:** 20-30 hours
 
-## Overview
+### 🟡 P1 - High Priority (42 tasks - Next)
+**Location:** [`p1-high/`](p1-high/README.md)
 
-This index organizes the entire StoryGenerator pipeline (from ideation to final export) into 15 distinct sequential steps OR 64 atomic parallelizable tasks.
+**Core pipeline implementation.** Start after P0:
+- Pipeline orchestration
+- Idea generation (7 tasks)
+- Script development (5 tasks)
+- Scene planning (3 tasks)
+- Audio production (2 tasks)
+- Subtitle creation (2 tasks)
+- Image generation (4 tasks)
+- Video production (3 tasks)
+- Post-production (6 tasks)
+- Quality control (3 tasks)
+- Export & delivery (3 tasks)
 
-## 🎯 Quick Navigation
+**Estimated Effort:** 120-200 hours (many can run in parallel)
 
-| Step | Name | Status | Priority | Directory |
-|------|------|--------|----------|-----------|
-| 0 | Research Prototypes | Not Started | High | [step-00-research/](step-00-research/) |
-| 1 | Ideas → Topics → Titles | Not Started | High | [step-01-ideas/](step-01-ideas/) |
-| 2 | Viral Score (Titles) | Not Started | High | [step-02-viral-score/](step-02-viral-score/) |
-| 3 | Raw Script → Iterate | Not Started | High | [step-03-raw-script/](step-03-raw-script/) |
-| 4 | Improve Script (GPT/Local) | Not Started | High | [step-04-improve-script/](step-04-improve-script/) |
-| 5 | Improve Title (GPT/Local) | Not Started | Medium | [step-05-improve-title/](step-05-improve-title/) |
-| 6 | Scene Planning | Not Started | High | [step-06-scene-planning/](step-06-scene-planning/) |
-| 7 | Voiceover | Not Started | High | [step-07-voiceover/](step-07-voiceover/) |
-| 8 | Subtitle Timing | Not Started | High | [step-08-subtitle-timing/](step-08-subtitle-timing/) |
-| 9 | Key Images (SDXL) | Not Started | High | [step-09-key-images/](step-09-key-images/) |
-| 10 | Video Generation | Not Started | High | [step-10-video-generation/](step-10-video-generation/) |
-| 11 | Post-Production | Not Started | High | [step-11-post-production/](step-11-post-production/) |
-| 12 | Quality Checks | Not Started | High | [step-12-quality-checks/](step-12-quality-checks/) |
-| 13 | Final Export | Not Started | High | [step-13-final-export/](step-13-final-export/) |
-| 14 | Platform Distribution & Analytics | Not Started | Medium | [step-14-distribution-analytics/](step-14-distribution-analytics/) |
+### 🟢 P2 - Medium Priority (9 tasks - Future)
+**Location:** [`p2-medium/`](p2-medium/README.md)
 
-## 📊 Pipeline Flow
+**Publishing and analytics.** Begin after core pipeline works:
+- Video generation advanced features
+- Platform distribution (4 tasks)
+- Analytics & optimization (4 tasks)
 
+**Estimated Effort:** 60-80 hours
+
+> **Note:** The Python-based sequential step issues (step-00 through step-14) have been archived to `obsolete/issues/` as they represent the obsolete Python implementation plan.
+
+## 🎯 C# Implementation Issues
+
+| Priority | Count | Estimated Effort | Location |
+|----------|-------|------------------|----------|
+| ✅ **Resolved** | 6 tasks | ~30 hours (done) | [resolved/](resolved/) |
+| 🔴 **P0 Critical** | 8 tasks | 20-30 hours | [p0-critical/](p0-critical/) |
+| 🟡 **P1 High** | 42 tasks | 120-200 hours | [p1-high/](p1-high/) |
+| 🟢 **P2 Medium** | 9 tasks | 60-80 hours | [p2-medium/](p2-medium/) |
+| **Master Roadmap** | Overview | N/A | [csharp-master-roadmap/](csharp-master-roadmap/) |
+
+**Total:** 65 tasks | 200-310 hours remaining effort
+
+## 📋 Detailed Breakdown by Priority
+
+### P0 - Critical (Must Complete First)
+1. **csharp-phase3-complete-generators** - Complete remaining C# generators
+2. **content-pipeline/02-content-01-reddit-scraper** - Reddit content scraping (P0)
+3. **content-pipeline/** - 5 additional content tasks (P1, but grouped with P0)
+
+### P1 - High (Core Pipeline)
+1. **csharp-phase4-pipeline-orchestration** - Full pipeline integration
+2. **idea-generation/** - 7 tasks (story idea generation)
+3. **script-development/** - 5 tasks (script creation & refinement)
+4. **scene-planning/** - 3 tasks (visual storyboard)
+5. **audio-production/** - 2 tasks (TTS & normalization)
+6. **subtitle-creation/** - 2 tasks (timing & mapping)
+7. **image-generation/** - 4 tasks (SDXL keyframes)
+8. **video-production/** - 3 tasks (video synthesis)
+9. **post-production/** - 6 tasks (editing & effects)
+10. **quality-control/** - 3 tasks (validation)
+11. **export-delivery/** - 3 tasks (final output)
+
+### P2 - Medium (Publishing & Analytics)
+1. **csharp-video-generators** - Advanced video features
+2. **distribution/** - 4 tasks (YouTube, TikTok, Instagram, Facebook)
+3. **analytics/** - 4 tasks (metrics, performance, optimization)
+
+## 🔄 Development Workflow
+
+```mermaid
+graph TD
+    A[Resolved: Phase 1+2] --> B[P0: Critical]
+    B --> C[P1: High Priority]
+    C --> D[P2: Medium Priority]
+    
+    B -->|Blocks| C
+    C -->|Enables| D
+    
+    style A fill:#90EE90
+    style B fill:#FF6B6B
+    style C fill:#FFD93D
+    style D fill:#6BCF7F
 ```
-Step 0: Research Prototypes (Setup)
-    ↓
-Step 1: Ideas → Topics → Titles (Reddit Stories + Alternative Sources)
-    ↓
-Step 2: Viral Score (Title Selection)
-    ↓
-Step 3: Raw Script → Iterate (Script v0, v1)
-    ↓
-Step 4: Improve Script (Script v2+)
-    ↓
-Step 5: Improve Title (Title Variants)
-    ↓
-Step 6: Scene Planning (Shots + Draft Subtitles)
-    ↓
-Step 7: Voiceover (Audio Generation + Normalization)
-    ↓
-Step 8: Subtitle Timing (Forced Alignment)
-    ↓
-Step 9: Key Images (SDXL Keyframes)
-    ↓
-Step 10: Video Generation (LTX/Interpolation)
-    ↓
-Step 11: Post-Production (Assembly + Effects)
-    ↓
-Step 12: Quality Checks (QC Reports)
-    ↓
-Step 13: Final Export (Platform-Ready Files)
-    ↓
-Step 14: Platform Distribution & Analytics (Upload + Performance Tracking)
+
+### Priority Flow:
+1. ✅ **Resolved** - Phases 1 & 2 complete
+2. 🔴 **P0** - Complete generators + content foundation
+3. 🟡 **P1** - Build complete generation pipeline  
+4. 🟢 **P2** - Add distribution & analytics
+
+## 📜 Obsolete Python Issues (Archived)
+
+The Python-based sequential step issues (step-00 through step-14) have been moved to `obsolete/issues/` for historical reference. They represented the original Python implementation plan which is no longer maintained.
+
+To view the archived Python issues:
+```bash
+cd obsolete/issues/
+ls step-*
 ```
+
+## 🚀 Getting Started
+
+### For New Contributors:
+1. **Read** [issues/README.md](README.md) for workflow overview
+2. **Review** P0 critical issues in [p0-critical/](p0-critical/)
+3. **Pick a task** and follow TDD practices
+4. **Write tests first**, then implement
+5. **Submit for review** when tests pass
+
+### For Test-Driven Development:
+- Write tests before code (Red-Green-Refactor)
+- Target >80% test coverage
+- Use dependency injection
+- Follow SOLID principles
+- Document as you code
 
 ## 🎬 Target Audience Segments
 
