@@ -21,7 +21,8 @@ issues/
 ├── step-10-video-generation/# Video Generation
 ├── step-11-post-production/# Post-Production
 ├── step-12-quality-checks/# Quality Checks
-└── step-13-final-export/  # Final Export
+├── step-13-final-export/  # Final Export
+└── step-14-distribution-analytics/ # Platform Distribution & Analytics
 ```
 
 ## Usage

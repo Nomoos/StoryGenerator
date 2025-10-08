@@ -24,6 +24,7 @@ This index organizes the entire StoryGenerator pipeline (from ideation to final 
 | 11 | Post-Production | Not Started | High | [step-11-post-production/](step-11-post-production/) |
 | 12 | Quality Checks | Not Started | High | [step-12-quality-checks/](step-12-quality-checks/) |
 | 13 | Final Export | Not Started | High | [step-13-final-export/](step-13-final-export/) |
+| 14 | Platform Distribution & Analytics | Not Started | Medium | [step-14-distribution-analytics/](step-14-distribution-analytics/) |
 
 ## 📊 Pipeline Flow
 
@@ -55,6 +56,8 @@ Step 11: Post-Production (Assembly + Effects)
 Step 12: Quality Checks (QC Reports)
     ↓
 Step 13: Final Export (Platform-Ready Files)
+    ↓
+Step 14: Platform Distribution & Analytics (Upload + Performance Tracking)
 ```
 
 ## 🎬 Target Audience Segments
