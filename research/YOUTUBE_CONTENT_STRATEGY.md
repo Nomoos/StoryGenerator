@@ -1000,9 +1000,9 @@ When generating video content with AI models (GPT, Claude, LLaMA, etc.), there a
 
 **Implementation**:
 
-```python
-# Stage 1: Generate skeleton (outline)
-skeleton_prompt = """
+```csharp
+// Stage 1: Generate skeleton (outline)
+var skeletonPrompt = $@"
 Create a detailed outline for a {duration}-minute video about {topic}.
 Structure: Introduction (10%), Main Content (80%), Conclusion (10%)
 Include:
@@ -1011,37 +1011,40 @@ Include:
 - Emotional progression
 - Visual descriptions for each beat
 Format as JSON with timestamps and beats.
-"""
+";
 
-skeleton = llm.generate(skeleton_prompt, max_tokens=1000)
+var skeleton = await llm.GenerateAsync(skeletonPrompt, maxTokens: 1000);
 
-# Stage 2: Generate each section with full skeleton context
-for section in skeleton.sections:
-    section_prompt = f"""
+// Stage 2: Generate each section with full skeleton context
+var fullScript = new List<string>();
+foreach (var section in skeleton.Sections)
+{
+    var sectionPrompt = $@"
 Full Story Skeleton: {skeleton}
 
-Previous Section Summary: {previous_section_summary}
+Previous Section Summary: {previousSectionSummary}
 
-Now write the full script for: {section.title}
-Duration: {section.duration}
-Beat: {section.beat}
-Emotional tone: {section.tone}
+Now write the full script for: {section.Title}
+Duration: {section.Duration}
+Beat: {section.Beat}
+Emotional tone: {section.Tone}
 
 Requirements:
 - Match the skeleton structure
 - Reference previous sections naturally
-- Set up next section: {next_section.title}
+- Set up next section: {section.NextSection?.Title}
 - Use vivid, specific language
 - Maintain character consistency
-"""
+";
     
-    section_script = llm.generate(section_prompt, max_tokens=800)
-    full_script.append(section_script)
+    var sectionScript = await llm.GenerateAsync(sectionPrompt, maxTokens: 800);
+    fullScript.Add(sectionScript);
+}
 
-# Stage 3: Coherence pass (optional)
-coherence_prompt = f"""
+// Stage 3: Coherence pass (optional)
+var coherencePrompt = $@"
 Review this video script for consistency:
-{full_script}
+{string.Join("\n\n", fullScript)}
 
 Fix any:
 - Character inconsistencies
@@ -1050,7 +1053,7 @@ Fix any:
 - Timeline issues
 
 Provide corrected version.
-"""
+";
 ```
 
 **Advantages**:
@@ -1075,48 +1078,54 @@ Provide corrected version.
 
 **Implementation**:
 
-```python
-context_window = []  # Stores recent paragraphs
-generated_content = []
-max_context_paragraphs = 3  # Last 3 paragraphs
+```csharp
+var contextWindow = new List<string>();  // Stores recent paragraphs
+var generatedContent = new List<string>();
+const int maxContextParagraphs = 3;  // Last 3 paragraphs
 
-initial_prompt = """
+var initialPrompt = $@"
 Write the opening of a {duration}-minute video about {topic}.
 Write 2-3 paragraphs. End at a natural pause point.
-"""
+";
 
-chunk = llm.generate(initial_prompt, max_tokens=400)
-generated_content.append(chunk)
-context_window.append(chunk)
+var chunk = await llm.GenerateAsync(initialPrompt, maxTokens: 400);
+generatedContent.Add(chunk);
+contextWindow.Add(chunk);
 
-while len(generated_content) < target_sections:
-    continuation_prompt = f"""
-Story skeleton: {skeleton_summary}
-Previous context: {' '.join(context_window[-max_context_paragraphs:])}
+while (generatedContent.Count < targetSections)
+{
+    var recentContext = string.Join(" ", contextWindow.TakeLast(maxContextParagraphs));
+    var continuationPrompt = $@"
+Story skeleton: {skeletonSummary}
+Previous context: {recentContext}
 
 Continue the story. Write next 2-3 paragraphs.
 Maintain tone and character consistency.
-Current progress: {current_minute}/{total_minutes} minutes
-"""
+Current progress: {currentMinute}/{totalMinutes} minutes
+";
     
-    chunk = llm.generate(continuation_prompt, max_tokens=400)
-    generated_content.append(chunk)
-    context_window.append(chunk)
+    chunk = await llm.GenerateAsync(continuationPrompt, maxTokens: 400);
+    generatedContent.Add(chunk);
+    contextWindow.Add(chunk);
     
-    # Keep only last N paragraphs in context
-    if len(context_window) > max_context_paragraphs:
-        context_window.pop(0)
+    // Keep only last N paragraphs in context
+    if (contextWindow.Count > maxContextParagraphs)
+    {
+        contextWindow.RemoveAt(0);
+    }
+}
 
-# Final section with conclusion
-conclusion_prompt = f"""
-Story skeleton: {skeleton_summary}
-Recent context: {' '.join(context_window[-max_context_paragraphs:])}
-Opening summary: {generated_content[0][:200]}
+// Final section with conclusion
+var conclusionContext = string.Join(" ", contextWindow.TakeLast(maxContextParagraphs));
+var conclusionPrompt = $@"
+Story skeleton: {skeletonSummary}
+Recent context: {conclusionContext}
+Opening summary: {generatedContent[0].Substring(0, Math.Min(200, generatedContent[0].Length))}
 
 Write the powerful conclusion (2-3 paragraphs).
 Tie back to opening themes.
 Deliver satisfying ending.
-"""
+";
 ```
 
 **Advantages**:
@@ -1141,32 +1150,33 @@ Deliver satisfying ending.
 
 **Implementation**:
 
-```python
-# Stage 1: Structure (fast, cheap model)
-structure = gpt_35_turbo.generate(
-    "Create video outline for {topic}",
-    max_tokens=500
-)
+```csharp
+// Stage 1: Structure (fast, cheap model)
+var structure = await gpt35Turbo.GenerateAsync(
+    $"Create video outline for {topic}",
+    maxTokens: 500
+);
 
-# Stage 2: Detailed sections (quality model)
-sections = []
-for beat in structure.beats:
-    section = claude_opus.generate(
-        f"Write script section: {beat}",
-        max_tokens=1000
-    )
-    sections.append(section)
+// Stage 2: Detailed sections (quality model)
+var sections = new List<string>();
+foreach (var beat in structure.Beats)
+{
+    var section = await claudeOpus.GenerateAsync(
+        $"Write script section: {beat}",
+        maxTokens: 1000
+    );
+    sections.Add(section);
+}
 
-# Stage 3: Coherence & polish (quality model)
-final_script = gpt_4_turbo.generate(
-    f"Polish this script for flow:\n{sections}",
-    max_tokens=4000
-)
+// Stage 3: Coherence & polish (quality model)
+var finalScript = await gpt4Turbo.GenerateAsync(
+    $"Polish this script for flow:\n{string.Join("\n\n", sections)}",
+    maxTokens: 4000
+);
 
-# Stage 4: Scene descriptions (vision model)
-visuals = dalle_3.generate_images(
-    [scene.description for scene in final_script.scenes]
-)
+// Stage 4: Scene descriptions (vision model)
+var sceneDescriptions = finalScript.Scenes.Select(s => s.Description).ToList();
+var visuals = await dalle3.GenerateImagesAsync(sceneDescriptions);
 ```
 
 **Advantages**:
@@ -1191,40 +1201,54 @@ visuals = dalle_3.generate_images(
 
 **Implementation**:
 
-```python
-# Generate comprehensive skeleton
-skeleton = llm.generate(
-    "Create detailed story skeleton with 12 beats for {topic}",
-    max_tokens=800
-)
+```csharp
+// Generate comprehensive skeleton
+var skeleton = await llm.GenerateAsync(
+    $"Create detailed story skeleton with 12 beats for {topic}",
+    maxTokens: 800
+);
 
-generated_paragraphs = []
-target_paragraphs = calculate_paragraphs_for_duration(duration_minutes)
+var generatedParagraphs = new List<string>();
+var targetParagraphs = CalculateParagraphsForDuration(durationMinutes);
 
-for i in range(target_paragraphs):
-    # Determine context
-    if i == 0:
-        context = "Opening"
-        reference_paragraphs = []
-    else:
-        context = f"Paragraph {i+1}/{target_paragraphs}"
-        # Last 2 paragraphs as reference
-        reference_paragraphs = generated_paragraphs[-2:] if len(generated_paragraphs) >= 2 else generated_paragraphs
+for (int i = 0; i < targetParagraphs; i++)
+{
+    // Determine context
+    string context;
+    List<string> referenceParagraphs;
     
-    # Find current beat in skeleton
-    current_beat = skeleton.beats[int(i * len(skeleton.beats) / target_paragraphs)]
-    next_beat = skeleton.beats[min(int((i+1) * len(skeleton.beats) / target_paragraphs), len(skeleton.beats)-1)]
+    if (i == 0)
+    {
+        context = "Opening";
+        referenceParagraphs = new List<string>();
+    }
+    else
+    {
+        context = $"Paragraph {i+1}/{targetParagraphs}";
+        // Last 2 paragraphs as reference
+        referenceParagraphs = generatedParagraphs.Count >= 2 
+            ? generatedParagraphs.TakeLast(2).ToList() 
+            : generatedParagraphs.ToList();
+    }
     
-    paragraph_prompt = f"""
+    // Find current beat in skeleton
+    int currentBeatIndex = (int)(i * skeleton.Beats.Count / (double)targetParagraphs);
+    int nextBeatIndex = Math.Min((int)((i+1) * skeleton.Beats.Count / (double)targetParagraphs), 
+                                  skeleton.Beats.Count - 1);
+    
+    var currentBeat = skeleton.Beats[currentBeatIndex];
+    var nextBeat = skeleton.Beats[nextBeatIndex];
+    
+    var paragraphPrompt = $@"
 Full Story Skeleton:
 {skeleton}
 
-Current Beat: {current_beat.title}
-Description: {current_beat.description}
-Next Beat: {next_beat.title}
+Current Beat: {currentBeat.Title}
+Description: {currentBeat.Description}
+Next Beat: {nextBeat.Title}
 
 Last 2 Paragraphs:
-{' '.join(reference_paragraphs)}
+{string.Join("\n\n", referenceParagraphs)}
 
 Write the next paragraph of the script.
 - Match the current beat
@@ -1234,21 +1258,23 @@ Write the next paragraph of the script.
 - Be specific and vivid
 
 Write exactly 1 paragraph (3-5 sentences).
-"""
+";
     
-    paragraph = llm.generate(paragraph_prompt, max_tokens=200)
-    generated_paragraphs.append(paragraph)
+    var paragraph = await llm.GenerateAsync(paragraphPrompt, maxTokens: 200);
+    generatedParagraphs.Add(paragraph);
     
-    # Progress tracking
-    print(f"Generated {i+1}/{target_paragraphs} paragraphs")
+    // Progress tracking
+    Console.WriteLine($"Generated {i+1}/{targetParagraphs} paragraphs");
+}
 
-full_script = '\n\n'.join(generated_paragraphs)
+var fullScript = string.Join("\n\n", generatedParagraphs);
 
-# Optional: Coherence pass
-final_script = llm.generate(
-    f"Review and lightly edit for flow:\n{full_script}",
-    max_tokens=len(full_script.split()) * 2
-)
+// Optional: Coherence pass
+var wordCount = fullScript.Split(' ').Length;
+var finalScript = await llm.GenerateAsync(
+    $"Review and lightly edit for flow:\n{fullScript}",
+    maxTokens: wordCount * 2
+);
 ```
 
 **Advantages**:
@@ -1286,47 +1312,47 @@ final_script = llm.generate(
 **For any content >10 minutes, implement these checks:**
 
 1. **Character Consistency Validation**
-```python
-consistency_check = """
+```csharp
+var consistencyCheck = @"
 Review this script and list any character inconsistencies:
 - Name variations
 - Personality shifts
 - Ability contradictions
 - Timeline issues
-"""
+";
 ```
 
 2. **Plot Thread Tracking**
-```python
-thread_check = """
+```csharp
+var threadCheck = @"
 Identify all plot threads introduced in this script.
 Mark which are:
 - Resolved ✓
 - Ongoing →
 - Forgotten/dropped ✗
-"""
+";
 ```
 
 3. **Tone Analysis**
-```python
-tone_check = """
+```csharp
+var toneCheck = $@"
 Analyze tone consistency across sections:
-- Opening: {tone_metrics}
-- Middle: {tone_metrics}
-- Closing: {tone_metrics}
+- Opening: {toneMetrics}
+- Middle: {toneMetrics}
+- Closing: {toneMetrics}
 Flag significant shifts.
-"""
+";
 ```
 
 4. **Pacing Validation**
-```python
-pacing_check = """
+```csharp
+var pacingCheck = $@"
 Calculate pacing metrics:
 - Words per minute: {wpm}
 - Scene changes per minute: {scpm}
-- Tension curve: {plot_curve}
+- Tension curve: {plotCurve}
 Identify rushed or dragging sections.
-"""
+";
 ```
 
 ---
