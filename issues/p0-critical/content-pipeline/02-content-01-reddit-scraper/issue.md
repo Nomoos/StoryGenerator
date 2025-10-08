@@ -3,7 +3,7 @@
 **ID:** `02-content-01`  
 **Priority:** P0 (Critical Path)  
 **Effort:** 4-6 hours  
-**Status:** Not Started
+**Status:** ✅ COMPLETE
 
 ## Overview
 
@@ -21,14 +21,14 @@ Implement Reddit story scraper using PRAW (Python Reddit API Wrapper) to mine st
 
 ## Acceptance Criteria
 
-- [ ] PRAW library installed and configured
-- [ ] Reddit API authentication working
-- [ ] 18 target subreddits defined (6 segments × 3 age buckets)
-- [ ] Scraper fetches top 50-100 posts per subreddit
-- [ ] Content filtered by upvotes (500+), engagement, age-appropriateness
-- [ ] Output JSON saved to `/sources/reddit/{segment}/{age}/`
-- [ ] Script runs successfully for all 6 segments
-- [ ] Documentation and usage examples provided
+- [x] PRAW library installed and configured
+- [x] Reddit API authentication working
+- [x] 18 target subreddits defined (6 segments × 3 age buckets)
+- [x] Scraper fetches top 50-100 posts per subreddit
+- [x] Content filtered by upvotes (500+), engagement, age-appropriateness
+- [x] Output JSON saved to `/sources/reddit/{segment}/{age}/`
+- [x] Script runs successfully for all 6 segments
+- [x] Documentation and usage examples provided
 
 ## Task Details
 
