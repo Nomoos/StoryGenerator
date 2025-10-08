@@ -8,32 +8,36 @@ namespace StoryGenerator.Tests.Examples;
 /// </summary>
 public class StringUtilsTests
 {
-    [Fact]
-    public void TruncateWithEllipsis_TextShorterThanMaxLength_ReturnsOriginalText()
+    [Theory]
+    [InlineData("Hello World", 20, "Hello World")]
+    [InlineData("Short", 100, "Short")]
+    [InlineData("Exactly twenty c", 16, "Exactly twenty c")]
+    public void TruncateWithEllipsis_TextShorterOrEqualToMaxLength_ReturnsOriginalText(
+        string text,
+        int maxLength,
+        string expected)
     {
-        // Arrange
-        string text = "Hello World";
-        int maxLength = 20;
-
         // Act
         string result = StringUtils.TruncateWithEllipsis(text, maxLength);
 
         // Assert
-        Assert.Equal("Hello World", result);
+        Assert.Equal(expected, result);
     }
 
-    [Fact]
-    public void TruncateWithEllipsis_TextLongerThanMaxLength_ReturnsTruncatedWithEllipsis()
+    [Theory]
+    [InlineData("This is a very long text that needs to be truncated", 20, "This is a very lo...")]
+    [InlineData("Another long text for testing purposes", 15, "Another long...")]
+    [InlineData("Short text but needs truncation", 10, "Short t...")]
+    public void TruncateWithEllipsis_TextLongerThanMaxLength_ReturnsTruncatedWithEllipsis(
+        string text,
+        int maxLength,
+        string expected)
     {
-        // Arrange
-        string text = "This is a very long text that needs to be truncated";
-        int maxLength = 20;
-
         // Act
         string result = StringUtils.TruncateWithEllipsis(text, maxLength);
 
         // Assert
-        Assert.Equal("This is a very lo...", result);
-        Assert.Equal(20, result.Length);
+        Assert.Equal(expected, result);
+        Assert.Equal(maxLength, result.Length);
     }
 }
