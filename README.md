@@ -17,6 +17,7 @@ This project automates the creation of emotional, dramatic vertical stories targ
 
 - **[README.md](README.md)** (this file) - Overview and quick start
 - **[docs/MODELS.md](docs/MODELS.md)** - Comprehensive model documentation with Hugging Face references
+- **[docs/GPU_COMPARISON.md](docs/GPU_COMPARISON.md)** - 🆚 **NEW: GPU comparison guide for AI content generation**
 - **[docs/RTX5090_QUICKREF.md](docs/RTX5090_QUICKREF.md)** - 🚀 **NEW: RTX 5090 optimization guide and quick reference**
 - **[config/rtx5090.yaml](config/rtx5090.yaml)** - 🎛️ **NEW: RTX 5090 optimized configuration file**
 - **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples for all pipeline stages
