@@ -463,6 +463,28 @@ namespace StoryGenerator.Research
             // For Unix-like systems
             return $"\"{arg.Replace("\"", "\\\"")}\"";
         }
+
+        /// <summary>
+        /// Get list of available Whisper models.
+        /// </summary>
+        public async Task<List<string>> GetAvailableModelsAsync()
+        {
+            // Standard faster-whisper models
+            return await Task.FromResult(new List<string>
+            {
+                "tiny",
+                "tiny.en",
+                "base",
+                "base.en",
+                "small",
+                "small.en",
+                "medium",
+                "medium.en",
+                "large-v1",
+                "large-v2",
+                "large-v3"
+            });
+        }
     }
 
     /// <summary>
@@ -546,41 +568,6 @@ namespace StoryGenerator.Research
         public string Language { get; set; }
 
         [JsonPropertyName("confidence")]
-        public double Confidence { get; set; }
-    }
-
-    /// <summary>
-    /// Represents a transcription result.
-    /// </summary>
-    public class TranscriptionResult
-    {
-        public string Text { get; set; }
-        public string Language { get; set; }
-        public double LanguageProbability { get; set; }
-        public List<TranscriptionSegment> Segments { get; set; }
-        public List<WordTimestamp> Words { get; set; }
-    }
-
-    /// <summary>
-    /// Represents a transcription segment.
-    /// </summary>
-    public class TranscriptionSegment
-    {
-        public int Id { get; set; }
-        public double Start { get; set; }
-        public double End { get; set; }
-        public string Text { get; set; }
-        public double? Confidence { get; set; }
-    }
-
-    /// <summary>
-    /// Represents a word with timestamp.
-    /// </summary>
-    public class WordTimestamp
-    {
-        public string Word { get; set; }
-        public double Start { get; set; }
-        public double End { get; set; }
         public double Confidence { get; set; }
     }
 }

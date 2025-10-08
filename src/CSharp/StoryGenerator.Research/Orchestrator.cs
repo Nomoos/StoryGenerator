@@ -298,20 +298,6 @@ namespace StoryGenerator.Research
     }
 
     /// <summary>
-    /// Represents audio processing result.
-    /// </summary>
-    public class AudioProcessingResult
-    {
-        public bool Success { get; set; }
-        public string NormalizedAudioPath { get; set; }
-        public string TranscriptionText { get; set; }
-        public string SubtitlePath { get; set; }
-        public string Language { get; set; }
-        public double Duration { get; set; }
-        public DateTime ProcessedAt { get; set; }
-    }
-
-    /// <summary>
     /// Represents video pipeline result.
     /// </summary>
     public class VideoPipelineResult
@@ -354,9 +340,11 @@ namespace StoryGenerator.Research
             CancellationToken cancellationToken = default)
         {
             // For prototype, delegate to existing method
+            var outputDir = Path.GetDirectoryName(outputAudioPath) ?? ".";
             return await orchestrator.ProcessAudioAsync(
                 inputAudioPath,
-                outputAudioPath,
+                outputDir,
+                language: null,
                 cancellationToken);
         }
 
