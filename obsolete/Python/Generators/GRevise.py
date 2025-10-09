@@ -3,6 +3,7 @@ import shutil
 import time
 
 import openai
+from dotenv import load_dotenv
 
 from Models.StoryIdea import StoryIdea
 from Tools.Utils import SCRIPTS_PATH, sanitize_filename, IDEAS_PATH, REVISED_PATH, loadScript
@@ -10,7 +11,13 @@ from Tools.Monitor import logger, PerformanceMonitor, log_error, log_info
 from Tools.Retry import retry_with_exponential_backoff, with_circuit_breaker
 from Tools.Validator import OutputValidator
 
-openai.api_key = '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'
+# Load environment variables from .env file
+load_dotenv()
+
+# Get API key from environment variable
+openai.api_key = os.getenv('OPENAI_API_KEY')
+if not openai.api_key:
+    raise ValueError("OPENAI_API_KEY environment variable is not set. Please check your .env file.")
 
 class RevisedScriptGenerator:
     def __init__(self, model: str = "gpt-4o-mini"):

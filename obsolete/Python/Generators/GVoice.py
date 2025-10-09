@@ -15,6 +15,7 @@ See: src/CSharp/MIGRATION_GUIDE.md for current implementation status
 
 import os
 from elevenlabs import ElevenLabs, Voice, VoiceSettings, save
+from dotenv import load_dotenv
 import shutil
 import time
 
@@ -32,7 +33,13 @@ from Tools.Monitor import logger, PerformanceMonitor, log_error, log_info
 from Tools.Retry import retry_with_exponential_backoff, with_circuit_breaker
 from Tools.Validator import OutputValidator
 
-API_KEY = 'sk_8b119f95dfca190665b8bc19a24e3be40e32d39c7c50a4d8'
+# Load environment variables from .env file
+load_dotenv()
+
+# Get API key from environment variable
+API_KEY = os.getenv('ELEVENLABS_API_KEY')
+if not API_KEY:
+    raise ValueError("ELEVENLABS_API_KEY environment variable is not set. Please check your .env file.")
 
 class VoiceMaker:
     def __init__(self):

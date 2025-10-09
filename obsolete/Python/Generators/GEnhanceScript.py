@@ -1,10 +1,17 @@
 import os
 
 import openai
+from dotenv import load_dotenv
 
 from Tools.Utils import SCRIPTS_PATH, sanitize_filename, IDEAS_PATH, REVISED_PATH, ENHANCED_NAME, REVISED_NAME
 
-openai.api_key = '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'
+# Load environment variables from .env file
+load_dotenv()
+
+# Get API key from environment variable
+openai.api_key = os.getenv('OPENAI_API_KEY')
+if not openai.api_key:
+    raise ValueError("OPENAI_API_KEY environment variable is not set. Please check your .env file.")
 
 
 class EnhanceScriptGenerator:
