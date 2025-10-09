@@ -55,8 +55,9 @@ This enhanced YouTube Channel Scraper extracts comprehensive metadata and analyt
 - **fps**: Frames per second (e.g., 30, 60)
 - **aspect_ratio**: Video aspect ratio (e.g., "16:9", "9:16")
 - **video_format**: Classification as "short" or "long" video
-  - Shorts: ≤60 seconds and vertical (height > width)
+  - Shorts: ≤3 minutes (180 seconds) and vertical (height > width)
   - Long: All other videos
+  - Note: As of October 2024, YouTube Shorts can be up to 3 minutes long
 
 ### Content Analysis Metrics
 - **title_length**: Number of characters in title

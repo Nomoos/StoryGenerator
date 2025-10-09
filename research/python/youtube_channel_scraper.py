@@ -93,6 +93,7 @@ class YouTubeChannelScraper:
     
     # Constants
     SHORTS_FETCH_MULTIPLIER = 3  # Fetch 3x shorts to compensate for potential filtering/unavailable videos
+    SHORTS_MAX_DURATION = 180  # YouTube Shorts max duration is 3 minutes (as of October 2024)
     
     def __init__(self, output_dir: str = "/tmp/youtube_channel_data"):
         """
@@ -311,9 +312,10 @@ class YouTubeChannelScraper:
                         aspect_ratio = f"{width}:{height}"
                         
                         # Determine video format based on duration and aspect ratio
-                        # YouTube Shorts: <= 60 seconds and vertical (height > width)
+                        # YouTube Shorts: <= 3 minutes (180s) and vertical (height > width)
+                        # Source: https://support.google.com/youtube/answer/15424877
                         if not video_format:  # Only determine if not already set
-                            if duration_seconds <= 60 and height > width:
+                            if duration_seconds <= self.SHORTS_MAX_DURATION and height > width:
                                 video_format = "short"
                             else:
                                 video_format = "long"
@@ -545,7 +547,7 @@ class YouTubeChannelScraper:
 
 ## Format Breakdown
 
-### Shorts (≤60s, Vertical)
+### Shorts (≤3min, Vertical)
 - **Count**: {len(shorts)}
 - **Total Views**: {sum(v.view_count for v in shorts):,}
 - **Avg Views**: {sum(v.view_count for v in shorts) // len(shorts) if shorts else 0:,}
@@ -745,7 +747,7 @@ All scraped data has been saved to:
         unknown = [v for v in self.videos if not v.video_format]
         
         report += f"""
-- **Shorts (≤60s, Vertical)**: {len(shorts)} videos
+- **Shorts (≤3min, Vertical)**: {len(shorts)} videos
 - **Long Videos**: {len(longs)} videos
 - **Unknown Format**: {len(unknown)} videos
 
