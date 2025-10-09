@@ -57,7 +57,8 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 ### 🔬 Research & Architecture
 - **[Technology Stack](docs/TECHNOLOGY_STACK_FINAL.md)** - C# + Python + SQLite
 - **[Hybrid Architecture](docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Architecture guide
-- **[Hybrid Roadmap](docs/HYBRID_ROADMAP.md)** - 📋 **NEW: Complete implementation status**
+- **[Hybrid Roadmap](docs/HYBRID_ROADMAP.md)** - 📋 Complete implementation status
+- **[Roadmap Analysis](docs/ROADMAP_ANALYSIS.md)** - 🎯 **NEW: Current status & next steps**
 - **[GPU Comparison](docs/GPU_COMPARISON.md)** - Hardware benchmarks
 - **[Models Documentation](docs/MODELS.md)** - ML model references
 - **[C# vs Python](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Technology comparison
@@ -101,7 +102,7 @@ StoryGenerator uses a **hybrid C# + Python architecture**:
 - **C# (.NET 9.0)**: Orchestration, APIs, I/O, configuration, and business logic
 - **Python**: ML model inference via subprocess calls (Whisper ASR, SDXL, LTX-Video)
 
-**Why Hybrid?** 
+**Why Hybrid?**
 - C# provides performance, type safety, and excellent tooling
 - Python gives access to the rich ML ecosystem
 - Best of both worlds for production-grade content generation
@@ -238,7 +239,7 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 - **Then:** Visual pipeline (Images → Video → Post-production)
 - **Future:** Platform distribution and analytics
 
-➡️ **[View Hybrid Roadmap](docs/HYBRID_ROADMAP.md)** - Complete implementation status with progress tracking  
+➡️ **[View Hybrid Roadmap](docs/HYBRID_ROADMAP.md)** - Complete implementation status with progress tracking
 ➡️ **[Issue tracking](docs/ISSUE_TRACKING.md)** - Task management details
 
 ---

@@ -1,6 +1,32 @@
 namespace StoryGenerator.Pipeline.Interfaces;
 
 /// <summary>
+/// Represents progress information for a pipeline stage
+/// </summary>
+public class PipelineProgress
+{
+    /// <summary>
+    /// Stage name
+    /// </summary>
+    public string StageName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Progress percentage (0-100)
+    /// </summary>
+    public int PercentComplete { get; set; }
+
+    /// <summary>
+    /// Current status message
+    /// </summary>
+    public string Message { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Timestamp of the progress update
+    /// </summary>
+    public DateTime Timestamp { get; set; } = DateTime.Now;
+}
+
+/// <summary>
 /// Represents a single stage in the pipeline.
 /// Each stage is independently testable and replaceable.
 /// Follows Single Responsibility Principle - each stage does one thing.
@@ -15,12 +41,16 @@ public interface IPipelineStage<TInput, TOutput>
     string StageName { get; }
 
     /// <summary>
-    /// Execute the pipeline stage
+    /// Execute the pipeline stage with progress reporting
     /// </summary>
     /// <param name="input">Input data for the stage</param>
+    /// <param name="progress">Progress reporter for status updates</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Output data from the stage</returns>
-    Task<TOutput> ExecuteAsync(TInput input, CancellationToken cancellationToken = default);
+    Task<TOutput> ExecuteAsync(
+        TInput input,
+        IProgress<PipelineProgress>? progress = null,
+        CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Validate input before execution
