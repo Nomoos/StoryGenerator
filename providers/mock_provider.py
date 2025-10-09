@@ -34,6 +34,7 @@ class MockLLMProvider(ILLMProvider):
         self.call_count = 0
         self.last_prompt = None
         self.last_messages = None
+        self._smart_mode = False  # Enable smart responses
 
     @property
     def model_name(self) -> str:
@@ -57,10 +58,25 @@ class MockLLMProvider(ILLMProvider):
             **kwargs: Additional parameters (ignored)
 
         Returns:
-            The predefined mock response
+            The predefined mock response or smart response
         """
         self.call_count += 1
         self.last_prompt = prompt
+        
+        # Try to provide smart responses based on prompt
+        if "cluster" in prompt.lower() or "topic" in prompt.lower():
+            return """Topic 1: Relationships and Personal Connections
+Theme: Stories about love, friendships, and family dynamics
+Ideas: 1, 2
+
+Topic 2: Career and Success
+Theme: Stories about professional growth and achievement
+Ideas: 3"""
+        elif "title" in prompt.lower():
+            return """1. Why nobody tells you about this shocking secret
+2. The truth about relationships that changed everything
+3. 5 things I discovered that blew my mind"""
+        
         return self.response
 
     def generate_chat(

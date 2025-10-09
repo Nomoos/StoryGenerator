@@ -35,7 +35,6 @@ from core.pipeline.title_generation import TitleGenerator
 from core.pipeline.title_scoring import TitleScorer
 from core.pipeline.voice_recommendation import VoiceRecommender
 from core.pipeline.top_selection import TopSelector
-from providers.openai_provider import OpenAIProvider
 from providers.mock_provider import MockLLMProvider
 
 # Configure logging
@@ -242,11 +241,17 @@ def main():
     # Initialize LLM provider
     if args.mock:
         logger.info("Using mock LLM provider")
-        llm_provider = MockLLMProvider()
+        # Create a smarter mock that returns different responses
+        llm_provider = MockLLMProvider(response="1. Mock idea about relationships\n2. Mock idea about career success\n3. Mock idea about personal growth")
     else:
         logger.info(f"Using OpenAI provider with model: {args.model}")
         try:
+            from providers.openai_provider import OpenAIProvider
             llm_provider = OpenAIProvider(model=args.model)
+        except ImportError as e:
+            logger.error(f"Failed to import OpenAI provider: {e}")
+            logger.error("Please install required dependencies: pip install openai tenacity")
+            sys.exit(1)
         except ValueError as e:
             logger.error(f"Failed to initialize OpenAI provider: {e}")
             logger.error("Please set OPENAI_API_KEY environment variable")
