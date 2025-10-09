@@ -1,54 +1,49 @@
-# QC: Subtitle Sync Check
+# QC: Audio-Subtitle Sync Check
 
 **ID:** `12-qc-02-sync-check`  
 **Priority:** P1  
-**Effort:** 1-2 hours  
-**Status:** Not Started
+**Effort:** 2-3 hours  
+**Status:** ❌ Not Implemented
 
 ## Overview
 
-[TODO: Add specific overview for this task]
+Verify audio-subtitle synchronization accuracy (±50ms tolerance). Validates that subtitle timing matches voiceover precisely throughout the video, detecting drift or misalignment.
+
+**Implementation Needed:** A/V sync validation service.
 
 ## Dependencies
 
-**Requires:**
-- `11-post-02`
+**Requires:** `11-post-02` (video with subtitles), `08-subtitles-01` (SRT timing)  
+**Blocks:** `12-qc-03` (QC report)
 
-**Blocks:**
-- [Tasks that depend on this one]
+## Status
+
+❌ **Not Implemented:** Sync validation not built
+
+## Required Features
+
+- Subtitle timing extraction
+- Audio waveform analysis
+- Sync drift detection (±50ms tolerance)
+- Per-subtitle validation
+- Sync quality scoring
+- Issue reporting
 
 ## Acceptance Criteria
 
-- [ ] [Add specific acceptance criteria]
+- [ ] Timing extraction working
+- [ ] Sync validation accurate
+- [ ] Drift detection functional
+- [ ] Quality metrics generated
+- [ ] Issue report with timestamps
+- [ ] Pass/fail criteria enforced
 - [ ] Documentation updated
-- [ ] Tests passing (if applicable)
-- [ ] Code reviewed and merged
-
-## Task Details
-
-### Implementation
-
-[TODO: Add implementation details, code examples, schemas]
-
-### Testing
-
-```bash
-# Add test commands
-```
-
-## Output Files
-
-- [List expected output files/artifacts]
-
-## Related Files
-
-- [List related source files or docs]
-
-## Notes
-
-- [Add any important notes or considerations]
 
 ## Next Steps
 
-After completion:
-- [List tasks that can proceed]
+- Implement timing analyzer
+- Create sync validator
+- Add drift detection
+- `12-qc-03-quality-report`
+
+**Output:** `data/Generator/qc/sync_reports/{gender}/{age}/{title_id}_sync_report.json`
