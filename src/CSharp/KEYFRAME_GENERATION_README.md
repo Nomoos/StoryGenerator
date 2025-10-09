@@ -252,7 +252,7 @@ You need to implement `IImageGenerationClient` to connect to SDXL. Options inclu
 ### Dependencies
 
 The keyframe generation service requires:
-- .NET 8.0 or later
+- .NET 9.0 or later
 - System.Text.Json for JSON serialization
 - An implementation of `IImageGenerationClient`
 

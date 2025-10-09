@@ -36,7 +36,7 @@ This document summarizes the comprehensive Test-Driven Development (TDD) infrast
 
 4. **.github/workflows/tests.yml** - CI/CD workflow
    - Python tests on 3.10, 3.11, 3.12
-   - C# tests on .NET 8.0
+   - C# tests on .NET 9.0
    - Code quality checks
    - Coverage reporting
 
@@ -225,7 +225,7 @@ Tests automatically run on:
 
 The workflow:
 1. Sets up Python 3.10, 3.11, 3.12
-2. Sets up .NET 8.0
+2. Sets up .NET 9.0
 3. Installs dependencies
 4. Runs linters and formatters
 5. Runs all tests with coverage

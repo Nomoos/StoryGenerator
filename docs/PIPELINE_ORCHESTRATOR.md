@@ -19,7 +19,7 @@ The C# Pipeline Orchestrator provides a complete end-to-end automation solution 
 
 ### Prerequisites
 
-- .NET 8.0 SDK or later
+- .NET 9.0 SDK or later
 - Python 3.8+ with StoryGenerator dependencies
 - OpenAI API key
 - ElevenLabs API key

@@ -56,7 +56,7 @@ dotnet run -- path/to/audio.mp3 women 18-23 my_story_001
 
 - `StoryGenerator.Research.WhisperClient` - For speech recognition and word timestamps
 - `faster-whisper` Python library - Must be installed (see requirements.txt)
-- `.NET 8.0` or higher
+- `.NET 9.0` or higher
 
 ## Directory Structure
 

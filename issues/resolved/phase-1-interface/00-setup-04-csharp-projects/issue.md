@@ -204,7 +204,7 @@ StoryGenerator.Tests
 
 ## Notes
 
-- **Requirements**: .NET 8.0 SDK or later
+- **Requirements**: .NET 9.0 SDK or later
 - **IDE Support**: Works with Visual Studio, VS Code (with C# extension), Rider
 - **Cross-Platform**: Builds on Windows, Linux, and macOS
 - **API Keys**: Required for OpenAI and ElevenLabs - set via config or environment variables:

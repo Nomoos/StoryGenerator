@@ -222,7 +222,7 @@ The `_draft` suffix on subtitles indicates they are estimated and should be refi
 
 ## Dependencies
 
-- .NET 8.0
+- .NET 9.0
 - System.Text.Json (built-in)
 - StoryGenerator.Models namespace
 

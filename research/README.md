@@ -386,7 +386,7 @@ Pillow
 - For GPU acceleration: CUDA-capable GPU with drivers
 - For Ollama: Ollama installed and running
 - Python 3.8+
-- .NET 8.0+ (for C#)
+- .NET 9.0+ (for C#)
 
 ## Installation
 
@@ -411,7 +411,7 @@ ollama pull llama2
 ```bash
 cd research/csharp
 
-# Ensure .NET 8.0 is installed
+# Ensure .NET 9.0 is installed
 dotnet --version
 
 # These are stubs - compile with your project

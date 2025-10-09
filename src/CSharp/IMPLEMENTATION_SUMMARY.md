@@ -195,7 +195,7 @@ Successfully established the foundation for the C# port of StoryGenerator with p
   - StoryGenerator.CLI (console app)
   - StoryGenerator.Tests (xUnit tests)
 
-All projects target .NET 8.0
+All projects target .NET 9.0
 All builds succeed
 ```
 

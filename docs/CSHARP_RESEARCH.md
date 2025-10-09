@@ -393,7 +393,7 @@ StoryGenerator.sln
 ## Technology Stack
 
 ### Core Technologies
-- **.NET 8.0**: Latest LTS version with best performance
+- **.NET 9.0**: Latest LTS version with best performance
 - **C# 12**: Modern language features
 - **ASP.NET Core**: Configuration, DI, hosting
 - **HttpClient**: HTTP API calls with retry policies
@@ -684,7 +684,7 @@ public async Task GenerateScript_WithValidStoryIdea_ReturnsScript()
 - [Python.NET Documentation](https://github.com/pythonnet/pythonnet)
 - [OpenAI .NET SDK](https://github.com/openai/openai-dotnet)
 - [ONNX Runtime](https://onnxruntime.ai/)
-- [.NET 8 Documentation](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8)
+- [.NET 9 Documentation](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8)
 
 ---
 

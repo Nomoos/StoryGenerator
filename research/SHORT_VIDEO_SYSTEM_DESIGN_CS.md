@@ -222,7 +222,7 @@ Příležitost = (Objem vyhledávání × Rychlost trendu) / (Konkurence × Kval
 ### 5.2 Automatizace workflow
 
 **Technologie:**
-- **Orchestrace:** C# (.NET 8)
+- **Orchestrace:** C# (.NET 9)
 - **ML Inference:** Python
 - **Databáze:** PostgreSQL
 - **Cache/Fronta:** Redis

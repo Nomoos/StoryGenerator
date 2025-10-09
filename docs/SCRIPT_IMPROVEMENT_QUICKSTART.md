@@ -273,4 +273,4 @@ For issues or questions:
 
 **Version**: 1.0  
 **Last Updated**: 2024  
-**Compatibility**: .NET 8.0+, Ollama 0.1.0+
+**Compatibility**: .NET 9.0+, Ollama 0.1.0+

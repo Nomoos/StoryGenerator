@@ -211,7 +211,7 @@ Added to `requirements.txt`
 
 ### System Requirements
 - Python 3.8+
-- .NET 8.0+ (for C# components)
+- .NET 9.0+ (for C# components)
 - FFmpeg (for audio processing)
 - CUDA toolkit (optional, for GPU acceleration)
 

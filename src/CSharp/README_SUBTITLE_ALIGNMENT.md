@@ -24,7 +24,7 @@ CSharp/
 
 ## Prerequisites
 
-- **.NET 8.0 SDK** or higher
+- **.NET 9.0 SDK** or higher
 - **Python 3.8+** with faster-whisper installed
 - **CUDA-capable GPU** (optional, but recommended for faster processing)
 

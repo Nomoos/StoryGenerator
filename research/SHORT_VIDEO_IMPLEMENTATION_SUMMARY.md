@@ -235,7 +235,7 @@ Implemented a comprehensive system design for generating and distributing short 
 ## 🏗️ Technical Architecture
 
 ### Technology Stack
-- **Orchestration:** C# (.NET 8)
+- **Orchestration:** C# (.NET 9)
 - **ML Inference:** Python (Ollama, Whisper, SDXL)
 - **Database:** PostgreSQL (production), SQLite (development)
 - **Cache/Queue:** Redis

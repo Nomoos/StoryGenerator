@@ -346,7 +346,7 @@ dotnet test --filter "Category=Integration"
 - [Main Documentation Index](./INDEX.md)
 
 ### External
-- [.NET 8.0 Docs](https://docs.microsoft.com/en-us/dotnet/)
+- [.NET 9.0 Docs](https://docs.microsoft.com/en-us/dotnet/)
 - [Async Programming](https://docs.microsoft.com/en-us/dotnet/csharp/async)
 - [xUnit Testing](https://xunit.net/)
 - [Moq Framework](https://github.com/moq/moq4)

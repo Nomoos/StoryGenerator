@@ -370,5 +370,5 @@ The foundation is solid, patterns are proven, and the implementation is ready fo
 ---
 
 *Implementation Date: 2025-01-06*
-*C# Version: .NET 8.0*
+*C# Version: .NET 9.0*
 *Test Framework: xUnit 2.5.3*

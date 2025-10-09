@@ -1,683 +1,265 @@
-
 # StoryGenerator - AI Video Content Pipeline
 
-An AI-driven video content pipeline that integrates ASR, LLM, vision, and generative models to create engaging short-form vertical videos for TikTok, YouTube Shorts, and Instagram Reels.
+> **An AI-driven video content pipeline that creates engaging short-form vertical videos for TikTok, YouTube Shorts, and Instagram Reels.**
 
-> **✅ HYBRID ARCHITECTURE**: This project uses a **hybrid C# + Python architecture** for optimal performance and capabilities.
-> 
-> - **C#** for orchestration, APIs, I/O, configuration, and business logic (primary implementation in `src/CSharp/`)
-> - **Python** for ML model inference via subprocess calls (Whisper ASR, SDXL image generation, LTX video synthesis)
-> - Active Python scripts: `research/python/whisper_subprocess.py`, `src/scripts/sdxl_generation.py`, `src/scripts/ltx_synthesis.py`
-> 
-> The obsolete Python implementation (full Python pipeline) has been removed after successful migration to C#. See `obsolete/MIGRATION_STATUS.md` for details.
+Transform story ideas into complete videos with AI-powered voiceovers, subtitles, and visual content. Built with a modern **hybrid C# + Python architecture** combining .NET 9.0's performance with Python's ML ecosystem.
 
-## 🔬 Architecture Research
+---
 
-**Complete research on C# vs Python vs Hybrid approach for each pipeline stage:**
-- **[Technology Stack Final](docs/TECHNOLOGY_STACK_FINAL.md)** - **Complete recommended stack (C# + Python + SQLite)**
-- **[Research Summary](docs/RESEARCH_SUMMARY.md)** - Start here for overview and navigation
-- **[C# vs Python Comparison](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Complete analysis with decision matrix
-- **[Hybrid Architecture Quick Reference](docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Quick guide for developers
-- **[Architecture Diagrams](docs/HYBRID_ARCHITECTURE_DIAGRAMS.md)** - Visual flowcharts and diagrams
-- **[Local Storage Strategy](docs/LOCAL_STORAGE_STRATEGY.md)** - SQLite + file system (simple, recommended)
-- **[Database Recommendations](docs/DATABASE_RECOMMENDATIONS.md)** - PostgreSQL + S3/Blob (enterprise)
-- **[C++ Integration Analysis](docs/CPP_INTEGRATION_ANALYSIS.md)** - Why C++ is not recommended
-- **[Repository Structure](docs/REPOSITORY_STRUCTURE.md)** - Recommended project organization
-- **[C# Implementation Research](docs/CSHARP_RESEARCH.md)** - Detailed research findings
+## 🚀 Quick Links
 
-**Key Finding**: Hybrid architecture recommended - C# for orchestration (7/11 stages), Python for ML inference (4/11 stages)
+<table>
+<tr>
+<td width="50%">
 
-## 🎯 Project Overview
+### 🏁 Getting Started
+- **[Quick Start Guide](docs/GETTING_STARTED.md)** - Get up and running in 15 minutes
+- **[Installation](docs/INSTALLATION.md)** - Detailed setup instructions
+- **[Hardware Requirements](docs/HARDWARE_REQUIREMENTS.md)** - Choose the right hardware
+- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Common issues and solutions
 
-This project automates the creation of emotional, dramatic vertical stories targeting viewers aged 10-30 in the US, Canada, and Australia. The pipeline transforms story ideas into complete videos with voiceovers, subtitles, and visual content.
+</td>
+<td width="50%">
 
-## 📚 Documentation
+### 📖 Core Documentation
+- **[Features](docs/FEATURES.md)** - Complete feature list
+- **[Pipeline Overview](docs/PIPELINE.md)** - How the pipeline works
+- **[Architecture](docs/ARCHITECTURE.md)** - System design
+- **[Examples](docs/EXAMPLES.md)** - Input/output examples
 
-- **[README.md](README.md)** (this file) - Overview and quick start
-- **[docs/IDEA_COLLECTOR.md](docs/IDEA_COLLECTOR.md)** - 🆕 Idea Collector system for gathering and transforming content sources
-- **[docs/MODELS.md](docs/MODELS.md)** - Comprehensive model documentation with Hugging Face references
-- **[docs/GPU_COMPARISON.md](docs/GPU_COMPARISON.md)** - 🆚 **NEW: GPU comparison guide for AI content generation**
-- **[docs/RTX5090_QUICKREF.md](docs/RTX5090_QUICKREF.md)** - 🚀 **NEW: RTX 5090 optimization guide and quick reference**
-- **[config/rtx5090.yaml](config/rtx5090.yaml)** - 🎛️ **NEW: RTX 5090 optimized configuration file**
-- **[docs/EXAMPLES.md](docs/EXAMPLES.md)** - Input/output examples for all pipeline stages
-- **[docs/PIPELINE.md](docs/PIPELINE.md)** - Detailed pipeline breakdown and technical specifications
-- **[docs/VIDEO_EXPORT.md](docs/VIDEO_EXPORT.md)** - Video export and metadata generation guide
-- **[docs/MICROSTEP_VALIDATION.md](docs/MICROSTEP_VALIDATION.md)** - Microstep validation and progress tracking system
-- **[docs/MICROSTEP_VALIDATION_QUICKSTART.md](docs/MICROSTEP_VALIDATION_QUICKSTART.md)** - Quick reference for validation system
-- **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Issue tracking and task templates
-- **[docs/INSTALLATION.md](docs/INSTALLATION.md)** - Detailed setup instructions
-- **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)** - Common issues and solutions
-- **[docs/TITLE_IMPROVEMENT.md](docs/TITLE_IMPROVEMENT.md)** - Title variant generation and improvement guide
-- **[docs/TITLE_SCORING.md](docs/TITLE_SCORING.md)** - Title scoring system documentation
-- **[docs/VIDEO_QUALITY_CONTROL.md](docs/VIDEO_QUALITY_CONTROL.md)** - Video quality checks and QC reports
+</td>
+</tr>
+<tr>
+<td>
 
-## 🏗️ Pipeline Architecture
+### 🔨 For Developers
+- **[C# Implementation Guide](src/CSharp/IMPLEMENTATION_GUIDE.md)** - Development guide
+- **[Pipeline Quick Start](docs/QUICK_START_GUIDE.md)** - Developer quick start
+- **[SOLID Principles](src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md)** - Code standards
+- **[Testing Guide](docs/TDD_GUIDE.md)** - Test-driven development
+- **[Contributing](CONTRIBUTING.md)** - How to contribute
 
-The complete pipeline consists of 10 major stages:
+</td>
+<td>
 
-### Currently Implemented
+### 🎨 For Content Creators
+- **[Idea Collector](docs/IDEA_COLLECTOR.md)** - Content source collection
+- **[Script Improvement](docs/SCRIPT_IMPROVEMENT_QUICKSTART.md)** - Enhance scripts
+- **[Title Optimization](docs/TITLE_IMPROVEMENT.md)** - Viral title generation
+- **[Video Export](docs/VIDEO_EXPORT.md)** - Export and metadata
+- **[Quality Control](docs/VIDEO_QUALITY_CONTROL.md)** - QC reports
 
-0. **✅ Idea Collection** (C# Implementation - `src/CSharp/StoryGenerator.Core/`)
-   - 🆕 Framework for collecting story ideas from multiple sources (Reddit, Instagram, TikTok)
-   - Transforms source material into original ideas (never copies content directly)
-   - Centralized registry with viral potential scoring across demographics
-   - Source validation to ensure copyright compliance
-   - **[Idea Collector Documentation](docs/IDEA_COLLECTOR.md)**
+</td>
+</tr>
+<tr>
+<td>
 
-1. **✅ Story Idea Generation** (`Generators/GStoryIdeas.py`)
-   - Generates story concepts with metadata
-   - Tracks potential across platforms, regions, age groups, and gender
-   
-2. **✅ Script Generation** (`Generators/GScript.py`)
-   - Uses GPT-4o-mini to generate ~360-word scripts
-   - Optimized for spoken content with emotional hooks
-   - Natural, conversational language
+### 🔬 Research & Architecture
+- **[Technology Stack](docs/TECHNOLOGY_STACK_FINAL.md)** - C# + Python + SQLite
+- **[Hybrid Architecture](docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Architecture guide
+- **[GPU Comparison](docs/GPU_COMPARISON.md)** - Hardware benchmarks
+- **[Models Documentation](docs/MODELS.md)** - ML model references
+- **[C# vs Python](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Technology comparison
 
-3. **✅ Script Improvement** (C# Implementation - `src/CSharp/Tools/`)
-   - Iteratively improves scripts using GPT or local LLM (qwen2.5_14b)
-   - Scores scripts on 8 rubric criteria (Hook, Plot, Dialogue, etc.)
-   - Generates improved versions (v2, v3, v4) until quality plateaus
-   - Saves to `data/gpt_improved/{segment}/{age}/{title_id}_v*.md`
-   - **[Quick Start Guide](docs/SCRIPT_IMPROVEMENT_QUICKSTART.md)**
+</td>
+<td>
 
-3.5. **✅ Title Improvement** (`scripts/title_improve.py`)
-   - Generates 5 improved title variants using GPT or local LLM
-   - Scores each variant using viral potential rubric
-   - Automatically selects best-performing title
-   - Saves to `data/titles/{segment}/{age}/{title_id}_improved.json`
-   - Maintains centralized title registry with slugs and change tracking
-   - **[Title Improvement Guide](docs/TITLE_IMPROVEMENT.md)**
+### 🔐 Security & Maintenance
+- **[Security Checklist](SECURITY_CHECKLIST.md)** - Security procedures
+- **[Repository Cleanup](REPOSITORY_CLEANUP_GUIDE.md)** - Maintenance guide
+- **[Issue Tracking](docs/ISSUE_TRACKING.md)** - Task management
+- **[Migration Guide](src/CSharp/MIGRATION_GUIDE.md)** - Python to C#
+- **[Roadmap](docs/IMPLEMENTATION_ROADMAP.md)** - Development timeline
 
-4. **✅ Script Revision** (`Generators/GRevise.py`)
-   - Polishes scripts for AI voice clarity
-   - Removes awkward phrasing
-   - Optimizes for ElevenLabs voice synthesis
+</td>
+</tr>
+</table>
 
-5. **✅ Voice Generation** (`Generators/GVoice.py`)
-   - ElevenLabs API integration (eleven_v3 model)
-   - LUFS normalization for consistent audio levels
-   - Silence trimming and padding
+---
 
-6. **✅ ASR & Subtitles** (`Generators/GTitles.py`)
-   - WhisperX for word-level alignment
-   - Generates word-by-word SRT files
-   - Aligns script to actual audio timing
+## 🎯 What is StoryGenerator?
 
-7. **✅ Video Export & Metadata** (`Generators/GVideoCompositor.py`)
-   - Exports final videos to organized production directory
-   - Automatic thumbnail generation (1080×1920)
-   - Metadata JSON with title, description, tags, and targeting info
-   - Path structure: `/data/final/{segment}/{age}/{title_id}.{mp4|jpg|json}`
-   - **[Export Guide](docs/VIDEO_EXPORT.md)**
+StoryGenerator automates the creation of emotional, dramatic vertical stories targeting viewers aged 10-30 in the US, Canada, and Australia. The pipeline transforms story ideas into complete videos with voiceovers, subtitles, and visual content.
 
-### Planned Implementation
+**Key Features:**
+- 🎯 AI-powered story idea generation with viral potential scoring
+- ✍️ GPT-4 script generation optimized for short-form video
+- 🎙️ Professional voice synthesis using ElevenLabs
+- 📝 Word-level subtitle alignment with WhisperX
+- 🎬 Complete video export with metadata and thumbnails
+- 📊 Automated quality control and reporting
 
-6. **🔄 Vision Guidance** (Planned)
-   - LLaVA-OneVision or Phi-3.5-vision integration
-   - Scene understanding and composition guidance
-   - Visual consistency validation
+➡️ **[See full feature list](docs/FEATURES.md)**
 
-7. **🔄 Keyframe Generation** (Planned)
-   - SDXL for high-quality image generation
-   - Scene-specific prompts from script analysis
-   - Visual storytelling alignment
+---
 
-8. **🔄 Video Synthesis** (Planned)
-   - LTX-Video or Stable Video Diffusion
-   - Smooth transitions between keyframes
-   - Synchronized with audio
+## 🏗️ Architecture Overview
 
-9. **🔄 Post-Production** (Planned)
-   - Subtitle overlay with dynamic styling
-   - Audio-visual synchronization
-   - Final rendering and format optimization
+StoryGenerator uses a **hybrid C# + Python architecture**:
 
-10. **🔄 One-Click Integration** (Planned)
-    - Automated end-to-end pipeline
-    - Error handling and recovery
-    - Progress tracking and logging
+- **C# (.NET 9.0)**: Orchestration, APIs, I/O, configuration, and business logic
+- **Python**: ML model inference via subprocess calls (Whisper ASR, SDXL, LTX-Video)
 
-## 📦 Installation
+**Why Hybrid?** 
+- C# provides performance, type safety, and excellent tooling
+- Python gives access to the rich ML ecosystem
+- Best of both worlds for production-grade content generation
+
+➡️ **[Learn more about the architecture](docs/ARCHITECTURE.md)**
+
+---
+
+## ⚡ Quick Start
 
 ### Prerequisites
+- **.NET 9.0 SDK** - [Download](https://dotnet.microsoft.com/download/dotnet/9.0)
+- **Git** - For cloning the repository
+- **API Keys** (optional): [OpenAI](https://platform.openai.com/api-keys), [ElevenLabs](https://elevenlabs.io/app/settings/api-keys)
 
-- Python 3.8+
-- CUDA-capable GPU (recommended for ASR and image generation)
-- FFmpeg
-
-### Setup
+### Get Started in 5 Minutes
 
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone https://github.com/Nomoos/StoryGenerator.git
 cd StoryGenerator
 
-# Install dependencies
-pip install -r requirements.txt
-
-# Set up API keys in respective generator files
-# - OpenAI API key in Generators/GScript.py and Generators/GRevise.py
-# - ElevenLabs API key in Generators/GVoice.py
-```
-
-### Additional Dependencies for Full Pipeline
-
-For the complete pipeline implementation, additional packages will be needed:
-
-```bash
-# For vision models
-pip install transformers accelerate
-
-# For SDXL
-pip install diffusers torch torchvision
-
-# For video synthesis
-pip install imageio imageio-ffmpeg
-
-# For WhisperX (if not already installed)
-pip install whisperx
-```
-
-## 🖥️ Hardware Requirements
-
-### Minimum Requirements (Cloud/API-based workflow)
-- **CPU**: Any modern processor (4+ cores recommended)
-- **RAM**: 8GB
-- **GPU**: Not required (uses cloud APIs)
-- **Storage**: 50GB for codebase and generated content
-
-### Recommended for Local AI Models
-
-#### RTX 3060 Ti / RTX 3070 (8GB VRAM)
-- **Text Generation**: Llama-3.1-8B (quantized)
-- **Image Generation**: SDXL Base only (no refiner)
-- **Video Generation**: Not recommended
-- **Workflow**: Sequential only, limited batch sizes
-
-#### RTX 3090 / RTX 4070 Ti (24GB VRAM)
-- **Text Generation**: Qwen2.5-14B or Llama-3.1-8B
-- **Image Generation**: SDXL Base + Refiner
-- **Video Generation**: LTX-Video (5-second clips)
-- **Workflow**: Sequential processing, some parallel capability
-
-#### RTX 4090 (24GB VRAM)
-- **Text Generation**: Qwen2.5-14B (full float16)
-- **Image Generation**: SDXL Base + Refiner + LoRAs
-- **Video Generation**: LTX-Video (5-second clips) or SVD (2-second clips)
-- **Workflow**: Limited parallel processing
-- **Performance**: Good for 1-2 videos per hour
-
-#### 🚀 RTX 5090 (32GB VRAM) - **OPTIMAL**
-- **Text Generation**: Qwen2.5-14B with good headroom
-- **Image Generation**: SDXL Base + Refiner or batch generation (2 images)
-- **Video Generation**: LTX-Video (8-second clips) or SVD (short clips)
-- **Workflow**: Some parallel processing capability
-- **Performance**: 1.7-2x faster than RTX 4090, pipeline in ~3.5 hours for 30 videos
-- **Multi-tasking**: Run text + image generation with careful memory management
-- **Quality**: Extended video lengths, higher resolutions compared to 24GB cards
-
-**💡 For detailed RTX 5090 optimization, see:**
-- **[RTX 5090 Quick Reference Guide](docs/RTX5090_QUICKREF.md)** - Quick setup and workflows
-- **[RTX 5090 Optimization Section in MODELS.md](docs/MODELS.md#rtx-5090-optimization-guide)** - Comprehensive guide
-- **[RTX 5090 Configuration File](config/rtx5090.yaml)** - Optimized settings
-
-### Multi-GPU Setups
-
-#### 2x RTX 5090 (64GB total)
-- **Performance**: 60-70% faster pipeline
-- **Setup**: GPU 0 for text/vision, GPU 1 for image/video
-- **Use Case**: High-volume content production
-
-#### 3x RTX 5090 (96GB total)
-- **Performance**: 80-85% faster pipeline
-- **Setup**: Dedicated GPU per stage (text, image, video)
-- **Use Case**: Enterprise-level content production
-- **Bonus**: Can run larger models with multi-GPU configurations
-pip install whisperx
-```
-
-## 🚀 Usage
-
-### Quick Start Example
-
-```python
-from Models.StoryIdea import StoryIdea
-from Generators.GScript import ScriptGenerator
-from Generators.GRevise import RevisedScriptGenerator
-from Generators.GVoice import VoiceMaker
-from Generators.GTitles import TitleGenerator
-
-# 1. Create a story idea
-idea = StoryIdea(
-    story_title="The Unexpected Friend",
-    narrator_gender="female",
-    tone="emotional, heartwarming",
-    theme="friendship, acceptance"
-)
-idea.to_file()
-
-# 2. Generate script
-script_gen = ScriptGenerator(model="gpt-4o-mini")
-script_gen.generate_from_storyidea(idea)
-
-# 3. Revise script for voice clarity
-revise_gen = RevisedScriptGenerator(model="gpt-4o-mini")
-revise_gen.Revise(idea)
-
-# 4. Generate voiceover
-voice_maker = VoiceMaker()
-voice_maker.generate_audio()
-
-# 5. Generate word-level subtitles
-title_gen = TitleGenerator(model_size="large-v2")
-title_gen.generate_titles()
-```
-
-### Example Scripts
-
-The `examples/` directory contains ready-to-run demonstration scripts:
-
-- **[basic_pipeline.py](examples/basic_pipeline.py)** - Complete walkthrough of the current pipeline
-- **[batch_processing.py](examples/batch_processing.py)** - Process multiple stories in batch
-- **[custom_story_ideas.py](examples/custom_story_ideas.py)** - Create custom story variations
-
-Run an example:
-```bash
-python examples/basic_pipeline.py
-```
-
-### Input/Output Examples
-
-For detailed examples of inputs and outputs at each pipeline stage, including:
-- Story idea JSON format
-- Script generation examples
-- Voice generation specifications
-- Subtitle SRT format
-- Planned: Shotlist JSON, keyframe images, final videos
-
-📖 **See [docs/EXAMPLES.md](docs/EXAMPLES.md) for comprehensive input/output examples**
-
-## 📁 Project Structure
-
-The project follows a clean, organized structure:
-
-```
-StoryGenerator/
-├── src/                    # Source code
-│   ├── Python/            # Python implementation
-│   │   ├── Generators/   # Core pipeline generators
-│   │   │   ├── GStoryIdeas.py  # Story idea generation
-│   │   │   ├── GScript.py      # Initial script generation
-│   │   │   ├── GRevise.py      # Script revision
-│   │   │   ├── GVoice.py       # Voice synthesis
-│   │   │   └── GTitles.py      # Subtitle generation
-│   │   ├── Models/       # Data models
-│   │   │   └── StoryIdea.py    # Story metadata model
-│   │   └── Tools/        # Utility functions
-│   │       └── Utils.py  # Path management, file utilities
-│   ├── CSharp/            # C# implementation
-│   │   ├── Generators/   # Video effects, compositing
-│   │   ├── Tools/        # Script improvement, FFmpeg
-│   │   └── Models/       # C# data models
-│   ├── Generator/         # Legacy generator code
-│   └── research/          # Research prototypes and experiments
-├── tests/                 # Test files
-├── scripts/               # Utility scripts and automation
-├── docs/                  # Documentation
-├── examples/              # Example scripts and demos
-├── data/                  # Generated content and data files
-│   ├── Stories/          # Story outputs (0_Ideas, 1_Scripts, etc.)
-│   ├── config/           # Configuration files
-│   ├── prompts/          # LLM prompts
-│   └── ...               # Other data directories
-├── assets/                # Media assets
-│   ├── audio/            # Audio files
-│   ├── images/           # Image assets
-│   ├── videos/           # Video files
-│   └── scenes/           # Scene data
-├── README.md              # This file
-├── QUICKSTART.md          # Quick start guide
-└── requirements.txt       # Python dependencies
-├── Generation/          # Manual generation scripts
-│   └── Manual/         # Individual component tests
-└── Stories/            # Output directory (gitignored)
-    ├── 0_Ideas/        # Story ideas JSON
-    ├── 1_Scripts/      # Generated scripts
-    ├── 2_Revised/      # Revised scripts
-    ├── 3_VoiceOver/    # Generated audio
-    └── 4_Titles/       # Subtitles and final assets
-```
-
-## 🔗 Model References
-
-### Currently Used
-
-- **OpenAI GPT-4o-mini**: Script generation and revision
-  - [OpenAI Platform Docs](https://platform.openai.com/docs/models/gpt-4o-mini)
-  - Cost: $0.150 / 1M input tokens, $0.600 / 1M output tokens
-
-- **ElevenLabs eleven_v3**: Voice synthesis
-  - [ElevenLabs API Docs](https://elevenlabs.io/docs/api-reference/text-to-speech)
-  - High-quality, natural-sounding voices
-
-- **WhisperX large-v2**: ASR and word-level alignment
-  - [openai/whisper-large-v2](https://huggingface.co/openai/whisper-large-v2)
-  - [WhisperX GitHub](https://github.com/m-bain/whisperX)
-
-### Planned Integration
-
-- **faster-whisper large-v3**: [Systran/faster-whisper-large-v3](https://huggingface.co/Systran/faster-whisper-large-v3)
-  - 4x faster inference, lower memory footprint
-  
-- **Qwen2.5-14B-Instruct**: [Qwen/Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct)
-  - Local LLM alternative for script generation
-  
-- **Llama-3.1-8B-Instruct**: [meta-llama/Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
-  - Lower VRAM alternative (16GB vs 28GB)
-  
-- **LLaVA-OneVision**: [Hugging Face Docs](https://huggingface.co/docs/transformers/en/model_doc/llava_onevision)
-  - Vision-language model for scene validation
-  
-- **Phi-3.5-vision**: [microsoft/Phi-3.5-vision-instruct](https://huggingface.co/microsoft/Phi-3.5-vision-instruct)
-  - Lightweight vision model (4B params, 8GB VRAM)
-  
-- **Stable Diffusion XL (SDXL)**: [Hugging Face Diffusers Docs](https://huggingface.co/docs/diffusers/en/using-diffusers/sdxl)
-  - High-quality keyframe generation (1024x1024)
-  
-- **LTX-Video**: [Lightricks/LTX-Video](https://huggingface.co/Lightricks/LTX-Video)
-  - Video generation from keyframes
-  
-- **Stable Video Diffusion**: [Stability AI](https://stability.ai/stable-video)
-  - Image-to-video conversion with smooth motion
-
-📖 **For detailed model documentation, specifications, and usage examples, see [docs/MODELS.md](docs/MODELS.md)**
-
-## 🎯 Target Audience
-
-- **Age**: 10-30 years old
-- **Regions**: US, Canada, Australia
-- **Platforms**: TikTok, YouTube Shorts, Instagram Reels
-- **Content**: Emotional drama, awkward moments, rebellion, identity, connection
-
-## 📋 Issue Tracking
-
-This project uses a structured issue tracking system to manage the implementation of all pipeline components.
-
-### Documentation
-
-- **[ISSUE_TRACKING.md](ISSUE_TRACKING.md)** - Issue tracking system overview and workflow
-- **[docs/CHILD_ISSUES.md](docs/CHILD_ISSUES.md)** - Complete issue templates for all 10 pipeline stages
-- **[PIPELINE.md](PIPELINE.md)** - Technical breakdown with implementation status
-- **[.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/)** - GitHub issue templates (use when creating issues)
-
-### 10 Major Pipeline Stages
-
-1. ✅ **Environment & Model Setup** - Configuration and model management
-2. ✅ **ASR Enhancement** - Speech recognition with WhisperX (upgrade to faster-whisper planned)
-3. 🔄 **Shotlist Generation** - LLM-based scene planning (planned)
-4. 🔄 **Vision Guidance** - Optional scene validation with vision models (planned)
-5. 🔄 **SDXL Keyframe Generation** - High-quality image generation (planned)
-6. 🔄 **Video Synthesis** - LTX-Video or SVD integration (planned)
-7. 🔄 **Post-Production** - Subtitle overlay and final rendering (planned)
-8. 🔄 **Pipeline Integration** - One-click end-to-end automation (planned)
-9. 🔄 **C# Implementation** - Research and migration (planned)
-10. 🔄 **Documentation** - Comprehensive guides and examples (in progress)
-
-### Current Implementation Status
-
-**✅ Completed (Stages 1-5 of current pipeline)**:
-- Story idea generation with viral potential scoring
-- GPT-4o-mini script generation (~360 words, emotional hooks)
-- Script revision optimized for AI voice synthesis
-- ElevenLabs voice generation with LUFS normalization
-- WhisperX word-level subtitle generation and alignment
-
-**🔄 In Progress**:
-- Documentation enhancement
-- Model references and citations
-- Input/output examples
-
-**📋 Planned**:
-- Shotlist generation using local LLMs
-- SDXL keyframe generation
-- Video synthesis with LTX-Video/SVD
-- Complete automation pipeline
-
-### Creating Issues
-
-**To create a new child issue**:
-1. Go to the [Issues tab](https://github.com/Nomoos/StoryGenerator/issues)
-2. Click "New Issue"
-3. Select the appropriate stage template (Stage 1-10)
-4. Fill in any additional context
-5. Submit the issue
-
-Each template includes:
-- Clear description and scope
-- Requirements (Must/Should/Nice to have)
-- Detailed subtasks
-- Success criteria
-- Dependencies and references
-
-For detailed information on the issue tracking workflow, see [ISSUE_TRACKING.md](ISSUE_TRACKING.md).
-
-## 🔐 Security Notes
-
-⚠️ **Important**: API keys are currently hardcoded in generator files. For production:
-- Use environment variables
-- Implement proper secrets management
-- Rotate keys regularly
-
----
-
-# StoryGenerator
-
-AI-powered story generation pipeline for creating engaging short-form video content for TikTok, YouTube Shorts, and Instagram Reels.
-
-## 🏗️ Repository Structure
-
-This repository contains **two implementations** of the StoryGenerator:
-
-### 📌 **C# Implementation** (Primary/Active)
-Located in `src/CSharp/` - Modern, type-safe implementation with better performance and cross-platform support. **This is the actively developed version.**
-
-### 📌 **Python Implementation** (⚠️ OBSOLETE - Historic Reference Only)
-Located in `src/Python/` - Original implementation preserved for reference purposes. **DO NOT USE FOR NEW DEVELOPMENT.** This code is no longer maintained and exists only as a historic reference for understanding the project's evolution.
-
----
-
-## 🚀 Quick Start
-
-### C# Version (Recommended - Active Development)
-```bash
+# 2. Navigate to C# implementation
 cd src/CSharp
-# See src/CSharp/README.md for setup instructions
+
+# 3. Build the solution
+dotnet restore
+dotnet build StoryGenerator.sln
+
+# 4. Run tests (optional)
+dotnet test
+
+# 5. Set up environment (optional for API usage)
+cp .env.example .env
+# Edit .env and add your API keys
 ```
 
-### Python Version (⚠️ OBSOLETE - Do Not Use)
-The Python implementation is preserved for historic reference only and should not be used for new development.
-
-For detailed setup instructions for C#, see:
-- **C#**: [src/CSharp/MIGRATION_GUIDE.md](src/CSharp/MIGRATION_GUIDE.md)
-- **Python (Reference Only)**: [src/Python/README.md](src/Python/README.md)
+➡️ **[Complete setup guide](docs/GETTING_STARTED.md)** | **[Troubleshooting](docs/TROUBLESHOOTING.md)**
 
 ---
 
-## ⚠️ IMPORTANT: Security Notice
+## 🏗️ Pipeline Stages
 
-**CRITICAL**: This repository previously had API keys hardcoded in source files. Before using:
+The complete pipeline consists of several major stages:
 
-1. **All exposed API keys should be considered compromised**
-2. Generate new API keys:
-   - [OpenAI API Keys](https://platform.openai.com/api-keys)
-   - [ElevenLabs API Keys](https://elevenlabs.io/app/settings/api-keys)
-3. Set up `.env` file from `.env.example`
-4. **Never commit API keys to version control**
+| Stage | Status | Description |
+|-------|--------|-------------|
+| **Idea Collection** | ✅ Complete | Gather story ideas from multiple sources |
+| **Script Generation** | ✅ Complete | Generate ~360-word scripts with GPT-4 |
+| **Script Improvement** | ✅ Complete | Iterative refinement with quality scoring |
+| **Title Optimization** | ✅ Complete | Generate and score title variations |
+| **Voice Generation** | ✅ Complete | Professional AI voice with ElevenLabs |
+| **Subtitle Generation** | ✅ Complete | Word-level alignment with WhisperX |
+| **Video Export** | ✅ Complete | Export with metadata and thumbnails |
+| **Keyframe Generation** | 🔄 Planned | SDXL-based image generation |
+| **Video Synthesis** | 🔄 Planned | LTX-Video or Stable Video Diffusion |
+| **Post-Production** | 🔄 Planned | Subtitle overlay and final rendering |
 
-See [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md) for detailed security procedures.
-
----
-
-## 📚 Documentation
-
-### Getting Started
-- [QUICKSTART.md](QUICKSTART.md) - 15-minute setup guide (Python)
-- [INDEX.md](INDEX.md) - Documentation navigation hub
-
-### Technical Documentation
-- [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture and design
-- [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMENTS.md) - Analysis and roadmap
-
-### Security
-- [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md) - Security procedures and checklist
-
-### Maintenance & Cleanup
-- [REPOSITORY_CLEANUP_GUIDE.md](REPOSITORY_CLEANUP_GUIDE.md) - Guide for finding and removing unused files
-- [CLEANUP.md](CLEANUP.md) - Repository cleanup and reorganization checklist
-- [scripts/README.md](scripts/README.md) - Utility scripts documentation
-
-### Reference
-- [SUMMARY.md](SUMMARY.md) - Implementation summary
+➡️ **[Detailed pipeline documentation](docs/PIPELINE.md)** | **[Implementation roadmap](docs/IMPLEMENTATION_ROADMAP.md)**
 
 ---
 
-## 🎯 Features
-
-- 🎯 **AI-Powered Story Generation**: Generate viral story ideas using GPT-4
-- ✍️ **Script Writing**: Create emotionally engaging scripts optimized for short-form video
-- 🎙️ **Voice Enhancement**: Add performance tags for realistic AI voices
-- 🔊 **Voice Generation**: Generate high-quality voiceovers using ElevenLabs
-- 📊 **Viral Potential Scoring**: Estimate engagement potential across platforms
-- ✅ **Video Quality Control**: Automated quality checks on final videos with comprehensive QC reports
-
----
-
-## 📁 Directory Structure
+## 📂 Project Structure
 
 ```
 StoryGenerator/
-│
-├── 📁 CSharp/                  # C# Implementation (Primary)
-│   ├── Generators/             # Coming soon
-│   ├── Models/                 # Coming soon
-│   └── README.md               # C# setup guide (coming soon)
-│
-├── 📁 Python/                  # Python Implementation
-│   ├── Generators/             # Core generation modules
-│   │   ├── GStoryIdeas.py     # Story idea generation
-│   │   ├── GScript.py         # Script generation
-│   │   ├── GRevise.py         # Script revision
-│   │   ├── GEnhanceScript.py  # Voice tag enhancement
-│   │   ├── GVoice.py          # Voice generation
-│   │   └── GTitles.py         # Title generation
-│   ├── Models/                 # Data models
-│   │   └── StoryIdea.py       # Story idea model
-│   ├── Tools/                  # Utilities
-│   │   └── Utils.py           # Helper functions
-│   ├── Generation/             # Manual execution scripts
-│   │   └── Manual/            # Entry points
-│   ├── requirements.txt        # Python dependencies
-│   ├── requirements-dev.txt    # Dev dependencies
-│   ├── pyproject.toml         # Python project config
-│   └── README.md              # Python-specific documentation
-│
-├── 📁 Stories/                 # Generated content (gitignored)
-│   ├── 0_Ideas/               # Story ideas
-│   ├── 1_Scripts/             # Initial scripts
-│   ├── 2_Revised/             # Revised scripts
-│   └── 3_VoiceOver/           # Audio files
-│
-├── 📄 Documentation
-│   ├── README.md              # This file
-│   ├── QUICKSTART.md          # Quick setup guide
-│   ├── ARCHITECTURE.md        # Technical architecture
-│   ├── RESEARCH_AND_IMPROVEMENTS.md
-│   ├── SECURITY_CHECKLIST.md
-│   ├── SUMMARY.md
-│   └── INDEX.md               # Documentation index
-│
-└── 📄 Configuration
-    ├── .env.example           # Environment template
-    └── .gitignore             # Git exclusions
+├── src/CSharp/                    # C# implementation (PRIMARY)
+│   ├── StoryGenerator.Core/       # Core models and utilities
+│   ├── StoryGenerator.Providers/  # API client implementations
+│   ├── StoryGenerator.Generators/ # Content generators
+│   ├── StoryGenerator.Pipeline/   # Pipeline orchestration
+│   ├── StoryGenerator.CLI/        # Command-line interface
+│   └── StoryGenerator.Tests/      # Unit tests
+├── docs/                          # Documentation
+├── data/                          # Generated content storage
+└── research/                      # Research prototypes
 ```
 
----
-
-## 🔧 Which Version Should I Use?
-
-| Feature | C# | Python |
-|---------|-----|--------|
-| **Status** | ✅ Active Development | ⚠️ **OBSOLETE** |
-| **Performance** | ⚡ Faster | 🐌 Slower |
-| **Type Safety** | ✅ Strong typing | ⚠️ Dynamic |
-| **Async Support** | ✅ Native | ⚠️ Added complexity |
-| **Deployment** | 📦 Single binary | 🐍 Requires interpreter |
-| **IDE Support** | ✅ Excellent | ✅ Good |
-| **Maintenance** | ✅ Active | ❌ **No longer maintained** |
-
-**Recommendation**: 
-- **For Production**: Use C# implementation (currently in development)
-- **For Development/Testing**: Use C# implementation
-- **Python**: Historic reference only - DO NOT use for new development
+➡️ **[Complete structure documentation](docs/REPOSITORY_STRUCTURE.md)**
 
 ---
 
-## 💻 Development
+## 🤖 AI Models & Technology Stack
 
-### Contributing
+**Core Technologies:**
+- **C# .NET 9.0** - Primary orchestration and business logic
+- **OpenAI GPT-4** - Script generation and improvement
+- **ElevenLabs** - Professional voice synthesis
+- **WhisperX** - Speech recognition and subtitle alignment
+- **SDXL** - Image generation (planned)
+- **LTX-Video** - Video synthesis (planned)
 
-Contributions are welcome for the C# implementation!
-
-**For C# development**:
-- See [src/CSharp/README.md](src/CSharp/README.md) for setup instructions
-- Follow [src/CSharp/MIGRATION_GUIDE.md](src/CSharp/MIGRATION_GUIDE.md) for architecture patterns
-
-**Python implementation**:
-- ⚠️ The Python code is OBSOLETE and no longer accepting contributions
-- Python code remains only as historic reference
+➡️ **[Complete model documentation](docs/MODELS.md)** | **[Technology stack details](docs/TECHNOLOGY_STACK_FINAL.md)**
 
 ---
 
-## 🔄 Migration from Python to C#
+## 🎯 Target Audience & Content
 
-**The Python implementation is now OBSOLETE.** All development has moved to C#.
+- **Age Range**: 10-30 years old
+- **Regions**: United States, Canada, Australia
+- **Platforms**: TikTok, YouTube Shorts, Instagram Reels
+- **Content Style**: Emotional drama, identity, connection, viral-optimized
 
-For complete migration guidance and current C# implementation status, see:
-- [src/CSharp/MIGRATION_GUIDE.md](src/CSharp/MIGRATION_GUIDE.md)
-- [src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md](src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md)
-
-Current C# Implementation Status:
-- ✅ Phase 1: Core Infrastructure (100% Complete)
-- ✅ Phase 2: API Providers (100% Complete)  
-- 🔄 Phase 3: Generators (In Progress)
-- 📋 Phase 4: Pipeline Orchestration (Planned)
+➡️ **[Content strategy guide](docs/CONTENT_RANKING.md)**
 
 ---
 
-## 📈 Roadmap
+## 💻 Development & Contributing
 
-### C# Implementation (Active Development)
-- [x] Core infrastructure and models
-- [x] API provider integrations (OpenAI, ElevenLabs)
-- [ ] Complete remaining generators
-- [ ] Add comprehensive unit tests
-- [ ] Create CLI interface
-- [ ] Build NuGet packages
-- [ ] Add web API
+We welcome contributions! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
 
-### Python Implementation (⚠️ OBSOLETE - No longer maintained)
-- The Python implementation is preserved for historic reference only
-- No further development or maintenance planned
+**Getting Started:**
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Follow the [C# Implementation Guide](src/CSharp/IMPLEMENTATION_GUIDE.md)
+4. Write tests for your changes
+5. Submit a pull request
 
-For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMENTS.md).
+➡️ **[Contributing guidelines](CONTRIBUTING.md)** | **[Code standards](src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md)** | **[Testing guide](docs/TDD_GUIDE.md)**
 
 ---
 
-## 📞 Support
+## 📋 Project Status & Roadmap
 
-- **Documentation**: Check [INDEX.md](INDEX.md) for all documentation
-- **Issues**: Open a GitHub issue
-- **Security**: See [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md)
+**Current Status:**
+- ✅ Core pipeline (Idea → Script → Voice → Subtitles → Export)
+- ✅ C# implementation with .NET 9.0
+- 🔄 Visual content generation (in progress)
+- 📋 Full automation and orchestration (planned)
+
+**Roadmap:**
+- Q1 2025: Complete visual pipeline (SDXL + LTX-Video)
+- Q2 2025: Web UI and API server
+- Q3 2025: Cloud deployment automation
+- Q4 2025: Advanced analytics and optimization
+
+➡️ **[Detailed roadmap](docs/IMPLEMENTATION_ROADMAP.md)** | **[Issue tracking](docs/ISSUE_TRACKING.md)**
+
+---
+
+## 🔐 Security
+
+⚠️ **Important Security Notice:**
+
+- **Never commit API keys** to version control
+- Use `.env` files for sensitive configuration
+- Rotate API keys regularly
+- Follow security best practices
+
+➡️ **[Security checklist](SECURITY_CHECKLIST.md)** | **[Security procedures](docs/SECURITY_CHECKLIST.md)**
+
+---
+
+## 📞 Support & Community
+
+- 📖 **Documentation**: [INDEX.md](docs/INDEX.md) - Complete documentation index
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Nomoos/StoryGenerator/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/Nomoos/StoryGenerator/discussions)
+- 🆘 **Troubleshooting**: [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 
 ---
 
@@ -685,24 +267,22 @@ For detailed roadmap, see [RESEARCH_AND_IMPROVEMENTS.md](RESEARCH_AND_IMPROVEMEN
 
 [Add your license here]
 
-## 🤝 Contributing
-
-[Add contribution guidelines here]
-
-## 📧 Contact
-
-[Add contact information here]
-
 ---
 
 ## 🙏 Acknowledgments
 
-- OpenAI for GPT models
-- ElevenLabs for voice generation
-- Community contributors
+- **OpenAI** - GPT models for script generation
+- **ElevenLabs** - Professional voice synthesis
+- **Stability AI** - Image and video generation models
+- **Microsoft** - .NET platform
+- **Community Contributors** - Thank you for your contributions!
 
 ---
 
-**Note**: This repository has been reorganized with the Python implementation marked as OBSOLETE. The C# implementation in `src/CSharp/` is now the primary and only actively maintained version. Python code remains available for historic reference only.
+<div align="center">
 
-**Remember**: Always keep your API keys secure and never commit them to version control!
+**Built with ❤️ using C# .NET 9.0 and Python**
+
+[Getting Started](docs/GETTING_STARTED.md) • [Documentation](docs/INDEX.md) • [GitHub](https://github.com/Nomoos/StoryGenerator)
+
+</div>
