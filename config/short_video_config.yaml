@@ -1,0 +1,448 @@
+# Short Video Generation System Configuration
+# Configuration file for automated short video generation and distribution
+
+system:
+  name: "Short Video Generation System"
+  version: "1.0.0"
+  environment: "development"  # development, staging, production
+
+# ============================================================================
+# REGION CONFIGURATION
+# ============================================================================
+regions:
+  # Tier 1: Highest CPM regions (Priority: P0)
+  tier1:
+    - code: US
+      locale: en-US
+      language: English (US)
+      cpm_estimate: 12.5
+      priority: 1
+      platforms: [youtube, tiktok, instagram]
+      voice_provider: elevenlabs
+      voice_id: adam
+      cultural_notes:
+        - Use pop culture references (Marvel, Netflix shows)
+        - Sports analogies (NFL, NBA, MLB)
+        - Colloquialisms: 'game-changer', 'no-brainer', 'dope'
+    
+    - code: UK
+      locale: en-GB
+      language: English (UK)
+      cpm_estimate: 11.0
+      priority: 1
+      platforms: [youtube, tiktok, instagram]
+      voice_provider: elevenlabs
+      voice_id: george
+      cultural_notes:
+        - British humor and understatement
+        - Football (soccer) references
+        - Received Pronunciation preferred
+    
+    - code: CA
+      locale: en-CA
+      language: English (Canada)
+      cpm_estimate: 10.5
+      priority: 1
+      platforms: [youtube, tiktok, instagram]
+      voice_provider: elevenlabs
+      voice_id: adam  # US voice acceptable
+      cultural_notes:
+        - Mix of US and UK influences
+        - Hockey references
+        - Multicultural sensitivity
+    
+    - code: AU
+      locale: en-AU
+      language: English (Australia)
+      cpm_estimate: 10.0
+      priority: 1
+      platforms: [youtube, tiktok, instagram]
+      voice_provider: elevenlabs
+      voice_id: charlie
+      cultural_notes:
+        - Australian slang acceptable
+        - Laid-back tone
+        - Cricket, rugby references
+    
+    - code: DE
+      locale: de-DE
+      language: German
+      cpm_estimate: 10.5
+      priority: 1
+      platforms: [youtube, instagram]
+      voice_provider: elevenlabs
+      voice_id: anton
+      cultural_notes:
+        - Efficiency and precision focus
+        - Engineering examples
+        - Formal vs. informal (Sie vs. du) - use informal for young adults
+  
+  # Tier 2: High CPM regions (Priority: P1)
+  tier2:
+    - code: JP
+      locale: ja-JP
+      language: Japanese
+      cpm_estimate: 9.0
+      priority: 2
+      platforms: [youtube, tiktok]
+      voice_provider: elevenlabs
+      voice_id: takumi
+      cultural_notes:
+        - Politeness levels important (use polite form)
+        - Anime/manga references resonate
+        - Seasonal topics (cherry blossoms, etc.)
+    
+    - code: FR
+      locale: fr-FR
+      language: French
+      cpm_estimate: 8.5
+      priority: 2
+      platforms: [youtube, tiktok]
+      voice_provider: azure
+      voice_id: french_female
+      cultural_notes:
+        - Formal vs. informal (vous vs. tu)
+        - Cultural pride - avoid anglicisms when possible
+        - Fashion, cuisine, art references
+    
+    - code: NO
+      locale: no-NO
+      language: Norwegian
+      cpm_estimate: 9.5
+      priority: 2
+      platforms: [youtube]
+      voice_provider: azure
+      voice_id: norwegian_female
+      cultural_notes:
+        - High English proficiency (English subs acceptable)
+        - Nature and outdoor references
+        - Egalitarian values
+  
+  # Tier 3 / Emerging: Medium-Low CPM (Priority: P2-P3)
+  emerging:
+    - code: CZ
+      locale: cs-CZ
+      language: Czech
+      cpm_estimate: 4.5
+      priority: 3
+      platforms: [youtube]
+      voice_provider: azure
+      voice_id: czech_male
+      cultural_notes:
+        - Central European references
+        - Historical awareness (avoid German occupation topics)
+        - Beer culture acceptable
+    
+    - code: PL
+      locale: pl-PL
+      language: Polish
+      cpm_estimate: 5.0
+      priority: 3
+      platforms: [youtube, tiktok]
+      voice_provider: azure
+      voice_id: polish_female
+      cultural_notes:
+        - Catholic influences (but secular content preferred)
+        - National pride
+        - Historical references (WWII, Solidarity)
+
+# ============================================================================
+# CONTENT STRATEGY
+# ============================================================================
+content_strategy:
+  daily_video_target: 10
+  localization_target: 3  # Average localizations per video
+  retry_threshold: 0.5    # Retry failed stages if success rate < 50%
+  
+  categories:
+    - id: education
+      name: Educational
+      weight: 35
+      examples: ["Study tips", "Life hacks", "How-to guides"]
+    
+    - id: entertainment
+      name: Entertainment
+      weight: 30
+      examples: ["Did you know?", "Fun facts", "Storytime"]
+    
+    - id: technology
+      name: Technology
+      weight: 20
+      examples: ["AI tools", "App reviews", "Tech tips"]
+    
+    - id: lifestyle
+      name: Lifestyle
+      weight: 15
+      examples: ["Productivity", "Fitness", "Motivation"]
+  
+  target_demographics:
+    age_ranges:
+      - [13, 17]  # Gen Z teenagers
+      - [18, 24]  # Gen Z young adults
+      - [25, 34]  # Millennials
+    
+    genders:
+      - male
+      - female
+      - neutral
+
+# ============================================================================
+# PIPELINE CONFIGURATION
+# ============================================================================
+pipeline:
+  stages:
+    # Stage 1: Trend Analysis & Topic Selection
+    trend_analysis:
+      enabled: true
+      frequency: daily  # daily, hourly, manual
+      sources:
+        - google_trends
+        - youtube
+        - tiktok
+        - reddit
+      min_score: 60  # Minimum trend score to consider (0-100)
+      max_topics: 50  # Maximum topics to fetch per run
+      
+    # Stage 2: Script Generation
+    script_generation:
+      model_local: llama3.1-8b
+      model_cloud: gpt-4o
+      variations: 10  # Number of script variations to generate
+      polish_top: 3   # Number of top scripts to polish with cloud
+      max_length_words: 100
+      target_duration_seconds: 45
+      temperature: 0.8  # Creativity (0.0 = deterministic, 1.0 = very creative)
+      
+    # Stage 3: Voiceover Generation
+    voiceover:
+      provider: elevenlabs  # elevenlabs, azure, google
+      fallback: azure
+      sample_rate: 48000
+      normalize_lufs: -16  # YouTube Shorts standard
+      trim_silence: true
+      add_padding_seconds: 0.5
+      
+    # Stage 4: Visual Generation
+    visual_generation:
+      strategy: mixed  # stock, ai, text, mixed
+      aspect_ratio: "9:16"
+      resolution: [1080, 1920]
+      keyframes_per_video: 5
+      transition_duration: 0.3
+      sources:
+        stock:
+          enabled: true
+          providers: [pexels, unsplash, pixabay]
+        ai:
+          enabled: true
+          model: sdxl
+          prompt_enhancement: true
+        text:
+          enabled: true
+          font: Arial Bold
+          background: gradient
+      
+    # Stage 5: Subtitle Generation
+    subtitle_generation:
+      enabled: true
+      style: dynamic  # static, dynamic
+      word_level: true
+      font_size: 24
+      font_family: Arial Black
+      position: bottom
+      margin: 50  # pixels from edge
+      colors:
+        primary: "#FFFFFF"
+        outline: "#000000"
+      
+    # Stage 6: Video Assembly
+    video_assembly:
+      format: mp4
+      codec: h264
+      fps: 30
+      video_bitrate: 10M
+      audio_bitrate: 192k
+      preset: fast  # ultrafast, fast, medium, slow
+      crf: 20  # Quality (lower = better, 18-28 recommended)
+
+# ============================================================================
+# LOCALIZATION
+# ============================================================================
+localization:
+  enabled: true
+  auto_localize_top_performers: true
+  min_views_threshold: 10000  # Auto-localize videos with >10k views
+  localization_delay_hours: 24  # Wait 24h before localizing
+  
+  translation:
+    provider: deepl  # deepl, google, gpt4
+    fallback: google
+    preserve_timing: true
+    preserve_tone: true
+  
+  cultural_adaptation:
+    tier1_regions: full  # full, standard, basic
+    tier2_regions: standard
+    emerging_regions: basic
+    
+    rules:
+      - Replace culturally specific references
+      - Adapt humor styles
+      - Localize examples and analogies
+      - Adjust formality levels
+
+# ============================================================================
+# AUTOMATION
+# ============================================================================
+automation:
+  batch_processing:
+    enabled: true
+    schedule: "0 2 * * *"  # Cron format: 2 AM daily
+    max_concurrent: 4
+    parallel: false  # Sequential by default
+  
+  localization_batch:
+    enabled: true
+    schedule: "0 3 * * *"  # 3 AM daily
+    max_concurrent: 2
+  
+  publishing:
+    auto_upload: false  # Manual for now (platform API restrictions)
+    staging_directory: "5_Videos/staging"
+    
+  error_handling:
+    max_retries: 3
+    retry_delay_seconds: 60
+    continue_on_error: true  # Don't stop batch on single failure
+    
+  cleanup:
+    remove_temp_files: true
+    keep_intermediate_outputs: false  # For debugging, set to true
+
+# ============================================================================
+# MONETIZATION
+# ============================================================================
+monetization:
+  target_cpm: 10.0
+  min_video_views: 1000
+  priority_regions: [US, UK, CA, DE]
+  
+  platform_requirements:
+    youtube:
+      subscribers_min: 1000
+      views_90d_min: 10000000  # 10M Shorts views in 90 days
+      apply_date: null  # Set when eligible
+    
+    tiktok:
+      followers_min: 10000
+      views_30d_min: 100000
+      apply_date: null
+    
+    instagram:
+      followers_min: 5000  # Varies by region
+      apply_date: null
+  
+  affiliate:
+    enabled: true
+    networks:
+      - amazon_associates
+      - shareASale
+    commission_rate_target: 0.05  # 5%
+  
+  brand_deals:
+    enabled: false
+    contact_email: partnerships@example.com
+    min_followers: 50000
+
+# ============================================================================
+# ANALYTICS
+# ============================================================================
+analytics:
+  tracking_enabled: true
+  platforms: [youtube, tiktok, instagram]
+  
+  metrics:
+    - views
+    - watch_time
+    - ctr
+    - engagement_rate
+    - cpm
+    - revenue
+  
+  reporting:
+    frequency: weekly
+    recipients:
+      - admin@example.com
+    format: html  # html, pdf, json
+  
+  alerts:
+    viral_threshold: 100000  # Alert if video exceeds 100k views
+    failure_threshold: 0.3   # Alert if >30% videos fail
+    low_cpm_threshold: 5.0   # Alert if CPM drops below $5
+    email: alerts@example.com
+
+# ============================================================================
+# TECHNICAL SETTINGS
+# ============================================================================
+technical:
+  database:
+    type: postgresql  # sqlite, postgresql
+    host: localhost
+    port: 5432
+    name: short_videos
+    user: postgres
+    password_env: DB_PASSWORD
+  
+  redis:
+    host: localhost
+    port: 6379
+    db: 0
+  
+  storage:
+    type: local  # local, s3, azure_blob
+    base_path: ./data
+    s3:
+      bucket: null
+      region: null
+      access_key_env: AWS_ACCESS_KEY
+      secret_key_env: AWS_SECRET_KEY
+    azure:
+      container: null
+      connection_string_env: AZURE_STORAGE_CONNECTION
+  
+  api_keys:
+    openai: OPENAI_API_KEY
+    elevenlabs: ELEVENLABS_API_KEY
+    deepl: DEEPL_API_KEY
+    youtube: YOUTUBE_API_KEY
+    tiktok: TIKTOK_API_KEY
+    instagram: INSTAGRAM_API_KEY
+  
+  performance:
+    max_workers: 4
+    timeout_seconds: 300
+    memory_limit_mb: 4096
+
+# ============================================================================
+# FEATURE FLAGS
+# ============================================================================
+features:
+  trend_monitoring: true
+  content_gap_analysis: true
+  ab_testing: false  # Coming soon
+  auto_publishing: false  # Restricted by platform APIs
+  analytics_dashboard: true
+  multi_language: true
+  ai_script_improvement: true
+  auto_thumbnail_generation: true
+
+# ============================================================================
+# LOGGING
+# ============================================================================
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: logs/short_video_system.log
+  max_file_size_mb: 100
+  backup_count: 5
+  console_output: true

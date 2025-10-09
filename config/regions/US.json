@@ -1,0 +1,195 @@
+{
+  "region": {
+    "code": "US",
+    "name": "United States",
+    "locale": "en-US",
+    "language": "English (US)",
+    "timezone": "America/New_York",
+    "currency": "USD"
+  },
+  
+  "monetization": {
+    "cpm_estimate": 12.5,
+    "cpm_range": [8, 18],
+    "currency": "USD",
+    "priority_tier": 1,
+    "notes": "Highest CPM region globally. Premium advertisers."
+  },
+  
+  "platforms": {
+    "youtube": {
+      "enabled": true,
+      "content_types": ["shorts"],
+      "optimal_posting_times": ["07:00", "12:00", "18:00", "21:00"],
+      "optimal_days": ["Tuesday", "Wednesday", "Thursday"],
+      "hashtag_limit": 3,
+      "title_max_length": 100,
+      "description_max_length": 5000,
+      "notes": "YouTube Shorts Fund available. Focus on watch time (>80%)."
+    },
+    "tiktok": {
+      "enabled": true,
+      "content_types": ["short_video"],
+      "optimal_posting_times": ["09:00", "15:00", "19:00"],
+      "optimal_days": ["Friday", "Saturday", "Sunday"],
+      "hashtag_limit": 30,
+      "caption_max_length": 150,
+      "notes": "High engagement platform. Use trending sounds and challenges."
+    },
+    "instagram": {
+      "enabled": true,
+      "content_types": ["reels"],
+      "optimal_posting_times": ["11:00", "14:00", "19:00"],
+      "optimal_days": ["Wednesday", "Friday"],
+      "hashtag_limit": 30,
+      "caption_max_length": 2200,
+      "notes": "Instagram Reels Play Bonus available in US. Focus on visual quality."
+    }
+  },
+  
+  "voice": {
+    "provider": "elevenlabs",
+    "voice_id": "adam",
+    "voice_name": "Adam",
+    "gender": "male",
+    "age_range": "young_adult",
+    "accent": "general_american",
+    "style": "energetic",
+    "description": "Clear, friendly American accent. Good for educational content.",
+    "alternatives": [
+      {
+        "voice_id": "bella",
+        "voice_name": "Bella",
+        "gender": "female",
+        "age_range": "young_adult",
+        "style": "warm",
+        "description": "Warm, engaging female voice"
+      },
+      {
+        "voice_id": "patrick",
+        "voice_name": "Patrick",
+        "gender": "male",
+        "age_range": "mature",
+        "style": "professional",
+        "description": "Authoritative male voice for serious topics"
+      }
+    ]
+  },
+  
+  "localization": {
+    "translation_required": false,
+    "cultural_adaptation_level": "full",
+    "reference_examples": [
+      "Use pop culture references (Marvel, Netflix shows, viral memes)",
+      "Sports analogies (NFL, NBA, MLB, NHL)",
+      "Colloquialisms: 'game-changer', 'no-brainer', 'dope', 'fire'",
+      "Educational system: GPA, SAT, college",
+      "Measurement units: feet, pounds, Fahrenheit"
+    ],
+    "avoid": [
+      "Politics (highly polarized)",
+      "Gun violence (sensitive)",
+      "Healthcare costs (controversial)",
+      "Religious topics (divisive)"
+    ]
+  },
+  
+  "content_preferences": {
+    "trending_topics": [
+      "AI and technology",
+      "Study hacks and productivity",
+      "Life hacks and tips",
+      "Fitness and health",
+      "Gaming and esports",
+      "Crypto and investing",
+      "Personal development",
+      "Food and cooking"
+    ],
+    "avoid_topics": [
+      "Politics (left vs. right divide)",
+      "Religion (sensitive)",
+      "Gun control (controversial)",
+      "Healthcare (divisive)"
+    ],
+    "popular_formats": [
+      "Did you know? (facts)",
+      "This changed my life (testimonial)",
+      "Top 5/10 (listicles)",
+      "Watch till the end (suspense)",
+      "POV: (point of view scenarios)"
+    ]
+  },
+  
+  "demographics": {
+    "primary_age_groups": [
+      {"range": [13, 17], "percentage": 30, "platforms": ["tiktok", "youtube"]},
+      {"range": [18, 24], "percentage": 40, "platforms": ["tiktok", "instagram", "youtube"]},
+      {"range": [25, 34], "percentage": 25, "platforms": ["instagram", "youtube"]},
+      {"range": [35, 44], "percentage": 5, "platforms": ["youtube", "instagram"]}
+    ],
+    "gender_split": {
+      "male": 48,
+      "female": 50,
+      "other": 2
+    },
+    "device_usage": {
+      "mobile": 85,
+      "desktop": 10,
+      "tablet": 5
+    }
+  },
+  
+  "compliance": {
+    "coppa_applicable": true,
+    "age_restrictions": 13,
+    "content_rating": "general",
+    "disclosure_required": true,
+    "disclosure_text": "Paid partnership",
+    "ftc_guidelines": true,
+    "notes": "COPPA requires parental consent for users under 13. FTC requires disclosure of sponsored content."
+  },
+  
+  "seo_keywords": {
+    "high_volume": [
+      "AI",
+      "productivity",
+      "hacks",
+      "tips",
+      "tutorial",
+      "how to",
+      "best",
+      "easy",
+      "quick",
+      "simple"
+    ],
+    "trending_hashtags": [
+      "#AI",
+      "#ProductivityTips",
+      "#LifeHacks",
+      "#TechTips",
+      "#StudyTips",
+      "#FitnessMotivation",
+      "#Shorts",
+      "#Viral",
+      "#ForYou",
+      "#FYP"
+    ]
+  },
+  
+  "analytics": {
+    "track_metrics": true,
+    "key_performance_indicators": [
+      "CPM",
+      "Watch time",
+      "CTR",
+      "Engagement rate",
+      "Subscriber conversion"
+    ],
+    "benchmarks": {
+      "cpm_target": 12.5,
+      "watch_time_target": 80,
+      "ctr_target": 5.0,
+      "engagement_rate_target": 5.0
+    }
+  }
+}
