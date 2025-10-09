@@ -34,10 +34,11 @@ public class PipelineOrchestrator
         // Initialize video pipeline services
         _sceneAnalysisService = new SceneAnalysisService(_config.Paths);
         _sceneDescriptionService = new SceneDescriptionService(_config.Paths);
+        bool useLTX = _config.Generation.Video.SynthesisMethod?.ToLower() != "keyframe";
         _videoGenerationService = new VideoGenerationService(
             _config.Paths, 
             _config.Generation.Video, 
-            useLTX: true); // Configure via config later
+            useLTX: useLTX);
         _videoCompositionService = new VideoCompositionService(
             _config.Paths, 
             _config.Generation.Video);
