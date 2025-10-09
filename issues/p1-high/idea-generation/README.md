@@ -26,7 +26,7 @@ This group transforms raw content into structured video ideas, topics, and click
 ## Dependencies
 
 **Requires:**
-- Content Pipeline group (ranked stories) - Optional for Reddit adaptation
+- Content Pipeline group (ranked stories) - Required for Reddit adaptation (Task 1)
 - OpenAI API or compatible LLM provider
 - Python 3.10+, pytest
 
@@ -225,12 +225,12 @@ LLM Generation ─────────────┘
 - With mock provider: < 1 second
 - With OpenAI API:
   - Ideas: ~30 seconds (20 ideas)
-  - Clustering: ~10 seconds
-  - Titles: ~60 seconds (80 titles)
+  - Clustering: ~10 seconds  
+  - Titles: ~60 seconds (80 titles across 8 topics)
   - Scoring: < 1 second (local)
   - Voice: < 1 second (local)
   - Selection: < 1 second (local)
-  - **Total:** ~2 minutes per segment
+  - **Total:** ~2 minutes per segment (includes API latency)
 
 **Cost Estimates (OpenAI gpt-4o-mini):**
 - Per segment: ~$0.10-0.20

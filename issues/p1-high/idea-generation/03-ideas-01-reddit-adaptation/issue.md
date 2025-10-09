@@ -65,6 +65,7 @@ adapter.save_ideas(ideas, Path("data/ideas/women/18-23"))
 
 **Key Features:**
 - LLM-based story adaptation for target audience
+- Temperature: 0.7 (balanced creativity/consistency)
 - Preserves source attribution and metadata
 - JSON output format
 - Batch processing support
