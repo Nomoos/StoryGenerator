@@ -68,6 +68,7 @@ class VideoMetadata:
     resolution: Optional[str] = None
     fps: Optional[int] = None
     aspect_ratio: Optional[str] = None
+    video_format: Optional[str] = None  # "short" or "long"
     
     # Engagement metrics (calculated)
     engagement_rate: Optional[float] = None
@@ -89,6 +90,10 @@ class VideoMetadata:
 
 class YouTubeChannelScraper:
     """Scrapes metadata from YouTube channel videos."""
+    
+    # Constants
+    SHORTS_FETCH_MULTIPLIER = 3  # Fetch 3x shorts to compensate for potential filtering/unavailable videos
+    SHORTS_MAX_DURATION = 180  # YouTube Shorts max duration is 3 minutes (as of October 2024)
     
     def __init__(self, output_dir: str = "/tmp/youtube_channel_data"):
         """
@@ -144,58 +149,96 @@ class YouTubeChannelScraper:
         # Otherwise assume it's a handle without @
         return f"https://www.youtube.com/@{input_str}"
     
-    def get_channel_videos(self, channel_url: str, top_n: int = 10) -> List[str]:
+    def get_channel_videos(self, channel_url: str, top_n: int = 10) -> Dict[str, List[str]]:
         """
-        Get list of video IDs from channel.
+        Get list of video IDs from channel, separated by shorts and long videos.
         
         Args:
             channel_url: Channel URL
-            top_n: Number of top videos to retrieve
+            top_n: Number of top videos to retrieve per format (shorts and long)
             
         Returns:
-            List of video IDs
+            Dict with 'shorts' and 'long' lists of video IDs
         """
-        print(f"📺 Fetching top {top_n} videos from channel...")
+        print(f"📺 Fetching top {top_n} shorts and top {top_n} long videos from channel...")
         
-        # Use yt-dlp to get video list sorted by views
-        cmd = [
+        all_videos = {'shorts': [], 'long': []}
+        
+        # Fetch shorts
+        print(f"  🎬 Fetching shorts...")
+        shorts_url = channel_url.rstrip('/') + "/shorts"
+        shorts_cmd = [
             "yt-dlp",
             "--flat-playlist",
             "--print", "id",
-            "--playlist-end", str(top_n),
+            "--playlist-end", str(top_n * self.SHORTS_FETCH_MULTIPLIER),
             "--playlist-reverse",  # Get most recent first
-            channel_url + "/videos"
+            shorts_url
         ]
         
         try:
             result = subprocess.run(
-                cmd,
+                shorts_cmd,
                 capture_output=True,
                 text=True,
                 timeout=60
             )
             
-            if result.returncode != 0:
-                print(f"⚠️ Error fetching videos: {result.stderr}")
-                return []
-            
-            video_ids = [line.strip() for line in result.stdout.split('\n') if line.strip()]
-            print(f"✅ Found {len(video_ids)} videos")
-            return video_ids[:top_n]
-            
+            if result.returncode == 0:
+                shorts = [line.strip() for line in result.stdout.split('\n') if line.strip()]
+                all_videos['shorts'] = shorts[:top_n]
+                print(f"  ✅ Found {len(all_videos['shorts'])} shorts")
+            else:
+                print(f"  ⚠️ Error fetching shorts: {result.stderr}")
+                
         except subprocess.TimeoutExpired:
-            print("⚠️ Timeout while fetching videos")
-            return []
+            print("  ⚠️ Timeout while fetching shorts")
         except Exception as e:
-            print(f"⚠️ Error: {e}")
-            return []
+            print(f"  ⚠️ Error fetching shorts: {e}")
+        
+        # Fetch long videos
+        print(f"  📹 Fetching long videos...")
+        videos_url = channel_url.rstrip('/') + "/videos"
+        long_cmd = [
+            "yt-dlp",
+            "--flat-playlist",
+            "--print", "id",
+            "--playlist-end", str(top_n),
+            "--playlist-reverse",  # Get most recent first
+            videos_url
+        ]
+        
+        try:
+            result = subprocess.run(
+                long_cmd,
+                capture_output=True,
+                text=True,
+                timeout=60
+            )
+            
+            if result.returncode == 0:
+                long_videos = [line.strip() for line in result.stdout.split('\n') if line.strip()]
+                all_videos['long'] = long_videos[:top_n]
+                print(f"  ✅ Found {len(all_videos['long'])} long videos")
+            else:
+                print(f"  ⚠️ Error fetching long videos: {result.stderr}")
+                
+        except subprocess.TimeoutExpired:
+            print("  ⚠️ Timeout while fetching long videos")
+        except Exception as e:
+            print(f"  ⚠️ Error fetching long videos: {e}")
+        
+        total = len(all_videos['shorts']) + len(all_videos['long'])
+        print(f"✅ Found total of {total} videos ({len(all_videos['shorts'])} shorts + {len(all_videos['long'])} long)")
+        return all_videos
     
-    def extract_video_metadata(self, video_id: str) -> Optional[VideoMetadata]:
+    def extract_video_metadata(self, video_id: str, expected_format: Optional[str] = None) -> Optional[VideoMetadata]:
         """
         Extract comprehensive metadata for a single video.
         
         Args:
             video_id: YouTube video ID
+            expected_format: Expected format ('short' or 'long'), optional
             
         Returns:
             VideoMetadata object or None on failure
@@ -203,6 +246,10 @@ class YouTubeChannelScraper:
         print(f"  📹 Extracting metadata for: {video_id}")
         
         video_url = f"https://www.youtube.com/watch?v={video_id}"
+        
+        # Use absolute path for output
+        output_path = self.output_dir.resolve() / video_id
+        print(f"     💾 Output path: {output_path}")
         
         # Get metadata using yt-dlp
         cmd = [
@@ -212,7 +259,7 @@ class YouTubeChannelScraper:
             "--write-auto-sub",
             "--sub-lang", "en",
             "--sub-format", "srt",
-            "-o", str(self.output_dir / f"{video_id}"),
+            "-o", str(output_path),
             video_url
         ]
         
@@ -225,7 +272,8 @@ class YouTubeChannelScraper:
             )
             
             # Load the info JSON
-            info_json_path = self.output_dir / f"{video_id}.info.json"
+            info_json_path = self.output_dir.resolve() / f"{video_id}.info.json"
+            print(f"     📄 Info JSON: {info_json_path}")
             if not info_json_path.exists():
                 print(f"    ⚠️ Could not retrieve metadata for {video_id}")
                 return None
@@ -237,6 +285,8 @@ class YouTubeChannelScraper:
             subtitle_text = None
             subtitle_files = list(self.output_dir.glob(f"{video_id}*.srt"))
             if subtitle_files:
+                subtitle_path = subtitle_files[0].resolve()
+                print(f"     📝 Subtitle file: {subtitle_path}")
                 with open(subtitle_files[0], 'r', encoding='utf-8') as f:
                     subtitle_text = self._parse_srt_to_text(f.read())
             
@@ -244,6 +294,11 @@ class YouTubeChannelScraper:
             resolution = None
             fps = None
             aspect_ratio = None
+            video_format = expected_format  # Use expected format if provided
+            
+            # Get duration early as it's needed for format detection
+            duration_seconds = info.get('duration', 0)
+            
             if 'formats' in info and info['formats']:
                 # Get the best quality format
                 formats = [f for f in info['formats'] if f.get('vcodec') != 'none']
@@ -255,6 +310,15 @@ class YouTubeChannelScraper:
                         width = best_format['width']
                         height = best_format['height']
                         aspect_ratio = f"{width}:{height}"
+                        
+                        # Determine video format based on duration and aspect ratio
+                        # YouTube Shorts: <= 3 minutes (180s) and vertical (height > width)
+                        # Source: https://support.google.com/youtube/answer/15424877
+                        if not video_format:  # Only determine if not already set
+                            if duration_seconds <= self.SHORTS_MAX_DURATION and height > width:
+                                video_format = "short"
+                            else:
+                                video_format = "long"
             
             # Extract chapters information
             chapters = info.get('chapters', [])
@@ -262,7 +326,6 @@ class YouTubeChannelScraper:
             chapter_count = len(chapters) if has_chapters else None
             
             # Get basic metadata
-            duration_seconds = info.get('duration', 0)
             view_count = info.get('view_count', 0)
             like_count = info.get('like_count')
             comment_count = info.get('comment_count')
@@ -334,6 +397,7 @@ class YouTubeChannelScraper:
                 resolution=resolution,
                 fps=fps,
                 aspect_ratio=aspect_ratio,
+                video_format=video_format,
                 
                 # Engagement metrics
                 engagement_rate=engagement_rate,
@@ -351,7 +415,8 @@ class YouTubeChannelScraper:
             )
             
             self.videos.append(metadata)
-            print(f"    ✅ Extracted: {metadata.title[:50]}...")
+            format_emoji = "🎬" if video_format == "short" else "📹"
+            print(f"    ✅ Extracted ({format_emoji} {video_format}): {metadata.title[:50]}... [{metadata.duration}]")
             return metadata
             
         except subprocess.TimeoutExpired:
@@ -397,11 +462,11 @@ class YouTubeChannelScraper:
     
     def scrape_channel(self, channel_input: str, top_n: int = 10) -> List[VideoMetadata]:
         """
-        Scrape top N videos from a channel.
+        Scrape top N shorts and top N long videos from a channel.
         
         Args:
             channel_input: Channel URL, handle, or ID
-            top_n: Number of videos to scrape
+            top_n: Number of videos to scrape per format (shorts and long)
             
         Returns:
             List of VideoMetadata objects
@@ -413,20 +478,32 @@ class YouTubeChannelScraper:
         # Extract channel URL
         channel_url = self.extract_channel_url(channel_input)
         print(f"📺 Channel URL: {channel_url}")
+        print(f"📁 Output directory: {self.output_dir.resolve()}")
         
-        # Get video IDs
-        video_ids = self.get_channel_videos(channel_url, top_n)
+        # Get video IDs separated by format
+        video_ids_by_format = self.get_channel_videos(channel_url, top_n)
         
-        if not video_ids:
+        total_videos = len(video_ids_by_format['shorts']) + len(video_ids_by_format['long'])
+        if total_videos == 0:
             print("❌ No videos found")
             return []
         
         # Extract metadata for each video
-        print(f"\n📊 Extracting metadata for {len(video_ids)} videos...\n")
+        print(f"\n📊 Extracting metadata for {total_videos} videos...\n")
         
-        for i, video_id in enumerate(video_ids, 1):
-            print(f"[{i}/{len(video_ids)}]")
-            self.extract_video_metadata(video_id)
+        # Process shorts
+        if video_ids_by_format['shorts']:
+            print(f"🎬 Processing {len(video_ids_by_format['shorts'])} shorts...")
+            for i, video_id in enumerate(video_ids_by_format['shorts'], 1):
+                print(f"[Short {i}/{len(video_ids_by_format['shorts'])}]")
+                self.extract_video_metadata(video_id, expected_format='short')
+        
+        # Process long videos
+        if video_ids_by_format['long']:
+            print(f"\n📹 Processing {len(video_ids_by_format['long'])} long videos...")
+            for i, video_id in enumerate(video_ids_by_format['long'], 1):
+                print(f"[Long {i}/{len(video_ids_by_format['long'])}]")
+                self.extract_video_metadata(video_id, expected_format='long')
         
         return self.videos
     
@@ -450,17 +527,35 @@ class YouTubeChannelScraper:
         avg_engagement = sum(v.engagement_rate for v in self.videos if v.engagement_rate) / len([v for v in self.videos if v.engagement_rate]) if any(v.engagement_rate for v in self.videos) else 0
         videos_with_subtitles = sum(1 for v in self.videos if v.subtitles_available)
         
+        # Calculate format-specific statistics
+        shorts = [v for v in self.videos if v.video_format == 'short']
+        longs = [v for v in self.videos if v.video_format == 'long']
+        
         report = f"""# YouTube Channel Scraping Report
 
 ## Summary Statistics
 
 - **Total Videos Scraped**: {len(self.videos)}
+  - **Shorts**: {len(shorts)}
+  - **Long Videos**: {len(longs)}
 - **Total Views**: {total_views:,}
 - **Average Views**: {total_views // len(self.videos):,}
 - **Total Likes**: {total_likes:,}
 - **Total Comments**: {total_comments:,}
 - **Average Engagement Rate**: {avg_engagement:.2f}%
 - **Videos with Subtitles**: {videos_with_subtitles} ({videos_with_subtitles/len(self.videos)*100:.1f}%)
+
+## Format Breakdown
+
+### Shorts (≤3min, Vertical)
+- **Count**: {len(shorts)}
+- **Total Views**: {sum(v.view_count for v in shorts):,}
+- **Avg Views**: {sum(v.view_count for v in shorts) // len(shorts) if shorts else 0:,}
+
+### Long Videos
+- **Count**: {len(longs)}
+- **Total Views**: {sum(v.view_count for v in longs):,}
+- **Avg Views**: {sum(v.view_count for v in longs) // len(longs) if longs else 0:,}
 
 ## Engagement Metrics Overview
 
@@ -477,11 +572,13 @@ class YouTubeChannelScraper:
 """
         
         for i, video in enumerate(self.videos, 1):
-            report += f"""### {i}. {video.title}
+            format_icon = "🎬" if video.video_format == "short" else "📹"
+            report += f"""### {i}. {format_icon} {video.title}
 
 **Basic Information:**
 - **Video ID**: {video.video_id}
 - **URL**: {video.url}
+- **Format**: {video.video_format.upper() if video.video_format else 'N/A'}
 - **Channel**: {video.channel_name or 'N/A'}
 - **Upload Date**: {video.upload_date}
 - **Duration**: {video.duration}
@@ -642,6 +739,18 @@ All scraped data has been saved to:
         report = """
 ## Content Patterns Analysis
 
+### Video Format Distribution
+"""
+        
+        shorts = [v for v in self.videos if v.video_format == 'short']
+        longs = [v for v in self.videos if v.video_format == 'long']
+        unknown = [v for v in self.videos if not v.video_format]
+        
+        report += f"""
+- **Shorts (≤3min, Vertical)**: {len(shorts)} videos
+- **Long Videos**: {len(longs)} videos
+- **Unknown Format**: {len(unknown)} videos
+
 ### Most Common Tags
 """
         
@@ -702,10 +811,16 @@ Common words in titles:
         avg_engagement = sum(v.engagement_rate for v in self.videos if v.engagement_rate) / len([v for v in self.videos if v.engagement_rate]) if any(v.engagement_rate for v in self.videos) else 0
         avg_views_per_day = sum(v.views_per_day for v in self.videos if v.views_per_day) / len([v for v in self.videos if v.views_per_day]) if any(v.views_per_day for v in self.videos) else 0
         
+        # Format-specific statistics
+        shorts = [v for v in self.videos if v.video_format == 'short']
+        longs = [v for v in self.videos if v.video_format == 'long']
+        
         data = {
             'videos': [v.to_dict() for v in self.videos],
             'summary': {
                 'total_videos': len(self.videos),
+                'shorts_count': len(shorts),
+                'long_videos_count': len(longs),
                 'videos_with_subtitles': sum(1 for v in self.videos if v.subtitles_available),
                 'total_views': sum(v.view_count for v in self.videos),
                 'average_views': sum(v.view_count for v in self.videos) // len(self.videos) if self.videos else 0,
@@ -714,6 +829,20 @@ Common words in titles:
                 'average_engagement_rate': round(avg_engagement, 2),
                 'average_views_per_day': round(avg_views_per_day, 2),
                 'videos_with_chapters': sum(1 for v in self.videos if v.has_chapters),
+            },
+            'format_breakdown': {
+                'shorts': {
+                    'count': len(shorts),
+                    'total_views': sum(v.view_count for v in shorts),
+                    'average_views': sum(v.view_count for v in shorts) // len(shorts) if shorts else 0,
+                    'average_duration': round(sum(v.duration_seconds for v in shorts) / len(shorts), 1) if shorts else 0,
+                },
+                'long': {
+                    'count': len(longs),
+                    'total_views': sum(v.view_count for v in longs),
+                    'average_views': sum(v.view_count for v in longs) // len(longs) if longs else 0,
+                    'average_duration': round(sum(v.duration_seconds for v in longs) / len(longs), 1) if longs else 0,
+                }
             },
             'engagement_metrics': {
                 'high_engagement_videos': sum(1 for v in self.videos if v.engagement_rate and v.engagement_rate > 5),
@@ -731,7 +860,8 @@ Common words in titles:
                 'long_videos': sum(1 for v in self.videos if v.duration_seconds >= 900),
                 'average_duration_seconds': round(sum(v.duration_seconds for v in self.videos) / len(self.videos)),
             },
-            'timestamp': self._get_timestamp()
+            'timestamp': self._get_timestamp(),
+            'output_directory': str(self.output_dir.resolve())
         }
         
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -739,6 +869,7 @@ Common words in titles:
         
         print(f"✅ JSON data saved to: {output_path}")
         print(f"   📊 Included {len(self.videos)} videos with comprehensive analytics")
+        print(f"   🎬 Shorts: {len(shorts)}, 📹 Long: {len(longs)}")
     
     def _get_timestamp(self):
         """Get current timestamp."""
@@ -760,7 +891,7 @@ def main():
         '--top',
         type=int,
         default=10,
-        help='Number of top videos to scrape (default: 10)'
+        help='Number of top videos to scrape per format (shorts and long videos, default: 10 each)'
     )
     parser.add_argument(
         '--output',
@@ -793,7 +924,7 @@ def main():
         print("\n🔬 YouTube Channel Scraper")
 
     print(f"📺 Channel: {channel}")
-    print(f"📊 Top Videos: {args.top}\n")
+    print(f"📊 Videos Per Format: Top {args.top} shorts + Top {args.top} long videos\n")
     
     scraper = YouTubeChannelScraper(output_dir=args.output)
     videos = scraper.scrape_channel(channel, args.top)
