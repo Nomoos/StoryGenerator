@@ -102,7 +102,7 @@ StoryGenerator uses a **hybrid C# + Python architecture**:
 - **C# (.NET 9.0)**: Orchestration, APIs, I/O, configuration, and business logic
 - **Python**: ML model inference via subprocess calls (Whisper ASR, SDXL, LTX-Video)
 
-**Why Hybrid?** 
+**Why Hybrid?**
 - C# provides performance, type safety, and excellent tooling
 - Python gives access to the rich ML ecosystem
 - Best of both worlds for production-grade content generation
@@ -239,7 +239,7 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 - **Then:** Visual pipeline (Images → Video → Post-production)
 - **Future:** Platform distribution and analytics
 
-➡️ **[View Hybrid Roadmap](docs/HYBRID_ROADMAP.md)** - Complete implementation status with progress tracking  
+➡️ **[View Hybrid Roadmap](docs/HYBRID_ROADMAP.md)** - Complete implementation status with progress tracking
 ➡️ **[Issue tracking](docs/ISSUE_TRACKING.md)** - Task management details
 
 ---

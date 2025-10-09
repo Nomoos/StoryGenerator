@@ -1,7 +1,7 @@
 # Hybrid Architecture Roadmap: Current Status and Next Steps
 
-**Version:** 1.0  
-**Last Updated:** 2025  
+**Version:** 1.0
+**Last Updated:** 2025
 **Status:** Active Analysis
 
 ---
@@ -100,7 +100,7 @@ The bulk of tasks are still "Not Started" and form the backlog (65 tasks total).
 - Quality Control (2 tasks): Automated QC checks and reporting
 - Export & Delivery (1 task): Final export with metadata
 
-**Total P1 Effort:** 160-250 hours  
+**Total P1 Effort:** 160-250 hours
 **Timeline:** 4-6 weeks with team
 
 ### Medium-Priority Features (Phase 4: 18 P2 tasks)
@@ -119,7 +119,7 @@ The bulk of tasks are still "Not Started" and form the backlog (65 tasks total).
 - Performance monitoring dashboard, advanced video effects
 - Documentation portal
 
-**Total P2 Effort:** 110-135 hours  
+**Total P2 Effort:** 110-135 hours
 **Timeline:** 3-4 weeks with team
 
 ---
@@ -128,7 +128,7 @@ The bulk of tasks are still "Not Started" and form the backlog (65 tasks total).
 
 ### 1. Finish Orchestration Foundation (Pipeline Integration)
 
-**Priority:** High  
+**Priority:** High
 **Status:** In Progress
 
 Continue the current work on the pipeline orchestration (Stage 8). Completing the C# "one-click integration" glue code will enable automatic end-to-end runs, monitoring, and recovery. This infrastructure makes it easier to plug in subsequent stages.
@@ -142,7 +142,7 @@ Continue the current work on the pipeline orchestration (Stage 8). Completing th
 
 ### 2. Tackle High-Priority Content Tasks
 
-**Priority:** High  
+**Priority:** High
 **Status:** Not Started (Planned)
 
 Once the orchestration basics are in place, move on to the high-priority content-generation features. In particular, start with **Shotlist generation** and **Video synthesis**, since they are critical for turning scripts into visuals. These can be developed initially as prototypes or research spikes to validate the approach.
@@ -220,11 +220,11 @@ def main():
     # Parse input from C#
     with open(sys.argv[1]) as f:
         args = json.load(f)
-    
+
     # Load model and generate images
     pipe = StableDiffusionXLPipeline.from_pretrained(args["model"])
     images = pipe(args["prompts"]).images
-    
+
     # Save and return results
     result = {"image_paths": save_images(images, args["output_dir"])}
     print(json.dumps(result))
