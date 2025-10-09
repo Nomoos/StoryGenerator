@@ -2,6 +2,33 @@
 
 This directory contains research prototypes for local-only model orchestration and media processing.
 
+## 🆕 YouTube Subtitle Research (NEW)
+
+**Complete toolkit for analyzing YouTube video subtitles**
+
+### Quick Access
+- **Tool**: [`python/youtube_subtitle_analyzer.py`](python/youtube_subtitle_analyzer.py) - Production-ready analysis tool
+- **Guide**: [`YOUTUBE_SUBTITLE_RESEARCH.md`](YOUTUBE_SUBTITLE_RESEARCH.md) - Comprehensive best practices
+- **Examples**: [`subtitle_analysis/`](subtitle_analysis/) - Sample analyses and patterns
+- **Quick Start**: [`subtitle_analysis/QUICKSTART.md`](subtitle_analysis/QUICKSTART.md) - Get started in 5 minutes
+
+### What's Included
+✅ Download and analyze any YouTube video  
+✅ Extract timing and readability metrics  
+✅ Generate comprehensive reports  
+✅ Validate subtitle quality  
+✅ Ready-to-use pipeline configurations  
+
+### Usage
+```bash
+pip install yt-dlp
+python research/python/youtube_subtitle_analyzer.py https://www.youtube.com/shorts/41QD8C6tqIU
+```
+
+📖 **Full documentation**: [`subtitle_analysis/INDEX.md`](subtitle_analysis/INDEX.md)
+
+---
+
 ## 🔬 Architecture Decision Documents
 
 **NEW: Comprehensive analysis of C# vs Python vs Hybrid approaches:**
