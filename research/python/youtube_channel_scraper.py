@@ -497,8 +497,10 @@ def main():
             if channel:
                 break
             print("❌ Channel cannot be empty. Please try again.")
+        print()
+    else:
+        print("\n🔬 YouTube Channel Scraper")
 
-    print("\n🔬 YouTube Channel Scraper")
     print(f"📺 Channel: {channel}")
     print(f"📊 Top Videos: {args.top}\n")
     

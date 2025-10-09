@@ -64,7 +64,7 @@ def test_interactive_mode_simulation():
     print("="*60)
     
     result = subprocess.run(
-        "echo '@test' | python3 youtube_channel_scraper.py --top 1 --output /tmp/test",
+        f"echo '@test' | {sys.executable} youtube_channel_scraper.py --top 1 --output /tmp/test",
         shell=True,
         capture_output=True,
         text=True,
@@ -95,7 +95,7 @@ def test_empty_input_rejection():
     
     # Simulate empty inputs followed by valid input
     result = subprocess.run(
-        "echo -e '\\n\\n@test' | python3 youtube_channel_scraper.py --top 1 --output /tmp/test",
+        f"echo -e '\\n\\n@test' | {sys.executable} youtube_channel_scraper.py --top 1 --output /tmp/test",
         shell=True,
         capture_output=True,
         text=True,
