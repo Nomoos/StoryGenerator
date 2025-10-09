@@ -1,42 +1,125 @@
 # Next Tasks to Implement from Phase 3
 
-**Status as of:** Scene Planning Group Completion  
-**Last Completed:** Group 4 - Scene Planning (3 tasks)
+**Status as of:** 2025-01-11 - Post-Cleanup  
+**Last Completed:** Groups 1, 2, 4, 6, 7, 8 (partial), 9 + Phase 4 (moved to resolved)  
+**Next Priority:** Group 3 (Script Development) - Lowest incomplete group
 
 ---
 
-## ✅ Completed Phase 3 Groups
+## ✅ Completed Phase 3 Groups (Moved to Resolved)
+
+All completed groups have been moved to `/issues/resolved/phase-3-implementation/` to maintain focus on active work.
 
 ### Group 1: Content Pipeline (6 tasks) - P0/P1 ✅
+**Location:** `/issues/resolved/p0-content-pipeline/`
+
 Source and process raw content for video ideas.
 - Reddit scraper, alternative sources, quality scoring
 - Deduplication, ranking, attribution
 
 ### Group 2: Idea Generation (7 tasks) - P1 ✅
+**Location:** `/issues/resolved/phase-3-implementation/group-2-idea-generation/`
+
 Transform content into video titles and concepts.
 - Reddit adaptation, LLM generation, clustering
 - Title generation, scoring, voice recommendation, top selection
 
-### Group 3: Script Development (5 tasks) - P1 ✅
-Generate and refine video scripts.
-- Raw generation, scoring, iteration
-- GPT improvement, title improvement
+### Group 4: Scene Planning (3 tasks) - P1 ✅
+**Location:** `/issues/resolved/phase-3-implementation/group-4-scene-planning/`
 
-### Group 4: Scene Planning (3 tasks) - P1 ✅ ← JUST COMPLETED
 Break scripts into scenes and shots.
 - Beat sheet creation, shot lists
 - Draft subtitle generation
 
-**Total Completed:** 21 tasks from 4 groups
+### Group 6: Subtitle Creation (2 tasks) - P1 ✅
+**Location:** `/issues/resolved/phase-3-implementation/group-6-subtitle-creation/`
+
+Create precisely timed subtitles.
+- Forced alignment, scene mapping
+
+### Group 7: Image Generation (4 tasks) - P1/P2 ✅
+**Location:** `/issues/resolved/phase-3-implementation/group-7-image-generation/`
+
+Generate keyframe images for videos.
+- Prompt building, keyframe generation (batch A & B)
+- Image selection
+
+### Group 8: Video Production (2 of 3 tasks) - P1/P2 ⚠️
+**Location:** `/issues/resolved/phase-3-implementation/group-8-video-production/`
+
+Generate video clips (partial completion).
+- ✅ LTX generation, interpolation
+- ❌ Variant selection (remains in p1-high)
+
+### Group 9: Post-Production (6 tasks) - P1/P2 ✅
+**Location:** `/issues/resolved/phase-3-implementation/group-9-post-production/`
+
+Assemble and enhance final videos.
+- Crop/resize, subtitle burning, BGM/SFX
+- Concatenation, transitions, color grading
+
+### Phase 4: Pipeline Orchestration (1 task) - P1 ✅
+**Location:** `/issues/resolved/phase-4-pipeline-orchestration/`
+
+Complete end-to-end pipeline orchestrator.
+- Full pipeline orchestration with state management
+
+**Total Completed:** 30+ tasks from 7 groups (plus Phase 4)
 
 ---
 
 ## 🎯 RECOMMENDED: Next Groups to Implement (In Priority Order)
 
-### Priority 1: Audio Production (Group 5) - NEXT RECOMMENDED
+### Priority 1: Script Development (Group 3) - NEXT RECOMMENDED ⭐
 
 **Why This is Critical:**
-- ✅ Scripts are ready (from Group 3)
+- ✅ Content pipeline is ready (Group 1)
+- ✅ Ideas are being generated (Group 2)
+- ❌ **BLOCKING:** Scripts are needed for scene planning
+- 🔥 **This is the LOWEST numbered incomplete group**
+- 🎯 **Blocks entire downstream pipeline**
+
+**Tasks (5):**
+1. **05-script-01-raw-generation** (P1) - Generate initial video script
+   - Use selected ideas from Group 2
+   - Apply storytelling structure
+   - Create engaging narrative flow
+   - Output: `Generator/scripts/raw/{title_id}.json`
+
+2. **05-script-02-script-scorer** (P1) - Score script quality
+   - Evaluate engagement, clarity, pacing
+   - Check for storytelling elements
+   - Assess target demographic fit
+   - Output: Quality scores and metrics
+
+3. **05-script-03-iteration** (P1) - Iteratively improve scripts
+   - Multiple refinement passes
+   - Address low-scoring areas
+   - Optimize for target audience
+   - Output: Improved script versions
+
+4. **05-script-04-gpt-improvement** (P1) - GPT-based enhancement
+   - Use GPT-4 for creative improvement
+   - Enhance engagement and flow
+   - Polish dialogue and narration
+   - Output: Enhanced script
+
+5. **05-script-05-title-improvement** (P1) - Optimize video title
+   - Refine title based on final script
+   - Ensure clickability and SEO
+   - A/B test variations
+   - Output: Final optimized title
+
+**Estimated Effort:** 15-20 hours (3 developers, 2 days)  
+**Blocking:** All downstream groups (scenes, audio, video, etc.)  
+**Priority Level:** P1 (CRITICAL)
+
+**Location:** `/issues/p1-high/script-development/`
+
+### Priority 2: Audio Production (Group 5) - SECOND PRIORITY
+
+**Why This is Next:**
+- ✅ Scripts will be ready (from Group 3)
 - ✅ Scene timing is established (from Group 4)
 - 🔥 Audio is needed for forced subtitle alignment
 - 🔥 Audio duration is required for accurate video timing
@@ -68,160 +151,130 @@ issues/p1-high/audio-production/
 └── 07-audio-02-normalization/
 ```
 
----
+**Estimated Effort:** 8-10 hours (2 developers, 1 day)  
+**Priority Level:** P1 (HIGH)
 
-### Priority 2: Image Generation (Group 7) - Can Run in Parallel
+**Location:** `/issues/p1-high/audio-production/`
 
-**Why This is Important:**
-- ✅ Scene visual prompts ready (from Group 4)
-- ✅ Can run independently while audio is generated
-- 🎯 Images needed for video synthesis
+### Priority 3: Video Variant Selection (Group 8 remainder)
 
-**Tasks (4):**
-1. **08-images-01-prompt-building** (P1) - Build SDXL prompts from visual descriptions
-2. **08-images-02-keyframe-batch-a** (P1) - Generate first batch of keyframes
-3. **08-images-03-keyframe-batch-b** (P2) - Generate second batch (variants)
-4. **08-images-04-selection** (P2) - Select best images for each scene
+**Why This is Remaining:**
+- ✅ LTX generation and interpolation are complete (moved to resolved)
+- ❌ Variant selection quality assessment NOT YET IMPLEMENTED
+- 🎯 Would improve video quality but not blocking
 
-**Estimated Effort:** 8-12 hours  
-**Dependencies:** Scene Planning (Group 4) ✅  
-**Blocks:** Video Production (Group 8)
+**Tasks (1):**
+1. **10-video-03-variant-selection** (P2) - Select best video variant
+   - Quality metrics for video assessment
+   - Motion smoothness and temporal consistency
+   - Artifact detection
+   - Output: Selected video variant manifest
 
-**Note:** Groups 5 and 7 can be worked on in parallel by different developers.
+**Estimated Effort:** 4-5 hours (1 developer, 0.5 day)  
+**Priority Level:** P2 (MEDIUM)
 
----
+**Location:** `/issues/p1-high/video-production/10-video-03-variant-selection/`
 
-### Priority 3: Video Production (Group 8) - After Audio + Images
-
-**Why Wait:**
-- ❌ Requires audio files for timing (from Group 5)
-- ❌ Requires keyframe images (from Group 7)
-- Must have both before video synthesis
+### Priority 4: Quality Control (Group 10)
 
 **Tasks (3):**
-1. **10-video-01-ltx-generation** (P1) - Generate video clips using LTX
-2. **10-video-02-interpolation** (P1) - Interpolate frames for smoothness
-3. **10-video-03-variant-selection** (P2) - Select best video variants
+1. **12-qc-01-device-preview** - Generate preview for different devices
+2. **12-qc-02-sync-check** - Verify audio/video sync
+3. **12-qc-03-quality-report** - Generate quality metrics report
 
-**Estimated Effort:** 8-12 hours  
-**Dependencies:** Audio (Group 5), Images (Group 7)
+**Estimated Effort:** 8-10 hours (2 developers, 1 day)  
+**Priority Level:** P1 (HIGH)
 
----
+**Location:** `/issues/p1-high/quality-control/`
 
-### Priority 4: Subtitle Creation (Group 6) - After Audio
+### Priority 5: Export & Delivery (Group 11)
 
-**Why Wait:**
-- ❌ Requires audio files for forced alignment (from Group 5)
-- Draft subtitles exist but need precise timing
+**Tasks (3):**
+1. **13-export-01-final-encode** - Final video encoding for distribution
+2. **13-export-02-thumbnail** - Generate video thumbnail
+3. **13-export-03-metadata** - Create metadata files
 
-**Tasks (2):**
-1. **11-subtitles-01-forced-alignment** (P1) - Align subtitles with audio using Whisper
-2. **11-subtitles-02-scene-mapping** (P1) - Map aligned subtitles to video scenes
+**Estimated Effort:** 6-8 hours (2 developers, 1 day)  
+**Priority Level:** P1 (HIGH)
 
-**Estimated Effort:** 4-6 hours  
-**Dependencies:** Audio (Group 5)
-
----
-
-### Priority 5: Post-Production (Group 9) - After Video
-
-**Why Wait:**
-- ❌ Requires video clips (from Group 8)
-- ❌ Requires aligned subtitles (from Group 6)
-- Final assembly stage
-
-**Tasks (6):**
-1. **09-post-01-crop-resize** (P1) - Crop to 9:16 aspect ratio
-2. **09-post-02-subtitle-burn** (P1) - Burn subtitles into video
-3. **09-post-03-bgm-sfx** (P1) - Add background music and sound effects
-4. **09-post-04-concatenation** (P1) - Concatenate clips into single video
-5. **09-post-05-transitions** (P2) - Add transitions between scenes
-6. **09-post-06-color-grading** (P2) - Apply color grading
-
-**Estimated Effort:** 10-14 hours  
-**Dependencies:** Video (Group 8), Subtitles (Group 6)
+**Location:** `/issues/p1-high/export-delivery/`
 
 ---
 
 ## 📊 Implementation Strategy
 
-### Parallel Execution Recommended
+### Updated Execution Plan
 
-**Wave 1: Foundation (Now - Next 1-2 days)**
-```
-Developer Team A (2 devs):
-├── 07-audio-01-tts-generation
-└── 07-audio-02-normalization
-
-Developer Team B (3 devs):
-├── 08-images-01-prompt-building
-├── 08-images-02-keyframe-batch-a
-├── 08-images-03-keyframe-batch-b
-└── 08-images-04-selection
-```
-
-**Wave 2: Synthesis (After Wave 1 - Next 2-3 days)**
-```
-Developer Team A (2 devs):
-├── 11-subtitles-01-forced-alignment
-└── 11-subtitles-02-scene-mapping
-
-Developer Team B (3 devs):
-├── 10-video-01-ltx-generation
-├── 10-video-02-interpolation
-└── 10-video-03-variant-selection
-```
-
-**Wave 3: Assembly (After Wave 2 - Next 2-3 days)**
-```
-Developer Team (4 devs):
-├── 09-post-01-crop-resize
-├── 09-post-02-subtitle-burn
-├── 09-post-03-bgm-sfx
-├── 09-post-04-concatenation
-├── 09-post-05-transitions
-└── 09-post-06-color-grading
-```
-
-**Wave 4: Quality & Delivery (After Wave 3 - Next 1-2 days)**
+**Wave 1: Script Development (Now - Next 2 days)**
 ```
 Developer Team (3 devs):
-├── Quality Control (3 tasks)
-├── Export & Delivery (3 tasks)
-└── Distribution (4 tasks - P2)
+├── 05-script-01-raw-generation
+├── 05-script-02-script-scorer
+├── 05-script-03-iteration
+├── 05-script-04-gpt-improvement
+└── 05-script-05-title-improvement
+```
+
+**Wave 2: Audio Production (After Wave 1 - Next 1 day)**
+```
+Developer Team (2 devs):
+├── 07-audio-01-tts-generation
+└── 07-audio-02-normalization
+```
+
+**Wave 3: Quality & Export (After Wave 2 - Next 2 days)**
+```
+Developer Team A (2 devs):
+├── 12-qc-01-device-preview
+├── 12-qc-02-sync-check
+└── 12-qc-03-quality-report
+
+Developer Team B (2 devs):
+├── 13-export-01-final-encode
+├── 13-export-02-thumbnail
+└── 13-export-03-metadata
+```
+
+**Optional: Video Variant Selection (Parallel to Wave 3)**
+```
+Developer (1 dev):
+└── 10-video-03-variant-selection
 ```
 
 ---
 
 ## 🚀 Immediate Next Action
 
-**START HERE: Audio Production (Group 5)**
+**START HERE: Script Development (Group 3) - LOWEST INCOMPLETE GROUP**
 
-### Step 1: Review Audio Production Issues
+### Step 1: Review Script Development Issues
 ```bash
 cd /home/runner/work/StoryGenerator/StoryGenerator
-cd issues/p1-high/audio-production
+cd issues/p1-high/script-development
 ls -la
-cat 07-audio-01-tts-generation/issue.md
-cat 07-audio-02-normalization/issue.md
+cat 05-script-01-raw-generation/issue.md
+cat 05-script-02-script-scorer/issue.md
+cat 05-script-03-iteration/issue.md
+cat 05-script-04-gpt-improvement/issue.md
+cat 05-script-05-title-improvement/issue.md
 ```
 
-### Step 2: Implement TTS Generation
-- Choose TTS provider (ElevenLabs recommended, OpenAI alternative)
-- Implement Python module: `core/audio_generation.py`
-- Add voice selection logic based on demographics
-- Create tests: `tests/test_audio_generation.py`
+### Step 2: Implement Script Generation
+- Choose LLM provider (GPT-4 recommended)
+- Implement Python module: `core/script_generation.py`
+- Add storytelling structure and templates
+- Create tests: `tests/test_script_generation.py`
 - Update issue template with implementation details
 
-### Step 3: Implement Audio Normalization
-- Use pyloudnorm library (already in requirements.txt)
-- Implement normalization to -14 LUFS (YouTube standard)
-- Add tests for LUFS measurement
-- Document normalization parameters
+### Step 3: Implement Script Scoring
+- Build quality evaluation metrics
+- Implement scoring algorithms
+- Add demographic fitting assessment
+- Document scoring criteria
 
 ### Step 4: Integration
-- Test end-to-end: Script → Scene Plan → Audio Generation
-- Verify audio files work with forced alignment tools (Whisper)
+- Test end-to-end: Ideas → Script Generation → Script Scoring
+- Verify scripts work with scene planning (Group 4)
 - Update pipeline documentation
 
 ---
@@ -232,38 +285,40 @@ cat 07-audio-02-normalization/issue.md
 
 ```
 Total Groups: 13
-Completed: 4 (31%)
-Remaining: 9 (69%)
+Completed: 7 (54% - Groups 1, 2, 4, 6, 7, 9 + partial 8)
+Remaining: 6 (46% - Groups 3, 5, 8 partial, 10, 11, 12)
 
 Total Tasks: 52
-Completed: 21 (40%)
-Remaining: 31 (60%)
+Completed: 30 (58%)
+Remaining: 22 (42%)
 
-Next Milestone: 50% completion (26 tasks)
-Requires: Audio Production (2) + Image Generation (4) + Subtitle Creation (2)
+Next Milestone: 65% completion (34 tasks)
+Requires: Script Development (5) + Audio Production (2) + remaining tasks
 ```
 
 **Estimated Timeline:**
-- Week 1 Complete: Groups 1-4 (21 tasks) ✅
-- Week 2 Target: Groups 5-7 (10 tasks) → 31 tasks (60%)
-- Week 3 Target: Groups 8-9 (11 tasks) → 42 tasks (81%)
-- Week 4 Target: Groups 10-13 (10 tasks) → 52 tasks (100%) ✅
+- ✅ Week 1-2 Complete: Groups 1, 2, 4, 6, 7, 9 (30 tasks) + Phase 4
+- 🎯 Week 3 Target: Group 3 Script Dev (5 tasks) → 35 tasks (67%)
+- 🎯 Week 4 Target: Group 5 Audio + Group 8 video + QC (6 tasks) → 41 tasks (79%)
+- 🎯 Week 5 Target: Groups 10-11 Export (6 tasks) → 47 tasks (90%)
+- 🎯 Week 6 Target: Final polish and distribution → 52 tasks (100%) ✅
 
 ---
 
 ## 🎯 Success Metrics
 
-After completing Audio Production (Group 5), you will have:
+After completing Script Development (Group 3), you will have:
 
-✅ End-to-end pipeline from content to audio:
+✅ End-to-end content-to-script pipeline:
 ```
-Reddit Content → Ideas → Scripts → Scenes → Audio Files
+Reddit Content → Ideas → Scripts (COMPLETE) → Scenes → Ready for Audio
 ```
 
 ✅ Key outputs ready:
-- Normalized audio files ready for video synthesis
-- Audio duration data for precise video timing
-- Audio files ready for forced subtitle alignment
+- Generated scripts ready for scene planning
+- Script quality scores and iterations
+- Optimized titles and narratives
+- Complete foundation for audio/video generation
 
 ✅ Unblocking multiple downstream tasks:
 - Subtitle forced alignment can proceed
