@@ -14,7 +14,7 @@ This roadmap tracks the implementation of StoryGenerator's hybrid architecture, 
 **Overall Progress:**
 - ✅ **Completed:** 15 tasks (100% of P0 critical)
 - 🔄 **In Progress:** 5 tasks (Pipeline orchestration foundation)
-- 📋 **Not Started:** 60 tasks (P1 and P2 priorities)
+- 📋 **Not Started:** 65 tasks (P1 and P2 priorities)
 
 ---
 
@@ -146,6 +146,7 @@ This roadmap tracks the implementation of StoryGenerator's hybrid architecture, 
 5. Test error handling
 
 **References:**
+- [Roadmap Analysis](ROADMAP_ANALYSIS.md) - Current status and next steps
 - [Pipeline Orchestration Guide](PIPELINE_ORCHESTRATION.md)
 - [Implementation Roadmap](IMPLEMENTATION_ROADMAP.md)
 - [P1 High Priority Issues](../issues/p1-high/)

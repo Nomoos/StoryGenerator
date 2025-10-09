@@ -57,7 +57,8 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 ### 🔬 Research & Architecture
 - **[Technology Stack](docs/TECHNOLOGY_STACK_FINAL.md)** - C# + Python + SQLite
 - **[Hybrid Architecture](docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Architecture guide
-- **[Hybrid Roadmap](docs/HYBRID_ROADMAP.md)** - 📋 **NEW: Complete implementation status**
+- **[Hybrid Roadmap](docs/HYBRID_ROADMAP.md)** - 📋 Complete implementation status
+- **[Roadmap Analysis](docs/ROADMAP_ANALYSIS.md)** - 🎯 **NEW: Current status & next steps**
 - **[GPU Comparison](docs/GPU_COMPARISON.md)** - Hardware benchmarks
 - **[Models Documentation](docs/MODELS.md)** - ML model references
 - **[C# vs Python](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Technology comparison
