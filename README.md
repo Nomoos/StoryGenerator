@@ -65,7 +65,7 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 <td>
 
 ### 🔐 Security & Maintenance
-- **[Security Checklist](SECURITY_CHECKLIST.md)** - Security procedures
+- **[Security Checklist](docs/SECURITY_CHECKLIST.md)** - Security procedures
 - **[Repository Cleanup](REPOSITORY_CLEANUP_GUIDE.md)** - Maintenance guide
 - **[Issue Tracking](docs/ISSUE_TRACKING.md)** - Task management
 - **[Migration Guide](src/CSharp/MIGRATION_GUIDE.md)** - Python to C#
@@ -250,7 +250,7 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 - Rotate API keys regularly
 - Follow security best practices
 
-➡️ **[Security checklist](SECURITY_CHECKLIST.md)** | **[Security procedures](docs/SECURITY_CHECKLIST.md)**
+➡️ **[Security checklist](docs/SECURITY_CHECKLIST.md)** | **[Security procedures](docs/SECURITY_CHECKLIST.md)**
 
 ---
 
