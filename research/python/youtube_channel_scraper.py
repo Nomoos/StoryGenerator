@@ -92,7 +92,7 @@ class YouTubeChannelScraper:
     """Scrapes metadata from YouTube channel videos."""
     
     # Constants
-    SHORTS_FETCH_MULTIPLIER = 3  # Fetch extra shorts to ensure we get enough
+    SHORTS_FETCH_MULTIPLIER = 3  # Fetch 3x shorts to compensate for potential filtering/unavailable videos
     
     def __init__(self, output_dir: str = "/tmp/youtube_channel_data"):
         """
