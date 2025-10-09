@@ -28,6 +28,8 @@ class Program
         rootCommand.AddCommand(CreateGenerateVoiceCommand());
         rootCommand.AddCommand(CreateGenerateSubtitlesCommand());
         rootCommand.AddCommand(CreateFullPipelineCommand());
+        rootCommand.AddCommand(CreatePipelineResumeCommand());
+        rootCommand.AddCommand(CreatePipelineValidateCommand());
 
         return await rootCommand.InvokeAsync(args);
     }
@@ -349,6 +351,110 @@ class Program
                 Console.WriteLine($"📂 Output directory: {revisedDir}");
             });
         }, topicOption, outputRootOption);
+
+        return command;
+    }
+
+    static Command CreatePipelineResumeCommand()
+    {
+        var checkpointPathOption = new Option<string>(
+            name: "--checkpoint-path",
+            description: "Path to the checkpoint file",
+            getDefaultValue: () => "./Stories/pipeline_checkpoint.json");
+
+        var command = new Command("pipeline-resume", "Resume a pipeline from a saved checkpoint")
+        {
+            checkpointPathOption
+        };
+
+        command.SetHandler(async (string checkpointPath) =>
+        {
+            if (!File.Exists(checkpointPath))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"❌ Checkpoint file not found: {checkpointPath}");
+                Console.ResetColor();
+                Environment.Exit(1);
+                return;
+            }
+
+            Console.WriteLine($"🔄 Resuming pipeline from checkpoint: {checkpointPath}");
+            Console.WriteLine("⚠️  Note: Pipeline resume via PipelineOrchestrator integration coming soon!");
+            Console.WriteLine("    For now, use 'full-pipeline' command which automatically resumes from checkpoints.");
+            
+            // TODO: Integrate with PipelineOrchestrator to resume from checkpoint
+            // This would require refactoring the full-pipeline command to use the orchestrator
+        }, checkpointPathOption);
+
+        return command;
+    }
+
+    static Command CreatePipelineValidateCommand()
+    {
+        var configPathOption = new Option<string>(
+            name: "--config",
+            description: "Path to pipeline configuration file",
+            getDefaultValue: () => "./appsettings.json");
+
+        var command = new Command("pipeline-validate", "Validate pipeline configuration")
+        {
+            configPathOption
+        };
+
+        command.SetHandler((string configPath) =>
+        {
+            if (!File.Exists(configPath))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"❌ Configuration file not found: {configPath}");
+                Console.ResetColor();
+                Environment.Exit(1);
+                return;
+            }
+
+            Console.WriteLine($"✅ Validating configuration: {configPath}");
+            
+            try
+            {
+                // Basic validation - check if file is valid JSON
+                var json = File.ReadAllText(configPath);
+                System.Text.Json.JsonDocument.Parse(json);
+                
+                // Check for required environment variables
+                var requiredEnvVars = new[] { "OPENAI_API_KEY", "ELEVENLABS_API_KEY" };
+                var missingVars = new List<string>();
+                
+                foreach (var envVar in requiredEnvVars)
+                {
+                    if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(envVar)))
+                    {
+                        missingVars.Add(envVar);
+                    }
+                }
+
+                if (missingVars.Count > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"⚠️  Warning: Missing environment variables:");
+                    foreach (var missing in missingVars)
+                    {
+                        Console.WriteLine($"    - {missing}");
+                    }
+                    Console.ResetColor();
+                }
+                
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("✅ Configuration is valid");
+                Console.ResetColor();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"❌ Configuration validation failed: {ex.Message}");
+                Console.ResetColor();
+                Environment.Exit(1);
+            }
+        }, configPathOption);
 
         return command;
     }
