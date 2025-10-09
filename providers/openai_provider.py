@@ -17,20 +17,24 @@ from tenacity import (
     retry_if_exception_type,
 )
 
+from core.interfaces.llm_provider import ILLMProvider, IAsyncLLMProvider
+
 logger = logging.getLogger(__name__)
 
 
-class OpenAIProvider:
+class OpenAIProvider(ILLMProvider):
     """
     Synchronous wrapper for OpenAI API using new SDK (v1.0+).
-    
+
     This class provides a clean interface to OpenAI's chat completions API
     with automatic retry logic for rate limits and proper error handling.
-    
+
+    Implements the ILLMProvider interface for standardized LLM access.
+
     Example:
         >>> provider = OpenAIProvider(model="gpt-4o-mini")
         >>> messages = [{"role": "user", "content": "Hello!"}]
-        >>> response = provider.chat_completion(messages)
+        >>> response = provider.generate_chat(messages)
         >>> print(response)
     """
 
@@ -55,6 +59,62 @@ class OpenAIProvider:
         self.model = model
         self.client = OpenAI(api_key=self.api_key)
         logger.info(f"Initialized OpenAI provider with model: {model}")
+
+    @property
+    def model_name(self) -> str:
+        """Get the name of the model being used."""
+        return self.model
+
+    def generate_completion(
+        self,
+        prompt: str,
+        temperature: float = 0.7,
+        max_tokens: Optional[int] = None,
+        **kwargs,
+    ) -> str:
+        """
+        Generate completion from a single prompt (implements ILLMProvider).
+
+        This is a convenience wrapper around generate_chat that formats
+        a simple prompt as a user message.
+
+        Args:
+            prompt: The prompt text
+            temperature: Sampling temperature (0-2, default: 0.7)
+            max_tokens: Maximum tokens in response (optional)
+            **kwargs: Additional parameters to pass to the API
+
+        Returns:
+            Generated text content as string
+        """
+        messages = [{"role": "user", "content": prompt}]
+        return self.generate_chat(messages, temperature, max_tokens, **kwargs)
+
+    def generate_chat(
+        self,
+        messages: List[Dict[str, str]],
+        temperature: float = 0.7,
+        max_tokens: Optional[int] = None,
+        **kwargs,
+    ) -> str:
+        """
+        Generate chat completion (implements ILLMProvider).
+
+        Args:
+            messages: List of message dicts with 'role' and 'content' keys
+            temperature: Sampling temperature (0-2, default: 0.7)
+            max_tokens: Maximum tokens in response (optional)
+            **kwargs: Additional parameters to pass to the API
+
+        Returns:
+            Generated text content as string
+
+        Raises:
+            RateLimitError: If rate limit exceeded after retries
+            APIError: If API returns an error
+            OpenAIError: For other OpenAI-related errors
+        """
+        return self.chat_completion(messages, temperature, max_tokens, **kwargs)
 
     @retry(
         retry=retry_if_exception_type((RateLimitError, APIConnectionError)),
@@ -149,17 +209,19 @@ class OpenAIProvider:
         return self.chat_completion(messages, temperature, max_tokens, **kwargs)
 
 
-class AsyncOpenAIProvider:
+class AsyncOpenAIProvider(IAsyncLLMProvider):
     """
     Asynchronous wrapper for OpenAI API using new SDK (v1.0+).
-    
+
     This class provides async/await support for OpenAI API calls,
     useful for high-throughput applications.
-    
+
+    Implements the IAsyncLLMProvider interface for standardized async LLM access.
+
     Example:
         >>> provider = AsyncOpenAIProvider(model="gpt-4o-mini")
         >>> messages = [{"role": "user", "content": "Hello!"}]
-        >>> response = await provider.chat_completion(messages)
+        >>> response = await provider.generate_chat(messages)
         >>> print(response)
     """
 
@@ -184,6 +246,62 @@ class AsyncOpenAIProvider:
         self.model = model
         self.client = AsyncOpenAI(api_key=self.api_key)
         logger.info(f"Initialized async OpenAI provider with model: {model}")
+
+    @property
+    def model_name(self) -> str:
+        """Get the name of the model being used."""
+        return self.model
+
+    async def generate_completion(
+        self,
+        prompt: str,
+        temperature: float = 0.7,
+        max_tokens: Optional[int] = None,
+        **kwargs,
+    ) -> str:
+        """
+        Generate async completion from a single prompt (implements IAsyncLLMProvider).
+
+        This is a convenience wrapper around generate_chat that formats
+        a simple prompt as a user message.
+
+        Args:
+            prompt: The prompt text
+            temperature: Sampling temperature (0-2, default: 0.7)
+            max_tokens: Maximum tokens in response (optional)
+            **kwargs: Additional parameters to pass to the API
+
+        Returns:
+            Generated text content as string
+        """
+        messages = [{"role": "user", "content": prompt}]
+        return await self.generate_chat(messages, temperature, max_tokens, **kwargs)
+
+    async def generate_chat(
+        self,
+        messages: List[Dict[str, str]],
+        temperature: float = 0.7,
+        max_tokens: Optional[int] = None,
+        **kwargs,
+    ) -> str:
+        """
+        Generate async chat completion (implements IAsyncLLMProvider).
+
+        Args:
+            messages: List of message dicts with 'role' and 'content' keys
+            temperature: Sampling temperature (0-2, default: 0.7)
+            max_tokens: Maximum tokens in response (optional)
+            **kwargs: Additional parameters to pass to the API
+
+        Returns:
+            Generated text content as string
+
+        Raises:
+            RateLimitError: If rate limit exceeded after retries
+            APIError: If API returns an error
+            OpenAIError: For other OpenAI-related errors
+        """
+        return await self.chat_completion(messages, temperature, max_tokens, **kwargs)
 
     @retry(
         retry=retry_if_exception_type((RateLimitError, APIConnectionError)),
