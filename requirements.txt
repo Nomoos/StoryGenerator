@@ -55,3 +55,5 @@ accelerate>=0.20.0
 # Alternative content source scrapers
 beautifulsoup4>=4.12.0
 tweepy>=4.14.0
+# YouTube video and subtitle analysis
+yt-dlp>=2024.0.0
