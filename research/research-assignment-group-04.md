@@ -257,9 +257,10 @@ Research scene graph architectures, level-of-detail (LOD) systems, memory manage
    - Content: Asset bundle and addressables system
 
 2. **Unreal World Composition**
-   - URL: https://docs.unrealengine.com/5.0/en-US/world-composition-in-unreal-engine/
+   - URL: https://docs.unrealengine.com/5.3/en-US/world-composition-in-unreal-engine/
    - Priority: High
    - Content: Level streaming and world management
+   - Note: Check for newer versions of Unreal Engine documentation at https://docs.unrealengine.com/ to ensure up-to-date features and APIs.
 
 3. **Real-Time Rendering (Book)**
    - Authors: Tomas Akenine-Möller, Eric Haines, Naty Hoffman
