@@ -40,7 +40,7 @@ Research feasibility of implementing the AI video pipeline in C# using ML.NET, n
 - [ ] Packaging/deployment options
 
 ### Nice to Research
-- [ ] Cross-platform support (.NET 8+)
+- [ ] Cross-platform support (.NET 9+)
 - [ ] Azure ML integration
 - [ ] Blazor UI possibilities
 

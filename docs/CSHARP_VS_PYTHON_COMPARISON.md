@@ -102,7 +102,7 @@ The project has **already chosen C# as the primary implementation** with Python 
 | Criterion | C# | Python | Winner |
 |-----------|-----|--------|--------|
 | **Packaging** | Single executable, self-contained | Requires Python runtime, dependencies | ✅ **C#** |
-| **Cross-Platform** | Excellent (.NET 8+) | Excellent (native) | ≈ **Tie** |
+| **Cross-Platform** | Excellent (.NET 9+) | Excellent (native) | ≈ **Tie** |
 | **Docker** | Smaller images, faster startup | Larger images, slower startup | ✅ **C#** |
 | **Cloud Integration** | Native Azure, good AWS/GCP | Good across all clouds | ✅ **C#** |
 | **Dependency Management** | NuGet (reliable, versioned) | pip/conda (dependency hell possible) | ✅ **C#** |

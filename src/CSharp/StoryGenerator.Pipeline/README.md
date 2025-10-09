@@ -31,7 +31,7 @@ The orchestrator executes the following steps in order:
 
 ## Prerequisites
 
-- .NET 8.0 SDK or later
+- .NET 9.0 SDK or later
 - Python 3.8+ with StoryGenerator dependencies installed
 - OpenAI API key (for script generation)
 - ElevenLabs API key (for voice generation)

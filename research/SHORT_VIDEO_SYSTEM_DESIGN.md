@@ -988,7 +988,7 @@ def generate_analytics_report(start_date, end_date):
 
 | Component | Technology | Rationale |
 |-----------|-----------|-----------|
-| **Orchestration** | C# (.NET 8) | Type safety, performance, async/await |
+| **Orchestration** | C# (.NET 9) | Type safety, performance, async/await |
 | **ML Inference** | Python | Best ML library ecosystem |
 | **Database** | PostgreSQL | Robust, JSON support, full-text search |
 | **Cache/Queue** | Redis | Fast, reliable task queuing |

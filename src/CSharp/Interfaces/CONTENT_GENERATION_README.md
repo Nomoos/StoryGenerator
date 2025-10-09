@@ -199,7 +199,7 @@ content_generation:
 
 ## Requirements
 
-- .NET 8.0+
+- .NET 9.0+
 - LLM API access (GPT-4o-mini, Qwen2.5-14B-Instruct, or similar)
 - File system access for reading/writing
 

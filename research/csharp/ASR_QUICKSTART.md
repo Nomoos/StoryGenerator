@@ -11,7 +11,7 @@ Get up and running with the ASR (Automatic Speech Recognition) module in 5 minut
    ```bash
    pip install faster-whisper>=0.10.0
    ```
-3. **.NET 8.0+** (for C# components)
+3. **.NET 9.0+** (for C# components)
 
 ## Platform Notes
 

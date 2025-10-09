@@ -199,7 +199,7 @@ Filter: ✅ Age-appropriate filtering works
 ### What's Needed to Run:
 
 **C# Generators:**
-- .NET 8.0 SDK
+- .NET 9.0 SDK
 - API credentials for OpenAI and ElevenLabs
 - Configuration via environment variables or appsettings.json
 

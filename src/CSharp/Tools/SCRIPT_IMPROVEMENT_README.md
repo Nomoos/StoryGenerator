@@ -189,7 +189,7 @@ These can be adjusted in the `ScriptImprover` class constructor.
 
 ## Requirements
 
-- .NET 8.0 or later
+- .NET 9.0 or later
 - Ollama installed and running (for local models)
 - OR OpenAI API key (for GPT models)
 

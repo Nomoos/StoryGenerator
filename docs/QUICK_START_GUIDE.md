@@ -1,7 +1,7 @@
 # Quick Start Guide - P1 Pipeline Implementation
 
 **Target Audience:** Developers implementing pipeline stages  
-**Prerequisites:** C# .NET 8.0, familiarity with async/await patterns
+**Prerequisites:** C# .NET 9.0, familiarity with async/await patterns
 
 ## Getting Started
 

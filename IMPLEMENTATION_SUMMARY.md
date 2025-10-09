@@ -13,7 +13,7 @@ This PR implements the foundational infrastructure for the StoryGenerator techno
 
 ## Completed Phases
 
-### ✅ Phase 1 — .NET 8 Solution & Projects
+### ✅ Phase 1 — .NET 9 Solution & Projects
 
 **Deliverables:**
 - Created `StoryGenerator.Data` class library project

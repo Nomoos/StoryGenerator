@@ -18,7 +18,7 @@ The C# implementation of StoryGenerator provides a high-performance, type-safe a
 
 ## 📦 Requirements
 
-- .NET 8.0 or later
+- .NET 9.0 or later
 - OpenAI API key
 - ElevenLabs API key (for voice generation)
 
@@ -329,13 +329,13 @@ string output = await producer.ProduceVideoAsync(config);
 
 **Requirements:**
 - FFmpeg must be installed and available in PATH
-- .NET 8.0 or later
+- .NET 9.0 or later
 
 ## 💻 Development
 
 ## 💻 Development Prerequisites
 
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download)
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download)
 - Visual Studio 2022, Rider, or VS Code
 - Git
 

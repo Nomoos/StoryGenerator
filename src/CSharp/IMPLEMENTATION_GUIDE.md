@@ -101,7 +101,7 @@ pip install diffusers[torch]     # For SDXL
 ### 4. Set Up .NET Environment
 
 ```bash
-# Install .NET 8.0 SDK (if not already installed)
+# Install .NET 9.0 SDK (if not already installed)
 # https://dotnet.microsoft.com/download
 
 # Add NuGet packages (if using Python.NET or gRPC)

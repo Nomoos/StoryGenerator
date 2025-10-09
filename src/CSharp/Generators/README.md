@@ -285,7 +285,7 @@ dotnet run --project Examples/ContentGenerationExample.cs
 
 ## Dependencies
 
-- .NET 8.0+
+- .NET 9.0+
 - System.Text.Json (included in .NET)
 - System.Text.RegularExpressions (included in .NET)
 

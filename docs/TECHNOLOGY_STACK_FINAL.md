@@ -7,7 +7,7 @@
 **Answer**: **No. Stick with C# + Python hybrid.**
 
 **Recommended Stack**:
-- **C# (.NET 8)** for orchestration, APIs, I/O, configuration
+- **C# (.NET 9)** for orchestration, APIs, I/O, configuration
 - **Python 3.11+** for ML inference (SDXL, LTX-Video, Whisper)
 - **SQLite** for local database
 - **Local file system** for media storage
@@ -186,7 +186,7 @@ public async Task<string> GenerateScriptAsync(string prompt)
 ```yaml
 Language (Orchestration):
   Primary: C# 12
-  Runtime: .NET 8.0
+  Runtime: .NET 9.0
   Reason: Type-safe, fast, excellent tooling
 
 Language (ML Inference):
@@ -316,7 +316,7 @@ Logging:
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│              C# Application (.NET 8)                │
+│              C# Application (.NET 9)                │
 │                                                      │
 │  ┌────────────────────────────────────────────┐    │
 │  │  Pipeline Orchestrator                     │    │
@@ -471,7 +471,7 @@ Logging:
 
 ```yaml
 Core:
-  - Language: C# 12 (.NET 8)
+  - Language: C# 12 (.NET 9)
   - ML: Python 3.11+ (PyTorch ecosystem)
   - Database: SQLite (local) or PostgreSQL (enterprise)
   - Storage: File system (local) or S3/Blob (enterprise)
@@ -531,7 +531,7 @@ Verdict: Not worth it
 
 **Recommended Stack**:
 ```
-C# (.NET 8) + Python 3.11+ + SQLite + FFmpeg
+C# (.NET 9) + Python 3.11+ + SQLite + FFmpeg
 ```
 
 **Reasoning**:

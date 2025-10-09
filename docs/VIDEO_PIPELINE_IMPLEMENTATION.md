@@ -140,7 +140,7 @@ Tests cover:
 ## Dependencies
 
 ### Required Software
-- .NET 8.0 SDK
+- .NET 9.0 SDK
 - FFmpeg (for video composition)
 - Python 3.8+ with:
   - PyTorch

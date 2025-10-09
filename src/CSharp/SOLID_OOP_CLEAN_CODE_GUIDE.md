@@ -1503,7 +1503,7 @@ public class PythonScriptBridge : IPythonScriptBridge
 
 4. **Deployment**:
    - Self-contained executables
-   - Cross-platform (.NET 8+)
+   - Cross-platform (.NET 9+)
    - Docker support
    - Easy CI/CD integration
 

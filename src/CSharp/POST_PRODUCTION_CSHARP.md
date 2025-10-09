@@ -277,7 +277,7 @@ Videos are saved following this structure:
 
 ### NuGet Packages
 
-No additional NuGet packages required beyond .NET 8.0 standard libraries.
+No additional NuGet packages required beyond .NET 9.0 standard libraries.
 
 ## Error Handling
 

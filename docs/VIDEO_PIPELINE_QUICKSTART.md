@@ -7,7 +7,7 @@ The StoryGenerator now includes a complete video generation pipeline that can au
 ## Prerequisites
 
 ### Required Software
-- ✅ .NET 8.0 SDK
+- ✅ .NET 9.0 SDK
 - ✅ FFmpeg (must be in PATH)
 - ✅ Python 3.8+ with:
   - PyTorch (with CUDA support recommended)

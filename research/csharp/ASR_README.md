@@ -42,7 +42,7 @@ The ASR module is designed to work seamlessly across all major platforms:
    pip install faster-whisper>=0.10.0
    ```
 
-2. **.NET 8.0+** for C# components
+2. **.NET 9.0+** for C# components
 
 3. **CUDA-capable GPU** (optional but recommended for faster processing)
 

@@ -201,7 +201,7 @@ await producer.ConcatenateVideosAsync(segments, output, "fade", 0.5);
 
 ### Required
 - **FFmpeg**: System installation required
-- **.NET 8.0**: Runtime requirement
+- **.NET 9.0**: Runtime requirement
 
 ### Optional
 - **Licensed Music Files**: For background music

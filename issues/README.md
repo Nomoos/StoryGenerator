@@ -2,6 +2,24 @@
 
 This directory contains issue tracking for the C# implementation of StoryGenerator, organized by priority and status for optimal workflow management.
 
+> **📋 NEW:** See the [Hybrid Architecture Roadmap](../docs/HYBRID_ROADMAP.md) for a comprehensive view of completed, in-progress, and planned work across the entire project.
+
+## 🚀 Quick Status
+
+**Current Phase:** Pipeline Orchestration Foundation (In Progress)
+
+| What's Done | What's Next | Future Work |
+|------------|-------------|-------------|
+| ✅ Core C# Infrastructure | 🔄 Pipeline Stage Interface | 📋 Idea → Script Pipeline |
+| ✅ API Providers (OpenAI, ElevenLabs) | 🔄 Checkpoint Manager | 📋 Audio → Video Pipeline |
+| ✅ 6 Generators Implemented | 🔄 Configuration System | 📋 Platform Distribution |
+| ✅ SQLite Database | 🔄 Enhanced Logging | 📋 Analytics Dashboard |
+| ✅ Content Collectors | 🔄 Error Handling | 📋 Advanced Features |
+
+**Progress:** 15/85 tasks complete (18%) • [View Detailed Roadmap →](../docs/HYBRID_ROADMAP.md)
+
+---
+
 ## 🎯 Organization by Priority & Status
 
 Issues are organized following **best practices** and **test-driven development (TDD)** principles:
@@ -52,15 +70,18 @@ All 9 P0 critical issues have been completed and moved to resolved/:
 
 ## 📊 Status Overview
 
+> **💡 Quick Summary:** See the [Hybrid Roadmap](../docs/HYBRID_ROADMAP.md) for detailed progress tracking and architecture overview.
+
 | Priority | Status | Task Count | Estimated Effort |
 |----------|--------|------------|------------------|
 | ✅ Resolved | Complete | 15 tasks | ~65 hours (done) |
 | 🔴 P0 Critical | Complete | 0 tasks | 0 hours (ALL DONE ✅) |
-| 🟡 P1 High | Next | 50 tasks | 160-250 hours |
-| 🟢 P2 Medium | Planned | 16 tasks | 110-135 hours |
-| **Total** | | **81 tasks** | **270-385 hours** |
+| 🔄 **Pipeline Foundation** | **In Progress** | **5 tasks** | **~30 hours** |
+| 🟡 P1 High | Not Started | 47 tasks | 160-250 hours |
+| 🟢 P2 Medium | Not Started | 18 tasks | 110-135 hours |
+| **Total** | | **85 tasks** | **335-480 hours** |
 
-> **Note:** All P0 critical issues are now complete! The project is ready to begin P1 high-priority tasks.
+> **Note:** All P0 critical issues are complete! Currently working on pipeline orchestration foundation, then P1 high-priority tasks.
 
 ---
 

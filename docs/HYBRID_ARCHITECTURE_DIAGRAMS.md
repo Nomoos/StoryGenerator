@@ -448,9 +448,9 @@ Python Subprocess
 ```
 Developer Machine
 ┌─────────────────────────────────────────────────────┐
-│  C# Application (.NET 8)                             │
+│  C# Application (.NET 9)                             │
 │  ├─ src/CSharp/                                      │
-│  └─ bin/Debug/net8.0/                                │
+│  └─ bin/Debug/net9.0/                                │
 │                                                       │
 │  Python Scripts                                      │
 │  ├─ scripts/sdxl_generate.py                         │
