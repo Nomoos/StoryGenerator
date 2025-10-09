@@ -4,22 +4,26 @@ This folder contains code and documentation that is no longer actively maintaine
 
 ## Contents
 
-### Python Implementation (`Python/`)
+### ✅ Python Implementation - Removed (2025-01-09)
 
-The original Python implementation of StoryGenerator has been deprecated in favor of the C# implementation.
+The original Python implementation of StoryGenerator has been removed after successful migration to C#.
 
-**Status:** ⚠️ Obsolete - No longer maintained
+**Status:** Removed - Migration complete
 
-**Why deprecated:**
-- The C# implementation provides better performance
-- Better integration with .NET ecosystem
-- More maintainable codebase
-- Improved error handling and type safety
+**Why removed:**
+- All core generators migrated to C# implementation
+- Unique features documented as issues for future implementation
+- Code preserved in git history for reference
+- Aligns with project's hybrid architecture (C# + Python)
 
-**For users:**
-- If you need the Python version, it is preserved here for reference
-- We strongly recommend using the C# implementation in `src/CSharp/`
-- No bug fixes or feature updates will be made to the Python code
+**Migration Details:**
+- See `MIGRATION_STATUS.md` for complete migration tracking
+- Issues created for valuable features not yet re-implemented
+- Active Python scripts (hybrid mode) remain in `research/python/`, `src/scripts/`, `src/Python/`
+
+**For reference:**
+- Git history: `git show HEAD~1:obsolete/Python/` to view removed code
+- Migration status: See `obsolete/MIGRATION_STATUS.md`
 
 ### Python Documentation (`docs/`)
 
@@ -37,17 +41,29 @@ See `issues/README.md` for details on archived issues.
 
 **Current Issues:** Active C# implementation issues are in the main `issues/` directory.
 
-### Python Research (`research/python/`)
+### Python Research (`research/`)
 
-Research prototypes and scripts created for the Python implementation:
-- LLM integration scripts (llm_call.py)
-- Image generation (sdxl_keyframe.py)
-- Video generation (ltx_generate.py)
-- Audio processing (lufs_normalize.py)
-- Subtitle tools (srt_tools.py)
-- Frame interpolation (interpolation.py)
+**Status:** Mostly archived - Some files moved to active `research/python/`
 
-See `research/README.md` for details on archived research files.
+Research prototypes and scripts created for the obsolete Python implementation. Most files have been archived here, but some actively-used Python scripts remain in the main `research/python/` directory as they are part of the hybrid architecture.
+
+**Archived Python Research Files:**
+- See `research/README.md` for details on archived research files
+- LLM integration prototypes
+- Image generation experiments  
+- Video generation experiments
+- Audio processing utilities
+- Subtitle tools
+- Frame interpolation research
+
+**Active Python Files (NOT obsolete):**
+The following Python files are **NOT obsolete** and remain active in the hybrid architecture:
+- `research/python/whisper_subprocess.py` - Used by C# WhisperClient
+- `research/python/test_whisper_integration.py` - Integration tests
+- `src/scripts/whisper_asr.py` - ASR processing
+- `src/scripts/sdxl_generation.py` - Image generation  
+- `src/scripts/ltx_synthesis.py` - Video synthesis
+- `src/Python/` - Various utility modules for hybrid integration
 
 **Current Research:** Active research (including C#-compatible Python scripts) is in the main `research/` directory.
 
@@ -70,14 +86,16 @@ This code is kept for:
 ## Related Documentation
 
 - See main `README.md` for current project documentation
-- See `docs/CSHARP_IMPLEMENTATION_COMPLETE.md` for C# implementation details
-- See `CLEANUP.md` for repository reorganization history
+- See `MIGRATION_STATUS.md` for Python to C# migration tracking
+- See `docs/RESEARCH_SUMMARY.md` for hybrid architecture research
+- See `docs/HYBRID_ARCHITECTURE_QUICKREF.md` for C# + Python integration patterns
 
 ---
 
-**Last Updated:** 2025-10-08  
+**Last Updated:** 2025-01-09  
+**Status:** Python implementation removed after successful C# migration  
 **Archived From:** 
-- `src/Python/` - Python implementation
+- `obsolete/Python/` - Removed 2025-01-09 (see MIGRATION_STATUS.md)
 - `docs/` - Python-specific documentation
 - `issues/step-XX/` - Python-based sequential issues
-- `research/python/` - Python research prototypes (partial)
+- `research/python/` - Python research prototypes (partial - some remain active)
