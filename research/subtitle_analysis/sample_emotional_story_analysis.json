@@ -1,0 +1,107 @@
+{
+  "video_id": "sample_emotional_story",
+  "video_url": "https://example.com/sample",
+  "total_segments": 10,
+  "total_duration": 26.5,
+  "avg_segment_duration": 2.5599999999999996,
+  "min_segment_duration": 2.3999999999999986,
+  "max_segment_duration": 2.7,
+  "avg_words_per_segment": 9.6,
+  "avg_chars_per_segment": 47.2,
+  "avg_reading_speed_wps": 3.7590455840455848,
+  "total_gaps": 9,
+  "avg_gap_duration": 0.10000000000000059,
+  "overlaps": 0,
+  "segments": [
+    {
+      "index": 1,
+      "start_time": 0.0,
+      "end_time": 2.5,
+      "duration": 2.5,
+      "text": "When I was 12, I found a letter in my dad's drawer",
+      "word_count": 12,
+      "char_count": 50
+    },
+    {
+      "index": 2,
+      "start_time": 2.6,
+      "end_time": 5.0,
+      "duration": 2.4,
+      "text": "It was from my mom who passed away when I was born",
+      "word_count": 12,
+      "char_count": 50
+    },
+    {
+      "index": 3,
+      "start_time": 5.1,
+      "end_time": 7.8,
+      "duration": 2.7,
+      "text": "She wrote it before she died, knowing she wouldn't make it",
+      "word_count": 11,
+      "char_count": 58
+    },
+    {
+      "index": 4,
+      "start_time": 7.9,
+      "end_time": 10.5,
+      "duration": 2.5999999999999996,
+      "text": "\"My darling, I'm so sorry I won't be there for you\"",
+      "word_count": 11,
+      "char_count": 51
+    },
+    {
+      "index": 5,
+      "start_time": 10.6,
+      "end_time": 13.2,
+      "duration": 2.5999999999999996,
+      "text": "\"But promise me you'll live the life I couldn't\"",
+      "word_count": 9,
+      "char_count": 48
+    },
+    {
+      "index": 6,
+      "start_time": 13.3,
+      "end_time": 15.8,
+      "duration": 2.5,
+      "text": "\"Dance in the rain, laugh until you cry\"",
+      "word_count": 8,
+      "char_count": 40
+    },
+    {
+      "index": 7,
+      "start_time": 15.9,
+      "end_time": 18.5,
+      "duration": 2.5999999999999996,
+      "text": "\"And always remember, you were loved\"",
+      "word_count": 6,
+      "char_count": 37
+    },
+    {
+      "index": 8,
+      "start_time": 18.6,
+      "end_time": 21.2,
+      "duration": 2.599999999999998,
+      "text": "I cried for hours holding that letter",
+      "word_count": 7,
+      "char_count": 37
+    },
+    {
+      "index": 9,
+      "start_time": 21.3,
+      "end_time": 24.0,
+      "duration": 2.6999999999999993,
+      "text": "Now it's framed next to my bed, reminding me every day",
+      "word_count": 11,
+      "char_count": 54
+    },
+    {
+      "index": 10,
+      "start_time": 24.1,
+      "end_time": 26.5,
+      "duration": 2.3999999999999986,
+      "text": "That even in death, a mother's love never fades",
+      "word_count": 9,
+      "char_count": 47
+    }
+  ]
+}

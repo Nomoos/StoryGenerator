@@ -1,0 +1,320 @@
+{
+  "analyses": [
+    {
+      "filename": "subtitle1.txt",
+      "title": "subtitle1",
+      "word_count": 831,
+      "sentence_count": 62,
+      "avg_words_per_sentence": 13.4,
+      "hook_first_sentence": "My neighbor kept parking in my driveway,\nso I parked behind him and went out of\ntown.",
+      "hook_word_count": 17,
+      "story_arc": [
+        "Setup/Introduction",
+        "Conflict/Problem",
+        "Escalation",
+        "Climax/Turning Point",
+        "Resolution"
+      ],
+      "emotional_words": [
+        "angry",
+        "crazy"
+      ],
+      "dialogue_present": true,
+      "dialogue_count": 7,
+      "time_markers": [
+        "first time",
+        "next day",
+        "later",
+        "then",
+        "after",
+        "finally",
+        "two weeks",
+        "months",
+        "immediately"
+      ],
+      "conflict_indicators": [
+        "but",
+        "problem",
+        "issue",
+        "couldn't",
+        "yell"
+      ],
+      "resolution_present": true
+    },
+    {
+      "filename": "subtitle2.txt",
+      "title": "subtitle2",
+      "word_count": 627,
+      "sentence_count": 68,
+      "avg_words_per_sentence": 9.2,
+      "hook_first_sentence": "What's your never again story?",
+      "hook_word_count": 5,
+      "story_arc": [
+        "Setup/Introduction",
+        "Conflict/Problem",
+        "Escalation",
+        "Climax/Turning Point",
+        "Resolution"
+      ],
+      "emotional_words": [],
+      "dialogue_present": true,
+      "dialogue_count": 5,
+      "time_markers": [
+        "next day",
+        "later",
+        "then",
+        "after",
+        "finally",
+        "two weeks",
+        "months",
+        "years"
+      ],
+      "conflict_indicators": [
+        "but"
+      ],
+      "resolution_present": true
+    },
+    {
+      "filename": "subtitle3.txt",
+      "title": "subtitle3",
+      "word_count": 530,
+      "sentence_count": 50,
+      "avg_words_per_sentence": 10.6,
+      "hook_first_sentence": "What's the best meal you've ever eaten?",
+      "hook_word_count": 7,
+      "story_arc": [
+        "Setup/Introduction",
+        "Conflict/Problem",
+        "Escalation",
+        "Climax/Turning Point",
+        "Resolution"
+      ],
+      "emotional_words": [
+        "happy"
+      ],
+      "dialogue_present": true,
+      "dialogue_count": 5,
+      "time_markers": [
+        "later",
+        "after",
+        "months",
+        "immediately"
+      ],
+      "conflict_indicators": [
+        "but",
+        "problem",
+        "wrong",
+        "couldn't",
+        "yell"
+      ],
+      "resolution_present": true
+    },
+    {
+      "filename": "subtitle4.txt",
+      "title": "subtitle4",
+      "word_count": 588,
+      "sentence_count": 51,
+      "avg_words_per_sentence": 11.5,
+      "hook_first_sentence": "What did your school illegally do?",
+      "hook_word_count": 6,
+      "story_arc": [
+        "Setup/Introduction",
+        "Conflict/Problem",
+        "Escalation",
+        "Resolution"
+      ],
+      "emotional_words": [
+        "horrified"
+      ],
+      "dialogue_present": true,
+      "dialogue_count": 3,
+      "time_markers": [
+        "years"
+      ],
+      "conflict_indicators": [
+        "but",
+        "wrong",
+        "scream"
+      ],
+      "resolution_present": true
+    },
+    {
+      "filename": "subtitle5.txt",
+      "title": "subtitle5",
+      "word_count": 495,
+      "sentence_count": 61,
+      "avg_words_per_sentence": 8.1,
+      "hook_first_sentence": "What's the worst announcement your\nschool ever made?",
+      "hook_word_count": 8,
+      "story_arc": [
+        "Setup/Introduction",
+        "Conflict/Problem",
+        "Escalation",
+        "Climax/Turning Point",
+        "Resolution"
+      ],
+      "emotional_words": [],
+      "dialogue_present": false,
+      "dialogue_count": 0,
+      "time_markers": [
+        "later",
+        "after",
+        "two weeks",
+        "months",
+        "years"
+      ],
+      "conflict_indicators": [
+        "but",
+        "refused",
+        "couldn't"
+      ],
+      "resolution_present": true
+    },
+    {
+      "filename": "subtitle6.txt",
+      "title": "subtitle6",
+      "word_count": 719,
+      "sentence_count": 108,
+      "avg_words_per_sentence": 6.7,
+      "hook_first_sentence": "My fiance\u00e9 wanted a prenup to protect\nher assets from me, then found out I had\n10x more than her.",
+      "hook_word_count": 20,
+      "story_arc": [
+        "Setup/Introduction",
+        "Conflict/Problem",
+        "Escalation",
+        "Climax/Turning Point",
+        "Resolution"
+      ],
+      "emotional_words": [],
+      "dialogue_present": true,
+      "dialogue_count": 6,
+      "time_markers": [
+        "later",
+        "then",
+        "finally",
+        "years",
+        "meanwhile"
+      ],
+      "conflict_indicators": [
+        "but",
+        "shouldn't"
+      ],
+      "resolution_present": true
+    }
+  ],
+  "patterns": {
+    "total_stories_analyzed": 6,
+    "average_word_count": 632.0,
+    "average_sentence_count": 67.0,
+    "average_words_per_sentence": 9.9,
+    "average_hook_length": 10.5,
+    "dialogue_usage": 0.8333333333333334,
+    "resolution_rate": 1.0,
+    "common_emotional_words": [
+      [
+        "angry",
+        1
+      ],
+      [
+        "crazy",
+        1
+      ],
+      [
+        "happy",
+        1
+      ],
+      [
+        "horrified",
+        1
+      ]
+    ],
+    "common_time_markers": [
+      [
+        "later",
+        5
+      ],
+      [
+        "after",
+        4
+      ],
+      [
+        "months",
+        4
+      ],
+      [
+        "years",
+        4
+      ],
+      [
+        "then",
+        3
+      ],
+      [
+        "finally",
+        3
+      ],
+      [
+        "two weeks",
+        3
+      ],
+      [
+        "next day",
+        2
+      ],
+      [
+        "immediately",
+        2
+      ],
+      [
+        "first time",
+        1
+      ]
+    ],
+    "common_conflict_indicators": [
+      [
+        "but",
+        6
+      ],
+      [
+        "couldn't",
+        3
+      ],
+      [
+        "problem",
+        2
+      ],
+      [
+        "yell",
+        2
+      ],
+      [
+        "wrong",
+        2
+      ],
+      [
+        "issue",
+        1
+      ],
+      [
+        "scream",
+        1
+      ],
+      [
+        "refused",
+        1
+      ],
+      [
+        "shouldn't",
+        1
+      ]
+    ],
+    "typical_story_arc": [
+      "Setup/Introduction",
+      "Conflict/Problem",
+      "Escalation",
+      "Climax/Turning Point",
+      "Resolution"
+    ]
+  },
+  "timestamp": "2025-10-09 08:12:59"
+}
