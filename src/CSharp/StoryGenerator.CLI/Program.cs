@@ -287,13 +287,20 @@ class Program
             description: "Root directory for all outputs",
             getDefaultValue: () => "./Stories");
 
+        var verboseOption = new Option<bool>(
+            name: "--verbose",
+            description: "Enable verbose logging output",
+            getDefaultValue: () => false);
+        verboseOption.AddAlias("-v");
+
         var command = new Command("full-pipeline", "Run the complete pipeline from idea to audio with subtitles")
         {
             topicOption,
-            outputRootOption
+            outputRootOption,
+            verboseOption
         };
 
-        command.SetHandler(async (string topic, string outputRoot) =>
+        command.SetHandler(async (string topic, string outputRoot, bool verbose) =>
         {
             await ExecuteWithServices(async (services) =>
             {
@@ -349,8 +356,8 @@ class Program
 
                 Console.WriteLine("🎉 Pipeline complete!");
                 Console.WriteLine($"📂 Output directory: {revisedDir}");
-            });
-        }, topicOption, outputRootOption);
+            }, verbose);
+        }, topicOption, outputRootOption, verboseOption);
 
         return command;
     }
@@ -459,9 +466,9 @@ class Program
         return command;
     }
 
-    static async Task ExecuteWithServices(Func<IServiceProvider, Task> action)
+    static async Task ExecuteWithServices(Func<IServiceProvider, Task> action, bool verbose = false)
     {
-        var services = ConfigureServices();
+        var services = ConfigureServices(verbose);
 
         try
         {
@@ -471,20 +478,32 @@ class Program
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"❌ Error: {ex.Message}");
+            
+            if (verbose)
+            {
+                Console.WriteLine($"\n📋 Stack Trace:");
+                Console.WriteLine(ex.StackTrace);
+            }
+            
             Console.ResetColor();
             Environment.Exit(1);
         }
     }
 
-    static IServiceProvider ConfigureServices()
+    static IServiceProvider ConfigureServices(bool verbose = false)
     {
         var services = new ServiceCollection();
 
-        // Logging
+        // Logging - adjust level based on verbose flag
         services.AddLogging(builder =>
         {
             builder.AddConsole();
-            builder.SetMinimumLevel(LogLevel.Information);
+            builder.SetMinimumLevel(verbose ? LogLevel.Debug : LogLevel.Information);
+            
+            if (verbose)
+            {
+                Console.WriteLine("🔍 Verbose logging enabled");
+            }
         });
 
         // Configuration (from environment variables or defaults)

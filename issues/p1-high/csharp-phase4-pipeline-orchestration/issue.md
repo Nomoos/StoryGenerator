@@ -48,12 +48,12 @@ Build a complete end-to-end pipeline orchestrator in C# that chains all generato
 
 ### CLI Interface
 - [x] Command-line interface for pipeline execution
-- [ ] Interactive mode for step-by-step execution (NOT IMPLEMENTED)
-- [ ] Batch processing mode (NOT IMPLEMENTED)
+- [x] Pipeline resume command
+- [x] Pipeline validate command
+- [x] Verbose logging option (added to full-pipeline command)
+- [ ] Interactive mode for step-by-step execution (OPTIONAL - deferred)
+- [ ] Batch processing mode (OPTIONAL - deferred)
 - [ ] Progress display with estimated time remaining (BASIC - needs enhancement)
-- [ ] Verbose logging option (NOT IMPLEMENTED)
-- [ ] Pipeline resume command (NOT IMPLEMENTED)
-- [ ] Pipeline validate command (NOT IMPLEMENTED)
 
 ### Testing
 - [x] Unit tests for orchestrator logic (partial tests exist)
