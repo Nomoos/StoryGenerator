@@ -3,11 +3,13 @@
 
 An AI-driven video content pipeline that integrates ASR, LLM, vision, and generative models to create engaging short-form vertical videos for TikTok, YouTube Shorts, and Instagram Reels.
 
-> **⚠️ IMPORTANT NOTICE**: The Python implementation is now **OBSOLETE** and maintained only as a **historic reference**. 
+> **✅ HYBRID ARCHITECTURE**: This project uses a **hybrid C# + Python architecture** for optimal performance and capabilities.
 > 
-> **All new development should use the C# implementation** located in `src/CSharp/`. The Python code in `obsolete/Python/` will remain available for reference purposes but is no longer recommended for active use.
+> - **C#** for orchestration, APIs, I/O, configuration, and business logic (primary implementation in `src/CSharp/`)
+> - **Python** for ML model inference via subprocess calls (Whisper ASR, SDXL image generation, LTX video synthesis)
+> - Active Python scripts: `research/python/whisper_subprocess.py`, `src/scripts/sdxl_generation.py`, `src/scripts/ltx_synthesis.py`
 > 
-> See the [C# Migration Guide](src/CSharp/MIGRATION_GUIDE.md) for migration instructions and current implementation status.
+> The obsolete Python implementation (full Python pipeline) has been removed after successful migration to C#. See `obsolete/MIGRATION_STATUS.md` for details.
 
 ## 🔬 Architecture Research
 
