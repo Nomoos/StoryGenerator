@@ -1,0 +1,193 @@
+{
+  "region": {
+    "code": "JP",
+    "name": "Japan",
+    "locale": "ja-JP",
+    "language": "Japanese",
+    "timezone": "Asia/Tokyo",
+    "currency": "JPY"
+  },
+  
+  "monetization": {
+    "cpm_estimate": 9.0,
+    "cpm_range": [6, 12],
+    "currency": "JPY",
+    "priority_tier": 2,
+    "notes": "High CPM in Asia. Tech-savvy audience with strong engagement."
+  },
+  
+  "platforms": {
+    "youtube": {
+      "enabled": true,
+      "content_types": ["shorts"],
+      "optimal_posting_times": ["07:00", "12:00", "20:00", "22:00"],
+      "optimal_days": ["Monday", "Wednesday", "Saturday"],
+      "hashtag_limit": 3,
+      "title_max_length": 100,
+      "description_max_length": 5000,
+      "notes": "YouTube very popular in Japan. High-quality production valued."
+    },
+    "tiktok": {
+      "enabled": true,
+      "content_types": ["short_video"],
+      "optimal_posting_times": ["12:00", "19:00", "22:00"],
+      "optimal_days": ["Friday", "Saturday", "Sunday"],
+      "hashtag_limit": 30,
+      "caption_max_length": 150,
+      "notes": "Growing platform in Japan. Trend-focused content."
+    },
+    "instagram": {
+      "enabled": false,
+      "notes": "Instagram less popular in Japan compared to YouTube and TikTok."
+    }
+  },
+  
+  "voice": {
+    "provider": "elevenlabs",
+    "voice_id": "takumi",
+    "voice_name": "Takumi",
+    "gender": "male",
+    "age_range": "young_adult",
+    "accent": "standard_japanese",
+    "style": "polite",
+    "description": "Standard Japanese with polite form (丁寧語). Good for general content.",
+    "alternatives": [
+      {
+        "voice_id": "yuki",
+        "voice_name": "Yuki",
+        "gender": "female",
+        "age_range": "young_adult",
+        "style": "friendly",
+        "description": "Friendly female voice with polite form"
+      }
+    ]
+  },
+  
+  "localization": {
+    "translation_required": true,
+    "cultural_adaptation_level": "full",
+    "reference_examples": [
+      "Use polite form (です・ます体) for general audience",
+      "Anime and manga references resonate well",
+      "Seasonal topics (cherry blossoms 桜, autumn leaves 紅葉)",
+      "Technology and gaming culture",
+      "Kawaii (cute) culture",
+      "Work-life balance (recent trend)",
+      "Use kanji appropriately with furigana for difficult characters"
+    ],
+    "avoid": [
+      "Direct criticism (indirect communication preferred)",
+      "Overt self-promotion (humility valued)",
+      "WWII topics (very sensitive)",
+      "Fukushima disaster (sensitive)",
+      "Political topics (generally avoided)"
+    ],
+    "translation_notes": [
+      "Use appropriate politeness levels (敬語)",
+      "Vertical text acceptable for traditional formats",
+      "Kanji + hiragana + katakana mix",
+      "Loan words from English common (use katakana)",
+      "Onomatopoeia very popular (ドキドキ, キラキラ)"
+    ]
+  },
+  
+  "content_preferences": {
+    "trending_topics": [
+      "Technology and gadgets",
+      "Anime and manga",
+      "Gaming and esports",
+      "Food and cooking",
+      "Travel (domestic and international)",
+      "Beauty and fashion",
+      "Study tips and education",
+      "Cute animals (猫カフェ, etc.)"
+    ],
+    "avoid_topics": [
+      "WWII and atomic bombs",
+      "Fukushima and nuclear",
+      "Political parties",
+      "Korean-Japanese relations (can be sensitive)",
+      "Chinese-Japanese relations (can be sensitive)"
+    ],
+    "popular_formats": [
+      "知ってた？ (Did you know?)",
+      "〜の作り方 (How to make ~)",
+      "トップ5 (Top 5)",
+      "便利グッズ (Useful gadgets)",
+      "ライフハック (Life hacks)",
+      "可愛い (Cute/Kawaii content)"
+    ]
+  },
+  
+  "demographics": {
+    "primary_age_groups": [
+      {"range": [13, 17], "percentage": 25, "platforms": ["youtube", "tiktok"]},
+      {"range": [18, 24], "percentage": 35, "platforms": ["youtube", "tiktok"]},
+      {"range": [25, 34], "percentage": 30, "platforms": ["youtube"]},
+      {"range": [35, 44], "percentage": 10, "platforms": ["youtube"]}
+    ],
+    "gender_split": {
+      "male": 48,
+      "female": 51,
+      "other": 1
+    },
+    "device_usage": {
+      "mobile": 90,
+      "desktop": 8,
+      "tablet": 2
+    }
+  },
+  
+  "compliance": {
+    "age_restrictions": 13,
+    "content_rating": "general",
+    "disclosure_required": true,
+    "disclosure_text": "PR",
+    "data_protection": "moderate",
+    "notes": "Use 'PR' tag for sponsored content. Youth protection laws apply."
+  },
+  
+  "seo_keywords": {
+    "high_volume": [
+      "技術",
+      "学習",
+      "便利",
+      "簡単",
+      "ライフハック",
+      "おすすめ",
+      "人気",
+      "最新",
+      "アニメ",
+      "ゲーム"
+    ],
+    "trending_hashtags": [
+      "#技術",
+      "#ライフハック",
+      "#便利グッズ",
+      "#学習",
+      "#アニメ",
+      "#ゲーム",
+      "#おすすめ",
+      "#Shorts",
+      "#バズる",
+      "#トレンド"
+    ]
+  },
+  
+  "analytics": {
+    "track_metrics": true,
+    "key_performance_indicators": [
+      "CPM",
+      "Watch time",
+      "CTR",
+      "Engagement rate",
+      "Subscriber conversion"
+    ],
+    "benchmarks": {
+      "cpm_target": 9.0,
+      "watch_time_target": 75,
+      "ctr_target": 4.0,
+      "engagement_rate_target": 5.0
+    }
+  }
+}

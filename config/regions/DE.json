@@ -1,0 +1,189 @@
+{
+  "region": {
+    "code": "DE",
+    "name": "Germany",
+    "locale": "de-DE",
+    "language": "German",
+    "timezone": "Europe/Berlin",
+    "currency": "EUR"
+  },
+  
+  "monetization": {
+    "cpm_estimate": 10.5,
+    "cpm_range": [7, 14],
+    "currency": "EUR",
+    "priority_tier": 1,
+    "notes": "Strong CPM in Europe. Engineering and tech-focused audience."
+  },
+  
+  "platforms": {
+    "youtube": {
+      "enabled": true,
+      "content_types": ["shorts"],
+      "optimal_posting_times": ["08:00", "13:00", "19:00", "21:00"],
+      "optimal_days": ["Monday", "Wednesday", "Friday"],
+      "hashtag_limit": 3,
+      "title_max_length": 100,
+      "description_max_length": 5000,
+      "notes": "German audience prefers quality over quantity. Technical content performs well."
+    },
+    "instagram": {
+      "enabled": true,
+      "content_types": ["reels"],
+      "optimal_posting_times": ["12:00", "17:00", "20:00"],
+      "optimal_days": ["Tuesday", "Thursday", "Saturday"],
+      "hashtag_limit": 30,
+      "caption_max_length": 2200,
+      "notes": "Strong Instagram presence in Germany. Visual quality important."
+    },
+    "tiktok": {
+      "enabled": false,
+      "notes": "TikTok less popular in Germany compared to other platforms."
+    }
+  },
+  
+  "voice": {
+    "provider": "elevenlabs",
+    "voice_id": "anton",
+    "voice_name": "Anton",
+    "gender": "male",
+    "age_range": "young_adult",
+    "accent": "standard_german",
+    "style": "clear",
+    "description": "Standard High German, neutral accent. Good for educational content.",
+    "alternatives": [
+      {
+        "voice_id": "giselle",
+        "voice_name": "Giselle",
+        "gender": "female",
+        "age_range": "young_adult",
+        "style": "friendly",
+        "description": "Warm German female voice"
+      }
+    ]
+  },
+  
+  "localization": {
+    "translation_required": true,
+    "cultural_adaptation_level": "full",
+    "reference_examples": [
+      "Engineering and technical precision",
+      "Efficiency and optimization focus",
+      "Automotive references (BMW, Mercedes, Volkswagen)",
+      "Football (Bundesliga, Bayern München)",
+      "Use 'du' form for young adults (13-34), 'Sie' for 35+",
+      "Metric system: meters, kilograms, Celsius"
+    ],
+    "avoid": [
+      "WWII references (very sensitive)",
+      "East vs. West Germany (still some tension)",
+      "Immigration (political)",
+      "Humor about German stereotypes (can be offensive)"
+    ],
+    "translation_notes": [
+      "Avoid anglicisms when possible",
+      "Use compound words appropriately",
+      "Formal vs. informal address is important",
+      "Regional dialects exist but standard German preferred"
+    ]
+  },
+  
+  "content_preferences": {
+    "trending_topics": [
+      "Technology and engineering",
+      "Environmental sustainability",
+      "Productivity and efficiency",
+      "Automotive technology",
+      "Science and research",
+      "History (non-WWII)",
+      "Travel and culture",
+      "Education and learning"
+    ],
+    "avoid_topics": [
+      "WWII and Nazi history",
+      "Immigration policy",
+      "Political parties",
+      "East-West divide"
+    ],
+    "popular_formats": [
+      "Wusstest du? (Did you know?)",
+      "So funktioniert es (How it works)",
+      "Top 5/10 (listicles)",
+      "Lifehacks",
+      "Erklärung (Explanation)"
+    ]
+  },
+  
+  "demographics": {
+    "primary_age_groups": [
+      {"range": [13, 17], "percentage": 20, "platforms": ["youtube", "instagram"]},
+      {"range": [18, 24], "percentage": 35, "platforms": ["youtube", "instagram"]},
+      {"range": [25, 34], "percentage": 30, "platforms": ["youtube", "instagram"]},
+      {"range": [35, 44], "percentage": 15, "platforms": ["youtube"]}
+    ],
+    "gender_split": {
+      "male": 52,
+      "female": 47,
+      "other": 1
+    },
+    "device_usage": {
+      "mobile": 75,
+      "desktop": 20,
+      "tablet": 5
+    }
+  },
+  
+  "compliance": {
+    "gdpr_applicable": true,
+    "age_restrictions": 13,
+    "content_rating": "general",
+    "disclosure_required": true,
+    "disclosure_text": "Bezahlte Partnerschaft",
+    "data_protection": "strict",
+    "notes": "GDPR compliance mandatory. Strict data protection laws. User consent required for tracking."
+  },
+  
+  "seo_keywords": {
+    "high_volume": [
+      "Technik",
+      "Lernen",
+      "Tipps",
+      "Anleitung",
+      "Tutorial",
+      "Effizient",
+      "Produktivität",
+      "Wissen",
+      "Innovation",
+      "Wissenschaft"
+    ],
+    "trending_hashtags": [
+      "#Technik",
+      "#Produktivität",
+      "#Lifehacks",
+      "#Lernen",
+      "#Wissen",
+      "#Innovation",
+      "#Wissenschaft",
+      "#Deutschland",
+      "#Shorts",
+      "#Viral"
+    ]
+  },
+  
+  "analytics": {
+    "track_metrics": true,
+    "key_performance_indicators": [
+      "CPM",
+      "Watch time",
+      "CTR",
+      "Engagement rate",
+      "Subscriber conversion"
+    ],
+    "benchmarks": {
+      "cpm_target": 10.5,
+      "watch_time_target": 75,
+      "ctr_target": 4.5,
+      "engagement_rate_target": 4.0
+    }
+  }
+}
