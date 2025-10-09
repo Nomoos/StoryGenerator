@@ -11,25 +11,33 @@ Issues are organized by **priority** and **status** rather than sequential phase
 - ✅ **TDD practices** - Test-first development workflow
 - ✅ **Clear dependencies** - Know what blocks what
 
-### ✅ Resolved Issues (6 tasks - Complete)
+### ✅ Resolved Issues (14 tasks - Complete)
 **Location:** [`resolved/`](resolved/README.md)
 
 Completed and verified tasks:
 - Phase 1: Interface setup (3 tasks)
 - Phase 2: C# prototypes (3 tasks)
+- P0 Security: Security fixes (2 tasks)
+- P0 C# Phase 3: Generator implementation (1 task)
+- P0 Content Pipeline: Content sourcing (5 tasks)
 
-### 🔴 P0 - Critical Priority (10 tasks - ALL COMPLETE ✅)
+### 🔴 P0 - Critical Priority (1 task remaining)
 **Location:** [`p0-critical/`](p0-critical/README.md)
 
-**Security Issues (Complete):**
+**Remaining:**
+- ⏳ content-pipeline/02-content-03-quality-scorer - Content quality assessment (Not Started)
+
+**Completed (Moved to resolved/):**
 - ✅ security-api-keys - API keys removed, environment variables implemented
 - ✅ security-file-paths - Verified platform-independent path handling
+- ✅ csharp-phase3-complete-generators - Complete remaining generators
+- ✅ content-pipeline/02-content-01-reddit-scraper - Reddit story scraping
+- ✅ content-pipeline/02-content-02-alt-sources - Alternative content sources
+- ✅ content-pipeline/02-content-04-deduplication - Duplicate detection
+- ✅ content-pipeline/02-content-05-ranking - Content ranking
+- ✅ content-pipeline/02-content-06-attribution - Source attribution
 
-**Completed:**
-- ✅ csharp-phase3-complete-generators (Complete remaining generators)
-- ✅ content-pipeline (Reddit scraper + quality control)
-
-**Estimated Effort:** 25-40 hours (ALL COMPLETE)
+**Estimated Effort:** 2-3 hours remaining (8/9 tasks complete)
 
 ### 🟡 P1 - High Priority (50 tasks - Next)
 **Location:** [`p1-high/`](p1-high/README.md)
@@ -84,23 +92,26 @@ Completed and verified tasks:
 
 | Priority | Count | Estimated Effort | Location |
 |----------|-------|------------------|----------|
-| ✅ **Resolved** | 6 tasks | ~30 hours (done) | [resolved/](resolved/) |
-| 🔴 **P0 Critical** | 10 tasks | 25-40 hours | [p0-critical/](p0-critical/) |
+| ✅ **Resolved** | 14 tasks | ~60 hours (done) | [resolved/](resolved/) |
+| 🔴 **P0 Critical** | 1 task | 2-3 hours | [p0-critical/](p0-critical/) |
 | 🟡 **P1 High** | 50 tasks | 160-250 hours | [p1-high/](p1-high/) |
 | 🟢 **P2 Medium** | 16 tasks | 110-135 hours | [p2-medium/](p2-medium/) |
 | **Master Roadmap** | Overview | N/A | [csharp-master-roadmap/](csharp-master-roadmap/) |
 
-**Total:** 82 tasks | 295-425 hours remaining effort (includes 17 new architecture/quality issues)
+**Total:** 81 tasks | 272-388 hours remaining effort (includes 17 new architecture/quality issues)
 
 ## 📋 Detailed Breakdown by Priority
 
 ### P0 - Critical (Must Complete First)
-1. ✅ **security-api-keys** - Remove exposed API keys (COMPLETE)
-2. ✅ **security-file-paths** - Fix hardcoded file paths (COMPLETE - Already resolved)
-3. ✅ **csharp-phase3-complete-generators** - Complete remaining C# generators (DONE)
-4. ✅ **content-pipeline/02-content-01-reddit-scraper** - Reddit content scraping (DONE)
-2. **content-pipeline/02-content-01-reddit-scraper** - Reddit content scraping (P0)
-3. **content-pipeline/** - 5 additional content tasks (P1, but grouped with P0)
+1. ✅ **security-api-keys** - Remove exposed API keys (COMPLETE - Moved to resolved/)
+2. ✅ **security-file-paths** - Fix hardcoded file paths (COMPLETE - Moved to resolved/)
+3. ✅ **csharp-phase3-complete-generators** - Complete remaining C# generators (COMPLETE - Moved to resolved/)
+4. ✅ **content-pipeline/02-content-01-reddit-scraper** - Reddit content scraping (COMPLETE - Moved to resolved/)
+5. ✅ **content-pipeline/02-content-02-alt-sources** - Alternative content sources (COMPLETE - Moved to resolved/)
+6. ⏳ **content-pipeline/02-content-03-quality-scorer** - Content quality assessment (Not Started - REMAINING)
+7. ✅ **content-pipeline/02-content-04-deduplication** - Duplicate detection (COMPLETE - Moved to resolved/)
+8. ✅ **content-pipeline/02-content-05-ranking** - Content ranking (COMPLETE - Moved to resolved/)
+9. ✅ **content-pipeline/02-content-06-attribution** - Source attribution (COMPLETE - Moved to resolved/)
 
 ### P1 - High (Core Pipeline)
 1. **New Architecture & Code Quality** (8 tasks):
@@ -141,7 +152,7 @@ Completed and verified tasks:
 
 ```mermaid
 graph TD
-    A[Resolved: Phase 1+2] --> B[P0: Critical]
+    A[Resolved: Phase 1+2+P0] --> B[P0: Quality Scorer]
     B --> C[P1: High Priority]
     C --> D[P2: Medium Priority]
     
@@ -155,8 +166,8 @@ graph TD
 ```
 
 ### Priority Flow:
-1. ✅ **Resolved** - Phases 1 & 2 complete
-2. 🔴 **P0** - Complete generators + content foundation
+1. ✅ **Resolved** - Phases 1 & 2 complete, 8/9 P0 tasks complete
+2. 🔴 **P0** - Complete quality scorer (1 task remaining)
 3. 🟡 **P1** - Build complete generation pipeline  
 4. 🟢 **P2** - Add distribution & analytics
 

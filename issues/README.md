@@ -12,15 +12,22 @@ Issues are organized following **best practices** and **test-driven development 
 Completed tasks with ✅ Complete status. Moved here to keep active issues focused on current work.
 - **Phase 1:** 3/3 tasks complete (Interface & setup)
 - **Phase 2:** 3/3 tasks complete (C# prototypes)
+- **P0 Security:** 2/2 tasks complete (Security fixes)
+- **P0 C# Phase 3:** 1/1 task complete (Generator implementation)
+- **P0 Content Pipeline:** 5/6 tasks complete (Content sourcing)
 
 👉 **[View Resolved Issues](resolved/README.md)**
 
 ### 🔴 P0 - Critical Priority
 **Location:** `p0-critical/`
 
-**Must complete immediately.** Blockers for other work. Focus all resources here first.
-- C# Phase 3 generator completion
-- Content pipeline foundation (Reddit scraper)
+**Nearly complete.** Only 1 task remaining (quality scorer).
+- ⏳ Content quality assessment (Not Started)
+
+**Completed (moved to resolved/):**
+- ✅ Security fixes (2 tasks)
+- ✅ C# Phase 3 generator completion
+- ✅ Content pipeline foundation (5 tasks)
 
 👉 **[View P0 Critical Issues](p0-critical/README.md)**
 
@@ -48,11 +55,11 @@ Completed tasks with ✅ Complete status. Moved here to keep active issues focus
 
 | Priority | Status | Task Count | Estimated Effort |
 |----------|--------|------------|------------------|
-| ✅ Resolved | Complete | 6 tasks | ~30 hours (done) |
-| 🔴 P0 Critical | Active | 8 tasks | 20-30 hours |
-| 🟡 P1 High | Next | 42 tasks | 120-200 hours |
-| 🟢 P2 Medium | Planned | 9 tasks | 60-80 hours |
-| **Total** | | **65 tasks** | **200-310 hours** |
+| ✅ Resolved | Complete | 14 tasks | ~60 hours (done) |
+| 🔴 P0 Critical | Nearly Done | 1 task | 2-3 hours |
+| 🟡 P1 High | Next | 50 tasks | 160-250 hours |
+| 🟢 P2 Medium | Planned | 16 tasks | 110-135 hours |
+| **Total** | | **81 tasks** | **272-388 hours** |
 
 > **Note:** The Python-based sequential step issues (step-00 through step-14) have been moved to `obsolete/issues/` as the C# implementation is now the primary codebase.
 
@@ -66,15 +73,18 @@ issues/
 ├── INDEX.md (issue index)
 ├── QUICKSTART.md (getting started guide)
 │
-├── resolved/ ✅ Completed issues (6 tasks)
+├── resolved/ ✅ Completed issues (14 tasks)
 │   ├── phase-1-interface/ (Setup complete)
-│   └── phase-2-prototype/ (Prototypes complete)
+│   ├── phase-2-prototype/ (Prototypes complete)
+│   ├── p0-security/ (Security fixes complete)
+│   ├── p0-csharp-phase3/ (Generator implementation complete)
+│   └── p0-content-pipeline/ (5/6 content tasks complete)
 │
-├── p0-critical/ 🔴 Critical priority (8 tasks, ~20-30 hours)
-│   ├── csharp-phase3-complete-generators/
+├── p0-critical/ 🔴 Critical priority (1 task, ~2-3 hours)
 │   └── content-pipeline/
+│       └── 02-content-03-quality-scorer/ (Not Started)
 │
-├── p1-high/ 🟡 High priority (42 tasks, ~120-200 hours)
+├── p1-high/ 🟡 High priority (50 tasks, ~160-250 hours)
 │   ├── csharp-phase4-pipeline-orchestration/
 │   ├── idea-generation/
 │   ├── script-development/
@@ -87,7 +97,7 @@ issues/
 │   ├── quality-control/
 │   └── export-delivery/
 │
-├── p2-medium/ 🟢 Medium priority (9 tasks, ~60-80 hours)
+├── p2-medium/ 🟢 Medium priority (16 tasks, ~110-135 hours)
 │   ├── csharp-video-generators/
 │   ├── distribution/
 │   └── analytics/
