@@ -529,6 +529,11 @@ See [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md) for detailed security procedu
 ### Security
 - [SECURITY_CHECKLIST.md](SECURITY_CHECKLIST.md) - Security procedures and checklist
 
+### Maintenance & Cleanup
+- [REPOSITORY_CLEANUP_GUIDE.md](REPOSITORY_CLEANUP_GUIDE.md) - Guide for finding and removing unused files
+- [CLEANUP.md](CLEANUP.md) - Repository cleanup and reorganization checklist
+- [scripts/README.md](scripts/README.md) - Utility scripts documentation
+
 ### Reference
 - [SUMMARY.md](SUMMARY.md) - Implementation summary
 
