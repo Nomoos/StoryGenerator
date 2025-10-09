@@ -88,6 +88,7 @@ public class VideoConfig
     public string AudioCodec { get; set; } = "aac";
     public string Bitrate { get; set; } = "8M";
     public string Quality { get; set; } = "high";
+    public string SynthesisMethod { get; set; } = "ltx"; // "ltx" or "keyframe"
 }
 
 public class Resolution
