@@ -84,6 +84,11 @@ class VideoMetadata:
     has_chapters: bool = False
     chapter_count: Optional[int] = None
     
+    # Story detection
+    is_story_video: Optional[bool] = None
+    story_confidence_score: Optional[float] = None
+    story_indicators: Optional[List[str]] = None
+    
     def to_dict(self):
         return asdict(self)
 
@@ -95,16 +100,55 @@ class YouTubeChannelScraper:
     SHORTS_FETCH_MULTIPLIER = 3  # Fetch 3x shorts to compensate for potential filtering/unavailable videos
     SHORTS_MAX_DURATION = 180  # YouTube Shorts max duration is 3 minutes (as of October 2024)
     
-    def __init__(self, output_dir: str = "/tmp/youtube_channel_data"):
+    # Story detection keywords (weighted by importance)
+    STORY_TITLE_KEYWORDS = {
+        # High confidence indicators (weight: 3)
+        'story': 3, 'storytime': 3, 'aita': 3, 'am i the': 3,
+        'tifu': 3, 'confession': 3, 'revenge': 3,
+        
+        # Medium confidence indicators (weight: 2)
+        'relationship': 2, 'breakup': 2, 'cheating': 2, 'caught': 2,
+        'ex boyfriend': 2, 'ex girlfriend': 2, 'my wife': 2, 'my husband': 2,
+        'family drama': 2, 'toxic': 2, 'entitled': 2, 'karen': 2,
+        
+        # Low confidence indicators (weight: 1)
+        'experience': 1, 'happened': 1, 'crazy': 1, 'insane': 1,
+        'unbelievable': 1, 'shocking': 1, 'drama': 1, 'betrayed': 1,
+    }
+    
+    STORY_DESCRIPTION_KEYWORDS = [
+        'story', 'storytime', 'experience', 'happened to me', 'true story',
+        'real story', 'my story', 'i want to share', 'let me tell you',
+        'this is about', 'backstory', 'narrative', 'tale',
+    ]
+    
+    STORY_TAGS = [
+        'story', 'storytime', 'storytelling', 'true story', 'real story',
+        'personal story', 'life story', 'story time', 'aita', 'reddit story',
+        'relationship story', 'revenge story', 'confession',
+    ]
+    
+    # Anti-patterns (likely NOT story videos)
+    NON_STORY_KEYWORDS = [
+        'tutorial', 'how to', 'review', 'unboxing', 'haul', 'vlog',
+        'gameplay', 'walkthrough', 'guide', 'tips', 'tricks', 'reaction',
+        'news', 'update', 'announcement', 'trailer', 'teaser', 'music video',
+        'podcast', 'interview', 'q&a', 'q and a', 'challenge', 'prank',
+    ]
+    
+    def __init__(self, output_dir: str = "/tmp/youtube_channel_data", story_only: bool = False):
         """
         Initialize scraper.
         
         Args:
             output_dir: Directory to store scraped data
+            story_only: If True, only include videos detected as story videos
         """
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.videos: List[VideoMetadata] = []
+        self.story_only = story_only
+        self.filtered_count = 0  # Track how many videos were filtered out
     
     def check_dependencies(self) -> bool:
         """Check if required dependencies are installed."""
@@ -151,18 +195,18 @@ class YouTubeChannelScraper:
     
     def get_channel_videos(self, channel_url: str, top_n: int = 10) -> Dict[str, List[str]]:
         """
-        Get list of video IDs from channel, separated by shorts and long videos.
+        Get list of video IDs from channel (shorts only).
         
         Args:
             channel_url: Channel URL
-            top_n: Number of top videos to retrieve per format (shorts and long)
+            top_n: Number of shorts to retrieve
             
         Returns:
-            Dict with 'shorts' and 'long' lists of video IDs
+            Dict with 'shorts' list of video IDs
         """
-        print(f"📺 Fetching top {top_n} shorts and top {top_n} long videos from channel...")
+        print(f"📺 Fetching top {top_n} shorts from channel...")
         
-        all_videos = {'shorts': [], 'long': []}
+        all_videos = {'shorts': []}
         
         # Fetch shorts
         print(f"  🎬 Fetching shorts...")
@@ -196,40 +240,8 @@ class YouTubeChannelScraper:
         except Exception as e:
             print(f"  ⚠️ Error fetching shorts: {e}")
         
-        # Fetch long videos
-        print(f"  📹 Fetching long videos...")
-        videos_url = channel_url.rstrip('/') + "/videos"
-        long_cmd = [
-            "yt-dlp",
-            "--flat-playlist",
-            "--print", "id",
-            "--playlist-end", str(top_n),
-            "--playlist-reverse",  # Get most recent first
-            videos_url
-        ]
-        
-        try:
-            result = subprocess.run(
-                long_cmd,
-                capture_output=True,
-                text=True,
-                timeout=60
-            )
-            
-            if result.returncode == 0:
-                long_videos = [line.strip() for line in result.stdout.split('\n') if line.strip()]
-                all_videos['long'] = long_videos[:top_n]
-                print(f"  ✅ Found {len(all_videos['long'])} long videos")
-            else:
-                print(f"  ⚠️ Error fetching long videos: {result.stderr}")
-                
-        except subprocess.TimeoutExpired:
-            print("  ⚠️ Timeout while fetching long videos")
-        except Exception as e:
-            print(f"  ⚠️ Error fetching long videos: {e}")
-        
-        total = len(all_videos['shorts']) + len(all_videos['long'])
-        print(f"✅ Found total of {total} videos ({len(all_videos['shorts'])} shorts + {len(all_videos['long'])} long)")
+        total = len(all_videos['shorts'])
+        print(f"✅ Found total of {total} shorts")
         return all_videos
     
     def extract_video_metadata(self, video_id: str, expected_format: Optional[str] = None) -> Optional[VideoMetadata]:
@@ -414,9 +426,23 @@ class YouTubeChannelScraper:
                 chapter_count=chapter_count
             )
             
+            # Detect if this is a story video
+            is_story, confidence, indicators = self.detect_story_video(metadata)
+            metadata.is_story_video = is_story
+            metadata.story_confidence_score = confidence
+            metadata.story_indicators = indicators
+            
+            # If story_only mode is enabled, filter out non-story videos
+            if self.story_only and not is_story:
+                self.filtered_count += 1
+                print(f"    ⏭️  Filtered (not a story, confidence: {confidence:.2f}): {metadata.title[:50]}...")
+                return None
+            
             self.videos.append(metadata)
             format_emoji = "🎬" if video_format == "short" else "📹"
-            print(f"    ✅ Extracted ({format_emoji} {video_format}): {metadata.title[:50]}... [{metadata.duration}]")
+            story_emoji = "📖" if is_story else "❓"
+            story_info = f"{story_emoji} Story: {confidence:.2f}" if confidence > 0 else ""
+            print(f"    ✅ Extracted ({format_emoji} {video_format}): {metadata.title[:50]}... [{metadata.duration}] {story_info}")
             return metadata
             
         except subprocess.TimeoutExpired:
@@ -460,13 +486,120 @@ class YouTubeChannelScraper:
         else:
             return f"{minutes:02d}:{secs:02d}"
     
+    def detect_story_video(self, video_metadata: VideoMetadata) -> tuple[bool, float, List[str]]:
+        """
+        Detect if a video is likely a story video based on metadata.
+        
+        Args:
+            video_metadata: Video metadata to analyze
+            
+        Returns:
+            Tuple of (is_story, confidence_score, indicators_found)
+            - is_story: True if video is likely a story (confidence > 0.3)
+            - confidence_score: Score between 0 and 1
+            - indicators_found: List of matched story indicators
+        """
+        score = 0.0
+        indicators = []
+        
+        # Check title for story keywords
+        title_lower = video_metadata.title.lower()
+        
+        # First check for anti-patterns (non-story content)
+        for keyword in self.NON_STORY_KEYWORDS:
+            if keyword in title_lower:
+                # Strong negative signal - likely not a story
+                return False, 0.0, [f"non-story keyword: {keyword}"]
+        
+        # Check title keywords with weights
+        title_score = 0
+        for keyword, weight in self.STORY_TITLE_KEYWORDS.items():
+            if keyword in title_lower:
+                title_score += weight
+                indicators.append(f"title: {keyword}")
+        
+        # If we have strong title indicators, boost the score significantly
+        if title_score >= 3:  # At least one high-confidence keyword
+            score += 0.5
+        elif title_score >= 2:  # Medium confidence
+            score += 0.3
+        elif title_score >= 1:  # Low confidence
+            score += 0.15
+        
+        # Check description
+        if video_metadata.description:
+            desc_lower = video_metadata.description.lower()
+            
+            # Check for anti-patterns in description
+            anti_pattern_count = sum(1 for keyword in self.NON_STORY_KEYWORDS if keyword in desc_lower)
+            if anti_pattern_count >= 2:
+                # Multiple anti-patterns in description
+                return False, 0.0, [f"non-story keywords in description: {anti_pattern_count}"]
+            
+            # Check for story keywords in description
+            desc_matches = 0
+            for keyword in self.STORY_DESCRIPTION_KEYWORDS:
+                if keyword in desc_lower:
+                    desc_matches += 1
+                    indicators.append(f"description: {keyword}")
+                    if desc_matches >= 2:  # Stop after 2 matches
+                        break
+            
+            if desc_matches >= 2:
+                score += 0.2
+            elif desc_matches >= 1:
+                score += 0.1
+        
+        # Check tags
+        if video_metadata.tags:
+            tags_lower = [tag.lower() for tag in video_metadata.tags]
+            tag_matches = 0
+            for tag in self.STORY_TAGS:
+                if tag in tags_lower:
+                    tag_matches += 1
+                    indicators.append(f"tag: {tag}")
+            
+            if tag_matches >= 2:
+                score += 0.2
+            elif tag_matches >= 1:
+                score += 0.1
+        
+        # Check subtitle text for story patterns (if available)
+        if video_metadata.subtitle_text:
+            subtitle_lower = video_metadata.subtitle_text.lower()[:500]  # Check first 500 chars
+            
+            # Story often starts with first-person narrative
+            first_person_indicators = [
+                'i was', 'i had', 'i went', 'i got', 'i decided', 'i thought',
+                'my story', 'this happened', 'so this happened',
+            ]
+            
+            subtitle_matches = 0
+            for indicator in first_person_indicators:
+                if indicator in subtitle_lower:
+                    subtitle_matches += 1
+                    indicators.append(f"subtitle: {indicator}")
+                    if subtitle_matches >= 2:  # Stop after 2 matches
+                        break
+            
+            if subtitle_matches >= 1:
+                score += 0.15
+        
+        # Normalize confidence to 0-1 range (cap at 1.0)
+        confidence = min(score, 1.0)
+        
+        # Determine if it's a story (threshold: 0.3 for permissive matching)
+        is_story = confidence >= 0.3
+        
+        return is_story, confidence, indicators
+    
     def scrape_channel(self, channel_input: str, top_n: int = 10) -> List[VideoMetadata]:
         """
-        Scrape top N shorts and top N long videos from a channel.
+        Scrape top N shorts from a channel.
         
         Args:
             channel_input: Channel URL, handle, or ID
-            top_n: Number of videos to scrape per format (shorts and long)
+            top_n: Number of shorts to scrape
             
         Returns:
             List of VideoMetadata objects
@@ -480,16 +613,16 @@ class YouTubeChannelScraper:
         print(f"📺 Channel URL: {channel_url}")
         print(f"📁 Output directory: {self.output_dir.resolve()}")
         
-        # Get video IDs separated by format
+        # Get video IDs (shorts only)
         video_ids_by_format = self.get_channel_videos(channel_url, top_n)
         
-        total_videos = len(video_ids_by_format['shorts']) + len(video_ids_by_format['long'])
+        total_videos = len(video_ids_by_format['shorts'])
         if total_videos == 0:
-            print("❌ No videos found")
+            print("❌ No shorts found")
             return []
         
         # Extract metadata for each video
-        print(f"\n📊 Extracting metadata for {total_videos} videos...\n")
+        print(f"\n📊 Extracting metadata for {total_videos} shorts...\n")
         
         # Process shorts
         if video_ids_by_format['shorts']:
@@ -497,13 +630,6 @@ class YouTubeChannelScraper:
             for i, video_id in enumerate(video_ids_by_format['shorts'], 1):
                 print(f"[Short {i}/{len(video_ids_by_format['shorts'])}]")
                 self.extract_video_metadata(video_id, expected_format='short')
-        
-        # Process long videos
-        if video_ids_by_format['long']:
-            print(f"\n📹 Processing {len(video_ids_by_format['long'])} long videos...")
-            for i, video_id in enumerate(video_ids_by_format['long'], 1):
-                print(f"[Long {i}/{len(video_ids_by_format['long'])}]")
-                self.extract_video_metadata(video_id, expected_format='long')
         
         return self.videos
     
@@ -529,33 +655,50 @@ class YouTubeChannelScraper:
         
         # Calculate format-specific statistics
         shorts = [v for v in self.videos if v.video_format == 'short']
-        longs = [v for v in self.videos if v.video_format == 'long']
         
-        report = f"""# YouTube Channel Scraping Report
+        # Calculate story video statistics
+        story_videos = [v for v in self.videos if v.is_story_video]
+        non_story_videos = [v for v in self.videos if not v.is_story_video]
+        avg_story_confidence = sum(v.story_confidence_score for v in self.videos if v.story_confidence_score) / len(self.videos) if self.videos else 0
+        
+        report = f"""# YouTube Channel Scraping Report (Shorts Only)
 
 ## Summary Statistics
 
-- **Total Videos Scraped**: {len(self.videos)}
-  - **Shorts**: {len(shorts)}
-  - **Long Videos**: {len(longs)}
+- **Total Shorts Scraped**: {len(self.videos)}
 - **Total Views**: {total_views:,}
 - **Average Views**: {total_views // len(self.videos):,}
 - **Total Likes**: {total_likes:,}
 - **Total Comments**: {total_comments:,}
 - **Average Engagement Rate**: {avg_engagement:.2f}%
-- **Videos with Subtitles**: {videos_with_subtitles} ({videos_with_subtitles/len(self.videos)*100:.1f}%)
+- **Shorts with Subtitles**: {videos_with_subtitles} ({videos_with_subtitles/len(self.videos)*100:.1f}%)
+"""
+        
+        # Add story filtering information if story_only mode was used
+        if self.story_only:
+            report += f"""
+## Story Filtering (Story-Only Mode: ENABLED)
 
-## Format Breakdown
+- **Story Videos Included**: {len(story_videos)} ({len(story_videos)/len(self.videos)*100:.1f}% of scraped)
+- **Non-Story Videos Filtered Out**: {self.filtered_count}
+- **Average Story Confidence**: {avg_story_confidence:.2f}
+"""
+        else:
+            report += f"""
+## Story Video Analysis
 
-### Shorts (≤3min, Vertical)
+- **Story Videos Detected**: {len(story_videos)} ({len(story_videos)/len(self.videos)*100:.1f}% of total)
+- **Non-Story Videos**: {len(non_story_videos)} ({len(non_story_videos)/len(self.videos)*100:.1f}% of total)
+- **Average Story Confidence**: {avg_story_confidence:.2f}
+"""
+        
+        report += f"""
+## Shorts Analysis
+
+All videos are YouTube Shorts (≤3min, Vertical format):
 - **Count**: {len(shorts)}
 - **Total Views**: {sum(v.view_count for v in shorts):,}
 - **Avg Views**: {sum(v.view_count for v in shorts) // len(shorts) if shorts else 0:,}
-
-### Long Videos
-- **Count**: {len(longs)}
-- **Total Views**: {sum(v.view_count for v in longs):,}
-- **Avg Views**: {sum(v.view_count for v in longs) // len(longs) if longs else 0:,}
 
 ## Engagement Metrics Overview
 
@@ -582,6 +725,11 @@ class YouTubeChannelScraper:
 - **Channel**: {video.channel_name or 'N/A'}
 - **Upload Date**: {video.upload_date}
 - **Duration**: {video.duration}
+
+**Story Classification:**
+- **Is Story Video**: {'✅ Yes' if video.is_story_video else '❌ No'}
+- **Story Confidence Score**: {f"{video.story_confidence_score:.2f}" if video.story_confidence_score is not None else 'N/A'}
+- **Story Indicators**: {', '.join(video.story_indicators) if video.story_indicators else 'None detected'}
 
 **Viewership & Engagement:**
 - **Views**: {video.view_count:,}
@@ -813,36 +961,38 @@ Common words in titles:
         
         # Format-specific statistics
         shorts = [v for v in self.videos if v.video_format == 'short']
-        longs = [v for v in self.videos if v.video_format == 'long']
+        
+        # Story video statistics
+        story_videos = [v for v in self.videos if v.is_story_video]
+        non_story_videos = [v for v in self.videos if not v.is_story_video]
+        avg_story_confidence = sum(v.story_confidence_score for v in self.videos if v.story_confidence_score) / len(self.videos) if self.videos else 0
         
         data = {
             'videos': [v.to_dict() for v in self.videos],
             'summary': {
-                'total_videos': len(self.videos),
-                'shorts_count': len(shorts),
-                'long_videos_count': len(longs),
-                'videos_with_subtitles': sum(1 for v in self.videos if v.subtitles_available),
+                'total_shorts': len(self.videos),
+                'shorts_with_subtitles': sum(1 for v in self.videos if v.subtitles_available),
                 'total_views': sum(v.view_count for v in self.videos),
                 'average_views': sum(v.view_count for v in self.videos) // len(self.videos) if self.videos else 0,
                 'total_likes': total_likes,
                 'total_comments': total_comments,
                 'average_engagement_rate': round(avg_engagement, 2),
                 'average_views_per_day': round(avg_views_per_day, 2),
-                'videos_with_chapters': sum(1 for v in self.videos if v.has_chapters),
+                'shorts_with_chapters': sum(1 for v in self.videos if v.has_chapters),
             },
-            'format_breakdown': {
-                'shorts': {
-                    'count': len(shorts),
-                    'total_views': sum(v.view_count for v in shorts),
-                    'average_views': sum(v.view_count for v in shorts) // len(shorts) if shorts else 0,
-                    'average_duration': round(sum(v.duration_seconds for v in shorts) / len(shorts), 1) if shorts else 0,
-                },
-                'long': {
-                    'count': len(longs),
-                    'total_views': sum(v.view_count for v in longs),
-                    'average_views': sum(v.view_count for v in longs) // len(longs) if longs else 0,
-                    'average_duration': round(sum(v.duration_seconds for v in longs) / len(longs), 1) if longs else 0,
-                }
+            'story_analysis': {
+                'story_only_mode': self.story_only,
+                'story_videos_count': len(story_videos),
+                'non_story_videos_count': len(non_story_videos),
+                'filtered_out_count': self.filtered_count,
+                'average_story_confidence': round(avg_story_confidence, 2),
+                'story_videos_percentage': round(len(story_videos) / len(self.videos) * 100, 1) if self.videos else 0,
+            },
+            'shorts_breakdown': {
+                'count': len(shorts),
+                'total_views': sum(v.view_count for v in shorts),
+                'average_views': sum(v.view_count for v in shorts) // len(shorts) if shorts else 0,
+                'average_duration': round(sum(v.duration_seconds for v in shorts) / len(shorts), 1) if shorts else 0,
             },
             'engagement_metrics': {
                 'high_engagement_videos': sum(1 for v in self.videos if v.engagement_rate and v.engagement_rate > 5),
@@ -854,10 +1004,10 @@ Common words in titles:
                 'average_description_length': round(sum(v.description_length for v in self.videos) / len(self.videos), 1),
                 'average_tag_count': round(sum(v.tag_count for v in self.videos) / len(self.videos), 1),
             },
-            'video_durations': {
-                'short_videos': sum(1 for v in self.videos if v.duration_seconds < 300),
-                'medium_videos': sum(1 for v in self.videos if 300 <= v.duration_seconds < 900),
-                'long_videos': sum(1 for v in self.videos if v.duration_seconds >= 900),
+            'shorts_durations': {
+                'under_1_min': sum(1 for v in self.videos if v.duration_seconds < 60),
+                'one_to_two_min': sum(1 for v in self.videos if 60 <= v.duration_seconds < 120),
+                'two_to_three_min': sum(1 for v in self.videos if 120 <= v.duration_seconds <= 180),
                 'average_duration_seconds': round(sum(v.duration_seconds for v in self.videos) / len(self.videos)),
             },
             'timestamp': self._get_timestamp(),
@@ -868,8 +1018,8 @@ Common words in titles:
             json.dump(data, f, indent=2)
         
         print(f"✅ JSON data saved to: {output_path}")
-        print(f"   📊 Included {len(self.videos)} videos with comprehensive analytics")
-        print(f"   🎬 Shorts: {len(shorts)}, 📹 Long: {len(longs)}")
+        print(f"   📊 Included {len(self.videos)} shorts with comprehensive analytics")
+        print(f"   🎬 All videos are shorts")
     
     def _get_timestamp(self):
         """Get current timestamp."""
@@ -891,12 +1041,17 @@ def main():
         '--top',
         type=int,
         default=10,
-        help='Number of top videos to scrape per format (shorts and long videos, default: 10 each)'
+        help='Number of top shorts to scrape (default: 10)'
     )
     parser.add_argument(
         '--output',
         default='/tmp/youtube_channel_data',
         help='Output directory (default: /tmp/youtube_channel_data)'
+    )
+    parser.add_argument(
+        '--story-only',
+        action='store_true',
+        help='Only include videos detected as story videos in the analysis (filters out non-story content)'
     )
     
     args = parser.parse_args()
@@ -924,9 +1079,13 @@ def main():
         print("\n🔬 YouTube Channel Scraper")
 
     print(f"📺 Channel: {channel}")
-    print(f"📊 Videos Per Format: Top {args.top} shorts + Top {args.top} long videos\n")
+    print(f"📊 Shorts to scrape: Top {args.top}")
+    if args.story_only:
+        print("📖 Story-Only Mode: ENABLED (will filter out non-story videos)\n")
+    else:
+        print("📖 Story-Only Mode: DISABLED (will include all videos)\n")
     
-    scraper = YouTubeChannelScraper(output_dir=args.output)
+    scraper = YouTubeChannelScraper(output_dir=args.output, story_only=args.story_only)
     videos = scraper.scrape_channel(channel, args.top)
     
     if videos:
@@ -942,6 +1101,8 @@ def main():
         print(f"📁 Output directory: {args.output}")
         print(f"📄 Report: {report_path}")
         print(f"💾 JSON data: {json_path}")
+        if args.story_only and scraper.filtered_count > 0:
+            print(f"📖 Filtered out {scraper.filtered_count} non-story videos")
     else:
         print("\n❌ No videos scraped")
         sys.exit(1)
