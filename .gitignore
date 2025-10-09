@@ -270,6 +270,9 @@ htmlcov/
 logs/
 *.log.*
 
+# Stories directory at root (config default)
+/Stories/
+
 # Temporary files
 tmp/
 temp/

@@ -114,6 +114,73 @@ def captured_logs(caplog):
     return caplog
 
 
+@pytest.fixture
+def mock_openai_client(mocker):
+    """Mock OpenAI client for testing.
+
+    Returns:
+        Mock: Mocked OpenAI client
+
+    Example:
+        def test_with_openai(mock_openai_client):
+            mock_openai_client.chat.completions.create.return_value = mock_response
+    """
+    mock_client = mocker.MagicMock()
+    mock_response = mocker.MagicMock()
+    mock_response.choices = [mocker.MagicMock()]
+    mock_response.choices[0].message.content = "Test response"
+    mock_client.chat.completions.create.return_value = mock_response
+    return mock_client
+
+
+@pytest.fixture
+def mock_elevenlabs_client(mocker):
+    """Mock ElevenLabs client for testing.
+
+    Returns:
+        Mock: Mocked ElevenLabs client
+
+    Example:
+        def test_with_elevenlabs(mock_elevenlabs_client):
+            mock_elevenlabs_client.generate.return_value = b"audio_data"
+    """
+    mock_client = mocker.MagicMock()
+    mock_client.generate.return_value = b"mock_audio_data"
+    return mock_client
+
+
+@pytest.fixture
+def isolated_config(tmp_path, monkeypatch):
+    """Provide isolated configuration for testing.
+
+    Creates temporary directories and sets environment variables
+    to avoid interfering with actual configuration.
+
+    Returns:
+        dict: Dictionary with temporary paths
+
+    Example:
+        def test_with_config(isolated_config):
+            assert isolated_config['story_root'].exists()
+    """
+    story_root = tmp_path / "stories"
+    log_dir = tmp_path / "logs"
+    cache_dir = tmp_path / "cache"
+
+    # Set environment variables
+    monkeypatch.setenv("STORY_ROOT", str(story_root))
+    monkeypatch.setenv("LOG_DIR", str(log_dir))
+    monkeypatch.setenv("CACHE_DIR", str(cache_dir))
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    monkeypatch.setenv("ELEVENLABS_API_KEY", "test-key")
+
+    return {
+        "story_root": story_root,
+        "log_dir": log_dir,
+        "cache_dir": cache_dir,
+    }
+
+
 # Markers for test categorization
 def pytest_configure(config):
     """Register custom markers for test categorization."""
