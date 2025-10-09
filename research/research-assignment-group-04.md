@@ -121,9 +121,9 @@ Research modern game scripting systems, including embedded languages (Lua, Pytho
    - Content: Official Unity visual scripting guide
 
 2. **Unreal Blueprints Documentation**
-   - URL: https://docs.unrealengine.com/5.0/en-US/blueprints-visual-scripting-in-unreal-engine/
+   - URL: https://docs.unrealengine.com/en-US/blueprints-visual-scripting-in-unreal-engine/
    - Priority: High
-   - Content: Comprehensive Blueprint system documentation
+   - Content: Comprehensive Blueprint system documentation (Note: Newer versions of Unreal Engine may be available. Researchers should check for the latest documentation.)
 
 3. **Lua Programming Guide**
    - URL: https://www.lua.org/manual/5.4/
