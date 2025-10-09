@@ -37,6 +37,9 @@ websockets==13.1
 praw==7.8.1
 python-dotenv>=1.0.0
 tenacity>=8.0.0
+# Configuration and logging
+pydantic-settings>=2.0.0
+python-json-logger>=2.0.0
 # SDXL and Stable Diffusion dependencies
 torch>=2.0.0
 torchvision>=0.15.0
@@ -56,3 +59,5 @@ accelerate>=0.20.0
 # Alternative content source scrapers
 beautifulsoup4>=4.12.0
 tweepy>=4.14.0
+# YouTube video and subtitle analysis
+yt-dlp>=2024.0.0
