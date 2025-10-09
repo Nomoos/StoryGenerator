@@ -1,8 +1,18 @@
 """
 YouTube Channel Scraper
 
-Scrapes titles, subtitles text, descriptions, tags, and other useful metadata
-from the top N videos on a YouTube channel.
+Scrapes comprehensive metadata from the top N videos on a YouTube channel,
+including titles, subtitles, descriptions, tags, engagement metrics, video quality,
+and performance analytics similar to VidIQ and TubeBuddy.
+
+Features:
+- Video metadata (title, description, tags, duration)
+- Engagement metrics (views, likes, comments, engagement rate)
+- Performance analytics (views per day/hour, like ratios)
+- Video quality info (resolution, FPS, aspect ratio)
+- Content analysis (title/description length, tag count, chapters)
+- Channel information (name, ID, follower count)
+- Comprehensive reporting with insights
 
 Usage:
     # Interactive mode (prompts for channel)
@@ -33,6 +43,7 @@ class VideoMetadata:
     description: str
     tags: List[str]
     duration: str
+    duration_seconds: int
     view_count: int
     like_count: Optional[int]
     comment_count: Optional[int]
@@ -41,6 +52,36 @@ class VideoMetadata:
     thumbnail_url: str
     subtitles_available: bool
     subtitle_text: Optional[str]
+    
+    # Channel information
+    channel_id: Optional[str] = None
+    channel_name: Optional[str] = None
+    channel_follower_count: Optional[int] = None
+    
+    # Additional metadata
+    categories: Optional[List[str]] = None
+    age_limit: Optional[int] = None
+    average_rating: Optional[float] = None
+    dislike_count: Optional[int] = None
+    
+    # Video quality metrics
+    resolution: Optional[str] = None
+    fps: Optional[int] = None
+    aspect_ratio: Optional[str] = None
+    
+    # Engagement metrics (calculated)
+    engagement_rate: Optional[float] = None
+    like_to_view_ratio: Optional[float] = None
+    comment_to_view_ratio: Optional[float] = None
+    views_per_day: Optional[float] = None
+    views_per_hour: Optional[float] = None
+    
+    # Content analysis
+    title_length: Optional[int] = None
+    description_length: Optional[int] = None
+    tag_count: Optional[int] = None
+    has_chapters: bool = False
+    chapter_count: Optional[int] = None
     
     def to_dict(self):
         return asdict(self)
@@ -199,21 +240,114 @@ class YouTubeChannelScraper:
                 with open(subtitle_files[0], 'r', encoding='utf-8') as f:
                     subtitle_text = self._parse_srt_to_text(f.read())
             
+            # Extract video quality info from formats
+            resolution = None
+            fps = None
+            aspect_ratio = None
+            if 'formats' in info and info['formats']:
+                # Get the best quality format
+                formats = [f for f in info['formats'] if f.get('vcodec') != 'none']
+                if formats:
+                    best_format = max(formats, key=lambda f: f.get('height', 0) or 0)
+                    resolution = f"{best_format.get('width', '?')}x{best_format.get('height', '?')}"
+                    fps = best_format.get('fps')
+                    if best_format.get('width') and best_format.get('height'):
+                        width = best_format['width']
+                        height = best_format['height']
+                        aspect_ratio = f"{width}:{height}"
+            
+            # Extract chapters information
+            chapters = info.get('chapters', [])
+            has_chapters = len(chapters) > 0
+            chapter_count = len(chapters) if has_chapters else None
+            
+            # Get basic metadata
+            duration_seconds = info.get('duration', 0)
+            view_count = info.get('view_count', 0)
+            like_count = info.get('like_count')
+            comment_count = info.get('comment_count')
+            upload_date_str = info.get('upload_date', '')
+            
+            # Calculate engagement metrics
+            engagement_rate = None
+            like_to_view_ratio = None
+            comment_to_view_ratio = None
+            views_per_day = None
+            views_per_hour = None
+            
+            if view_count and view_count > 0:
+                if like_count is not None:
+                    like_to_view_ratio = (like_count / view_count) * 100
+                if comment_count is not None:
+                    comment_to_view_ratio = (comment_count / view_count) * 100
+                
+                # Calculate engagement rate (likes + comments) / views
+                if like_count is not None and comment_count is not None:
+                    engagement_rate = ((like_count + comment_count) / view_count) * 100
+                
+                # Calculate views per day/hour based on upload date
+                if upload_date_str:
+                    try:
+                        from datetime import datetime
+                        upload_date = datetime.strptime(upload_date_str, '%Y%m%d')
+                        days_since_upload = (datetime.now() - upload_date).days
+                        if days_since_upload > 0:
+                            views_per_day = view_count / days_since_upload
+                            views_per_hour = views_per_day / 24
+                    except Exception:
+                        pass
+            
+            # Get categories
+            categories = info.get('categories', [])
+            if isinstance(categories, str):
+                categories = [categories]
+            
             # Create metadata object
             metadata = VideoMetadata(
                 video_id=video_id,
                 title=info.get('title', ''),
                 description=info.get('description', ''),
                 tags=info.get('tags', []),
-                duration=self._format_duration(info.get('duration', 0)),
-                view_count=info.get('view_count', 0),
-                like_count=info.get('like_count'),
-                comment_count=info.get('comment_count'),
-                upload_date=info.get('upload_date', ''),
+                duration=self._format_duration(duration_seconds),
+                duration_seconds=duration_seconds,
+                view_count=view_count,
+                like_count=like_count,
+                comment_count=comment_count,
+                upload_date=upload_date_str,
                 url=video_url,
                 thumbnail_url=info.get('thumbnail', ''),
                 subtitles_available=subtitle_text is not None,
-                subtitle_text=subtitle_text
+                subtitle_text=subtitle_text,
+                
+                # Channel information
+                channel_id=info.get('channel_id'),
+                channel_name=info.get('channel', info.get('uploader')),
+                channel_follower_count=info.get('channel_follower_count'),
+                
+                # Additional metadata
+                categories=categories if categories else None,
+                age_limit=info.get('age_limit'),
+                average_rating=info.get('average_rating'),
+                dislike_count=info.get('dislike_count'),
+                
+                # Video quality metrics
+                resolution=resolution,
+                fps=fps,
+                aspect_ratio=aspect_ratio,
+                
+                # Engagement metrics
+                engagement_rate=engagement_rate,
+                like_to_view_ratio=like_to_view_ratio,
+                comment_to_view_ratio=comment_to_view_ratio,
+                views_per_day=views_per_day,
+                views_per_hour=views_per_hour,
+                
+                # Content analysis
+                title_length=len(info.get('title', '')),
+                description_length=len(info.get('description', '')),
+                tag_count=len(info.get('tags', [])),
+                has_chapters=has_chapters,
+                chapter_count=chapter_count
             )
             
             self.videos.append(metadata)
@@ -309,14 +443,34 @@ class YouTubeChannelScraper:
         if not self.videos:
             return "No videos scraped"
         
+        # Calculate aggregate statistics
+        total_views = sum(v.view_count for v in self.videos)
+        total_likes = sum(v.like_count for v in self.videos if v.like_count)
+        total_comments = sum(v.comment_count for v in self.videos if v.comment_count)
+        avg_engagement = sum(v.engagement_rate for v in self.videos if v.engagement_rate) / len([v for v in self.videos if v.engagement_rate]) if any(v.engagement_rate for v in self.videos) else 0
+        videos_with_subtitles = sum(1 for v in self.videos if v.subtitles_available)
+        
         report = f"""# YouTube Channel Scraping Report
 
-## Summary
+## Summary Statistics
 
 - **Total Videos Scraped**: {len(self.videos)}
-- **Videos with Subtitles**: {sum(1 for v in self.videos if v.subtitles_available)}
-- **Total Views**: {sum(v.view_count for v in self.videos):,}
-- **Average Views**: {sum(v.view_count for v in self.videos) // len(self.videos):,}
+- **Total Views**: {total_views:,}
+- **Average Views**: {total_views // len(self.videos):,}
+- **Total Likes**: {total_likes:,}
+- **Total Comments**: {total_comments:,}
+- **Average Engagement Rate**: {avg_engagement:.2f}%
+- **Videos with Subtitles**: {videos_with_subtitles} ({videos_with_subtitles/len(self.videos)*100:.1f}%)
+
+## Engagement Metrics Overview
+
+"""
+        
+        for video in self.videos:
+            if video.engagement_rate:
+                report += f"- **{video.title[:50]}...**: {video.engagement_rate:.2f}% engagement\n"
+        
+        report += f"""
 
 ## Video Details
 
@@ -325,15 +479,40 @@ class YouTubeChannelScraper:
         for i, video in enumerate(self.videos, 1):
             report += f"""### {i}. {video.title}
 
-**Metadata:**
+**Basic Information:**
 - **Video ID**: {video.video_id}
 - **URL**: {video.url}
+- **Channel**: {video.channel_name or 'N/A'}
+- **Upload Date**: {video.upload_date}
 - **Duration**: {video.duration}
+
+**Viewership & Engagement:**
 - **Views**: {video.view_count:,}
 - **Likes**: {video.like_count if video.like_count else 'N/A'}
 - **Comments**: {video.comment_count if video.comment_count else 'N/A'}
-- **Upload Date**: {video.upload_date}
+- **Engagement Rate**: {f"{video.engagement_rate:.2f}%" if video.engagement_rate else 'N/A'}
+- **Like-to-View Ratio**: {f"{video.like_to_view_ratio:.3f}%" if video.like_to_view_ratio else 'N/A'}
+- **Comment-to-View Ratio**: {f"{video.comment_to_view_ratio:.3f}%" if video.comment_to_view_ratio else 'N/A'}
+- **Views Per Day**: {f"{video.views_per_day:.0f}" if video.views_per_day else 'N/A'}
+- **Views Per Hour**: {f"{video.views_per_hour:.1f}" if video.views_per_hour else 'N/A'}
+
+**Video Quality:**
+- **Resolution**: {video.resolution or 'N/A'}
+- **FPS**: {video.fps or 'N/A'}
+- **Aspect Ratio**: {video.aspect_ratio or 'N/A'}
+
+**Content Analysis:**
+- **Title Length**: {video.title_length} characters
+- **Description Length**: {video.description_length} characters
+- **Tag Count**: {video.tag_count}
+- **Has Chapters**: {'Yes' if video.has_chapters else 'No'}
+- **Chapter Count**: {video.chapter_count if video.chapter_count else 'N/A'}
 - **Subtitles Available**: {'Yes' if video.subtitles_available else 'No'}
+- **Categories**: {', '.join(video.categories) if video.categories else 'N/A'}
+
+**Channel Information:**
+- **Channel ID**: {video.channel_id or 'N/A'}
+- **Channel Followers**: {f"{video.channel_follower_count:,}" if video.channel_follower_count else 'N/A'}
 
 **Description:**
 ```
@@ -341,7 +520,7 @@ class YouTubeChannelScraper:
 ```
 
 **Tags:**
-{', '.join(video.tags[:10])}{'...' if len(video.tags) > 10 else ''}
+{', '.join(video.tags[:15])}{'...' if len(video.tags) > 15 else ''}
 
 **Subtitle Text (First 200 words):**
 ```
@@ -352,7 +531,116 @@ class YouTubeChannelScraper:
 
 """
         
-        report += f"""## Common Patterns
+        report += self._generate_performance_analysis()
+        report += self._generate_content_patterns_analysis()
+        
+        report += f"""
+
+## Data Files
+
+All scraped data has been saved to:
+- **JSON format**: `channel_data.json` - Machine-readable data with all metrics
+- **Individual video info**: `{{video_id}}.info.json` - Full metadata per video
+- **Subtitles**: `{{video_id}}.srt` - Subtitle files where available
+
+## Key Insights
+
+### Top Performing Videos by Views
+"""
+        
+        sorted_by_views = sorted(self.videos, key=lambda v: v.view_count, reverse=True)[:5]
+        for i, video in enumerate(sorted_by_views, 1):
+            report += f"{i}. **{video.title}** - {video.view_count:,} views\n"
+        
+        report += """
+
+### Highest Engagement Rates
+"""
+        
+        sorted_by_engagement = sorted([v for v in self.videos if v.engagement_rate], 
+                                     key=lambda v: v.engagement_rate, reverse=True)[:5]
+        for i, video in enumerate(sorted_by_engagement, 1):
+            report += f"{i}. **{video.title}** - {video.engagement_rate:.2f}% engagement\n"
+        
+        report += """
+
+### Most Viewed Per Day
+"""
+        
+        sorted_by_daily_views = sorted([v for v in self.videos if v.views_per_day], 
+                                      key=lambda v: v.views_per_day, reverse=True)[:5]
+        for i, video in enumerate(sorted_by_daily_views, 1):
+            report += f"{i}. **{video.title}** - {video.views_per_day:.0f} views/day\n"
+        
+        report += f"""
+
+---
+
+**Scraping Date**: {self._get_timestamp()}
+**Videos Analyzed**: {len(self.videos)}
+**Success Rate**: {videos_with_subtitles / len(self.videos) * 100:.1f}% with subtitles
+"""
+        
+        if output_path:
+            Path(output_path).write_text(report, encoding='utf-8')
+            print(f"\n✅ Report saved to: {output_path}")
+        
+        return report
+    
+    def _generate_performance_analysis(self) -> str:
+        """Generate performance analysis section."""
+        if not self.videos:
+            return ""
+        
+        report = """
+## Performance Analysis
+
+### Engagement Metrics Distribution
+"""
+        
+        # Calculate engagement distribution
+        high_engagement = sum(1 for v in self.videos if v.engagement_rate and v.engagement_rate > 5)
+        medium_engagement = sum(1 for v in self.videos if v.engagement_rate and 2 < v.engagement_rate <= 5)
+        low_engagement = sum(1 for v in self.videos if v.engagement_rate and v.engagement_rate <= 2)
+        
+        report += f"""
+- **High Engagement (>5%)**: {high_engagement} videos
+- **Medium Engagement (2-5%)**: {medium_engagement} videos
+- **Low Engagement (<2%)**: {low_engagement} videos
+
+### Views Performance
+"""
+        
+        avg_views = sum(v.view_count for v in self.videos) / len(self.videos)
+        above_avg = sum(1 for v in self.videos if v.view_count > avg_views)
+        below_avg = len(self.videos) - above_avg
+        
+        report += f"""
+- **Average Views**: {avg_views:,.0f}
+- **Videos Above Average**: {above_avg}
+- **Videos Below Average**: {below_avg}
+
+### Content Quality Indicators
+"""
+        
+        videos_with_chapters = sum(1 for v in self.videos if v.has_chapters)
+        avg_title_length = sum(v.title_length for v in self.videos) / len(self.videos)
+        avg_tag_count = sum(v.tag_count for v in self.videos) / len(self.videos)
+        
+        report += f"""
+- **Videos with Chapters**: {videos_with_chapters} ({videos_with_chapters/len(self.videos)*100:.1f}%)
+- **Average Title Length**: {avg_title_length:.0f} characters
+- **Average Tag Count**: {avg_tag_count:.1f} tags
+- **Videos with Subtitles**: {sum(1 for v in self.videos if v.subtitles_available)}
+
+"""
+        
+        return report
+    
+    def _generate_content_patterns_analysis(self) -> str:
+        """Generate content patterns analysis section."""
+        report = """
+## Content Patterns Analysis
 
 ### Most Common Tags
 """
@@ -368,7 +656,7 @@ class YouTubeChannelScraper:
         for tag, count in tag_counts.most_common(20):
             report += f"- **{tag}**: {count} videos\n"
         
-        report += f"""
+        report += """
 
 ### Title Patterns
 
@@ -380,7 +668,7 @@ Common words in titles:
         for video in self.videos:
             # Remove common words
             words = video.title.lower().split()
-            words = [w for w in words if len(w) > 3 and w not in ['the', 'and', 'for', 'with', 'this', 'that']]
+            words = [w for w in words if len(w) > 3 and w not in ['the', 'and', 'for', 'with', 'this', 'that', 'from', 'your']]
             all_title_words.extend(words)
         
         word_counts = Counter(all_title_words)
@@ -388,51 +676,32 @@ Common words in titles:
         for word, count in word_counts.most_common(20):
             report += f"- **{word}**: {count} times\n"
         
-        report += f"""
-
-### Performance Metrics
-
-**Top Performing Videos (by views):**
-"""
-        
-        sorted_videos = sorted(self.videos, key=lambda v: v.view_count, reverse=True)
-        
-        for i, video in enumerate(sorted_videos[:5], 1):
-            report += f"{i}. **{video.title}** - {video.view_count:,} views\n"
-        
         report += """
 
-## Data Files
-
-All scraped data has been saved to:
-- **JSON format**: `channel_data.json` - Machine-readable data
-- **Individual video info**: `{video_id}.info.json` - Full metadata per video
-- **Subtitles**: `{video_id}.srt` - Subtitle files where available
-
-## Usage in StoryGenerator
-
-This data can be used to:
-1. Analyze successful content patterns
-2. Extract common themes and topics
-3. Identify effective titles and descriptions
-4. Study subtitle patterns
-5. Benchmark performance metrics
-
----
-
-**Scraping Date**: {self._get_timestamp()}
-**Videos Analyzed**: {len(self.videos)}
-**Success Rate**: {sum(1 for v in self.videos if v.subtitles_available) / len(self.videos) * 100:.1f}% with subtitles
+### Video Duration Distribution
 """
         
-        if output_path:
-            Path(output_path).write_text(report, encoding='utf-8')
-            print(f"\n✅ Report saved to: {output_path}")
+        short_videos = sum(1 for v in self.videos if v.duration_seconds < 300)
+        medium_videos = sum(1 for v in self.videos if 300 <= v.duration_seconds < 900)
+        long_videos = sum(1 for v in self.videos if v.duration_seconds >= 900)
+        
+        report += f"""
+- **Short (<5 min)**: {short_videos} videos
+- **Medium (5-15 min)**: {medium_videos} videos
+- **Long (>15 min)**: {long_videos} videos
+
+"""
         
         return report
     
     def save_json(self, output_path: str):
-        """Save all video metadata as JSON."""
+        """Save all video metadata as JSON with comprehensive analytics."""
+        # Calculate aggregate statistics
+        total_likes = sum(v.like_count for v in self.videos if v.like_count)
+        total_comments = sum(v.comment_count for v in self.videos if v.comment_count)
+        avg_engagement = sum(v.engagement_rate for v in self.videos if v.engagement_rate) / len([v for v in self.videos if v.engagement_rate]) if any(v.engagement_rate for v in self.videos) else 0
+        avg_views_per_day = sum(v.views_per_day for v in self.videos if v.views_per_day) / len([v for v in self.videos if v.views_per_day]) if any(v.views_per_day for v in self.videos) else 0
+        
         data = {
             'videos': [v.to_dict() for v in self.videos],
             'summary': {
@@ -440,6 +709,27 @@ This data can be used to:
                 'videos_with_subtitles': sum(1 for v in self.videos if v.subtitles_available),
                 'total_views': sum(v.view_count for v in self.videos),
                 'average_views': sum(v.view_count for v in self.videos) // len(self.videos) if self.videos else 0,
+                'total_likes': total_likes,
+                'total_comments': total_comments,
+                'average_engagement_rate': round(avg_engagement, 2),
+                'average_views_per_day': round(avg_views_per_day, 2),
+                'videos_with_chapters': sum(1 for v in self.videos if v.has_chapters),
+            },
+            'engagement_metrics': {
+                'high_engagement_videos': sum(1 for v in self.videos if v.engagement_rate and v.engagement_rate > 5),
+                'medium_engagement_videos': sum(1 for v in self.videos if v.engagement_rate and 2 < v.engagement_rate <= 5),
+                'low_engagement_videos': sum(1 for v in self.videos if v.engagement_rate and v.engagement_rate <= 2),
+            },
+            'content_quality': {
+                'average_title_length': round(sum(v.title_length for v in self.videos) / len(self.videos), 1),
+                'average_description_length': round(sum(v.description_length for v in self.videos) / len(self.videos), 1),
+                'average_tag_count': round(sum(v.tag_count for v in self.videos) / len(self.videos), 1),
+            },
+            'video_durations': {
+                'short_videos': sum(1 for v in self.videos if v.duration_seconds < 300),
+                'medium_videos': sum(1 for v in self.videos if 300 <= v.duration_seconds < 900),
+                'long_videos': sum(1 for v in self.videos if v.duration_seconds >= 900),
+                'average_duration_seconds': round(sum(v.duration_seconds for v in self.videos) / len(self.videos)),
             },
             'timestamp': self._get_timestamp()
         }
@@ -448,6 +738,7 @@ This data can be used to:
             json.dump(data, f, indent=2)
         
         print(f"✅ JSON data saved to: {output_path}")
+        print(f"   📊 Included {len(self.videos)} videos with comprehensive analytics")
     
     def _get_timestamp(self):
         """Get current timestamp."""
