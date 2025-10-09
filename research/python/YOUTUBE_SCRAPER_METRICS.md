@@ -54,6 +54,9 @@ This enhanced YouTube Channel Scraper extracts comprehensive metadata and analyt
 - **resolution**: Video resolution (e.g., "1920x1080")
 - **fps**: Frames per second (e.g., 30, 60)
 - **aspect_ratio**: Video aspect ratio (e.g., "16:9", "9:16")
+- **video_format**: Classification as "short" or "long" video
+  - Shorts: ≤60 seconds and vertical (height > width)
+  - Long: All other videos
 
 ### Content Analysis Metrics
 - **title_length**: Number of characters in title
