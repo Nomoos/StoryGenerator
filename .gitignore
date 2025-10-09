@@ -279,6 +279,9 @@ temp/
 *.tmp
 *.bak
 
+# Cleanup staging directory (for safe file removal)
+.trash/
+
 # Cache
 cache/
 *.cache

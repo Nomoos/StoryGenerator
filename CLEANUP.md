@@ -370,7 +370,11 @@ git commit -m "ci: enforce clean top-level via root guard"
 
 ## See Also
 
+- `REPOSITORY_CLEANUP_GUIDE.md` - Comprehensive guide for detecting and removing orphaned/unused files
+- `scripts/README.md` - Documentation for cleanup and utility scripts
+- `scripts/detect-orphans.sh` - Script for detecting orphaned files
+- `scripts/detect-dead-code.py` - Python dead code detector
+- `scripts/check-clean-root.sh` - Root cleanliness validation script
 - `docs/REORGANIZE.md` - Detailed reorganization guide with duplicate detection
 - `docs/REORGANIZATION_SUMMARY.md` - Summary of completed reorganization work
 - `docs/TEST_FILES.md` - Git tracking policy for test and content files
-- `scripts/check-clean-root.sh` - Root cleanliness validation script
