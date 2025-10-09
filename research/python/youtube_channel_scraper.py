@@ -91,6 +91,9 @@ class VideoMetadata:
 class YouTubeChannelScraper:
     """Scrapes metadata from YouTube channel videos."""
     
+    # Constants
+    SHORTS_FETCH_MULTIPLIER = 3  # Fetch extra shorts to ensure we get enough
+    
     def __init__(self, output_dir: str = "/tmp/youtube_channel_data"):
         """
         Initialize scraper.
@@ -162,13 +165,14 @@ class YouTubeChannelScraper:
         
         # Fetch shorts
         print(f"  🎬 Fetching shorts...")
+        shorts_url = channel_url.rstrip('/') + "/shorts"
         shorts_cmd = [
             "yt-dlp",
             "--flat-playlist",
             "--print", "id",
-            "--playlist-end", str(top_n * 3),  # Fetch more to ensure we get enough shorts
+            "--playlist-end", str(top_n * self.SHORTS_FETCH_MULTIPLIER),
             "--playlist-reverse",  # Get most recent first
-            channel_url + "/shorts"
+            shorts_url
         ]
         
         try:
@@ -193,13 +197,14 @@ class YouTubeChannelScraper:
         
         # Fetch long videos
         print(f"  📹 Fetching long videos...")
+        videos_url = channel_url.rstrip('/') + "/videos"
         long_cmd = [
             "yt-dlp",
             "--flat-playlist",
             "--print", "id",
             "--playlist-end", str(top_n),
             "--playlist-reverse",  # Get most recent first
-            channel_url + "/videos"
+            videos_url
         ]
         
         try:
@@ -290,6 +295,9 @@ class YouTubeChannelScraper:
             aspect_ratio = None
             video_format = expected_format  # Use expected format if provided
             
+            # Get duration early as it's needed for format detection
+            duration_seconds = info.get('duration', 0)
+            
             if 'formats' in info and info['formats']:
                 # Get the best quality format
                 formats = [f for f in info['formats'] if f.get('vcodec') != 'none']
@@ -304,7 +312,6 @@ class YouTubeChannelScraper:
                         
                         # Determine video format based on duration and aspect ratio
                         # YouTube Shorts: <= 60 seconds and vertical (height > width)
-                        duration_seconds = info.get('duration', 0)
                         if not video_format:  # Only determine if not already set
                             if duration_seconds <= 60 and height > width:
                                 video_format = "short"
@@ -317,7 +324,6 @@ class YouTubeChannelScraper:
             chapter_count = len(chapters) if has_chapters else None
             
             # Get basic metadata
-            duration_seconds = info.get('duration', 0)
             view_count = info.get('view_count', 0)
             like_count = info.get('like_count')
             comment_count = info.get('comment_count')
@@ -573,7 +579,7 @@ class YouTubeChannelScraper:
 - **Format**: {video.video_format.upper() if video.video_format else 'N/A'}
 - **Channel**: {video.channel_name or 'N/A'}
 - **Upload Date**: {video.upload_date}
-- **Duration**: {video.duration} ({video.duration_seconds}s)
+- **Duration**: {video.duration}
 
 **Viewership & Engagement:**
 - **Views**: {video.view_count:,}
