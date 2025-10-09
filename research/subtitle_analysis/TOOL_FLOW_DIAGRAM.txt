@@ -1,0 +1,208 @@
+```
+YouTube Subtitle Research - Tool Flow Diagram
+==============================================
+
+┌─────────────────────────────────────────────────────────────────┐
+│                        INPUT OPTIONS                            │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Option 1: YouTube URL                                          │
+│  ┌────────────────────────────────────────────┐                │
+│  │ https://www.youtube.com/shorts/41QD8C6tqIU │                │
+│  └────────────────────────────────────────────┘                │
+│                    │                                            │
+│                    ▼                                            │
+│  Option 2: Local SRT File                                       │
+│  ┌────────────────────────────────────────────┐                │
+│  │ path/to/subtitles.srt                      │                │
+│  └────────────────────────────────────────────┘                │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              YOUTUBE SUBTITLE ANALYZER TOOL                     │
+│              (youtube_subtitle_analyzer.py)                     │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Step 1: Download Video (if URL provided)                       │
+│  ┌──────────────────────────────────────────┐                  │
+│  │ yt-dlp downloads video as MP4            │                  │
+│  └──────────────────────────────────────────┘                  │
+│           │                                                     │
+│           ▼                                                     │
+│  Step 2: Extract Subtitles                                      │
+│  ┌──────────────────────────────────────────┐                  │
+│  │ yt-dlp extracts auto-generated or        │                  │
+│  │ manual subtitles as SRT file             │                  │
+│  └──────────────────────────────────────────┘                  │
+│           │                                                     │
+│           ▼                                                     │
+│  Step 3: Parse SRT File                                         │
+│  ┌──────────────────────────────────────────┐                  │
+│  │ - Parse timestamps                       │                  │
+│  │ - Extract text content                   │                  │
+│  │ - Build segment objects                  │                  │
+│  └──────────────────────────────────────────┘                  │
+│           │                                                     │
+│           ▼                                                     │
+│  Step 4: Analyze Metrics                                        │
+│  ┌──────────────────────────────────────────┐                  │
+│  │ Timing Analysis:                         │                  │
+│  │ • Segment durations                      │                  │
+│  │ • Gaps between segments                  │                  │
+│  │ • Overlapping segments                   │                  │
+│  │                                          │                  │
+│  │ Text Analysis:                           │                  │
+│  │ • Word count per segment                 │                  │
+│  │ • Character count per segment            │                  │
+│  │ • Reading speed (WPS)                    │                  │
+│  │                                          │                  │
+│  │ Quality Checks:                          │                  │
+│  │ • Duration bounds validation             │                  │
+│  │ • Reading speed validation               │                  │
+│  │ • Character limit validation             │                  │
+│  └──────────────────────────────────────────┘                  │
+│           │                                                     │
+│           ▼                                                     │
+│  Step 5: Generate Reports                                       │
+│  ┌──────────────────────────────────────────┐                  │
+│  │ • Markdown report (human-readable)       │                  │
+│  │ • JSON data (machine-readable)           │                  │
+│  │ • Configuration recommendations          │                  │
+│  └──────────────────────────────────────────┘                  │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                         OUTPUTS                                 │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. Video File (if downloaded)                                  │
+│  ┌────────────────────────────────────────────┐                │
+│  │ /tmp/youtube_research/41QD8C6tqIU.mp4     │                │
+│  └────────────────────────────────────────────┘                │
+│                                                                 │
+│  2. Subtitle File                                               │
+│  ┌────────────────────────────────────────────┐                │
+│  │ /tmp/youtube_research/41QD8C6tqIU.srt     │                │
+│  └────────────────────────────────────────────┘                │
+│                                                                 │
+│  3. Analysis Report (Markdown)                                  │
+│  ┌────────────────────────────────────────────┐                │
+│  │ /tmp/youtube_research/                     │                │
+│  │   41QD8C6tqIU_report.md                   │                │
+│  │                                            │                │
+│  │ Contains:                                  │                │
+│  │ • Summary statistics                       │                │
+│  │ • Segment breakdown table                  │                │
+│  │ • Key findings                             │                │
+│  │ • Implementation recommendations           │                │
+│  │ • Ready-to-use configuration               │                │
+│  └────────────────────────────────────────────┘                │
+│                                                                 │
+│  4. Analysis Data (JSON)                                        │
+│  ┌────────────────────────────────────────────┐                │
+│  │ /tmp/youtube_research/                     │                │
+│  │   41QD8C6tqIU_analysis.json               │                │
+│  │                                            │                │
+│  │ Contains:                                  │                │
+│  │ • All metrics in structured format         │                │
+│  │ • Per-segment details                      │                │
+│  │ • Suitable for automation                  │                │
+│  └────────────────────────────────────────────┘                │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                   USE CASES & INTEGRATION                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Use Case 1: Analyze Competitor Videos                          │
+│  ┌──────────────────────────────────────────┐                  │
+│  │ • Understand successful subtitle patterns │                  │
+│  │ • Extract timing specifications          │                  │
+│  │ • Benchmark against your content         │                  │
+│  └──────────────────────────────────────────┘                  │
+│                                                                 │
+│  Use Case 2: Validate Generated Subtitles                       │
+│  ┌──────────────────────────────────────────┐                  │
+│  │ • Check quality of GTitles.py output     │                  │
+│  │ • Ensure timing meets standards          │                  │
+│  │ • Identify issues before publishing      │                  │
+│  └──────────────────────────────────────────┘                  │
+│                                                                 │
+│  Use Case 3: Optimize Pipeline Configuration                    │
+│  ┌──────────────────────────────────────────┐                  │
+│  │ • Analyze 10+ successful videos          │                  │
+│  │ • Calculate average metrics              │                  │
+│  │ • Update GTitles.py configuration        │                  │
+│  │ • Test and iterate                       │                  │
+│  └──────────────────────────────────────────┘                  │
+│                                                                 │
+│  Integration with StoryGenerator Pipeline:                      │
+│  ┌──────────────────────────────────────────┐                  │
+│  │                                          │                  │
+│  │  Step 6: GTitles.py                      │                  │
+│  │  └─> Apply phrase breaking logic         │                  │
+│  │  └─> Use optimal timing specs            │                  │
+│  │                                          │                  │
+│  │  Step 9: Post-Production                 │                  │
+│  │  └─> Apply styling recommendations       │                  │
+│  │  └─> Use validated configurations        │                  │
+│  │                                          │                  │
+│  │  Step 12: Quality Checks                 │                  │
+│  │  └─> Validate subtitle quality           │                  │
+│  │  └─> Check against best practices        │                  │
+│  │                                          │                  │
+│  └──────────────────────────────────────────┘                  │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    KEY METRICS ANALYZED                         │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Timing Metrics:                                                │
+│  • Segment duration (min, max, avg)                             │
+│  • Total video duration                                         │
+│  • Gap durations between segments                               │
+│  • Number of overlapping segments                               │
+│                                                                 │
+│  Text Metrics:                                                  │
+│  • Words per segment (avg)                                      │
+│  • Characters per segment (avg)                                 │
+│  • Reading speed in WPS (words per second)                      │
+│  • Text density analysis                                        │
+│                                                                 │
+│  Quality Metrics:                                               │
+│  • Duration within optimal range (1.5-3.5s)                     │
+│  • Reading speed within range (2.0-3.5 WPS)                     │
+│  • Character count under limit (≤50)                            │
+│  • No timing overlaps detected                                  │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│               OPTIMAL SPECIFICATIONS (RESEARCH FINDINGS)        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Segment Duration:    1.5 - 3.5 seconds (optimal: 2.5s)        │
+│  Words per Segment:   3 - 8 words                               │
+│  Characters:          30 - 50 characters                        │
+│  Reading Speed:       2.0 - 3.0 words/second                    │
+│  Gap Duration:        0.05 - 0.2 seconds                        │
+│  Font Size:           60-80px (for 1080×1920)                   │
+│  Positioning:         Top 8%, Bottom 10% margins                │
+│  Styling:             White text, black outline (3px)           │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+Legend:
+━━━━━  Primary flow
+- - -  Optional flow
+┌────┐  Process step
+│    │  Data/File
+```
