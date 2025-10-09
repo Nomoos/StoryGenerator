@@ -116,7 +116,7 @@ Research modern game scripting systems, including embedded languages (Lua, Pytho
 
 ### Recommended Sources
 1. **Unity Visual Scripting Documentation**
-   - URL: https://docs.unity3d.com/Packages/com.unity.visualscripting@latest
+   - URL: https://docs.unity3d.com/Packages/com.unity.visualscripting@1.9
    - Priority: High
    - Content: Official Unity visual scripting guide
 
