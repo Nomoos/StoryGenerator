@@ -5,6 +5,10 @@ Scrapes titles, subtitles text, descriptions, tags, and other useful metadata
 from the top N videos on a YouTube channel.
 
 Usage:
+    # Interactive mode (prompts for channel)
+    python youtube_channel_scraper.py
+    
+    # With channel argument
     python youtube_channel_scraper.py <channel_url_or_id> [--top N]
     python youtube_channel_scraper.py https://www.youtube.com/@channelname --top 10
     python youtube_channel_scraper.py UC1234567890 --top 20
@@ -458,7 +462,8 @@ def main():
     )
     parser.add_argument(
         'channel',
-        help='Channel URL, handle (@username), or ID'
+        nargs='?',
+        help='Channel URL, handle (@username), or ID (optional - will prompt if not provided)'
     )
     parser.add_argument(
         '--top',
@@ -474,12 +479,31 @@ def main():
     
     args = parser.parse_args()
     
-    print(f"\n🔬 YouTube Channel Scraper")
-    print(f"📺 Channel: {args.channel}")
+    # Interactive mode: prompt for channel if not provided
+    channel = args.channel
+    if not channel:
+        print("\n🔬 YouTube Channel Scraper")
+        print("=" * 60)
+        print("\nNo channel provided. Please enter the channel information.")
+        print("\nYou can provide:")
+        print("  • Full channel URL: https://www.youtube.com/@channelname")
+        print("  • Channel handle: @channelname")
+        print("  • Channel ID: UC1234567890")
+        print("  • Just the channel name: channelname")
+        print()
+
+        while True:
+            channel = input("Enter channel URL, handle, or name: ").strip()
+            if channel:
+                break
+            print("❌ Channel cannot be empty. Please try again.")
+
+    print("\n🔬 YouTube Channel Scraper")
+    print(f"📺 Channel: {channel}")
     print(f"📊 Top Videos: {args.top}\n")
     
     scraper = YouTubeChannelScraper(output_dir=args.output)
-    videos = scraper.scrape_channel(args.channel, args.top)
+    videos = scraper.scrape_channel(channel, args.top)
     
     if videos:
         # Generate report
@@ -490,7 +514,7 @@ def main():
         json_path = Path(args.output) / 'channel_data.json'
         scraper.save_json(str(json_path))
         
-        print(f"\n✅ Scraping complete!")
+        print("\n✅ Scraping complete!")
         print(f"📁 Output directory: {args.output}")
         print(f"📄 Report: {report_path}")
         print(f"💾 JSON data: {json_path}")
