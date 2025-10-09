@@ -27,6 +27,42 @@ python research/python/youtube_subtitle_analyzer.py https://www.youtube.com/shor
 
 📖 **Full documentation**: [`subtitle_analysis/INDEX.md`](subtitle_analysis/INDEX.md)
 
+## 🆕 Story Pattern Analysis (NEW)
+
+**Extract success patterns from viral YouTube stories**
+
+### Quick Access
+- **Story Analyzer**: [`python/story_pattern_analyzer.py`](python/story_pattern_analyzer.py) - Analyze subtitle files for patterns
+- **Channel Scraper**: [`python/youtube_channel_scraper.py`](python/youtube_channel_scraper.py) - Scrape top videos from channels
+- **Analysis Results**: [`story_analysis/story_patterns_report.md`](story_analysis/story_patterns_report.md)
+- **Documentation**: [`story_analysis/README.md`](story_analysis/README.md)
+
+### What's Included
+✅ Story structure and arc analysis  
+✅ Hook effectiveness measurement  
+✅ Emotional engagement patterns  
+✅ Optimal content length (632 words ±50)  
+✅ Dialogue usage patterns (83%)  
+✅ Channel scraping for competitive intelligence  
+
+### Key Findings
+- **Optimal Length**: 582-682 words
+- **Hook**: 10-15 words, immediate conflict
+- **Structure**: Setup → Conflict → Escalation → Climax → Resolution
+- **Dialogue**: 83% of stories use it
+- **Resolution**: 100% must have closure
+
+### Usage
+```bash
+# Analyze story patterns
+python research/python/story_pattern_analyzer.py subtitle*.txt
+
+# Scrape channel data
+python research/python/youtube_channel_scraper.py @channelname --top 10
+```
+
+📖 **Full documentation**: [`story_analysis/README.md`](story_analysis/README.md)
+
 ---
 
 ## 🔬 Architecture Decision Documents
