@@ -1,0 +1,187 @@
+{
+  "region": {
+    "code": "CZ",
+    "name": "Czech Republic",
+    "locale": "cs-CZ",
+    "language": "Czech",
+    "timezone": "Europe/Prague",
+    "currency": "CZK"
+  },
+  
+  "monetization": {
+    "cpm_estimate": 4.5,
+    "cpm_range": [3, 7],
+    "currency": "CZK",
+    "priority_tier": 3,
+    "notes": "Emerging market with growing monetization. Less competition."
+  },
+  
+  "platforms": {
+    "youtube": {
+      "enabled": true,
+      "content_types": ["shorts"],
+      "optimal_posting_times": ["08:00", "13:00", "19:00", "21:00"],
+      "optimal_days": ["Wednesday", "Friday", "Sunday"],
+      "hashtag_limit": 3,
+      "title_max_length": 100,
+      "description_max_length": 5000,
+      "notes": "YouTube is the dominant video platform in Czech Republic."
+    },
+    "instagram": {
+      "enabled": false,
+      "notes": "Instagram Reels less popular in CZ. Focus on YouTube first."
+    },
+    "tiktok": {
+      "enabled": false,
+      "notes": "TikTok growing but still niche in Czech Republic."
+    }
+  },
+  
+  "voice": {
+    "provider": "azure",
+    "voice_id": "cs-CZ-AntoninNeural",
+    "voice_name": "Antonín",
+    "gender": "male",
+    "age_range": "adult",
+    "accent": "standard_czech",
+    "style": "neutral",
+    "description": "Standard Czech accent. Clear and professional.",
+    "alternatives": [
+      {
+        "voice_id": "cs-CZ-VlastaNeural",
+        "voice_name": "Vlasta",
+        "gender": "female",
+        "age_range": "adult",
+        "style": "warm",
+        "description": "Warm female Czech voice"
+      }
+    ]
+  },
+  
+  "localization": {
+    "translation_required": true,
+    "cultural_adaptation_level": "standard",
+    "reference_examples": [
+      "Central European references",
+      "Ice hockey (popular sport)",
+      "Beer culture (pivo, pivnice)",
+      "Historical figures (Havel, Kafka)",
+      "Prague landmarks and tourism",
+      "Metric system: meters, kilograms, Celsius",
+      "Use informal 'ty' for young audiences"
+    ],
+    "avoid": [
+      "German occupation (WWII sensitive)",
+      "Soviet occupation (1968 sensitive)",
+      "Political topics (generally avoided)",
+      "Roma minority issues (very sensitive)"
+    ],
+    "translation_notes": [
+      "Czech has complex grammar (7 cases)",
+      "Informal 'ty' vs. formal 'vy'",
+      "Diacritical marks important (ě, š, č, ř, ž, ý, á, í, é)",
+      "Use everyday Czech, not overly formal"
+    ]
+  },
+  
+  "content_preferences": {
+    "trending_topics": [
+      "Technology and IT",
+      "Gaming and esports",
+      "Travel and tourism",
+      "Food and beer",
+      "DIY and crafts",
+      "Sports (ice hockey, football)",
+      "History and culture",
+      "Personal finance"
+    ],
+    "avoid_topics": [
+      "Politics (polarizing)",
+      "WWII and occupation",
+      "1968 Prague Spring",
+      "Roma minority",
+      "Religion (mostly secular society)"
+    ],
+    "popular_formats": [
+      "Věděli jste? (Did you know?)",
+      "Jak na to (How to)",
+      "Top 5/10 (nejlepší)",
+      "Tipy a triky (Tips and tricks)",
+      "Lifehacky",
+      "Zajímavosti (Interesting facts)"
+    ]
+  },
+  
+  "demographics": {
+    "primary_age_groups": [
+      {"range": [13, 17], "percentage": 25, "platforms": ["youtube"]},
+      {"range": [18, 24], "percentage": 35, "platforms": ["youtube"]},
+      {"range": [25, 34], "percentage": 30, "platforms": ["youtube"]},
+      {"range": [35, 44], "percentage": 10, "platforms": ["youtube"]}
+    ],
+    "gender_split": {
+      "male": 51,
+      "female": 48,
+      "other": 1
+    },
+    "device_usage": {
+      "mobile": 70,
+      "desktop": 25,
+      "tablet": 5
+    }
+  },
+  
+  "compliance": {
+    "gdpr_applicable": true,
+    "age_restrictions": 13,
+    "content_rating": "general",
+    "disclosure_required": true,
+    "disclosure_text": "Placené partnerství",
+    "data_protection": "strict",
+    "notes": "EU GDPR compliance mandatory. Czech data protection authority oversight."
+  },
+  
+  "seo_keywords": {
+    "high_volume": [
+      "technologie",
+      "tipy",
+      "návod",
+      "jak na to",
+      "hry",
+      "zajímavosti",
+      "lifehack",
+      "produktivita",
+      "cestování",
+      "jídlo"
+    ],
+    "trending_hashtags": [
+      "#technologie",
+      "#tipy",
+      "#lifehack",
+      "#jaknato",
+      "#zajímavosti",
+      "#česko",
+      "#praha",
+      "#shorts",
+      "#viral",
+      "#trending"
+    ]
+  },
+  
+  "analytics": {
+    "track_metrics": true,
+    "key_performance_indicators": [
+      "CPM",
+      "Watch time",
+      "CTR",
+      "Engagement rate",
+      "Subscriber conversion"
+    ],
+    "benchmarks": {
+      "cpm_target": 4.5,
+      "watch_time_target": 70,
+      "ctr_target": 3.5,
+      "engagement_rate_target": 4.0
+    }
+  }
+}

@@ -119,6 +119,35 @@ This directory also contains comprehensive research documents on various aspects
   - TikTok and Instagram trend sources
   - Multi-platform aggregation strategies
 
+### 🆕 Short Video System Design (NEW)
+- **[SHORT_VIDEO_SYSTEM_DESIGN.md](SHORT_VIDEO_SYSTEM_DESIGN.md)** - Comprehensive system design
+  - Strategic framework for monetization in high-CPM regions
+  - Complete content generation pipeline with AI models
+  - Multi-region localization strategy (10+ languages)
+  - Market research and content gap analysis
+  - Automation and scaling infrastructure
+  - Monetization and expansion roadmap
+  - Technical architecture (C# + Python hybrid)
+  - Configuration schemas and integration guides
+  
+- **[SHORT_VIDEO_SYSTEM_DESIGN_CS.md](SHORT_VIDEO_SYSTEM_DESIGN_CS.md)** - Czech summary
+  - Zkrácená česká verze systémového návrhu
+  - Strategický rámec a monetizace
+  - Pipeline generování obsahu
+  - Lokalizační strategie
+  
+- **[SHORT_VIDEO_QUICKREF.md](SHORT_VIDEO_QUICKREF.md)** - Quick reference guide
+  - One-page overview of the entire system
+  - Region priorities and CPM targets
+  - Pipeline stages with timing and costs
+  - Success metrics and benchmarks
+  - Quick start commands
+  - Common troubleshooting
+
+**Configuration Files:**
+- **[../config/short_video_config.yaml](../config/short_video_config.yaml)** - Master configuration
+- **[../config/regions/](../config/regions/)** - Region-specific configs (US, DE, JP, CZ)
+
 ## Python Implementations
 
 Located in `/research/python/`:
