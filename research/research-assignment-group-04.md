@@ -252,7 +252,7 @@ Research scene graph architectures, level-of-detail (LOD) systems, memory manage
 
 ### Recommended Sources
 1. **Unity Addressables Documentation**
-   - URL: https://docs.unity3d.com/Packages/com.unity.addressables@latest
+   - URL: https://docs.unity3d.com/Packages/com.unity.addressables@1.21
    - Priority: High
    - Content: Asset bundle and addressables system
 
