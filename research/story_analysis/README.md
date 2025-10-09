@@ -34,7 +34,8 @@ Scrapes comprehensive metadata from top N videos on a YouTube channel.
 - Downloads subtitles (if available)
 - Collects view counts, likes, comments
 - Analyzes common patterns across videos
-- Generates comprehensive reports
+- **NEW: Story video detection and filtering** - Identifies story videos vs non-story content
+- Generates comprehensive reports with story analysis
 
 **Usage:**
 ```bash
@@ -46,13 +47,26 @@ python research/python/youtube_channel_scraper.py https://www.youtube.com/@chann
 
 # By channel ID
 python research/python/youtube_channel_scraper.py UC1234567890 --top 20
+
+# Filter to include ONLY story videos (recommended for story generation pipeline)
+python research/python/youtube_channel_scraper.py @channelname --top 10 --story-only
 ```
 
 **Output:**
-- Markdown report with video metadata
-- JSON data with all scraped information
+- Markdown report with video metadata and story analysis
+- JSON data with all scraped information including story confidence scores
 - Individual video info files
 - Subtitle files (where available)
+
+**Story Detection:**
+The scraper now automatically detects story videos based on:
+- Title keywords (story, AITA, revenge, relationship, etc.)
+- Description content
+- Tags
+- Subtitle content (first-person narratives)
+- Exclusion of non-story content (tutorials, reviews, vlogs, etc.)
+
+Use `--story-only` flag to filter out non-story videos and focus analysis on story content only.
 
 ## Analysis Results
 
@@ -152,14 +166,20 @@ STORY_CONFIG = {
 ### For Channel Research
 
 ```bash
-# Scrape competitor channel
+# Scrape competitor channel (all videos)
 python research/python/youtube_channel_scraper.py @competitorname --top 20
+
+# Scrape ONLY story videos for story pattern analysis
+python research/python/youtube_channel_scraper.py @competitorname --top 20 --story-only
 
 # Analyze top performing videos
 cd /tmp/youtube_channel_data
 cat channel_report.md
 
 # Use insights to improve content strategy
+# - Check story video detection accuracy
+# - Analyze story confidence scores
+# - Identify patterns in successful story videos
 ```
 
 ## Requirements
@@ -189,6 +209,9 @@ cat /tmp/story_patterns_report.md
 ```bash
 # Scrape top 10 videos from a channel
 python research/python/youtube_channel_scraper.py @storytimechannel --top 10
+
+# Scrape ONLY story videos (recommended for story generation pipeline)
+python research/python/youtube_channel_scraper.py @storytimechannel --top 10 --story-only
 
 # View results
 cat /tmp/youtube_channel_data/channel_report.md

@@ -44,6 +44,7 @@ python research/python/youtube_subtitle_analyzer.py https://www.youtube.com/shor
 ✅ Optimal content length (632 words ±50)  
 ✅ Dialogue usage patterns (83%)  
 ✅ Channel scraping for competitive intelligence  
+✅ **NEW: Story video detection and filtering** - Focus analysis on story content only
 
 ### Key Findings
 - **Optimal Length**: 582-682 words
@@ -57,8 +58,11 @@ python research/python/youtube_subtitle_analyzer.py https://www.youtube.com/shor
 # Analyze story patterns
 python research/python/story_pattern_analyzer.py subtitle*.txt
 
-# Scrape channel data
+# Scrape channel data (all videos)
 python research/python/youtube_channel_scraper.py @channelname --top 10
+
+# Scrape ONLY story videos (recommended for story analysis)
+python research/python/youtube_channel_scraper.py @channelname --top 10 --story-only
 ```
 
 📖 **Full documentation**: [`story_analysis/README.md`](story_analysis/README.md)
