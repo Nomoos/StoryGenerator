@@ -57,6 +57,7 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 ### 🔬 Research & Architecture
 - **[Technology Stack](docs/TECHNOLOGY_STACK_FINAL.md)** - C# + Python + SQLite
 - **[Hybrid Architecture](docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Architecture guide
+- **[Hybrid Roadmap](docs/HYBRID_ROADMAP.md)** - 📋 **NEW: Complete implementation status**
 - **[GPU Comparison](docs/GPU_COMPARISON.md)** - Hardware benchmarks
 - **[Models Documentation](docs/MODELS.md)** - ML model references
 - **[C# vs Python](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Technology comparison
@@ -226,18 +227,19 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 ## 📋 Project Status & Roadmap
 
 **Current Status:**
-- ✅ Core pipeline (Idea → Script → Voice → Subtitles → Export)
-- ✅ C# implementation with .NET 9.0
-- 🔄 Visual content generation (in progress)
-- 📋 Full automation and orchestration (planned)
+- ✅ Core pipeline foundation (15 tasks complete)
+- 🔄 Pipeline orchestration (in active development)
+- 📋 Content pipeline stages (planned)
+- 📋 Visual pipeline stages (planned)
 
 **Roadmap:**
-- Q1 2025: Complete visual pipeline (SDXL + LTX-Video)
-- Q2 2025: Web UI and API server
-- Q3 2025: Cloud deployment automation
-- Q4 2025: Advanced analytics and optimization
+- **Current:** Pipeline orchestration foundation (2-3 weeks)
+- **Next:** P1 content pipeline (Idea → Script → Audio → Subtitles)
+- **Then:** Visual pipeline (Images → Video → Post-production)
+- **Future:** Platform distribution and analytics
 
-➡️ **[Detailed roadmap](docs/IMPLEMENTATION_ROADMAP.md)** | **[Issue tracking](docs/ISSUE_TRACKING.md)**
+➡️ **[View Hybrid Roadmap](docs/HYBRID_ROADMAP.md)** - Complete implementation status with progress tracking  
+➡️ **[Issue tracking](docs/ISSUE_TRACKING.md)** - Task management details
 
 ---
 
