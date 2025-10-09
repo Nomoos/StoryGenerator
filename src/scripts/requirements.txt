@@ -1,0 +1,13 @@
+# StoryGenerator Python Scripts - Base Requirements
+# These are minimal dependencies for the JSONL bridge and basic ML operations
+
+# JSON processing and subprocess communication
+python-dotenv>=1.0.0
+
+# Optional ML dependencies (can be installed separately)
+# Uncomment or install via extras when needed:
+# torch>=2.0.0
+# diffusers>=0.25.0
+# transformers>=4.35.0
+# accelerate>=0.25.0
+# faster-whisper>=0.10.0
