@@ -105,6 +105,8 @@ class YouTubeChannelScraper:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.videos: List[VideoMetadata] = []
+        self.channel_id: Optional[str] = None
+        self.channel_name: Optional[str] = None
     
     def check_dependencies(self) -> bool:
         """Check if required dependencies are installed."""
@@ -415,6 +417,10 @@ class YouTubeChannelScraper:
             )
             
             self.videos.append(metadata)
+            
+            # Save video info as markdown for easier viewing
+            self._save_video_info_as_markdown(metadata)
+            
             format_emoji = "🎬" if video_format == "short" else "📹"
             print(f"    ✅ Extracted ({format_emoji} {video_format}): {metadata.title[:50]}... [{metadata.duration}]")
             return metadata
@@ -448,6 +454,80 @@ class YouTubeChannelScraper:
             text_lines.append(line)
         
         return ' '.join(text_lines)
+    
+    def _save_video_info_as_markdown(self, video: VideoMetadata):
+        """
+        Save individual video metadata as markdown for easier viewing.
+        
+        Args:
+            video: VideoMetadata object
+        """
+        format_icon = "🎬" if video.video_format == "short" else "📹"
+        
+        md_content = f"""# {format_icon} {video.title}
+
+## Basic Information
+
+- **Video ID**: {video.video_id}
+- **URL**: {video.url}
+- **Format**: {video.video_format.upper() if video.video_format else 'N/A'}
+- **Channel**: {video.channel_name or 'N/A'}
+- **Channel ID**: {video.channel_id or 'N/A'}
+- **Upload Date**: {video.upload_date}
+- **Duration**: {video.duration} ({video.duration_seconds} seconds)
+
+## Viewership & Engagement
+
+- **Views**: {video.view_count:,}
+- **Likes**: {video.like_count if video.like_count else 'N/A'}
+- **Comments**: {video.comment_count if video.comment_count else 'N/A'}
+- **Engagement Rate**: {f"{video.engagement_rate:.2f}%" if video.engagement_rate else 'N/A'}
+- **Like-to-View Ratio**: {f"{video.like_to_view_ratio:.3f}%" if video.like_to_view_ratio else 'N/A'}
+- **Comment-to-View Ratio**: {f"{video.comment_to_view_ratio:.3f}%" if video.comment_to_view_ratio else 'N/A'}
+- **Views Per Day**: {f"{video.views_per_day:.0f}" if video.views_per_day else 'N/A'}
+- **Views Per Hour**: {f"{video.views_per_hour:.1f}" if video.views_per_hour else 'N/A'}
+
+## Video Quality
+
+- **Resolution**: {video.resolution or 'N/A'}
+- **FPS**: {video.fps or 'N/A'}
+- **Aspect Ratio**: {video.aspect_ratio or 'N/A'}
+
+## Content Analysis
+
+- **Title Length**: {video.title_length} characters
+- **Description Length**: {video.description_length} characters
+- **Tag Count**: {video.tag_count}
+- **Has Chapters**: {'Yes' if video.has_chapters else 'No'}
+- **Chapter Count**: {video.chapter_count if video.chapter_count else 'N/A'}
+- **Subtitles Available**: {'Yes' if video.subtitles_available else 'No'}
+- **Categories**: {', '.join(video.categories) if video.categories else 'N/A'}
+
+## Description
+
+```
+{video.description[:500]}{'...' if len(video.description) > 500 else ''}
+```
+
+## Tags
+
+{', '.join(video.tags[:20])}{'...' if len(video.tags) > 20 else ''}
+
+## Subtitle Text (First 300 words)
+
+```
+{' '.join((video.subtitle_text or '').split()[:300])}{'...' if video.subtitle_text and len(video.subtitle_text.split()) > 300 else ''}
+```
+
+---
+
+*This is a markdown representation of video metadata.*  
+*For complete data, see `{video.video_id}.info.json`*
+"""
+        
+        md_path = self.output_dir / f"{video.video_id}.info.md"
+        with open(md_path, 'w', encoding='utf-8') as f:
+            f.write(md_content)
     
     def _format_duration(self, seconds: int) -> str:
         """Format duration in seconds to HH:MM:SS."""
@@ -505,6 +585,11 @@ class YouTubeChannelScraper:
                 print(f"[Long {i}/{len(video_ids_by_format['long'])}]")
                 self.extract_video_metadata(video_id, expected_format='long')
         
+        # Capture channel information from first video
+        if self.videos:
+            self.channel_id = self.videos[0].channel_id
+            self.channel_name = self.videos[0].channel_name
+        
         return self.videos
     
     def generate_report(self, output_path: Optional[str] = None) -> str:
@@ -512,13 +597,18 @@ class YouTubeChannelScraper:
         Generate comprehensive report of scraped data.
         
         Args:
-            output_path: Path to save markdown report
+            output_path: Path to save markdown report (if None, uses channel-specific dir)
             
         Returns:
             Markdown report text
         """
         if not self.videos:
             return "No videos scraped"
+        
+        # Use channel-specific directory if no output path specified
+        if output_path is None:
+            channel_dir = self._get_channel_output_dir()
+            output_path = str(channel_dir / "channel_report.md")
         
         # Calculate aggregate statistics
         total_views = sum(v.view_count for v in self.videos)
@@ -531,7 +621,20 @@ class YouTubeChannelScraper:
         shorts = [v for v in self.videos if v.video_format == 'short']
         longs = [v for v in self.videos if v.video_format == 'long']
         
-        report = f"""# YouTube Channel Scraping Report
+        # Build report title with channel info
+        channel_info = ""
+        if self.channel_name:
+            channel_info = f" - {self.channel_name}"
+        if self.channel_id:
+            channel_info += f" ({self.channel_id})"
+        
+        report = f"""# YouTube Channel Scraping Report{channel_info}
+
+## Channel Information
+
+- **Channel Name**: {self.channel_name or 'N/A'}
+- **Channel ID**: {self.channel_id or 'N/A'}
+- **Scrape Date**: {self._get_timestamp()}
 
 ## Summary Statistics
 
@@ -631,13 +734,19 @@ class YouTubeChannelScraper:
         report += self._generate_performance_analysis()
         report += self._generate_content_patterns_analysis()
         
+        channel_dir = self._get_channel_output_dir()
         report += f"""
 
 ## Data Files
 
-All scraped data has been saved to:
-- **JSON format**: `channel_data.json` - Machine-readable data with all metrics
-- **Individual video info**: `{{video_id}}.info.json` - Full metadata per video
+All scraped data has been saved to channel-specific directory: `{channel_dir.name}/`
+
+Files:
+- **Markdown Report**: `channel_report.md` - This comprehensive report
+- **JSON Data**: `channel_data.json` - Machine-readable data with all metrics
+- **JSON Summary**: `channel_data_summary.md` - JSON data converted to Markdown for easy viewing
+- **Individual Video Info**: `{{video_id}}.info.json` - Full metadata per video
+- **Video Info Markdown**: `{{video_id}}.info.md` - Video metadata in Markdown format
 - **Subtitles**: `{{video_id}}.srt` - Subtitle files where available
 
 ## Key Insights
@@ -803,8 +912,19 @@ Common words in titles:
         
         return report
     
-    def save_json(self, output_path: str):
-        """Save all video metadata as JSON with comprehensive analytics."""
+    def save_json(self, output_path: Optional[str] = None):
+        """
+        Save all video metadata as JSON with comprehensive analytics.
+        Also creates a markdown version for easier viewing on GitHub.
+        
+        Args:
+            output_path: Path to save JSON file (if None, uses channel-specific dir)
+        """
+        # Use channel-specific directory if no output path specified
+        if output_path is None:
+            channel_dir = self._get_channel_output_dir()
+            output_path = str(channel_dir / "channel_data.json")
+        
         # Calculate aggregate statistics
         total_likes = sum(v.like_count for v in self.videos if v.like_count)
         total_comments = sum(v.comment_count for v in self.videos if v.comment_count)
@@ -816,6 +936,8 @@ Common words in titles:
         longs = [v for v in self.videos if v.video_format == 'long']
         
         data = {
+            'channel_id': self.channel_id,
+            'channel_name': self.channel_name,
             'videos': [v.to_dict() for v in self.videos],
             'summary': {
                 'total_videos': len(self.videos),
@@ -864,17 +986,127 @@ Common words in titles:
             'output_directory': str(self.output_dir.resolve())
         }
         
+        # Save JSON
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2)
         
         print(f"✅ JSON data saved to: {output_path}")
         print(f"   📊 Included {len(self.videos)} videos with comprehensive analytics")
         print(f"   🎬 Shorts: {len(shorts)}, 📹 Long: {len(longs)}")
+        
+        # Create markdown version for easier GitHub viewing
+        md_path = output_path.replace('.json', '_summary.md')
+        self._save_json_as_markdown(data, md_path)
+        print(f"   📄 Markdown version saved to: {md_path}")
     
     def _get_timestamp(self):
         """Get current timestamp."""
         from datetime import datetime
         return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    def _save_json_as_markdown(self, data: dict, output_path: str):
+        """
+        Convert JSON data to a readable Markdown format.
+        
+        Args:
+            data: Dictionary containing channel data
+            output_path: Path to save markdown file
+        """
+        md_content = f"""# Channel Data Summary
+
+**Generated**: {data.get('timestamp', 'N/A')}  
+**Channel**: {data.get('channel_name', 'N/A')} ({data.get('channel_id', 'N/A')})
+
+## Summary Statistics
+
+"""
+        
+        summary = data.get('summary', {})
+        for key, value in summary.items():
+            label = key.replace('_', ' ').title()
+            md_content += f"- **{label}**: {value:,}\n" if isinstance(value, (int, float)) else f"- **{label}**: {value}\n"
+        
+        md_content += "\n## Format Breakdown\n\n"
+        format_breakdown = data.get('format_breakdown', {})
+        for format_type, stats in format_breakdown.items():
+            md_content += f"### {format_type.title()}\n\n"
+            for key, value in stats.items():
+                label = key.replace('_', ' ').title()
+                md_content += f"- **{label}**: {value:,}\n" if isinstance(value, (int, float)) else f"- **{label}**: {value}\n"
+            md_content += "\n"
+        
+        md_content += "## Engagement Metrics\n\n"
+        engagement = data.get('engagement_metrics', {})
+        for key, value in engagement.items():
+            label = key.replace('_', ' ').title()
+            md_content += f"- **{label}**: {value}\n"
+        
+        md_content += "\n## Content Quality\n\n"
+        quality = data.get('content_quality', {})
+        for key, value in quality.items():
+            label = key.replace('_', ' ').title()
+            md_content += f"- **{label}**: {value}\n"
+        
+        md_content += "\n## Video Durations\n\n"
+        durations = data.get('video_durations', {})
+        for key, value in durations.items():
+            label = key.replace('_', ' ').title()
+            md_content += f"- **{label}**: {value}\n"
+        
+        md_content += f"""
+
+## Videos List
+
+Total videos: {len(data.get('videos', []))}
+
+"""
+        
+        for i, video in enumerate(data.get('videos', []), 1):
+            format_icon = "🎬" if video.get('video_format') == "short" else "📹"
+            md_content += f"""### {i}. {format_icon} {video.get('title', 'N/A')}
+
+- **Video ID**: {video.get('video_id', 'N/A')}
+- **URL**: {video.get('url', 'N/A')}
+- **Views**: {video.get('view_count', 0):,}
+- **Duration**: {video.get('duration', 'N/A')}
+- **Engagement Rate**: {video.get('engagement_rate', 'N/A')}%
+- **Upload Date**: {video.get('upload_date', 'N/A')}
+
+"""
+        
+        md_content += """
+---
+
+*This file is a Markdown representation of the JSON data for easier viewing on GitHub.*  
+*For complete data, see `channel_data.json`*
+"""
+        
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(md_content)
+    
+    def _get_channel_output_dir(self) -> Path:
+        """
+        Get channel-specific output directory.
+        Creates a subdirectory using channel ID and name for organization.
+        
+        Returns:
+            Path to channel-specific directory
+        """
+        if self.channel_id and self.channel_name:
+            # Sanitize channel name for filesystem
+            safe_name = "".join(c if c.isalnum() or c in (' ', '-', '_') else '_' for c in self.channel_name)
+            safe_name = safe_name.replace(' ', '_')
+            channel_dir = self.output_dir / f"{self.channel_id}_{safe_name}"
+        elif self.channel_id:
+            channel_dir = self.output_dir / self.channel_id
+        else:
+            # Fallback to timestamp if no channel info
+            from datetime import datetime
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            channel_dir = self.output_dir / f"channel_{timestamp}"
+        
+        channel_dir.mkdir(parents=True, exist_ok=True)
+        return channel_dir
 
 
 def main():
@@ -930,18 +1162,20 @@ def main():
     videos = scraper.scrape_channel(channel, args.top)
     
     if videos:
-        # Generate report
-        report_path = Path(args.output) / 'channel_report.md'
-        scraper.generate_report(str(report_path))
+        # Get channel-specific output directory
+        channel_dir = scraper._get_channel_output_dir()
         
-        # Save JSON
-        json_path = Path(args.output) / 'channel_data.json'
-        scraper.save_json(str(json_path))
+        # Generate report (will automatically use channel-specific dir)
+        scraper.generate_report()
+        
+        # Save JSON (will automatically use channel-specific dir)
+        scraper.save_json()
         
         print("\n✅ Scraping complete!")
-        print(f"📁 Output directory: {args.output}")
-        print(f"📄 Report: {report_path}")
-        print(f"💾 JSON data: {json_path}")
+        print(f"📁 Channel-specific output directory: {channel_dir}")
+        print(f"📄 Report: {channel_dir / 'channel_report.md'}")
+        print(f"💾 JSON data: {channel_dir / 'channel_data.json'}")
+        print(f"📄 Markdown summary: {channel_dir / 'channel_data_summary.md'}")
     else:
         print("\n❌ No videos scraped")
         sys.exit(1)
