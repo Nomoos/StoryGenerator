@@ -3,52 +3,76 @@
 **ID:** `04-scoring-03-top-selection`  
 **Priority:** P1  
 **Effort:** 1-2 hours  
-**Status:** Not Started
+**Status:** ✅ Complete
 
 ## Overview
 
-[TODO: Add specific overview for this task]
+Selects the top 5 titles per segment based on viral scores while ensuring diversity across topics.
 
 ## Dependencies
 
 **Requires:**
-- `04-scoring-01`
+- `04-scoring-01` - Title scoring
 
 **Blocks:**
-- [Tasks that depend on this one]
+- Script Development group (needs selected titles)
 
 ## Acceptance Criteria
 
-- [ ] [Add specific acceptance criteria]
-- [ ] Documentation updated
-- [ ] Tests passing (if applicable)
-- [ ] Code reviewed and merged
+- [x] TopSelector class implemented
+- [x] Top 5 selection per segment
+- [x] Topic diversity ensured
+- [x] 9 unit tests passing
+- [x] Code reviewed and merged
 
-## Task Details
+## Implementation
 
-### Implementation
+**Module:** `core/pipeline/top_selection.py`
+**Class:** `TopSelector`
 
-[TODO: Add implementation details, code examples, schemas]
+```python
+from core.pipeline.top_selection import TopSelector
 
-### Testing
-
-```bash
-# Add test commands
+selector = TopSelector()
+selected = selector.select_top_titles(titles_with_voices, top_n=5, min_score=55)
+selector.save_selected_titles(selected, output_dir, gender, age_bucket)
 ```
+
+**Selection Strategy:**
+1. Filter titles below minimum score (default: 55)
+2. Sort by score descending
+3. First pass: Select one title per topic for diversity
+4. Second pass: Fill remaining slots with highest scores
+5. Final: Re-sort by score
 
 ## Output Files
 
-- [List expected output files/artifacts]
+**File:** `data/selected/{gender}/{age_bucket}/top_5_titles.json`
 
-## Related Files
-
-- [List related source files or docs]
-
-## Notes
-
-- [Add any important notes or considerations]
+```json
+{
+  "segment": {
+    "gender": "women",
+    "age_bucket": "18-23"
+  },
+  "total_selected": 5,
+  "average_score": 82.3,
+  "topics_represented": 4,
+  "selected_at": "2024-01-01T12:00:00",
+  "titles": [
+    {
+      "id": "topic_02_title_05",
+      "text": "The shocking truth nobody tells you about relationships",
+      "score": 92.5,
+      "score_tier": "excellent",
+      "topic_id": "topic_02",
+      "voice_recommendation": {...}
+    }
+  ]
+}
+```
 
 ## Next Steps
 
-After completion:
-- [List tasks that can proceed]
+- Script Development group can begin with selected titles
+- These titles feed into script generation pipeline
