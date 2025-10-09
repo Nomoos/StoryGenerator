@@ -1,5 +1,6 @@
 using StoryGenerator.Pipeline.Config;
 using StoryGenerator.Pipeline.Interfaces;
+using StoryGenerator.Pipeline.Services;
 
 namespace StoryGenerator.Pipeline.Core;
 
@@ -14,6 +15,10 @@ public class PipelineOrchestrator
     private readonly PipelineLogger _logger;
     private readonly IPythonExecutor _pythonExecutor;
     private readonly IPipelineCheckpointManager _checkpointManager;
+    private readonly SceneAnalysisService _sceneAnalysisService;
+    private readonly SceneDescriptionService _sceneDescriptionService;
+    private readonly VideoGenerationService _videoGenerationService;
+    private readonly VideoCompositionService _videoCompositionService;
 
     public PipelineOrchestrator(
         PipelineConfig config,
@@ -25,6 +30,17 @@ public class PipelineOrchestrator
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _pythonExecutor = pythonExecutor ?? throw new ArgumentNullException(nameof(pythonExecutor));
         _checkpointManager = checkpointManager ?? throw new ArgumentNullException(nameof(checkpointManager));
+        
+        // Initialize video pipeline services
+        _sceneAnalysisService = new SceneAnalysisService(_config.Paths);
+        _sceneDescriptionService = new SceneDescriptionService(_config.Paths);
+        _videoGenerationService = new VideoGenerationService(
+            _config.Paths, 
+            _config.Generation.Video, 
+            useLTX: true); // Configure via config later
+        _videoCompositionService = new VideoCompositionService(
+            _config.Paths, 
+            _config.Generation.Video);
     }
 
     /// <summary>
@@ -271,32 +287,42 @@ public class PipelineOrchestrator
 
     private async Task AnalyzeScenesAsync(string storyTitle)
     {
-        var pythonCode = $"from Generators.GSceneAnalyzer import SceneAnalyzer; from Models.StoryIdea import StoryIdea; analyzer = SceneAnalyzer(); idea = StoryIdea(story_title='{storyTitle}'); analyzer.analyze_story(idea)";
-        await _pythonExecutor.ExecuteCommandAsync(pythonCode);
+        await _sceneAnalysisService.AnalyzeScenesAsync(storyTitle);
     }
 
     private async Task DescribeScenesAsync(string storyTitle)
     {
-        var pythonCode = $"from Generators.GSceneDescriber import SceneDescriber; from Models.StoryIdea import StoryIdea; describer = SceneDescriber(); idea = StoryIdea(story_title='{storyTitle}'); describer.describe_scenes(idea)";
-        await _pythonExecutor.ExecuteCommandAsync(pythonCode);
+        await _sceneDescriptionService.DescribeScenesAsync(storyTitle);
     }
 
     private async Task GenerateKeyframesAsync(string storyTitle)
     {
-        var pythonCode = $"from Generators.GKeyframeGenerator import KeyframeGenerator; from Models.StoryIdea import StoryIdea; generator = KeyframeGenerator(); idea = StoryIdea(story_title='{storyTitle}'); generator.generate_keyframes(idea)";
-        await _pythonExecutor.ExecuteCommandAsync(pythonCode);
+        // Keyframe generation is handled as part of video generation
+        // This step can be skipped or used for pre-generating keyframes
+        _logger.LogInfo("  (Keyframes will be generated during video synthesis)");
     }
 
     private async Task InterpolateVideoAsync(string storyTitle)
     {
-        var pythonCode = $"from Generators.GVideoInterpolator import VideoInterpolator; from Models.StoryIdea import StoryIdea; interpolator = VideoInterpolator(); idea = StoryIdea(story_title='{storyTitle}'); interpolator.interpolate_scenes(idea)";
-        await _pythonExecutor.ExecuteCommandAsync(pythonCode);
+        // Generate video clips using selected method
+        await _videoGenerationService.GenerateVideoClipsAsync(storyTitle);
     }
 
     private async Task<string> ComposeVideoAsync(string storyTitle)
     {
-        var scriptPath = Path.Combine(_config.Paths.PythonRoot, "Generation", "Manual", "MVideoPipeline.py");
-        await _pythonExecutor.ExecuteScriptAsync(scriptPath, storyTitle);
-        return Path.Combine(_config.Paths.StoryRoot, _config.Paths.Final, $"{storyTitle}.mp4");
+        // Load generated clips
+        var videoDir = Path.Combine(_config.Paths.StoryRoot, _config.Paths.Videos, storyTitle);
+        var clipPaths = Directory.GetFiles(videoDir, "clip_*.mp4")
+            .OrderBy(f => f)
+            .ToList();
+
+        if (clipPaths.Count == 0)
+        {
+            throw new InvalidOperationException($"No video clips found for {storyTitle}");
+        }
+
+        // Compose final video
+        var finalVideoPath = await _videoCompositionService.ComposeVideoAsync(storyTitle, clipPaths);
+        return finalVideoPath;
     }
 }
