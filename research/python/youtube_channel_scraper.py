@@ -1142,9 +1142,9 @@ def main():
     print(f"📺 Channel: {channel}")
     print(f"📊 Videos Per Format: Top {args.top} shorts + Top {args.top} long videos")
     if args.story_only:
-        print(f"📖 Story-Only Mode: ENABLED (will filter out non-story videos)\n")
+        print("📖 Story-Only Mode: ENABLED (will filter out non-story videos)\n")
     else:
-        print(f"📖 Story-Only Mode: DISABLED (will include all videos)\n")
+        print("📖 Story-Only Mode: DISABLED (will include all videos)\n")
     
     scraper = YouTubeChannelScraper(output_dir=args.output, story_only=args.story_only)
     videos = scraper.scrape_channel(channel, args.top)
