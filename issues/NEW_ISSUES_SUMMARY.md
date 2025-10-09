@@ -14,7 +14,7 @@ Created 17 new structured GitHub issues based on the comprehensive analysis and 
 
 These security issues have been completed and moved to `resolved/p0-security/`:
 
-1. **security-api-keys** ([issue](../resolved/p0-security/security-api-keys/issue.md))
+1. **security-api-keys** ([issue](resolved/p0-security/security-api-keys/issue.md))
    - **Severity:** CRITICAL ⚠️
    - **Effort:** 2-4 hours
    - **Status:** ✅ COMPLETE
@@ -22,7 +22,7 @@ These security issues have been completed and moved to `resolved/p0-security/`:
    - **Impact:** API keys for OpenAI and ElevenLabs were hardcoded in multiple files
    - **Completed:** Environment variables implemented, keys removed
 
-2. **security-file-paths** ([issue](../resolved/p0-security/security-file-paths/issue.md))
+2. **security-file-paths** ([issue](resolved/p0-security/security-file-paths/issue.md))
    - **Severity:** HIGH
    - **Effort:** 0 hours (Already resolved)
    - **Status:** ✅ COMPLETE
