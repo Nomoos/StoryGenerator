@@ -3,53 +3,32 @@
 **ID:** `11-post-01-crop-resize`  
 **Priority:** P1  
 **Effort:** 2-3 hours  
-**Status:** Not Started
+**Status:** ✅ Implementation Complete
 
 ## Overview
 
-[TODO: Add specific overview for this task]
+Crop and resize video clips to 9:16 vertical aspect ratio optimized for mobile platforms (TikTok, Instagram Reels, YouTube Shorts). Includes intelligent cropping with face detection and safe zone management.
+
+**Implementation:** `Tools.VideoPostProducer.CropAndResize()` - FFmpeg-based cropping with configurable safe zones.
 
 ## Dependencies
 
-**Requires:**
-- `10-video-03`
-- `01-research-03`
+**Requires:** `10-video-03` (selected video clips)  
+**Blocks:** `11-post-02` (subtitle burn-in)
 
-**Blocks:**
-- [Tasks that depend on this one]
+## Status
 
-## Acceptance Criteria
+✅ **Complete:** Full implementation with intelligent cropping
 
-- [ ] [Add specific acceptance criteria]
-- [ ] Documentation updated
-- [ ] Tests passing (if applicable)
-- [ ] Code reviewed and merged
+## Features
 
-## Task Details
-
-### Implementation
-
-[TODO: Add implementation details, code examples, schemas]
-
-### Testing
-
-```bash
-# Add test commands
-```
-
-## Output Files
-
-- [List expected output files/artifacts]
-
-## Related Files
-
-- [List related source files or docs]
-
-## Notes
-
-- [Add any important notes or considerations]
+- 9:16 aspect ratio (1080x1920)
+- Face detection for optimal framing
+- Configurable safe zones
+- Maintains video quality
 
 ## Next Steps
 
-After completion:
-- [List tasks that can proceed]
+- `11-post-02-subtitle-burn`
+
+**Documentation:** `/src/CSharp/POST_PRODUCTION_CSHARP.md`

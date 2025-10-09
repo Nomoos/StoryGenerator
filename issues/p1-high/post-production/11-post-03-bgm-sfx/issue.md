@@ -1,54 +1,34 @@
-# Post: Add BGM & SFX
+# Post: Background Music & SFX
 
 **ID:** `11-post-03-bgm-sfx`  
 **Priority:** P2  
-**Effort:** 4-5 hours  
-**Status:** Not Started
+**Effort:** 2-3 hours  
+**Status:** ✅ Implementation Complete
 
 ## Overview
 
-[TODO: Add specific overview for this task]
+Add background music and sound effects to video with audio ducking (automatic volume reduction during voiceover) to maintain voice clarity while enhancing production value.
+
+**Implementation:** `Tools.VideoPostProducer.AddBackgroundMusic()` - FFmpeg audio mixing with ducking.
 
 ## Dependencies
 
-**Requires:**
-- `11-post-02`
+**Requires:** `11-post-01` (cropped video), `07-audio-02` (voiceover)  
+**Blocks:** `11-post-04` (concatenation)
 
-**Blocks:**
-- [Tasks that depend on this one]
+## Status
 
-## Acceptance Criteria
+✅ **Complete:** Full implementation with ducking support
 
-- [ ] [Add specific acceptance criteria]
-- [ ] Documentation updated
-- [ ] Tests passing (if applicable)
-- [ ] Code reviewed and merged
+## Features
 
-## Task Details
-
-### Implementation
-
-[TODO: Add implementation details, code examples, schemas]
-
-### Testing
-
-```bash
-# Add test commands
-```
-
-## Output Files
-
-- [List expected output files/artifacts]
-
-## Related Files
-
-- [List related source files or docs]
-
-## Notes
-
-- [Add any important notes or considerations]
+- Background music mixing
+- Audio ducking during voiceover
+- Configurable volume levels
+- Multi-track audio support
 
 ## Next Steps
 
-After completion:
-- [List tasks that can proceed]
+- `11-post-04-concatenation`
+
+**Documentation:** `/src/CSharp/POST_PRODUCTION_CSHARP.md`

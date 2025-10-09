@@ -1,55 +1,34 @@
-# Post: Burn/Soft Subtitles
+# Post: Subtitle Burn-in
 
 **ID:** `11-post-02-subtitle-burn`  
 **Priority:** P1  
-**Effort:** 3-4 hours  
-**Status:** Not Started
+**Effort:** 2-3 hours  
+**Status:** ✅ Implementation Complete
 
 ## Overview
 
-[TODO: Add specific overview for this task]
+Burn or soft-code subtitles into video with safe zone positioning, readable styling, and proper timing synchronization from aligned SRT files.
+
+**Implementation:** `Tools.VideoPostProducer.AddSubtitles()` - FFmpeg subtitle overlay with customizable styling.
 
 ## Dependencies
 
-**Requires:**
-- `11-post-01`
-- `08-subtitles-02`
+**Requires:** `11-post-01` (cropped video), `08-subtitles-01` (SRT files)  
+**Blocks:** `11-post-04` (concatenation)
 
-**Blocks:**
-- [Tasks that depend on this one]
+## Status
 
-## Acceptance Criteria
+✅ **Complete:** Full implementation with burn-in and soft-coding
 
-- [ ] [Add specific acceptance criteria]
-- [ ] Documentation updated
-- [ ] Tests passing (if applicable)
-- [ ] Code reviewed and merged
+## Features
 
-## Task Details
-
-### Implementation
-
-[TODO: Add implementation details, code examples, schemas]
-
-### Testing
-
-```bash
-# Add test commands
-```
-
-## Output Files
-
-- [List expected output files/artifacts]
-
-## Related Files
-
-- [List related source files or docs]
-
-## Notes
-
-- [Add any important notes or considerations]
+- SRT/VTT subtitle support
+- Safe zone positioning
+- Customizable font/style
+- Hard-burn or soft-code options
 
 ## Next Steps
 
-After completion:
-- [List tasks that can proceed]
+- `11-post-03-bgm-sfx`
+
+**Documentation:** `/src/CSharp/POST_PRODUCTION_CSHARP.md`

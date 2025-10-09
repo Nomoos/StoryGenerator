@@ -3,52 +3,45 @@
 **ID:** `12-qc-01-device-preview`  
 **Priority:** P1  
 **Effort:** 2-3 hours  
-**Status:** Not Started
+**Status:** ❌ Not Implemented
 
 ## Overview
 
-[TODO: Add specific overview for this task]
+Generate device-specific preview renders to test video appearance on target platforms (iPhone, Android, various screen sizes). Validates safe zones, subtitle readability, and visual quality across devices.
+
+**Implementation Needed:** Device preview generation service.
 
 ## Dependencies
 
-**Requires:**
-- `11-post-06`
+**Requires:** `11-post-06` (final video with all post-production)  
+**Blocks:** `12-qc-03` (QC report)
 
-**Blocks:**
-- [Tasks that depend on this one]
+## Status
+
+❌ **Not Implemented:** Device preview system not built
+
+## Required Features
+
+- Device-specific rendering (iPhone 14, Samsung Galaxy, etc.)
+- Screen size adaptation testing
+- Safe zone validation
+- Subtitle readability checks
+- Quality preview generation
 
 ## Acceptance Criteria
 
-- [ ] [Add specific acceptance criteria]
+- [ ] Multiple device profiles supported
+- [ ] Preview renders generated
+- [ ] Safe zone overlay visualization
+- [ ] Readability scoring
+- [ ] Comparison view created
 - [ ] Documentation updated
-- [ ] Tests passing (if applicable)
-- [ ] Code reviewed and merged
-
-## Task Details
-
-### Implementation
-
-[TODO: Add implementation details, code examples, schemas]
-
-### Testing
-
-```bash
-# Add test commands
-```
-
-## Output Files
-
-- [List expected output files/artifacts]
-
-## Related Files
-
-- [List related source files or docs]
-
-## Notes
-
-- [Add any important notes or considerations]
 
 ## Next Steps
 
-After completion:
-- [List tasks that can proceed]
+- Implement device profile system
+- Create preview renderer
+- Add validation metrics
+- `12-qc-02-sync-check`
+
+**Output:** `data/Generator/qc/device_tests/{gender}/{age}/{title_id}/`

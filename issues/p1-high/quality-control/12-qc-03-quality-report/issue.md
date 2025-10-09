@@ -1,55 +1,67 @@
-# QC: Generate Quality Report
+# QC: Quality Assessment Report
 
 **ID:** `12-qc-03-quality-report`  
 **Priority:** P1  
 **Effort:** 2-3 hours  
-**Status:** Not Started
+**Status:** ❌ Not Implemented
 
 ## Overview
 
-[TODO: Add specific overview for this task]
+Generate comprehensive quality assessment report covering all validation criteria: A/V sync, audio levels (LUFS), video quality, subtitle readability, device compatibility. Provides pass/fail determination and actionable feedback.
+
+**Implementation Needed:** QC report generation service.
 
 ## Dependencies
 
-**Requires:**
-- `12-qc-01`
-- `12-qc-02`
+**Requires:** `12-qc-01` (device tests), `12-qc-02` (sync check), final video  
+**Blocks:** Export & Delivery group
 
-**Blocks:**
-- [Tasks that depend on this one]
+## Status
+
+❌ **Not Implemented:** QC reporting not built
+
+## Required Validation
+
+- ✅ Audio levels (-14.0 LUFS ±1.0)
+- ❌ A/V sync (±50ms tolerance)
+- ❌ Video quality (bitrate, resolution, artifacts)
+- ❌ Subtitle readability (contrast, timing)
+- ❌ Device compatibility (iOS, Android)
+- ❌ Safe zone compliance
+
+## Report Structure
+
+```json
+{
+  "titleId": "story_001",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "overallStatus": "PASS|FAIL|WARNING",
+  "audioLevels": { "lufs": -14.2, "status": "PASS" },
+  "avSync": { "maxDrift": 35, "status": "PASS" },
+  "videoQuality": { "bitrate": "8M", "artifacts": "none", "status": "PASS" },
+  "subtitles": { "readability": 95, "contrast": "good", "status": "PASS" },
+  "devices": { "ios": "PASS", "android": "PASS" },
+  "issues": [],
+  "recommendations": []
+}
+```
 
 ## Acceptance Criteria
 
-- [ ] [Add specific acceptance criteria]
+- [ ] All metrics validated
+- [ ] Pass/fail logic implemented
+- [ ] JSON report generated
+- [ ] Human-readable summary
+- [ ] Issue tracking functional
+- [ ] Recommendations provided
 - [ ] Documentation updated
-- [ ] Tests passing (if applicable)
-- [ ] Code reviewed and merged
-
-## Task Details
-
-### Implementation
-
-[TODO: Add implementation details, code examples, schemas]
-
-### Testing
-
-```bash
-# Add test commands
-```
-
-## Output Files
-
-- [List expected output files/artifacts]
-
-## Related Files
-
-- [List related source files or docs]
-
-## Notes
-
-- [Add any important notes or considerations]
 
 ## Next Steps
 
-After completion:
-- [List tasks that can proceed]
+- Implement metric collection
+- Create report generator
+- Add pass/fail logic
+- Test with sample videos
+- **Export & Delivery** group can proceed after QC pass
+
+**Output:** `data/Generator/qc/quality_reports/{gender}/{age}/{title_id}_qc_report.json`
