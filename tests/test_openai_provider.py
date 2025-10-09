@@ -7,7 +7,7 @@ including initialization, API calls, error handling, and retry logic.
 
 import pytest
 from unittest.mock import Mock, patch, AsyncMock
-from openai import APIError, RateLimitError, APIConnectionError
+from openai import APIError, RateLimitError
 from providers.openai_provider import OpenAIProvider, AsyncOpenAIProvider
 from providers.mock_provider import MockLLMProvider, AsyncMockLLMProvider
 from core.interfaces.llm_provider import ILLMProvider, IAsyncLLMProvider
