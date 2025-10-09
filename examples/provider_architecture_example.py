@@ -11,10 +11,11 @@ import sys
 from pathlib import Path
 
 # Add parent directory to path to import providers
+# Note: This is done before imports to avoid E402 flake8 error
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from providers import OpenAIProvider, MockLLMProvider
-from core.interfaces.llm_provider import ILLMProvider
+from providers import OpenAIProvider, MockLLMProvider  # noqa: E402
+from core.interfaces.llm_provider import ILLMProvider  # noqa: E402
 
 
 def generate_story_idea(provider: ILLMProvider, topic: str) -> str:
@@ -134,7 +135,7 @@ def main():
     try:
         idea = generate_story_idea(mock_provider, "magic cooking")
         print(f"\n{idea}")
-        print(f"\nMock Provider Stats:")
+        print("\nMock Provider Stats:")
         print(f"  - Calls made: {mock_provider.call_count}")
         print(f"  - Last prompt: {mock_provider.last_prompt[:50]}...")
     except Exception as e:

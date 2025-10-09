@@ -1,0 +1,47 @@
+# Pre-commit hooks for StoryGenerator
+# See https://pre-commit.com for more information
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^obsolete/
+      - id: end-of-file-fixer
+        exclude: ^obsolete/
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: debug-statements
+
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        language_version: python3.10
+        exclude: ^obsolete/
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black", "--line-length", "100"]
+        exclude: ^obsolete/
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        exclude: ^obsolete/
+        additional_dependencies: [flake8-bugbear]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        exclude: ^(obsolete/|tests/|examples/)
+        additional_dependencies: [types-all]
+        args: [--ignore-missing-imports]
