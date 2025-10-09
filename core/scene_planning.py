@@ -26,7 +26,15 @@ class Shot:
     
     def to_dict(self) -> Dict:
         """Convert shot to dictionary."""
-        return asdict(self)
+        return {
+            'shotNumber': self.shot_number,
+            'startTime': self.start_time,
+            'endTime': self.end_time,
+            'duration': self.duration,
+            'sceneDescription': self.scene_description,
+            'visualPrompt': self.visual_prompt,
+            'narration': self.narration
+        }
 
 
 @dataclass

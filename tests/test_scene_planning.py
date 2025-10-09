@@ -220,8 +220,8 @@ class TestShot:
         
         shot_dict = shot.to_dict()
         
-        assert shot_dict['shot_number'] == 1
-        assert shot_dict['start_time'] == 0.0
+        assert shot_dict['shotNumber'] == 1
+        assert shot_dict['startTime'] == 0.0
         assert shot_dict['duration'] == 5.0
 
 
