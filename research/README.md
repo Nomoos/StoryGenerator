@@ -33,7 +33,8 @@ python research/python/youtube_subtitle_analyzer.py https://www.youtube.com/shor
 
 ### Quick Access
 - **Story Analyzer**: [`python/story_pattern_analyzer.py`](python/story_pattern_analyzer.py) - Analyze subtitle files for patterns
-- **Channel Scraper**: [`python/youtube_channel_scraper.py`](python/youtube_channel_scraper.py) - Scrape top videos from channels
+- **Channel Scraper**: [`python/youtube_channel_scraper.py`](python/youtube_channel_scraper.py) - Scrape YouTube Shorts from channels
+- **Copilot Analysis**: [`story_analysis/COPILOT_ANALYSIS.md`](story_analysis/COPILOT_ANALYSIS.md) - Comprehensive analysis for GitHub Copilot
 - **Analysis Results**: [`story_analysis/story_patterns_report.md`](story_analysis/story_patterns_report.md)
 - **Documentation**: [`story_analysis/README.md`](story_analysis/README.md)
 
@@ -43,8 +44,8 @@ python research/python/youtube_subtitle_analyzer.py https://www.youtube.com/shor
 ✅ Emotional engagement patterns  
 ✅ Optimal content length (632 words ±50)  
 ✅ Dialogue usage patterns (83%)  
-✅ Channel scraping for competitive intelligence  
-✅ **NEW: Story video detection and filtering** - Focus analysis on story content only
+✅ **Shorts-focused scraping** - Analyzes YouTube Shorts only for relevant insights
+✅ **Story video detection and filtering** - Focus analysis on story content only
 
 ### Key Findings
 - **Optimal Length**: 582-682 words
@@ -58,10 +59,10 @@ python research/python/youtube_subtitle_analyzer.py https://www.youtube.com/shor
 # Analyze story patterns
 python research/python/story_pattern_analyzer.py subtitle*.txt
 
-# Scrape channel data (all videos)
+# Scrape shorts from channel
 python research/python/youtube_channel_scraper.py @channelname --top 10
 
-# Scrape ONLY story videos (recommended for story analysis)
+# Scrape ONLY story shorts (recommended for story analysis)
 python research/python/youtube_channel_scraper.py @channelname --top 10 --story-only
 ```
 

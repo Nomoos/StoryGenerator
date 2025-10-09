@@ -27,19 +27,20 @@ python research/python/story_pattern_analyzer.py subtitle1.txt subtitle2.txt ...
 
 ### 2. YouTube Channel Scraper (`research/python/youtube_channel_scraper.py`)
 
-Scrapes comprehensive metadata from top N videos on a YouTube channel.
+Scrapes comprehensive metadata from YouTube Shorts on a channel (shorts only).
 
 **Features:**
+- **Shorts-focused analysis** - Scrapes only YouTube Shorts for relevant story insights
 - Extracts titles, descriptions, tags
 - Downloads subtitles (if available)
 - Collects view counts, likes, comments
-- Analyzes common patterns across videos
-- **NEW: Story video detection and filtering** - Identifies story videos vs non-story content
+- Analyzes common patterns across shorts
+- **Story video detection and filtering** - Identifies story videos vs non-story content
 - Generates comprehensive reports with story analysis
 
 **Usage:**
 ```bash
-# By channel handle
+# By channel handle (scrapes top 10 shorts)
 python research/python/youtube_channel_scraper.py @channelname --top 10
 
 # By channel URL
@@ -48,18 +49,18 @@ python research/python/youtube_channel_scraper.py https://www.youtube.com/@chann
 # By channel ID
 python research/python/youtube_channel_scraper.py UC1234567890 --top 20
 
-# Filter to include ONLY story videos (recommended for story generation pipeline)
+# Filter to include ONLY story shorts (recommended for story generation pipeline)
 python research/python/youtube_channel_scraper.py @channelname --top 10 --story-only
 ```
 
 **Output:**
-- Markdown report with video metadata and story analysis
+- Markdown report with shorts metadata and story analysis
 - JSON data with all scraped information including story confidence scores
 - Individual video info files
 - Subtitle files (where available)
 
 **Story Detection:**
-The scraper now automatically detects story videos based on:
+The scraper automatically detects story videos based on:
 - Title keywords (story, AITA, revenge, relationship, etc.)
 - Description content
 - Tags
@@ -67,6 +68,8 @@ The scraper now automatically detects story videos based on:
 - Exclusion of non-story content (tutorials, reviews, vlogs, etc.)
 
 Use `--story-only` flag to filter out non-story videos and focus analysis on story content only.
+
+**Note:** The scraper now focuses exclusively on YouTube Shorts (≤3min, vertical format) for more relevant story analysis.
 
 ## Analysis Results
 

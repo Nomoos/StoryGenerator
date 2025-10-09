@@ -195,18 +195,18 @@ class YouTubeChannelScraper:
     
     def get_channel_videos(self, channel_url: str, top_n: int = 10) -> Dict[str, List[str]]:
         """
-        Get list of video IDs from channel, separated by shorts and long videos.
+        Get list of video IDs from channel (shorts only).
         
         Args:
             channel_url: Channel URL
-            top_n: Number of top videos to retrieve per format (shorts and long)
+            top_n: Number of shorts to retrieve
             
         Returns:
-            Dict with 'shorts' and 'long' lists of video IDs
+            Dict with 'shorts' list of video IDs
         """
-        print(f"📺 Fetching top {top_n} shorts and top {top_n} long videos from channel...")
+        print(f"📺 Fetching top {top_n} shorts from channel...")
         
-        all_videos = {'shorts': [], 'long': []}
+        all_videos = {'shorts': []}
         
         # Fetch shorts
         print(f"  🎬 Fetching shorts...")
@@ -240,40 +240,8 @@ class YouTubeChannelScraper:
         except Exception as e:
             print(f"  ⚠️ Error fetching shorts: {e}")
         
-        # Fetch long videos
-        print(f"  📹 Fetching long videos...")
-        videos_url = channel_url.rstrip('/') + "/videos"
-        long_cmd = [
-            "yt-dlp",
-            "--flat-playlist",
-            "--print", "id",
-            "--playlist-end", str(top_n),
-            "--playlist-reverse",  # Get most recent first
-            videos_url
-        ]
-        
-        try:
-            result = subprocess.run(
-                long_cmd,
-                capture_output=True,
-                text=True,
-                timeout=60
-            )
-            
-            if result.returncode == 0:
-                long_videos = [line.strip() for line in result.stdout.split('\n') if line.strip()]
-                all_videos['long'] = long_videos[:top_n]
-                print(f"  ✅ Found {len(all_videos['long'])} long videos")
-            else:
-                print(f"  ⚠️ Error fetching long videos: {result.stderr}")
-                
-        except subprocess.TimeoutExpired:
-            print("  ⚠️ Timeout while fetching long videos")
-        except Exception as e:
-            print(f"  ⚠️ Error fetching long videos: {e}")
-        
-        total = len(all_videos['shorts']) + len(all_videos['long'])
-        print(f"✅ Found total of {total} videos ({len(all_videos['shorts'])} shorts + {len(all_videos['long'])} long)")
+        total = len(all_videos['shorts'])
+        print(f"✅ Found total of {total} shorts")
         return all_videos
     
     def extract_video_metadata(self, video_id: str, expected_format: Optional[str] = None) -> Optional[VideoMetadata]:
@@ -627,11 +595,11 @@ class YouTubeChannelScraper:
     
     def scrape_channel(self, channel_input: str, top_n: int = 10) -> List[VideoMetadata]:
         """
-        Scrape top N shorts and top N long videos from a channel.
+        Scrape top N shorts from a channel.
         
         Args:
             channel_input: Channel URL, handle, or ID
-            top_n: Number of videos to scrape per format (shorts and long)
+            top_n: Number of shorts to scrape
             
         Returns:
             List of VideoMetadata objects
@@ -645,16 +613,16 @@ class YouTubeChannelScraper:
         print(f"📺 Channel URL: {channel_url}")
         print(f"📁 Output directory: {self.output_dir.resolve()}")
         
-        # Get video IDs separated by format
+        # Get video IDs (shorts only)
         video_ids_by_format = self.get_channel_videos(channel_url, top_n)
         
-        total_videos = len(video_ids_by_format['shorts']) + len(video_ids_by_format['long'])
+        total_videos = len(video_ids_by_format['shorts'])
         if total_videos == 0:
-            print("❌ No videos found")
+            print("❌ No shorts found")
             return []
         
         # Extract metadata for each video
-        print(f"\n📊 Extracting metadata for {total_videos} videos...\n")
+        print(f"\n📊 Extracting metadata for {total_videos} shorts...\n")
         
         # Process shorts
         if video_ids_by_format['shorts']:
@@ -662,13 +630,6 @@ class YouTubeChannelScraper:
             for i, video_id in enumerate(video_ids_by_format['shorts'], 1):
                 print(f"[Short {i}/{len(video_ids_by_format['shorts'])}]")
                 self.extract_video_metadata(video_id, expected_format='short')
-        
-        # Process long videos
-        if video_ids_by_format['long']:
-            print(f"\n📹 Processing {len(video_ids_by_format['long'])} long videos...")
-            for i, video_id in enumerate(video_ids_by_format['long'], 1):
-                print(f"[Long {i}/{len(video_ids_by_format['long'])}]")
-                self.extract_video_metadata(video_id, expected_format='long')
         
         return self.videos
     
@@ -694,26 +655,23 @@ class YouTubeChannelScraper:
         
         # Calculate format-specific statistics
         shorts = [v for v in self.videos if v.video_format == 'short']
-        longs = [v for v in self.videos if v.video_format == 'long']
         
         # Calculate story video statistics
         story_videos = [v for v in self.videos if v.is_story_video]
         non_story_videos = [v for v in self.videos if not v.is_story_video]
         avg_story_confidence = sum(v.story_confidence_score for v in self.videos if v.story_confidence_score) / len(self.videos) if self.videos else 0
         
-        report = f"""# YouTube Channel Scraping Report
+        report = f"""# YouTube Channel Scraping Report (Shorts Only)
 
 ## Summary Statistics
 
-- **Total Videos Scraped**: {len(self.videos)}
-  - **Shorts**: {len(shorts)}
-  - **Long Videos**: {len(longs)}
+- **Total Shorts Scraped**: {len(self.videos)}
 - **Total Views**: {total_views:,}
 - **Average Views**: {total_views // len(self.videos):,}
 - **Total Likes**: {total_likes:,}
 - **Total Comments**: {total_comments:,}
 - **Average Engagement Rate**: {avg_engagement:.2f}%
-- **Videos with Subtitles**: {videos_with_subtitles} ({videos_with_subtitles/len(self.videos)*100:.1f}%)
+- **Shorts with Subtitles**: {videos_with_subtitles} ({videos_with_subtitles/len(self.videos)*100:.1f}%)
 """
         
         # Add story filtering information if story_only mode was used
@@ -732,23 +690,15 @@ class YouTubeChannelScraper:
 - **Story Videos Detected**: {len(story_videos)} ({len(story_videos)/len(self.videos)*100:.1f}% of total)
 - **Non-Story Videos**: {len(non_story_videos)} ({len(non_story_videos)/len(self.videos)*100:.1f}% of total)
 - **Average Story Confidence**: {avg_story_confidence:.2f}
-- **Story Videos by Format**:
-  - Shorts: {len([v for v in story_videos if v.video_format == 'short'])}
-  - Long: {len([v for v in story_videos if v.video_format == 'long'])}
 """
         
         report += f"""
-## Format Breakdown
+## Shorts Analysis
 
-### Shorts (≤3min, Vertical)
+All videos are YouTube Shorts (≤3min, Vertical format):
 - **Count**: {len(shorts)}
 - **Total Views**: {sum(v.view_count for v in shorts):,}
 - **Avg Views**: {sum(v.view_count for v in shorts) // len(shorts) if shorts else 0:,}
-
-### Long Videos
-- **Count**: {len(longs)}
-- **Total Views**: {sum(v.view_count for v in longs):,}
-- **Avg Views**: {sum(v.view_count for v in longs) // len(longs) if longs else 0:,}
 
 ## Engagement Metrics Overview
 
@@ -1011,7 +961,6 @@ Common words in titles:
         
         # Format-specific statistics
         shorts = [v for v in self.videos if v.video_format == 'short']
-        longs = [v for v in self.videos if v.video_format == 'long']
         
         # Story video statistics
         story_videos = [v for v in self.videos if v.is_story_video]
@@ -1021,17 +970,15 @@ Common words in titles:
         data = {
             'videos': [v.to_dict() for v in self.videos],
             'summary': {
-                'total_videos': len(self.videos),
-                'shorts_count': len(shorts),
-                'long_videos_count': len(longs),
-                'videos_with_subtitles': sum(1 for v in self.videos if v.subtitles_available),
+                'total_shorts': len(self.videos),
+                'shorts_with_subtitles': sum(1 for v in self.videos if v.subtitles_available),
                 'total_views': sum(v.view_count for v in self.videos),
                 'average_views': sum(v.view_count for v in self.videos) // len(self.videos) if self.videos else 0,
                 'total_likes': total_likes,
                 'total_comments': total_comments,
                 'average_engagement_rate': round(avg_engagement, 2),
                 'average_views_per_day': round(avg_views_per_day, 2),
-                'videos_with_chapters': sum(1 for v in self.videos if v.has_chapters),
+                'shorts_with_chapters': sum(1 for v in self.videos if v.has_chapters),
             },
             'story_analysis': {
                 'story_only_mode': self.story_only,
@@ -1041,19 +988,11 @@ Common words in titles:
                 'average_story_confidence': round(avg_story_confidence, 2),
                 'story_videos_percentage': round(len(story_videos) / len(self.videos) * 100, 1) if self.videos else 0,
             },
-            'format_breakdown': {
-                'shorts': {
-                    'count': len(shorts),
-                    'total_views': sum(v.view_count for v in shorts),
-                    'average_views': sum(v.view_count for v in shorts) // len(shorts) if shorts else 0,
-                    'average_duration': round(sum(v.duration_seconds for v in shorts) / len(shorts), 1) if shorts else 0,
-                },
-                'long': {
-                    'count': len(longs),
-                    'total_views': sum(v.view_count for v in longs),
-                    'average_views': sum(v.view_count for v in longs) // len(longs) if longs else 0,
-                    'average_duration': round(sum(v.duration_seconds for v in longs) / len(longs), 1) if longs else 0,
-                }
+            'shorts_breakdown': {
+                'count': len(shorts),
+                'total_views': sum(v.view_count for v in shorts),
+                'average_views': sum(v.view_count for v in shorts) // len(shorts) if shorts else 0,
+                'average_duration': round(sum(v.duration_seconds for v in shorts) / len(shorts), 1) if shorts else 0,
             },
             'engagement_metrics': {
                 'high_engagement_videos': sum(1 for v in self.videos if v.engagement_rate and v.engagement_rate > 5),
@@ -1065,10 +1004,10 @@ Common words in titles:
                 'average_description_length': round(sum(v.description_length for v in self.videos) / len(self.videos), 1),
                 'average_tag_count': round(sum(v.tag_count for v in self.videos) / len(self.videos), 1),
             },
-            'video_durations': {
-                'short_videos': sum(1 for v in self.videos if v.duration_seconds < 300),
-                'medium_videos': sum(1 for v in self.videos if 300 <= v.duration_seconds < 900),
-                'long_videos': sum(1 for v in self.videos if v.duration_seconds >= 900),
+            'shorts_durations': {
+                'under_1_min': sum(1 for v in self.videos if v.duration_seconds < 60),
+                'one_to_two_min': sum(1 for v in self.videos if 60 <= v.duration_seconds < 120),
+                'two_to_three_min': sum(1 for v in self.videos if 120 <= v.duration_seconds <= 180),
                 'average_duration_seconds': round(sum(v.duration_seconds for v in self.videos) / len(self.videos)),
             },
             'timestamp': self._get_timestamp(),
@@ -1079,8 +1018,8 @@ Common words in titles:
             json.dump(data, f, indent=2)
         
         print(f"✅ JSON data saved to: {output_path}")
-        print(f"   📊 Included {len(self.videos)} videos with comprehensive analytics")
-        print(f"   🎬 Shorts: {len(shorts)}, 📹 Long: {len(longs)}")
+        print(f"   📊 Included {len(self.videos)} shorts with comprehensive analytics")
+        print(f"   🎬 All videos are shorts")
     
     def _get_timestamp(self):
         """Get current timestamp."""
@@ -1102,7 +1041,7 @@ def main():
         '--top',
         type=int,
         default=10,
-        help='Number of top videos to scrape per format (shorts and long videos, default: 10 each)'
+        help='Number of top shorts to scrape (default: 10)'
     )
     parser.add_argument(
         '--output',
@@ -1140,7 +1079,7 @@ def main():
         print("\n🔬 YouTube Channel Scraper")
 
     print(f"📺 Channel: {channel}")
-    print(f"📊 Videos Per Format: Top {args.top} shorts + Top {args.top} long videos")
+    print(f"📊 Shorts to scrape: Top {args.top}")
     if args.story_only:
         print("📖 Story-Only Mode: ENABLED (will filter out non-story videos)\n")
     else:
