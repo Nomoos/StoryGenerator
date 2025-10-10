@@ -1,4 +1,4 @@
-# Alternative Content Source Scrapers
+# Alternative Content Source Scrapers (Enhanced v2.0)
 
 This directory contains scrapers for alternative content sources beyond Reddit, designed to gather story content for the StoryGenerator pipeline.
 
@@ -26,6 +26,34 @@ Scrapes story threads from Twitter/X that contain narrative content.
 
 **Output:** `src/Generator/sources/twitter/{gender}/{age}/YYYYMMDD_twitter_content.json`
 
+### 3. Instagram Scraper 🆕
+Scrapes Instagram stories/posts from hashtags and accounts on specific topics.
+
+**Features:**
+- Searches trending hashtags
+- Extracts post captions and stories
+- Tracks engagement (likes, comments, views)
+- Mock data implementation for testing
+- Age-specific hashtag targeting
+
+**Output:** `src/Generator/sources/instagram/{gender}/{age}/YYYYMMDD_instagram_content.json`
+
+**Dependencies:** `pip install instagrapi` (optional, uses mock data by default)
+
+### 4. TikTok Scraper 🆕
+Scrapes TikTok video descriptions and captions on specific topics.
+
+**Features:**
+- Searches trending hashtags
+- Extracts video descriptions/captions
+- Tracks engagement (likes, comments, shares, views)
+- Mock data implementation for testing
+- Age-specific hashtag targeting
+
+**Output:** `src/Generator/sources/tiktok/{gender}/{age}/YYYYMMDD_tiktok_content.json`
+
+**Dependencies:** `pip install TikTokApi` (optional, uses mock data by default)
+
 ## Quick Start
 
 ### Basic Usage
@@ -34,11 +62,15 @@ Scrapes story threads from Twitter/X that contain narrative content.
 # Scrape Quora for women aged 18-23
 python alt_sources_scraper.py --sources quora --gender women --age 18-23
 
-# Scrape Twitter for men aged 14-17
-python alt_sources_scraper.py --sources twitter --gender men --age 14-17
+# Scrape Instagram and TikTok for men aged 14-17
+python alt_sources_scraper.py --sources instagram,tiktok --gender men --age 14-17
 
 # Scrape all sources for all demographics
 python alt_sources_scraper.py --sources all --all-demographics
+
+# Run individual scrapers
+python instagram_scraper.py  # Scrapes all demographics with mock data
+python tiktok_scraper.py     # Scrapes all demographics with mock data
 ```
 
 ### Python API
@@ -46,9 +78,11 @@ python alt_sources_scraper.py --sources all --all-demographics
 ```python
 from quora_scraper import QuoraScraper
 from twitter_scraper import TwitterScraper
+from instagram_scraper import InstagramScraper
+from tiktok_scraper import TikTokScraper
 
-# Initialize scraper
-scraper = QuoraScraper()
+# Initialize scraper (Instagram/TikTok use mock data by default)
+scraper = InstagramScraper(use_mock=True)
 
 # Scrape content
 result = scraper.run(
@@ -68,7 +102,7 @@ print(f"Saved to: {result['output_file']}")
 python alt_sources_scraper.py [OPTIONS]
 
 Options:
-  --sources TEXT              Comma-separated sources (quora,twitter,all)
+  --sources TEXT              Comma-separated sources (quora,twitter,instagram,tiktok,all)
   --gender [men|women]        Target gender
   --age [10-13|14-17|18-23]   Target age bucket
   --all-demographics          Scrape all gender/age combinations
@@ -83,7 +117,7 @@ Options:
 ### Single Demographic
 ```bash
 python alt_sources_scraper.py \
-  --sources quora,twitter \
+  --sources quora,twitter,instagram,tiktok \
   --gender women \
   --age 18-23 \
   --topic "relationships" \
@@ -97,6 +131,26 @@ python alt_sources_scraper.py \
   --all-demographics \
   --limit 50 \
   --delay 3
+```
+
+### Instagram Only
+```bash
+python alt_sources_scraper.py \
+  --sources instagram \
+  --gender men \
+  --age 14-17 \
+  --topic "gaming" \
+  --limit 30
+```
+
+### TikTok Only
+```bash
+python alt_sources_scraper.py \
+  --sources tiktok \
+  --gender women \
+  --age 18-23 \
+  --topic "college life" \
+  --limit 40
 ```
 
 ### Custom Topic

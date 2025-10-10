@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
-Alternative Content Sources Scraper
+Alternative Content Sources Scraper (Enhanced v2.0)
 
 Unified script to scrape content from multiple alternative sources:
 - Quora: Questions and answers
 - Twitter/X: Story threads
+- Instagram: Stories from hashtags and accounts (NEW)
+- TikTok: Video descriptions and captions (NEW)
 
 Usage:
-    python alt_sources_scraper.py --sources quora,twitter --gender women --age 18-23
+    python alt_sources_scraper.py --sources quora,twitter,instagram,tiktok --gender women --age 18-23
     python alt_sources_scraper.py --sources all --all-demographics
     python alt_sources_scraper.py --help
 """
@@ -24,6 +26,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from quora_scraper import QuoraScraper
 from twitter_scraper import TwitterScraper
+from instagram_scraper import InstagramScraper
+from tiktok_scraper import TikTokScraper
 
 
 def parse_args():
@@ -39,16 +43,19 @@ Examples:
   # Scrape all sources for all demographics
   python alt_sources_scraper.py --sources all --all-demographics
   
-  # Scrape only Twitter for men aged 14-17 with custom topic
-  python alt_sources_scraper.py --sources twitter --gender men --age 14-17 --topic "gaming"
+  # Scrape only Instagram and TikTok for men aged 14-17
+  python alt_sources_scraper.py --sources instagram,tiktok --gender men --age 14-17
+  
+  # Scrape with custom topic
+  python alt_sources_scraper.py --sources instagram --gender women --age 18-23 --topic "college life"
         """,
     )
 
     parser.add_argument(
         "--sources",
         type=str,
-        default="quora,twitter",
-        help="Comma-separated list of sources (quora, twitter, or 'all')",
+        default="quora,twitter,instagram,tiktok",
+        help="Comma-separated list of sources (quora, twitter, instagram, tiktok, or 'all')",
     )
 
     parser.add_argument(
@@ -108,6 +115,12 @@ def init_scrapers(source_names: List[str]) -> Dict:
             elif name == "twitter":
                 scrapers["twitter"] = TwitterScraper()
                 print(f"✅ Initialized Twitter scraper")
+            elif name == "instagram":
+                scrapers["instagram"] = InstagramScraper(use_mock=True)
+                print(f"✅ Initialized Instagram scraper (mock mode)")
+            elif name == "tiktok":
+                scrapers["tiktok"] = TikTokScraper(use_mock=True)
+                print(f"✅ Initialized TikTok scraper (mock mode)")
             else:
                 print(f"⚠️  Unknown source: {name}")
         except Exception as e:
@@ -221,7 +234,7 @@ def main():
     # Parse sources
     source_list = args.sources.lower().split(",")
     if "all" in source_list:
-        source_list = ["quora", "twitter"]
+        source_list = ["quora", "twitter", "instagram", "tiktok"]
 
     # Initialize scrapers
     print("Initializing scrapers...")

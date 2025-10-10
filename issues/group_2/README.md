@@ -12,10 +12,13 @@
 
 ## 📋 Current Status
 
-See [.NEXT.MD](.NEXT.MD) for the current priority item.
+**Quick Status:** 3 tasks available (14-20 hours) | ✅ Idea generation pipeline complete (7 tasks)
 
-**Open Issues:** See [.ISSUES/](.ISSUES/) folder  
-**Completed Issues:** See [.DONE/](.DONE/) folder
+See detailed status tracking:
+- **[GROUP_2_STATUS.md](GROUP_2_STATUS.md)** - Comprehensive progress hub and task list
+- **[.NEXT.MD](.NEXT.MD)** - Current priority and execution order
+- **[.ISSUES/](.ISSUES/)** - Open issues (3 tasks)
+- **[.DONE/](.DONE/)** - Completed issues
 
 ---
 

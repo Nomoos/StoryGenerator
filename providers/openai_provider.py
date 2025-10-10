@@ -7,6 +7,7 @@ retry logic, and support for both synchronous and asynchronous operations.
 
 import os
 import logging
+from typing import Optional, List, Dict
 from openai import OpenAI, AsyncOpenAI
 from openai import OpenAIError, RateLimitError, APIError, APIConnectionError
 from tenacity import (
