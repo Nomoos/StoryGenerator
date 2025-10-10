@@ -59,7 +59,7 @@ Validates that the repository root contains only allowed files/directories.
 
 **Allowed root items:**
 - Configuration files: `.gitignore`, `.editorconfig`, `pyproject.toml`, etc.
-- Documentation: `README.md`, `QUICKSTART.md`, `CLEANUP.md`, etc.
+- Documentation: `README.md`, `QUICKSTART.md`, `CLEANUP_REPO.md`, etc.
 - Directories: `src/`, `tests/`, `docs/`, `scripts/`, `assets/`, `examples/`, etc.
 
 ## 🎬 Content Generation Scripts
