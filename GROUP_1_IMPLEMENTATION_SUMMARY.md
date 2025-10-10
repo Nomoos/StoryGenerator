@@ -282,10 +282,10 @@ logger.info(f"API cost: ${stats['total_cost']:.4f}")
 
 Based on testing and examples:
 
-- **Cache Hit Rate**: 40-90% depending on query patterns
-- **Cost Reduction**: Up to 90% with effective caching
-- **Response Time**: <1ms for cached responses vs 500-2000ms for API calls
-- **Token Counting**: Accurate within 1-2% of actual API counts
+- **Cache Hit Rate**: Varies from 40-90% depending on query patterns and duplicate frequency
+- **Estimated Cost Reduction**: Up to 90% with effective caching
+- **Estimated Response Time**: Typically <1ms for cached responses vs 500-2000ms for API calls
+- **Token Counting**: Accurate within 1-2% of actual API counts (based on tiktoken)
 
 ## Future Enhancements
 
