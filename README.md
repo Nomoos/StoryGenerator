@@ -166,6 +166,65 @@ pip install faster-whisper>=0.10.0
 
 ---
 
+## 🪟 Windows Pipeline Quickstart
+
+StoryGenerator now includes a **step-based Windows pipeline** with `.bat` scripts for discrete, composable processing.
+
+### Setup
+
+1. **Create Python virtual environment:**
+   ```cmd
+   python -m venv env
+   env\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+2. **Configure environment:**
+   ```cmd
+   copy .env.example .env
+   REM Edit .env with your API keys and settings
+   ```
+
+### Run Complete Pipeline
+
+Process one story through all steps (ingest → preprocess → generate → postprocess → package):
+
+```cmd
+.\pipeline\scripts\all.bat
+```
+
+Or process a specific story:
+
+```cmd
+.\pipeline\scripts\all.bat STORY-123
+```
+
+### Run Individual Steps
+
+Run just the generate step:
+
+```cmd
+.\pipeline\scripts\03_generate.bat
+```
+
+Or with a specific story ID:
+
+```cmd
+.\pipeline\scripts\03_generate.bat STORY-123
+```
+
+### Features
+
+- ✅ **Automatic retry** with configurable `MAX_TRIES` and `SLEEP_SECS`
+- ✅ **Acceptance criteria checking** - each step validates output quality
+- ✅ **Story ID auto-selection** - picks pending stories when none specified
+- ✅ **Exit codes**: `0` = success, `1` = config error, `2` = runtime error, `3` = acceptance not met
+- ✅ **Run tracking** - execution metadata saved in `.runs/`
+
+➡️ **[Windows Pipeline Documentation](pipeline/scripts/README.md)**
+
+---
+
 ## 🎙️ Publishing to Podbean (Podcast Platform)
 
 StoryGenerator now supports automated podcast publishing to **Podbean** via GitHub Actions or command line.
