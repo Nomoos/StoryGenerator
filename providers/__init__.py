@@ -58,6 +58,13 @@ except ImportError:
     FacebookUploader = None
     FacebookAnalytics = None
 
+try:
+    from .wordpress_provider import WordPressProvider
+    _has_wordpress = True
+except ImportError:
+    _has_wordpress = False
+    WordPressProvider = None
+
 __all__ = [
     "MockLLMProvider",
     "AsyncMockLLMProvider",
@@ -96,5 +103,10 @@ if _has_facebook:
     __all__.extend([
         "FacebookUploader",
         "FacebookAnalytics",
+    ])
+
+if _has_wordpress:
+    __all__.extend([
+        "WordPressProvider",
     ])
 
