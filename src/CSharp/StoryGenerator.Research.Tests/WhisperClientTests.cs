@@ -10,7 +10,7 @@ namespace StoryGenerator.Research.Tests
     /// </summary>
     public class WhisperClientTests
     {
-        [Fact(Skip = "Requires whisper_subprocess.py script")]
+        [Fact]
         [Trait("Category", "Integration")]
         public void Constructor_WithDefaultParameters_CreatesInstance()
         {
@@ -27,7 +27,7 @@ namespace StoryGenerator.Research.Tests
             Assert.NotNull(client);
         }
 
-        [Fact(Skip = "Requires whisper_subprocess.py script")]
+        [Fact]
         [Trait("Category", "Integration")]
         public void Constructor_WithCustomModelPath_CreatesInstance()
         {
@@ -44,7 +44,7 @@ namespace StoryGenerator.Research.Tests
             Assert.NotNull(client);
         }
 
-        [Fact(Skip = "Requires whisper_subprocess.py script and faster-whisper")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task TranscribeAsync_WithValidAudioFile_ReturnsTranscription()
         {
@@ -73,7 +73,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires whisper_subprocess.py script and faster-whisper")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task TranscribeAsync_WithWordTimestamps_ReturnsTimedWords()
         {
@@ -109,7 +109,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires whisper_subprocess.py script and faster-whisper")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task TranscribeAsync_WithLanguage_UsesSpecifiedLanguage()
         {
@@ -141,7 +141,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires whisper_subprocess.py script and faster-whisper")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task TranscribeAsync_WithVADFilter_EnablesVAD()
         {
@@ -172,7 +172,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires whisper_subprocess.py script")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task TranscribeAsync_WithCancellation_ThrowsOperationCanceledException()
         {
@@ -202,7 +202,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires whisper_subprocess.py script")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task GetAvailableModelsAsync_ReturnsModelList()
         {

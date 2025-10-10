@@ -32,7 +32,7 @@ namespace StoryGenerator.Research.Tests
             Assert.NotNull(client);
         }
 
-        [Fact(Skip = "Requires Ollama to be installed and running")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task GenerateAsync_WithValidPrompt_ReturnsResponse()
         {
@@ -56,7 +56,7 @@ namespace StoryGenerator.Research.Tests
             Assert.NotNull(result);
         }
 
-        [Fact(Skip = "Requires Ollama to be installed and running")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task GenerateAsync_WithSystemMessage_IncludesSystemInPrompt()
         {
@@ -82,7 +82,7 @@ namespace StoryGenerator.Research.Tests
             Assert.NotNull(result);
         }
 
-        [Fact(Skip = "Requires Ollama to be installed and running")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task ChatAsync_WithMessages_ReturnsResponse()
         {
@@ -106,7 +106,7 @@ namespace StoryGenerator.Research.Tests
             Assert.NotNull(result);
         }
 
-        [Fact(Skip = "Requires Ollama to be installed and running")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task ListModelsAsync_ReturnsModelList()
         {
@@ -126,7 +126,7 @@ namespace StoryGenerator.Research.Tests
             Assert.NotNull(models);
         }
 
-        [Theory(Skip = "Requires Ollama to be installed and running")]
+        [Theory]
         [Trait("Category", "Integration")]
         [InlineData("llama2")]
         [InlineData("mistral")]
@@ -150,7 +150,7 @@ namespace StoryGenerator.Research.Tests
             Assert.True(result || !result); // Either succeeds or fails gracefully
         }
 
-        [Fact(Skip = "Requires Ollama to be installed")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task GenerateAsync_WithCancellation_ThrowsOperationCanceledException()
         {

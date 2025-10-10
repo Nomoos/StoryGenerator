@@ -29,7 +29,7 @@ namespace StoryGenerator.Research.Tests
             Assert.NotNull(orchestrator);
         }
 
-        [Fact(Skip = "Requires whisper_subprocess.py script")]
+        [Fact]
         [Trait("Category", "Integration")]
         public void Constructor_WithoutClients_CreatesDefaultInstances()
         {

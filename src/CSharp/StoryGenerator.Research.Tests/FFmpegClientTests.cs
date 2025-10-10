@@ -32,7 +32,7 @@ namespace StoryGenerator.Research.Tests
             Assert.NotNull(client);
         }
 
-        [Fact(Skip = "Requires FFmpeg to be installed")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task NormalizeAudioAsync_WithValidAudio_ReturnsNormalizationResult()
         {
@@ -67,7 +67,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires FFmpeg to be installed")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task NormalizeAudioAsync_WithCustomLUFS_UsesSpecifiedTarget()
         {
@@ -103,7 +103,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires FFmpeg to be installed")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task NormalizeAudioAsync_WithTwoPass_PerformsTwoPassNormalization()
         {
@@ -137,7 +137,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires FFmpeg to be installed")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task CropVideoAsync_ToVerticalFormat_ReturnsSuccess()
         {
@@ -174,7 +174,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires FFmpeg to be installed")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task EncodeVideoAsync_WithH264_CreatesValidVideo()
         {
@@ -210,7 +210,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires FFmpeg to be installed")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task GetMediaInfoAsync_WithValidFile_ReturnsMediaInfo()
         {
@@ -239,7 +239,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires FFmpeg to be installed")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task ExtractAudioAsync_FromVideo_CreatesAudioFile()
         {
@@ -273,7 +273,7 @@ namespace StoryGenerator.Research.Tests
             }
         }
 
-        [Fact(Skip = "Requires FFmpeg to be installed")]
+        [Fact]
         [Trait("Category", "Integration")]
         public async Task NormalizeAudioAsync_WithCancellation_ThrowsOperationCanceledException()
         {
