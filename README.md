@@ -119,11 +119,32 @@ StoryGenerator uses a **hybrid C# + Python architecture**:
 ### Prerequisites
 - **.NET 9.0 SDK** - [Download](https://dotnet.microsoft.com/download/dotnet/9.0)
 - **Git** - For cloning the repository
+- **Python 3.10+** - For pipeline scripts
 - **API Keys** (optional): [OpenAI](https://platform.openai.com/api-keys), [ElevenLabs](https://elevenlabs.io/app/settings/api-keys)
 
 > 💡 **For local model inference**: Install [optional dependencies](docs/guides/setup/OPTIONAL_DEPENDENCIES.md) (FFmpeg, Ollama, Python/faster-whisper)
 
-### Get Started in 5 Minutes
+### Windows Quick Start (Automated Setup)
+
+**One-command setup for Windows:**
+
+```cmd
+# 1. Clone the repository
+git clone https://github.com/Nomoos/StoryGenerator.git
+cd StoryGenerator
+
+# 2. Run automated setup
+.\quickstart.bat
+```
+
+The `quickstart.bat` script will:
+- ✅ Check Python 3.10+ installation
+- ✅ Create and activate virtual environment
+- ✅ Install all dependencies
+- ✅ Run tests to verify installation
+- ✅ Show next steps
+
+### Manual Setup (All Platforms)
 
 ```bash
 # 1. Clone the repository
@@ -163,6 +184,82 @@ pip install faster-whisper>=0.10.0
 ➡️ **[Complete Windows setup guide](docs/guides/setup/OPTIONAL_DEPENDENCIES.md)**
 
 ➡️ **[Complete setup guide](docs/quickstarts/general/GETTING_STARTED.md)** | **[Troubleshooting](docs/guides/general/TROUBLESHOOTING.md)**
+
+---
+
+## 🪟 Windows Pipeline Quickstart
+
+StoryGenerator now includes a **step-based Windows pipeline** with `.bat` scripts for discrete, composable processing.
+
+### Quick Start (One Command)
+
+Run the automated setup script:
+
+```cmd
+.\quickstart.bat
+```
+
+This will:
+- ✅ Check Python installation (requires 3.10+)
+- ✅ Create virtual environment
+- ✅ Install all dependencies
+- ✅ Run tests to verify installation
+- ✅ Show next steps
+
+### Manual Setup
+
+1. **Create Python virtual environment:**
+   ```cmd
+   python -m venv env
+   env\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+2. **Configure environment:**
+   ```cmd
+   copy .env.example .env
+   REM Edit .env with your API keys and settings
+   ```
+
+### Run Complete Pipeline
+
+Process one story through all steps (ingest → preprocess → generate → postprocess → package):
+
+```cmd
+.\pipeline\scripts\all.bat
+```
+
+Or process a specific story:
+
+```cmd
+.\pipeline\scripts\all.bat STORY-123
+```
+
+### Run Individual Steps
+
+Run just the generate step:
+
+```cmd
+.\pipeline\scripts\03_generate.bat
+```
+
+Or with a specific story ID:
+
+```cmd
+.\pipeline\scripts\03_generate.bat STORY-123
+```
+
+### Features
+
+- ✅ **Automatic retry** with configurable `MAX_TRIES` and `SLEEP_SECS`
+- ✅ **Acceptance criteria checking** - each step validates output quality
+- ✅ **Story ID auto-selection** - picks pending stories when none specified
+- ✅ **Database tracking** - optional SQLite tracking for visibility
+- ✅ **Exit codes**: `0` = success, `1` = config error, `2` = runtime error, `3` = acceptance not met
+- ✅ **Run tracking** - execution metadata saved in `.runs/`
+
+➡️ **[Windows Pipeline Documentation](pipeline/scripts/README.md)**
+➡️ **[Database Tracking Guide](pipeline/DATABASE_TRACKING.md)**
 
 ---
 
