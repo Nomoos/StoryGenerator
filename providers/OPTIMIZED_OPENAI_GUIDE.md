@@ -149,6 +149,81 @@ cache_stats = provider.get_usage_stats()["cache_stats"]
 print(f"Cache hit rate: {cache_stats['hit_rate']:.2%}")
 ```
 
+### Batch API Pricing
+
+Use the batch pricing tier to calculate costs for asynchronous batch operations (50% discount):
+
+```python
+# Initialize with batch pricing tier
+provider = OptimizedOpenAIProvider(
+    model="gpt-4o-mini",
+    pricing_tier="batch"
+)
+
+# Cost estimation uses batch pricing
+input_tokens = 1000
+output_tokens = 500
+cost = provider.estimate_cost(input_tokens, output_tokens)
+print(f"Batch API cost: ${cost:.6f}")
+
+# Compare standard vs batch pricing
+comparison = provider.compare_pricing_tiers(input_tokens, output_tokens)
+print(f"""
+Pricing Comparison:
+- Standard API: ${comparison['standard_cost']:.6f}
+- Batch API: ${comparison['batch_cost']:.6f}
+- Savings: ${comparison['savings']:.6f} ({comparison['savings_percent']:.1f}%)
+""")
+```
+
+### Video Cost Estimation
+
+Calculate the estimated cost per video based on average token usage:
+
+```python
+provider = OptimizedOpenAIProvider(
+    model="gpt-4o-mini",
+    pricing_tier="batch"  # Use batch pricing for cost savings
+)
+
+# Estimate cost per video
+# Typical video generation might use:
+# - Script generation: ~500 input, ~2000 output tokens
+# - Script revision: ~2500 input, ~2000 output tokens
+# - Title generation: ~200 input, ~50 output tokens
+video_cost = provider.estimate_video_cost(
+    avg_input_tokens_per_request=1067,  # Average across all requests
+    avg_output_tokens_per_request=1350,  # Average across all requests
+    requests_per_video=3  # Number of API calls per video
+)
+
+print(f"""
+Video Cost Estimate:
+- Model: {video_cost['model']}
+- Pricing tier: {video_cost['pricing_tier']}
+- Cost per request: ${video_cost['cost_per_request']:.6f}
+- Cost per video: ${video_cost['cost_per_video']:.6f}
+- Total tokens per video: {video_cost['total_tokens_per_video']:,}
+- Requests per video: {video_cost['requests_per_video']}
+""")
+
+# Compare costs for 100 videos
+videos = 100
+total_batch = video_cost['cost_per_video'] * videos
+print(f"Cost for {videos} videos (batch pricing): ${total_batch:.2f}")
+
+# Compare with standard pricing
+video_cost_standard = provider.estimate_video_cost(
+    avg_input_tokens_per_request=1067,
+    avg_output_tokens_per_request=1350,
+    requests_per_video=3,
+    pricing_tier="standard"
+)
+total_standard = video_cost_standard['cost_per_video'] * videos
+print(f"Cost for {videos} videos (standard pricing): ${total_standard:.2f}")
+print(f"Total savings with batch API: ${total_standard - total_batch:.2f}")
+```
+
 ## Real-World Examples
 
 ### Example 1: Story Generation Pipeline
@@ -286,14 +361,27 @@ comparison = compare_model_costs(prompt, models)
 
 ### Model Pricing
 
-The provider includes pricing for common models (per 1M tokens):
+The provider includes pricing for common models (per 1M tokens) with support for both standard and batch API pricing:
+
+#### Standard API Pricing (Real-time/Synchronous)
 
 | Model | Input Price | Output Price |
 |-------|------------|--------------|
 | gpt-4o-mini | $0.15 | $0.60 |
-| gpt-4o | $5.00 | $15.00 |
+| gpt-4o | $2.50 | $10.00 |
 | gpt-4-turbo | $10.00 | $30.00 |
 | gpt-3.5-turbo | $0.50 | $1.50 |
+
+#### Batch API Pricing (50% Discount - Asynchronous)
+
+| Model | Input Price | Output Price | Savings |
+|-------|------------|--------------|---------|
+| gpt-4o-mini | $0.075 | $0.30 | 50% |
+| gpt-4o | $1.25 | $5.00 | 50% |
+| gpt-4-turbo | $5.00 | $15.00 | 50% |
+| gpt-3.5-turbo | $0.25 | $0.75 | 50% |
+
+**Note:** The Batch API offers 50% cost savings for asynchronous bulk operations. Use `pricing_tier="batch"` when initializing the provider to calculate costs using batch pricing.
 
 Update pricing in `providers/openai_optimized.py` if needed.
 
@@ -318,7 +406,8 @@ OptimizedOpenAIProvider(
     model="gpt-4o-mini",       # Model to use
     enable_cache=True,         # Enable response caching
     cache_ttl=3600,            # Cache TTL in seconds
-    cache_backend="file"       # Cache backend: 'file' or 'redis'
+    cache_backend="file",      # Cache backend: 'file' or 'redis'
+    pricing_tier="standard"    # Pricing tier: 'standard' or 'batch'
 )
 ```
 

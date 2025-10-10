@@ -28,12 +28,25 @@ from core.interfaces.llm_provider import ILLMProvider, IAsyncLLMProvider, ChatMe
 logger = logging.getLogger(__name__)
 
 
-# Pricing per 1M tokens (as of 2024) - can be moved to config
+# Pricing per 1M tokens (as of October 2024) - can be moved to config
+# Standard API pricing for real-time/synchronous requests
 PRICING = {
-    "gpt-4o-mini": {"input": 0.15, "output": 0.60},
-    "gpt-4o": {"input": 5.0, "output": 15.0},
-    "gpt-4-turbo": {"input": 10.0, "output": 30.0},
-    "gpt-3.5-turbo": {"input": 0.50, "output": 1.50},
+    "gpt-4o-mini": {
+        "standard": {"input": 0.15, "output": 0.60},
+        "batch": {"input": 0.075, "output": 0.30},  # 50% discount
+    },
+    "gpt-4o": {
+        "standard": {"input": 2.50, "output": 10.0},
+        "batch": {"input": 1.25, "output": 5.0},  # 50% discount
+    },
+    "gpt-4-turbo": {
+        "standard": {"input": 10.0, "output": 30.0},
+        "batch": {"input": 5.0, "output": 15.0},  # 50% discount
+    },
+    "gpt-3.5-turbo": {
+        "standard": {"input": 0.50, "output": 1.50},
+        "batch": {"input": 0.25, "output": 0.75},  # 50% discount
+    },
 }
 
 
@@ -62,6 +75,7 @@ class OptimizedOpenAIProvider(ILLMProvider):
         enable_cache: bool = True,
         cache_ttl: int = 3600,
         cache_backend: str = "file",
+        pricing_tier: str = "standard",
     ):
         """
         Initialize optimized OpenAI provider.
@@ -72,6 +86,7 @@ class OptimizedOpenAIProvider(ILLMProvider):
             enable_cache: Enable response caching (default: True)
             cache_ttl: Cache time-to-live in seconds (default: 3600)
             cache_backend: Cache backend ('redis' or 'file', default: 'file')
+            pricing_tier: Pricing tier to use for cost calculation ('standard' or 'batch', default: 'standard')
             
         Raises:
             ValueError: If API key is not provided and not found in environment
@@ -84,6 +99,14 @@ class OptimizedOpenAIProvider(ILLMProvider):
             )
 
         self.model = model
+        
+        # Validate and store pricing tier
+        if pricing_tier not in ["standard", "batch"]:
+            raise ValueError(
+                f"Invalid pricing_tier '{pricing_tier}'. Must be 'standard' or 'batch'."
+            )
+        self.pricing_tier = pricing_tier
+        
         self.client = OpenAI(api_key=self.api_key)
         
         # Initialize token encoder
@@ -109,7 +132,7 @@ class OptimizedOpenAIProvider(ILLMProvider):
         
         logger.info(
             f"Initialized OptimizedOpenAIProvider: model={model}, "
-            f"cache={enable_cache}, backend={cache_backend}"
+            f"pricing_tier={pricing_tier}, cache={enable_cache}, backend={cache_backend}"
         )
 
     @property
@@ -152,20 +175,29 @@ class OptimizedOpenAIProvider(ILLMProvider):
         tokens += 3  # Every reply is primed with assistant
         return tokens
 
-    def estimate_cost(self, input_tokens: int, output_tokens: int) -> float:
+    def estimate_cost(self, input_tokens: int, output_tokens: int, pricing_tier: str | None = None) -> float:
         """
         Estimate cost for a request.
         
         Args:
             input_tokens: Number of input tokens
             output_tokens: Number of output tokens
+            pricing_tier: Pricing tier to use ('standard' or 'batch'). 
+                         If None, uses the provider's default pricing tier.
             
         Returns:
             Estimated cost in USD
         """
-        pricing = PRICING.get(self.model, PRICING["gpt-4o-mini"])
-        input_cost = (input_tokens / 1_000_000) * pricing["input"]
-        output_cost = (output_tokens / 1_000_000) * pricing["output"]
+        tier = pricing_tier or self.pricing_tier
+        
+        # Get model pricing with fallback to gpt-4o-mini
+        model_pricing = PRICING.get(self.model, PRICING["gpt-4o-mini"])
+        
+        # Get tier pricing with fallback to standard
+        tier_pricing = model_pricing.get(tier, model_pricing.get("standard", {"input": 0.15, "output": 0.60}))
+        
+        input_cost = (input_tokens / 1_000_000) * tier_pricing["input"]
+        output_cost = (output_tokens / 1_000_000) * tier_pricing["output"]
         return input_cost + output_cost
 
     def _track_usage(self, input_tokens: int, output_tokens: int):
@@ -320,6 +352,7 @@ class OptimizedOpenAIProvider(ILLMProvider):
             - total_cost
             - request_count
             - average_tokens_per_request
+            - pricing_tier
             - cache_stats (if caching enabled)
         """
         total_tokens = self.total_input_tokens + self.total_output_tokens
@@ -333,12 +366,84 @@ class OptimizedOpenAIProvider(ILLMProvider):
             "request_count": self.request_count,
             "average_tokens_per_request": round(avg_tokens, 2),
             "model": self.model,
+            "pricing_tier": self.pricing_tier,
         }
         
         if self.enable_cache and self.cache:
             stats["cache_stats"] = self.cache.get_stats()
         
         return stats
+    
+    def compare_pricing_tiers(self, input_tokens: int, output_tokens: int) -> dict:
+        """
+        Compare costs between standard and batch pricing tiers.
+        
+        Args:
+            input_tokens: Number of input tokens
+            output_tokens: Number of output tokens
+            
+        Returns:
+            Dictionary with cost comparison:
+            - standard_cost: Cost using standard pricing
+            - batch_cost: Cost using batch pricing
+            - savings: Amount saved using batch pricing
+            - savings_percent: Percentage saved using batch pricing
+        """
+        standard_cost = self.estimate_cost(input_tokens, output_tokens, pricing_tier="standard")
+        batch_cost = self.estimate_cost(input_tokens, output_tokens, pricing_tier="batch")
+        savings = standard_cost - batch_cost
+        savings_percent = (savings / standard_cost * 100) if standard_cost > 0 else 0
+        
+        return {
+            "standard_cost": round(standard_cost, 6),
+            "batch_cost": round(batch_cost, 6),
+            "savings": round(savings, 6),
+            "savings_percent": round(savings_percent, 2),
+        }
+    
+    def estimate_video_cost(
+        self,
+        avg_input_tokens_per_request: int,
+        avg_output_tokens_per_request: int,
+        requests_per_video: int,
+        pricing_tier: str | None = None,
+    ) -> dict:
+        """
+        Estimate the cost per video based on average token usage.
+        
+        Args:
+            avg_input_tokens_per_request: Average input tokens per API request
+            avg_output_tokens_per_request: Average output tokens per API request
+            requests_per_video: Number of API requests needed per video
+            pricing_tier: Pricing tier to use ('standard' or 'batch'). 
+                         If None, uses the provider's default pricing tier.
+            
+        Returns:
+            Dictionary with video cost breakdown:
+            - cost_per_request: Cost per API request
+            - cost_per_video: Total cost per video
+            - total_tokens_per_video: Total tokens used per video
+            - pricing_tier: Pricing tier used for calculation
+        """
+        tier = pricing_tier or self.pricing_tier
+        
+        cost_per_request = self.estimate_cost(
+            avg_input_tokens_per_request, 
+            avg_output_tokens_per_request,
+            pricing_tier=tier
+        )
+        
+        cost_per_video = cost_per_request * requests_per_video
+        total_tokens = (avg_input_tokens_per_request + avg_output_tokens_per_request) * requests_per_video
+        
+        return {
+            "cost_per_request": round(cost_per_request, 6),
+            "cost_per_video": round(cost_per_video, 6),
+            "total_tokens_per_video": total_tokens,
+            "requests_per_video": requests_per_video,
+            "pricing_tier": tier,
+            "model": self.model,
+        }
 
     def reset_stats(self):
         """Reset usage statistics."""
