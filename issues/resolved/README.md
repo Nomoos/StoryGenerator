@@ -108,12 +108,21 @@ Assemble and enhance final videos:
 - **11-post-05-transitions** - Add transitions between scenes
 - **11-post-06-color-grading** - Apply color grading
 
-### Phase 4: Pipeline Orchestration (✅ Complete)
+### Phase 4: Pipeline Orchestration (✅ Complete - Enhanced 2025-10-10)
 
 **Location:** `phase-4-pipeline-orchestration/`
 
-Complete end-to-end pipeline orchestration:
-- **csharp-phase4-pipeline-orchestration** - Full pipeline orchestrator with state management, error handling, and progress tracking
+Complete end-to-end pipeline orchestration with enhanced foundation:
+- **csharp-phase4-pipeline-orchestration** - Full pipeline orchestrator with:
+  - State management and checkpoint/resume
+  - Error handling and retry logic
+  - Progress tracking and lifecycle hooks
+  - **NEW (2025-10-10):** Declarative YAML/JSON configuration
+  - **NEW (2025-10-10):** Dynamic stage registration
+  - **NEW (2025-10-10):** Event-driven architecture (OnStageStart, OnStageComplete, OnStageError)
+  - **NEW (2025-10-10):** Enhanced CLI with `storygen run` command
+  - **NEW (2025-10-10):** 42 comprehensive tests
+  - See: [docs/PIPELINE_ORCHESTRATION.md](../../docs/PIPELINE_ORCHESTRATION.md)
 
 ## Status
 
@@ -153,5 +162,5 @@ For active development work, see:
 
 ---
 
-**Last Updated:** 2025-01-11  
-**Status:** 46+ issues resolved (Phases 1-2 complete, P0 complete, Phase 3 ~58% complete, Phase 4 complete ✅)
+**Last Updated:** 2025-10-10  
+**Status:** 46+ issues resolved (Phases 1-2 complete, P0 complete, Phase 3 ~58% complete, Phase 4 complete with enhanced foundation ✅)
