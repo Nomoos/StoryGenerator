@@ -5,17 +5,17 @@ Reddit Story Scraper for StoryGenerator
 Mines stories from target subreddits filtered by demographics.
 """
 
-import praw
 import json
 import os
 import sys
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import List, Dict
+
+import praw
 
 # Subreddit mapping by segment and age
-SUBREDDIT_MAP = {
+SUBREDDIT_MAP: dict[str, list[str]] = {
     "women/10-13": ["r/TrueOffMyChest", "r/relationships", "r/AmItheAsshole"],
     "women/14-17": ["r/teenagers", "r/AmItheAsshole", "r/TrueOffMyChest"],
     "women/18-23": ["r/relationships", "r/dating_advice", "r/confession"],
@@ -43,7 +43,7 @@ def init_reddit() -> praw.Reddit:
 
 def scrape_subreddit(
     reddit: praw.Reddit, subreddit_name: str, limit: int = 100, min_upvotes: int = 500
-) -> List[Dict]:
+) -> list[dict[str, str | int]]:
     """Scrape top posts from a subreddit."""
     stories = []
     subreddit = reddit.subreddit(subreddit_name.replace("r/", ""))
@@ -80,10 +80,10 @@ def scrape_subreddit(
     return stories
 
 
-def filter_age_appropriate(stories: List[Dict], age_bucket: str) -> List[Dict]:
+def filter_age_appropriate(stories: list[dict[str, str | int]], age_bucket: str) -> list[dict[str, str | int]]:
     """Filter stories for age-appropriateness."""
     # Simple keyword filtering (enhance with ML model later)
-    inappropriate_keywords = {
+    inappropriate_keywords: dict[str, list[str]] = {
         "10-13": ["sex", "drugs", "violence", "nsfw", "explicit"],
         "14-17": ["explicit", "nsfw"],
         "18-23": [],  # No filtering for adults
@@ -93,21 +93,21 @@ def filter_age_appropriate(stories: List[Dict], age_bucket: str) -> List[Dict]:
     if not keywords:
         return stories
 
-    filtered = []
+    filtered: list[dict[str, str | int]] = []
     for story in stories:
-        text_lower = (story["title"] + " " + story["text"]).lower()
+        text_lower = (str(story["title"]) + " " + str(story["text"])).lower()
         if not any(kw in text_lower for kw in keywords):
             filtered.append(story)
 
     return filtered
 
 
-def scrape_segment(reddit: praw.Reddit, gender: str, age: str) -> Dict:
+def scrape_segment(reddit: praw.Reddit, gender: str, age: str) -> dict[str, str | list[dict[str, str | int]]]:
     """Scrape all stories for a segment."""
     segment_key = f"{gender}/{age}"
     subreddits = SUBREDDIT_MAP.get(segment_key, [])
 
-    all_stories = []
+    all_stories: list[dict[str, str | int]] = []
     for subreddit in subreddits:
         print(f"📥 Scraping {subreddit} for {segment_key}...")
         try:

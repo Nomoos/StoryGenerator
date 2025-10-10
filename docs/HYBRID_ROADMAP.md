@@ -317,13 +317,29 @@ This roadmap tracks the implementation of StoryGenerator's hybrid architecture, 
 - **Data Management:** SQLite database, repositories
 - **Content Collection:** Reddit, Instagram, TikTok scrapers
 - **Business Logic:** Script generation, idea generation, validation
+- **Code Quality:** Nullable reference types, warnings as errors, StyleCop analyzers
 
-### Python Components (3.11+)
-- **Whisper ASR:** Speech-to-text transcription
-- **SDXL:** High-quality image generation
-- **LTX-Video:** Video synthesis from keyframes
-- **Ollama:** Local LLM for offline generation
+### Python Components (3.10+)
+- **ML Models:** Whisper ASR, SDXL, LTX-Video, Ollama
 - **FFmpeg:** Video/audio processing
+- **Type Safety:** Full type hints with mypy strict mode enabled
+- **Code Style:** Black formatter + flake8 linter (PEP 8 compliant)
+
+#### Adopted Python Enhancement Proposals (PEPs)
+For maintainability and modern Python practices:
+
+- **PEP 484** – Type Hints (all public functions typed)
+- **PEP 585** – Type Hinting Generics (`list[str]` instead of `List[str]`)
+- **PEP 604** – Union types with `|` (`str | int` instead of `Union[str, int]`)
+- **PEP 612** – Parameter specification variables for decorators
+- **PEP 618** – Optional length-checking in `zip(strict=True)`
+- **PEP 621** – Standard project metadata in `pyproject.toml` ✅
+- **PEP 668** – Externally managed environments (use virtual envs)
+- **PEP 525/530** – Async generators & comprehensions
+- **PEP 567** – Context variables for async-safe storage
+- **PEP 659** – Adaptive interpreter (3.11+ performance boost)
+
+📖 **See [Python PEP Guidelines](PYTHON_PEP_GUIDELINES.md) for detailed information**
 
 ### Integration Approach
 - **Subprocess calls:** C# spawns Python processes

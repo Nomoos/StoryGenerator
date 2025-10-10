@@ -9,8 +9,8 @@ Usage:
     python scripts/microstep_validate.py config <step> [<gender> <age>]
 """
 
-import sys
 import argparse
+import sys
 from pathlib import Path
 
 # Add src/Python to path
@@ -19,35 +19,37 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src" / "Python"))
 from Tools.MicrostepValidator import (
     MicrostepValidator,
     copilot_check_microstep,
-    update_microstep_progress,
     log_microstep_config,
+    update_microstep_progress,
 )
 
 
-def cmd_list():
+def cmd_list() -> None:
     """List all microsteps."""
     validator = MicrostepValidator()
     validator.list_microsteps()
 
 
-def cmd_check(step: int, gender: str = None, age: str = None):
+def cmd_check(step: int, gender: str | None = None, age: str | None = None) -> None:
     """Perform @copilot check on a microstep."""
     copilot_check_microstep(step, gender, age)
 
 
-def cmd_progress(step: int, status: str, gender: str = None, age: str = None, details: str = ""):
+def cmd_progress(
+    step: int, status: str, gender: str | None = None, age: str | None = None, details: str = ""
+) -> None:
     """Update progress for a microstep."""
     update_microstep_progress(step, status, details, gender, age)
     print(f"✅ Progress updated: Step {step} - {status}")
 
 
-def cmd_config(step: int, gender: str = None, age: str = None):
+def cmd_config(step: int, gender: str | None = None, age: str | None = None) -> None:
     """Log configuration for a microstep."""
     log_microstep_config(step, gender=gender, age=age)
     print(f"✅ Config logged: Step {step}")
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Microstep Validation CLI",
         formatter_class=argparse.RawDescriptionHelpFormatter,
