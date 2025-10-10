@@ -1,0 +1,71 @@
+# Simple Pipeline Orchestration Example
+# This is a minimal configuration to get started
+
+metadata:
+  name: "Simple StoryGenerator Pipeline"
+  version: "1.0.0"
+  description: "Basic pipeline for video generation"
+
+# Global error handling
+error_handling:
+  continue_on_error: false
+  retry_count: 2
+  retry_delay: 5
+
+# Logging
+logging:
+  level: "INFO"
+  console: true
+  file: "pipeline.log"
+
+# Pipeline stages
+stages:
+  # Stage 1: Generate Story Idea
+  - id: "story_idea"
+    name: "Story Idea Generation"
+    enabled: true
+    order: 10
+    max_retries: 3
+
+  # Stage 2: Generate Script
+  - id: "script_generation"
+    name: "Script Generation"
+    enabled: true
+    order: 20
+    max_retries: 3
+
+  # Stage 3: Revise Script
+  - id: "script_revision"
+    name: "Script Revision"
+    enabled: true
+    order: 30
+    max_retries: 2
+
+  # Stage 4: Enhance Script
+  - id: "script_enhancement"
+    name: "Script Enhancement"
+    enabled: true
+    order: 40
+    max_retries: 2
+
+  # Stage 5: Generate Voice
+  - id: "voice_synthesis"
+    name: "Voice Synthesis"
+    enabled: true
+    order: 50
+    max_retries: 3
+
+  # Stage 6: Generate Subtitles
+  - id: "asr_subtitles"
+    name: "ASR & Subtitles"
+    enabled: true
+    order: 60
+    max_retries: 2
+
+  # Stage 7: Video Composition (optional)
+  - id: "video_composition"
+    name: "Final Video Composition"
+    enabled: false  # Disable if you only want audio output
+    order: 70
+    max_retries: 2
+    continue_on_error: true
