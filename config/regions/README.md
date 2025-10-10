@@ -261,11 +261,11 @@ cp .env.example .env
 ## Related Documentation
 
 ### Branding & Channel Strategy
-- [Branding Documentation](../docs/branding/) - Complete branding and channel strategy
-- [Channel Naming Strategy](../docs/branding/CHANNEL_NAMING_STRATEGY.md) - Global naming conventions
-- [Persona Definition](../docs/branding/PERSONA_NOM_STORIES_EN.md) - US target audience (Nom Stories EN)
-- [Metadata Guidelines](../docs/branding/METADATA_GUIDELINES.md) - Localized SEO best practices
-- [Channel Templates](../docs/branding/CHANNEL_TEMPLATES.md) - Ready-to-use channel setup templates
+- [Branding Documentation](../../docs/branding/) - Complete branding and channel strategy
+- [Channel Naming Strategy](../../docs/branding/CHANNEL_NAMING_STRATEGY.md) - Global naming conventions
+- [Persona Definition](../../docs/branding/PERSONA_NOM_STORIES_EN.md) - US target audience (Nom Stories EN)
+- [Metadata Guidelines](../../docs/branding/METADATA_GUIDELINES.md) - Localized SEO best practices
+- [Channel Templates](../../docs/branding/CHANNEL_TEMPLATES.md) - Ready-to-use channel setup templates
 
 ### System Design & Research
 - [SHORT_VIDEO_SYSTEM_DESIGN.md](../research/SHORT_VIDEO_SYSTEM_DESIGN.md) - Complete system design
