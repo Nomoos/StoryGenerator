@@ -6,17 +6,16 @@ This directory contains issue tracking for the C# implementation of StoryGenerat
 
 ## 🚀 Quick Status
 
-**Current Phase:** Phase 3 Implementation (~68% Complete)
+**Current Phase:** Phase 2 - Pipeline Orchestration Foundation
 
-| What's Done | What's Next | Future Work |
-|------------|-------------|-------------|
-| ✅ Phase 1-2 Complete | 🔄 Group 3: Script Development | 📋 Group 10: Quality Control |
-| ✅ P0 Tasks Complete | 🔄 Group 5: Audio Production | 📋 Group 11: Export & Delivery |
-| ✅ Phase 4 Orchestration | 🔄 Group 8: Video variant selection | 📋 P2: Distribution |
-| ✅ 30+ Phase 3 tasks done | | 📋 P2: Analytics |
-| ✅ Groups 1,2,4,6,7,9 done | | |
+> **📋 For comprehensive progress tracking and status details, see [Hybrid Architecture Roadmap](../docs/HYBRID_ROADMAP.md)**
 
-**Progress:** 46+/~78 tasks complete (~59%) • **Next:** Group 3 Script Development (5 tasks)
+| Phase | Status | Progress |
+|-------|--------|----------|
+| Phase 1: Foundation | ✅ Complete | 15/15 tasks |
+| Phase 2: Orchestration | 🔄 In Progress | 5 tasks |
+| Phase 3: P1 Pipeline | 📋 Planned | 47 tasks |
+| Phase 4: P2 Features | 📋 Planned | 18 tasks |
 
 ---
 
@@ -77,17 +76,18 @@ Core pipeline implementation tasks:
 
 ## 📊 Status Overview
 
-> **💡 Quick Summary:** See the [Hybrid Roadmap](../docs/HYBRID_ROADMAP.md) for detailed progress tracking and architecture overview.
+> **💡 For detailed progress tracking, architecture overview, and current status, see the [Hybrid Architecture Roadmap](../docs/HYBRID_ROADMAP.md) - the single source of truth for project status.**
 
-| Priority | Status | Task Count | Estimated Effort |
-|----------|--------|------------|------------------|
-| ✅ Resolved | Complete | 46+ tasks | ~180 hours (done) |
-| 🔴 P0 Critical | Complete | 0 tasks | 0 hours (ALL DONE ✅) |
-| 🟡 P1 High | ~68% Complete | ~14 remaining | ~40-60 hours |
-| 🟢 P2 Medium | Not Started | 18 tasks | 110-135 hours |
-| **Total** | **~68% Done** | **~78 tasks** | **~330-375 hours** |
+**Quick Summary:**
+- ✅ Phase 1 Foundation: 100% Complete (15/15 tasks)
+- 🔄 Phase 2 Orchestration: In Progress (5 tasks)
+- 📋 Phase 3 P1 Pipeline: Planned (47 tasks)
+- 📋 Phase 4 P2 Features: Planned (18 tasks)
 
-> **Note:** Major progress! 30+ Phase 3 tasks and Phase 4 orchestration are complete. Focus now on Group 3 (Script Development) - the lowest numbered incomplete group.
+**Issue Organization:**
+- All closed/resolved issues have been verified and moved to `resolved/` directory
+- Active work is tracked in priority-based directories (p1-high, p2-medium)
+- See [HYBRID_ROADMAP.md](../docs/HYBRID_ROADMAP.md) for complete status
 
 ---
 
