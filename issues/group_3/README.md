@@ -12,9 +12,10 @@
 
 ## 📋 Current Status
 
-See [.NEXT.MD](.NEXT.MD) for the current priority item.
+**Progress Hub:** See [PROGRESS.md](./PROGRESS.md) for comprehensive status tracking  
+**Current Priority:** See [.NEXT.MD](.NEXT.MD) for the current focus item
 
-**Open Issues:** See [.ISSUES/](.ISSUES/) folder  
+**Open Issues:** See [.ISSUES/](.ISSUES/) folder (2 tasks: voice cloning, style consistency)  
 **Completed Issues:** See [.DONE/](.DONE/) folder
 
 ---
