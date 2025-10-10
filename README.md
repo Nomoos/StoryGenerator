@@ -147,6 +147,64 @@ cp .env.example .env
 
 ---
 
+## 🎙️ Publishing to Podbean (Podcast Platform)
+
+StoryGenerator now supports automated podcast publishing to **Podbean** via GitHub Actions or command line.
+
+### Setup
+
+1. **Get Podbean API Credentials**
+   - Log in to your [Podbean account](https://www.podbean.com/)
+   - Go to Settings → API → Create OAuth Client
+   - Copy your Client ID and Client Secret
+
+2. **Configure Repository Secrets** (for GitHub Actions)
+   - Go to your repository Settings → Secrets and variables → Actions
+   - Add two secrets:
+     - `PODBEAN_CLIENT_ID` - Your Podbean Client ID
+     - `PODBEAN_CLIENT_SECRET` - Your Podbean Client Secret
+
+### Usage with GitHub Actions
+
+1. Place your podcast audio file in the `podcasts/` directory (e.g., `podcasts/ep001.mp3`)
+2. Go to Actions → "Publish to Podbean" → Run workflow
+3. Fill in the workflow inputs:
+   - **Audio path**: `podcasts/ep001.mp3`
+   - **Title**: Your episode title
+   - **Description**: Episode description (2-3 sentences)
+   - **Publish at** (optional): ISO UTC time for scheduling (e.g., `2025-10-12T15:00:00Z`)
+   - **Artwork path** (optional): Path to episode artwork (e.g., `assets/ep001.jpg`)
+
+### Usage via Command Line
+
+```bash
+export PODBEAN_CLIENT_ID="your_client_id"
+export PODBEAN_CLIENT_SECRET="your_client_secret"
+export AUDIO_PATH="podcasts/ep001.mp3"
+export EP_TITLE="Episode 1: My First Episode"
+export EP_DESC="This is an amazing episode about..."
+
+# Optional: Schedule publishing
+export EP_PUBLISH_AT="2025-10-12T15:00:00Z"
+
+# Optional: Add episode artwork
+export EP_ARTWORK_PATH="assets/ep001.jpg"
+
+python scripts/publish_podbean.py
+```
+
+### Features
+
+- ✅ OAuth authentication with Podbean API
+- ✅ Automated audio upload
+- ✅ Immediate or scheduled publishing
+- ✅ Optional episode artwork upload
+- ✅ Comprehensive error handling and logging
+
+➡️ **[Podbean API Documentation](https://developers.podbean.com/podbean-api-docs/)**
+
+---
+
 ## 🏗️ Pipeline Stages
 
 The complete pipeline consists of several major stages:

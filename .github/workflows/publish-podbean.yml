@@ -1,0 +1,54 @@
+name: Publish to Podbean
+
+on:
+  workflow_dispatch:
+    inputs:
+      audio_path:
+        description: "Repo path to audio (e.g., podcasts/ep001.mp3)"
+        required: true
+        type: string
+      title:
+        description: "Episode title"
+        required: true
+        type: string
+      description:
+        description: "Episode description (2–3 sentences)"
+        required: true
+        type: string
+      publish_at:
+        description: "Optional ISO UTC time (e.g., 2025-10-12T15:00:00Z) — leave blank to publish now"
+        required: false
+        type: string
+      artwork_path:
+        description: "Optional repo path to episode artwork (e.g., assets/ep001.jpg)"
+        required: false
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install requests
+
+      - name: Publish to Podbean
+        env:
+          PODBEAN_CLIENT_ID: ${{ secrets.PODBEAN_CLIENT_ID }}
+          PODBEAN_CLIENT_SECRET: ${{ secrets.PODBEAN_CLIENT_SECRET }}
+          AUDIO_PATH: ${{ github.workspace }}/${{ inputs.audio_path }}
+          EP_TITLE: ${{ inputs.title }}
+          EP_DESC: ${{ inputs.description }}
+          EP_PUBLISH_AT: ${{ inputs.publish_at }}
+          EP_ARTWORK_PATH: ${{ github.workspace }}/${{ inputs.artwork_path }}
+        run: |
+          chmod +x scripts/publish_podbean.py
+          python scripts/publish_podbean.py
