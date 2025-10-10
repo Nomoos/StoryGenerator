@@ -4,7 +4,7 @@ This document describes the final repository reorganization completed on 2025-10
 
 ## Overview
 
-The repository has been reorganized to have a cleaner top-level structure with better separation of concerns. This reorganization follows the guidelines in `CLEANUP.md` and `docs/REORGANIZE.md`.
+The repository has been reorganized to have a cleaner top-level structure with better separation of concerns. This reorganization follows the guidelines in `CLEANUP_REPO.md`.
 
 ## Changes Made
 
@@ -59,7 +59,7 @@ The root guard script (`scripts/check-clean-root.sh`) has been updated to allow 
 
 ### 6. Updated Documentation
 
-- `CLEANUP.md` - Updated with new allowed top-level items
+- `CLEANUP_REPO.md` - Updated with new allowed top-level items
 - `issues/README.md` - Updated path references
 - `obsolete/README.md` - Created to explain the obsolete folder purpose
 - `.gitignore` - Added section for obsolete folder artifacts
@@ -108,7 +108,7 @@ StoryGenerator/
 ├── .env.example      # Environment variables template
 ├── .gitattributes    # Git attributes
 ├── .gitignore        # Git ignore patterns
-├── CLEANUP.md        # Cleanup and reorganization guide
+├── CLEANUP_REPO.md   # Cleanup and reorganization guide
 ├── QUICKSTART.md     # Quick start guide
 ├── README.md         # Main documentation
 └── requirements.txt  # Python dependencies (for tools)
@@ -162,8 +162,7 @@ Update any documentation that references:
 
 ## Related Documentation
 
-- `CLEANUP.md` - Comprehensive cleanup and reorganization guide
-- `docs/REORGANIZE.md` - Detailed reorganization steps
+- `CLEANUP_REPO.md` - Comprehensive cleanup and reorganization guide
 - `docs/REORGANIZATION_SUMMARY.md` - Previous reorganization summary
 - `obsolete/README.md` - Information about archived code
 

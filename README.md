@@ -68,7 +68,7 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 
 ### 🔐 Security & Maintenance
 - **[Security Checklist](docs/SECURITY_CHECKLIST.md)** - Security procedures
-- **[Repository Cleanup](REPOSITORY_CLEANUP_GUIDE.md)** - Maintenance guide
+- **[Repository Cleanup](CLEANUP_REPO.md)** - Maintenance guide
 - **[Issue Tracking](docs/ISSUE_TRACKING.md)** - Task management
 - **[Migration Guide](src/CSharp/MIGRATION_GUIDE.md)** - Python to C#
 - **[Roadmap](docs/IMPLEMENTATION_ROADMAP.md)** - Development timeline

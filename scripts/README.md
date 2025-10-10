@@ -157,8 +157,8 @@ pip install -r requirements.txt
 
 ## 📚 Related Documentation
 
-- [REPOSITORY_CLEANUP_GUIDE.md](../REPOSITORY_CLEANUP_GUIDE.md) - Comprehensive cleanup guide
-- [CLEANUP.md](../CLEANUP.md) - Repository cleanup checklist
+- [CLEANUP_REPO.md](../CLEANUP_REPO.md) - Comprehensive cleanup and maintenance guide
+- [CLEANUP_REPO.md](../CLEANUP_REPO.md) - Repository cleanup checklist
 - [docs/REORGANIZATION_GUIDE.md](../docs/REORGANIZATION_GUIDE.md) - Reorganization guide
 - [README_REDDIT_SCRAPER.md](./README_REDDIT_SCRAPER.md) - Reddit scraper documentation
 
