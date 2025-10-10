@@ -6,7 +6,9 @@ This document describes the new feature that allows generating keyframes directl
 
 The `GenerateKeyframesFromSceneAsync` method provides a simplified API for generating keyframes when you have:
 - A simple text description of a scene
-- Optional subtitle text to overlay or include in the scene
+- Optional subtitle text to include in the scene
+
+**Important Note**: Subtitle text is incorporated into the image generation prompt (influencing the visual style and content), not rendered as actual text overlay on the image. For actual text rendering, use post-processing tools.
 
 This is useful for:
 - Quick prototyping and testing
@@ -210,11 +212,7 @@ See `CSharp/Examples/SimpleKeyframeGenerationExample.cs` for a complete working 
 - Multiple scene types
 - Mock SDXL client for testing
 
-Run the example:
-```bash
-cd src/CSharp
-dotnet run --project Examples SimpleKeyframeGenerationExample
-```
+**Note**: The example file is provided as a reference. To use it, you would need to integrate it into an executable project (such as the CLI or Pipeline project) that can run the example code.
 
 ## Configuration Tips
 
