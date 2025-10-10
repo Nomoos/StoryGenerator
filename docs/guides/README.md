@@ -4,12 +4,12 @@ This directory contains detailed guides for various aspects of the StoryGenerato
 
 ## Contents
 
-### Root Level
-- **[FAQ.md](FAQ.md)** - Frequently asked questions
-- **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Common issues and solutions
-- **[DEDUPLICATION_README.md](DEDUPLICATION_README.md)** - Content deduplication guide
-- **[README_ENHANCEMENTS.md](README_ENHANCEMENTS.md)** - README enhancement guide
-- **[REORGANIZATION_GUIDE.md](REORGANIZATION_GUIDE.md)** - Repository reorganization guide
+### General (`general/`)
+- **[FAQ.md](general/FAQ.md)** - Frequently asked questions
+- **[TROUBLESHOOTING.md](general/TROUBLESHOOTING.md)** - Common issues and solutions
+- **[DEDUPLICATION_README.md](general/DEDUPLICATION_README.md)** - Content deduplication guide
+- **[README_ENHANCEMENTS.md](general/README_ENHANCEMENTS.md)** - README enhancement guide
+- **[REORGANIZATION_GUIDE.md](general/REORGANIZATION_GUIDE.md)** - Repository reorganization guide
 
 ### Setup (`setup/`)
 - **[INSTALLATION.md](setup/INSTALLATION.md)** - Installation instructions
@@ -28,5 +28,5 @@ This directory contains detailed guides for various aspects of the StoryGenerato
 
 ## See Also
 - [Quickstarts](../quickstarts/)
-- [FAQ](FAQ.md)
-- [Troubleshooting](TROUBLESHOOTING.md)
+- [FAQ](general/FAQ.md)
+- [Troubleshooting](general/TROUBLESHOOTING.md)

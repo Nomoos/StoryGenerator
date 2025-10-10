@@ -16,7 +16,7 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 - **[Quick Start Guide](docs/quickstarts/general/GETTING_STARTED.md)** - Get up and running in 15 minutes
 - **[Installation](docs/guides/setup/INSTALLATION.md)** - Detailed setup instructions
 - **[Hardware Requirements](docs/hardware/HARDWARE_REQUIREMENTS.md)** - Choose the right hardware
-- **[Troubleshooting](docs/guides/TROUBLESHOOTING.md)** - Common issues and solutions
+- **[Troubleshooting](docs/guides/general/TROUBLESHOOTING.md)** - Common issues and solutions
 
 </td>
 <td width="50%">
@@ -36,7 +36,7 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 - **[C# Implementation Guide](src/CSharp/IMPLEMENTATION_GUIDE.md)** - Development guide
 - **[Pipeline Quick Start](docs/quickstarts/general/QUICK_START_GUIDE.md)** - Developer quick start
 - **[SOLID Principles](src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md)** - Code standards
-- **[Testing Guide](docs/testing/TDD_GUIDE.md)** - Test-driven development
+- **[Testing Guide](docs/testing/tdd/TDD_GUIDE.md)** - Test-driven development
 - **[Contributing](CONTRIBUTING.md)** - How to contribute
 
 </td>
@@ -67,7 +67,7 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 <td>
 
 ### 🔐 Security & Maintenance
-- **[Security Checklist](docs/features/SECURITY_CHECKLIST.md)** - Security procedures
+- **[Security Checklist](docs/features/system/SECURITY_CHECKLIST.md)** - Security procedures
 - **[Repository Cleanup](CLEANUP_REPO.md)** - Maintenance guide
 - **[Issue Tracking](docs/guides/issues/ISSUE_TRACKING.md)** - Task management
 - **[Migration Guide](src/CSharp/MIGRATION_GUIDE.md)** - Python to C#
@@ -140,7 +140,7 @@ cp .env.example .env
 # Edit .env and add your API keys
 ```
 
-➡️ **[Complete setup guide](docs/quickstarts/general/GETTING_STARTED.md)** | **[Troubleshooting](docs/guides/TROUBLESHOOTING.md)**
+➡️ **[Complete setup guide](docs/quickstarts/general/GETTING_STARTED.md)** | **[Troubleshooting](docs/guides/general/TROUBLESHOOTING.md)**
 
 ---
 
@@ -221,7 +221,7 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 4. Write tests for your changes
 5. Submit a pull request
 
-➡️ **[Contributing guidelines](CONTRIBUTING.md)** | **[Code standards](src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md)** | **[Testing guide](docs/testing/TDD_GUIDE.md)**
+➡️ **[Contributing guidelines](CONTRIBUTING.md)** | **[Code standards](src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md)** | **[Testing guide](docs/testing/tdd/TDD_GUIDE.md)**
 
 ---
 
@@ -251,7 +251,7 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 - Rotate API keys regularly
 - Follow security best practices
 
-➡️ **[Security checklist](docs/features/SECURITY_CHECKLIST.md)** | **[Security procedures](docs/features/SECURITY_CHECKLIST.md)**
+➡️ **[Security checklist](docs/features/system/SECURITY_CHECKLIST.md)** | **[Security procedures](docs/features/system/SECURITY_CHECKLIST.md)**
 
 ---
 
@@ -260,7 +260,7 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 - 📖 **Documentation**: [INDEX.md](docs/INDEX.md) - Complete documentation index
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Nomoos/StoryGenerator/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/Nomoos/StoryGenerator/discussions)
-- 🆘 **Troubleshooting**: [TROUBLESHOOTING.md](docs/guides/TROUBLESHOOTING.md)
+- 🆘 **Troubleshooting**: [TROUBLESHOOTING.md](docs/guides/general/TROUBLESHOOTING.md)
 
 ---
 

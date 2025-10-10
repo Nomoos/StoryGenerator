@@ -224,7 +224,7 @@ cd issues/resolved/
 
 ## Related Documentation
 
-- `/docs/testing/MICROSTEP_VALIDATION.md` - Microstep validation system
+- `/docs/testing/validation/MICROSTEP_VALIDATION.md` - Microstep validation system
 - `/docs/architecture/structure/GENERATOR_STRUCTURE.md` - Generator folder structure
 - `/docs/pipeline/PIPELINE.md` - Complete pipeline documentation
 - `atomic/README.md` - Parallel workflow guide

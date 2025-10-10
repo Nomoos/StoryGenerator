@@ -6,11 +6,13 @@ This directory contains implementation notes, summaries, and technical details.
 
 ### Root Level
 - **[IMPLEMENTATION_RESULTS.md](IMPLEMENTATION_RESULTS.md)** - Implementation results and outcomes
-- **[ATTRIBUTION_INTEGRATION.md](ATTRIBUTION_INTEGRATION.md)** - Attribution integration
-- **[TOPIC_GENERATION_INTEGRATION.md](TOPIC_GENERATION_INTEGRATION.md)** - Topic generation integration
-- **[EXPORT_ENHANCEMENTS.md](EXPORT_ENHANCEMENTS.md)** - Export enhancements
 - **[ENHANCEMENTS.md](ENHANCEMENTS.md)** - General enhancements
 - **[STEP5_README.md](STEP5_README.md)** - Step 5 implementation notes
+
+### Integration (`integration/`)
+- **[ATTRIBUTION_INTEGRATION.md](integration/ATTRIBUTION_INTEGRATION.md)** - Attribution integration
+- **[TOPIC_GENERATION_INTEGRATION.md](integration/TOPIC_GENERATION_INTEGRATION.md)** - Topic generation integration
+- **[EXPORT_ENHANCEMENTS.md](integration/EXPORT_ENHANCEMENTS.md)** - Export enhancements
 
 ### C# Implementation (`csharp/`)
 - **[CSHARP_IMPLEMENTATION_COMPLETE.md](csharp/CSHARP_IMPLEMENTATION_COMPLETE.md)** - C# implementation status
