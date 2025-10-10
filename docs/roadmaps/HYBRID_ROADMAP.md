@@ -13,7 +13,7 @@ This roadmap tracks the implementation of StoryGenerator's hybrid architecture, 
 
 **Overall Progress:**
 - ✅ **Completed:** 50 tasks (100% of Phase 1, 100% of Phase 2, 64% of Phase 3)
-- 🔄 **In Progress:** 17 tasks (remaining Phase 3 groups)
+- 🔄 **In Progress:** 20 tasks (17 Phase 3 + 3 Group 2 content enhancements)
 - 📋 **Not Started:** 18 tasks (Phase 4 P2 features)
 
 **Key Achievements:**
@@ -258,7 +258,16 @@ This roadmap tracks the implementation of StoryGenerator's hybrid architecture, 
 - ✅ Thumbnail Generation
 - ✅ Platform-specific Encoding
 
-**🔄 In Progress Groups (active in issues/p1-high/):**
+**🔄 In Progress Groups (active in issues/p1-high/ and issues/group_2/):**
+
+#### Group 2: Content Pipeline Enhancements (3 tasks) - 📋 NOT STARTED
+- [ ] Enhanced Reddit Scraper - Multi-subreddit, incremental updates, duplicate detection
+- [ ] Social Media Sources - Instagram and TikTok content collection
+- [ ] Content Deduplication System - Fuzzy matching and semantic similarity
+
+**Location:** `issues/group_2/`  
+**Effort:** 14-20 hours  
+**Priority:** P1 (High)
 
 #### Group 3: Script Development (5 tasks) - 📋 NOT STARTED
 - [ ] Script Generation Stage
@@ -273,8 +282,8 @@ This roadmap tracks the implementation of StoryGenerator's hybrid architecture, 
 - [ ] Audio Normalization Stage
 
 **Completed:** 30/47 tasks (64%)
-**Remaining:** 17 tasks
-**Total P1 Effort:** 160-250 hours (~150h completed)
+**Remaining:** 20 tasks (17 original + 3 content enhancements)
+**Total P1 Effort:** 174-270 hours (~150h completed)
 **Timeline:** 2-3 weeks remaining with team
 
 **References:**
