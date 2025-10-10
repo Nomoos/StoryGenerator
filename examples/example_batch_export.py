@@ -7,7 +7,9 @@ import os
 import sys
 
 # Add src/Python directory to path
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src', 'Python'))
+sys.path.insert(
+    0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src", "Python")
+)
 
 from Models.StoryIdea import StoryIdea
 from Tools.BatchExporter import BatchExporter
@@ -23,7 +25,7 @@ def create_sample_stories():
             tone="adventurous",
             theme="self-discovery",
             goal="Inspire viewers to take risks",
-            potencial={"age_groups": {"20_25": 85}}
+            potencial={"age_groups": {"20_25": 85}},
         ),
         StoryIdea(
             story_title="A Lesson in Patience",
@@ -31,7 +33,7 @@ def create_sample_stories():
             tone="reflective",
             theme="wisdom",
             goal="Share life lessons",
-            potencial={"age_groups": {"25_30": 90}}
+            potencial={"age_groups": {"25_30": 90}},
         ),
         StoryIdea(
             story_title="The Power of Friendship",
@@ -39,33 +41,33 @@ def create_sample_stories():
             tone="heartwarming",
             theme="relationships",
             goal="Celebrate human connections",
-            potencial={"age_groups": {"18_23": 88}}
-        )
+            potencial={"age_groups": {"18_23": 88}},
+        ),
     ]
     return stories
 
 
 def example_sequential_batch():
     """Example: Sequential batch export."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("Example 1: Sequential Batch Export")
-    print("="*60 + "\n")
-    
+    print("=" * 60 + "\n")
+
     # Create sample stories
     stories = create_sample_stories()
-    
+
     # Get video paths (in real usage, these would be actual video files)
     video_paths = [
         os.path.join(TITLES_PATH, sanitize_filename(story.story_title), "final_video.mp4")
         for story in stories
     ]
-    
+
     # Initialize batch exporter
     exporter = BatchExporter(max_workers=1)
-    
+
     print("📦 Starting sequential batch export...")
     print(f"   Processing {len(stories)} videos one at a time\n")
-    
+
     # Note: In real usage, make sure the video files exist
     # This is just a demonstration of the API
     print("⚠️  Note: This example requires actual video files to exist.")
@@ -74,43 +76,43 @@ def example_sequential_batch():
 
 def example_parallel_batch():
     """Example: Parallel batch export."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("Example 2: Parallel Batch Export")
-    print("="*60 + "\n")
-    
+    print("=" * 60 + "\n")
+
     stories = create_sample_stories()
     video_paths = [
         os.path.join(TITLES_PATH, sanitize_filename(story.story_title), "final_video.mp4")
         for story in stories
     ]
-    
+
     # Initialize with multiple workers for parallel processing
     exporter = BatchExporter(max_workers=4)
-    
+
     print("📦 Starting parallel batch export...")
     print(f"   Processing {len(stories)} videos with 4 workers\n")
-    
+
     # Export with custom callback for progress
     def progress_callback(current, total, title):
         print(f"   [{current}/{total}] Processing: {title}")
-    
+
     print("⚠️  Note: This example requires actual video files to exist.")
 
 
 def example_batch_with_options():
     """Example: Batch export with custom options."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("Example 3: Batch Export with Custom Options")
-    print("="*60 + "\n")
-    
+    print("=" * 60 + "\n")
+
     stories = create_sample_stories()
     video_paths = [
         os.path.join(TITLES_PATH, sanitize_filename(story.story_title), "final_video.mp4")
         for story in stories
     ]
-    
+
     exporter = BatchExporter(max_workers=2)
-    
+
     print("📦 Batch export with custom settings:")
     print("   - Generate thumbnails: Yes")
     print("   - Generate metadata: Yes")
@@ -120,10 +122,10 @@ def example_batch_with_options():
 
 def example_retry_failed():
     """Example: Retry failed exports."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("Example 4: Retry Failed Exports")
-    print("="*60 + "\n")
-    
+    print("=" * 60 + "\n")
+
     print("If a batch export had failures, you can retry them:")
     print()
     print("```python")
@@ -139,10 +141,10 @@ def example_retry_failed():
 
 def example_batch_summary():
     """Example: Understanding batch export results."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("Example 5: Batch Export Results")
-    print("="*60 + "\n")
-    
+    print("=" * 60 + "\n")
+
     print("Batch export returns detailed results:")
     print()
     print("Summary Structure:")
@@ -166,19 +168,19 @@ def example_batch_summary():
 
 def main():
     """Run all examples."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("BATCH EXPORTER - USAGE EXAMPLES")
-    print("="*60)
-    
+    print("=" * 60)
+
     example_sequential_batch()
     example_parallel_batch()
     example_batch_with_options()
     example_retry_failed()
     example_batch_summary()
-    
-    print("\n" + "="*60)
+
+    print("\n" + "=" * 60)
     print("📚 Additional Information")
-    print("="*60)
+    print("=" * 60)
     print()
     print("Benefits of Batch Export:")
     print("  ✅ Process multiple videos efficiently")
@@ -193,7 +195,7 @@ def main():
     print("  3. Retry failed exports after fixing issues")
     print("  4. Check batch summary for detailed statistics")
     print()
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
 
 
 if __name__ == "__main__":

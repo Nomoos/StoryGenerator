@@ -12,11 +12,7 @@ from pathlib import Path
 # Add scripts directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
 
-from process_quality import (
-    calculate_score,
-    assess_content_quality,
-    load_scoring_config
-)
+from process_quality import calculate_score, assess_content_quality, load_scoring_config
 
 
 def example_score_ideas():
@@ -24,32 +20,32 @@ def example_score_ideas():
     print("=" * 60)
     print("Example 1: Scoring Ideas")
     print("=" * 60)
-    
+
     ideas = [
         {
             "title": "The Secret Nobody Tells You About Success",
             "synopsis": "A shocking revelation that changes everything you thought you knew",
             "hook": "What if the key to success was hiding in plain sight?",
-            "themes": ["mystery", "revelation", "success", "truth"]
+            "themes": ["mystery", "revelation", "success", "truth"],
         },
         {
             "title": "A Story About Things",
             "synopsis": "Some things happen",
-            "hook": "This is a story"
+            "hook": "This is a story",
         },
         {
             "title": "The Amazing Discovery That Will Blow Your Mind",
             "synopsis": "Scientists have uncovered something incredible that could change the world forever",
             "hook": "Are you ready to learn the truth?",
-            "themes": ["science", "discovery", "mystery", "innovation", "future"]
-        }
+            "themes": ["science", "discovery", "mystery", "innovation", "future"],
+        },
     ]
-    
+
     for i, idea in enumerate(ideas, 1):
         score = calculate_score(idea)
         print(f"\nIdea {i}: {idea['title']}")
         print(f"Score: {score:.1f}/100")
-        
+
         if score >= 85:
             print("Quality: ⭐ Excellent")
         elif score >= 70:
@@ -65,17 +61,17 @@ def example_detailed_metrics():
     print("\n" + "=" * 60)
     print("Example 2: Detailed Metrics")
     print("=" * 60)
-    
+
     content = {
         "title": "Why Everyone Keeps Making The Same Mistakes",
         "description": "This shocking truth reveals the hidden patterns in human behavior that nobody talks about",
         "themes": ["psychology", "behavior", "truth", "society"],
-        "keywords": ["mistakes", "patterns", "human", "hidden"]
+        "keywords": ["mistakes", "patterns", "human", "hidden"],
     }
-    
+
     # Get individual metrics
     metrics = assess_content_quality(content, "topic")
-    
+
     print(f"\nContent: {content['title']}")
     print("\n📊 Metric Breakdown:")
     print(f"  Novelty:     {metrics['novelty']:.1f}/100  (uniqueness & surprise)")
@@ -83,7 +79,7 @@ def example_detailed_metrics():
     print(f"  Clarity:     {metrics['clarity']:.1f}/100  (understandability)")
     print(f"  Replay:      {metrics['replay']:.1f}/100  (rewatchability)")
     print(f"  Share:       {metrics['share']:.1f}/100  (viral potential)")
-    
+
     # Calculate weighted score using the same function the system uses
     final_score = calculate_score(content)
     print(f"\n🎯 Final Score: {final_score:.1f}/100")
@@ -94,7 +90,7 @@ def example_compare_titles():
     print("\n" + "=" * 60)
     print("Example 3: Comparing Title Styles")
     print("=" * 60)
-    
+
     titles = [
         {"title": "5 Secrets Nobody Tells You About Success", "style": "List + Secret"},
         {"title": "Why Do We Keep Making The Same Mistakes?", "style": "Question"},
@@ -102,19 +98,15 @@ def example_compare_titles():
         {"title": "How I Changed My Life Forever", "style": "Personal"},
         {"title": "A Guide to Better Living", "style": "Generic"},
     ]
-    
+
     results = []
     for title_data in titles:
         score = calculate_score({"title": title_data["title"]})
-        results.append({
-            "title": title_data["title"],
-            "style": title_data["style"],
-            "score": score
-        })
-    
+        results.append({"title": title_data["title"], "style": title_data["style"], "score": score})
+
     # Sort by score
     results.sort(key=lambda x: x["score"], reverse=True)
-    
+
     print("\n🏆 Title Rankings (by viral potential):\n")
     for i, result in enumerate(results, 1):
         print(f"{i}. {result['title']}")
@@ -126,44 +118,40 @@ def example_batch_scoring():
     print("\n" + "=" * 60)
     print("Example 4: Batch Scoring")
     print("=" * 60)
-    
+
     # Simulate multiple content items
     content_batch = [
         {
             "id": "001",
             "title": "The Mystery of the Ancient Code",
             "synopsis": "Coders discover a hidden algorithm in old files",
-            "themes": ["technology", "mystery"]
+            "themes": ["technology", "mystery"],
         },
         {
             "id": "002",
             "title": "Space Adventures",
             "synopsis": "Exploring the solar system",
-            "themes": ["space"]
+            "themes": ["space"],
         },
         {
             "id": "003",
             "title": "The Secret Truth Everyone Needs to Know",
             "synopsis": "A shocking revelation that will change everything",
-            "themes": ["truth", "revelation", "mystery"]
+            "themes": ["truth", "revelation", "mystery"],
         },
-        {
-            "id": "004",
-            "title": "Test",
-            "synopsis": "Test content"
-        }
+        {"id": "004", "title": "Test", "synopsis": "Test content"},
     ]
-    
+
     print("\n📊 Scoring Results:\n")
-    
+
     excellent = []
     good = []
     acceptable = []
     poor = []
-    
+
     for content in content_batch:
         score = calculate_score(content)
-        
+
         if score >= 85:
             excellent.append((content["id"], score))
             status = "⭐ Excellent"
@@ -176,10 +164,10 @@ def example_batch_scoring():
         else:
             poor.append((content["id"], score))
             status = "❌ Poor"
-        
+
         print(f"[{content['id']}] {content['title']}")
         print(f"       Score: {score:.1f}/100 - {status}\n")
-    
+
     print("\n" + "=" * 60)
     print("Summary:")
     print(f"  ⭐ Excellent: {len(excellent)}")
@@ -194,21 +182,21 @@ def example_custom_weights():
     print("\n" + "=" * 60)
     print("Example 5: Custom Scoring Weights")
     print("=" * 60)
-    
+
     content = {
         "title": "The Amazing Discovery",
         "synopsis": "A scientist makes a breakthrough",
-        "themes": ["science", "discovery"]
+        "themes": ["science", "discovery"],
     }
-    
+
     # Default weights
     config_default = load_scoring_config()
     score_default = calculate_score(content, config_default)
-    
+
     print(f"\nContent: {content['title']}")
     print(f"\nDefault Score: {score_default:.1f}/100")
     print("Weights:", config_default.get("viral", {}))
-    
+
     # Custom weights (emphasize shareability)
     config_custom = {
         "viral": {
@@ -216,11 +204,11 @@ def example_custom_weights():
             "emotional": 0.20,
             "clarity": 0.15,
             "replay": 0.10,
-            "share": 0.40  # Increased shareability weight
+            "share": 0.40,  # Increased shareability weight
         }
     }
     score_custom = calculate_score(content, config_custom)
-    
+
     print(f"\nCustom Score (share-focused): {score_custom:.1f}/100")
     print("Weights:", config_custom["viral"])
     print(f"\nDifference: {abs(score_default - score_custom):.1f} points")
@@ -232,13 +220,13 @@ def main():
     print("Content Quality Scoring Examples")
     print("=" * 60)
     print()
-    
+
     example_score_ideas()
     example_detailed_metrics()
     example_compare_titles()
     example_batch_scoring()
     example_custom_weights()
-    
+
     print("\n" + "=" * 60)
     print("Examples Complete!")
     print("=" * 60)

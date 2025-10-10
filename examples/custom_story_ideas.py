@@ -8,6 +8,7 @@ Demonstrates the flexibility of the StoryIdea model.
 from Models.StoryIdea import StoryIdea
 import json
 
+
 def example_emotional_story():
     """Emotional, heartfelt story"""
     return StoryIdea(
@@ -26,8 +27,9 @@ def example_emotional_story():
         voice_style="vulnerable, reflective, sincere",
         target_moral="it's never too late to forgive yourself",
         locations="bedroom, old park bench, coffee shop",
-        goal="Create a deeply emotional story about unspoken words"
+        goal="Create a deeply emotional story about unspoken words",
     )
+
 
 def example_comedy_story():
     """Light, comedic story"""
@@ -48,8 +50,9 @@ def example_comedy_story():
         target_moral="everyone has embarrassing moments",
         locations="home office, kitchen",
         mentioned_brands="Zoom",
-        goal="Create a relatable comedy about remote work fails"
+        goal="Create a relatable comedy about remote work fails",
     )
+
 
 def example_mystery_story():
     """Suspenseful mystery"""
@@ -69,8 +72,9 @@ def example_mystery_story():
         voice_style="tense, questioning, relieved",
         target_moral="sometimes care comes from unexpected places",
         locations="apartment, mailbox, workplace",
-        goal="Create a suspenseful story with a heartwarming twist"
+        goal="Create a suspenseful story with a heartwarming twist",
     )
+
 
 def example_romance_story():
     """Romantic, sweet story"""
@@ -90,51 +94,51 @@ def example_romance_story():
         voice_style="warm, hopeful, slightly nervous",
         target_moral="taking chances can lead to beautiful connections",
         locations="coffee shop, rainy street, park",
-        goal="Create a sweet romance about everyday moments"
+        goal="Create a sweet romance about everyday moments",
     )
+
 
 def example_minimal_story():
     """Minimal required fields only"""
-    return StoryIdea(
-        story_title="Simple Story",
-        narrator_gender="male"
-    )
+    return StoryIdea(story_title="Simple Story", narrator_gender="male")
+
 
 def main():
     print("🎨 Creating Custom Story Ideas")
     print("=" * 60)
-    
+
     stories = [
         ("Emotional Story", example_emotional_story()),
         ("Comedy Story", example_comedy_story()),
         ("Mystery Story", example_mystery_story()),
         ("Romance Story", example_romance_story()),
-        ("Minimal Story", example_minimal_story())
+        ("Minimal Story", example_minimal_story()),
     ]
-    
+
     for category, story in stories:
         print(f"\n📖 {category}: {story.story_title}")
         print(f"   Tone: {story.tone or 'Not specified'}")
         print(f"   Theme: {story.theme or 'Not specified'}")
         print(f"   Emotional Core: {story.emotional_core or 'Not specified'}")
-        
+
         # Save to file
         story.to_file()
         print(f"   ✅ Saved to: Stories/0_Ideas/{story.story_title}.json")
-        
+
         # Show potential score
         print(f"   📊 Overall Potential: {story.potencial['overall']}/10")
-    
+
     print("\n" + "=" * 60)
     print("✨ All story ideas created!")
     print("📁 Check: Stories/0_Ideas/")
-    
+
     # Example: Load story from file
     print("\n📥 Example: Loading story from file")
     loaded_story = StoryIdea.from_file("Stories/0_Ideas/Simple_Story.json")
     print(f"   Loaded: {loaded_story.story_title}")
     print(f"   JSON content:")
     print(json.dumps(loaded_story.to_dict(), indent=2))
+
 
 if __name__ == "__main__":
     main()

@@ -71,7 +71,7 @@ def main():
         print(f"   Log file size: {log_file.stat().st_size} bytes")
         print()
         print("   Last 5 lines of log file:")
-        lines = log_file.read_text().strip().split('\n')
+        lines = log_file.read_text().strip().split("\n")
         for line in lines[-5:]:
             print(f"   {line}")
     else:

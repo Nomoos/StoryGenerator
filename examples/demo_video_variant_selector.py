@@ -11,33 +11,38 @@ import json
 from pathlib import Path
 
 # Add src/Python directory to path
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src', 'Python'))
+sys.path.insert(
+    0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src", "Python")
+)
 
 from Tools.VideoVariantSelector import VideoVariantSelector
 
 
 def example_single_selection():
     """Example: Select best variant from a list."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("Example 1: Single Shot Variant Selection")
-    print("="*70)
-    
-    print("""
+    print("=" * 70)
+
+    print(
+        """
 Scenario: You have 3 video variants for shot_001:
 - variant_ltx.mp4 (generated with LTX-Video)
 - variant_interp.mp4 (generated with frame interpolation)
 - variant_stable.mp4 (generated with stable diffusion video)
-    """)
-    
+    """
+    )
+
     # In a real scenario, these would be actual video files
     variants = [
         "Generator/videos/ltx/shot_001/variant_ltx.mp4",
         "Generator/videos/interpolated/shot_001/variant_interp.mp4",
-        "Generator/videos/stable/shot_001/variant_stable.mp4"
+        "Generator/videos/stable/shot_001/variant_stable.mp4",
     ]
-    
+
     print("Code:")
-    print("""
+    print(
+        """
     from Tools.VideoVariantSelector import VideoVariantSelector
     
     selector = VideoVariantSelector()
@@ -51,31 +56,37 @@ Scenario: You have 3 video variants for shot_001:
     print(f"Selected: {selected}")
     print(f"Quality Score: {report['selected_score']['overall_score']}/100")
     print(f"Reason: {report['selection_reason']}")
-    """)
-    
+    """
+    )
+
     print("\nExpected Output:")
-    print("""
+    print(
+        """
     Selected: Generator/videos/ltx/shot_001/variant_ltx.mp4
     Quality Score: 87.5/100
     Reason: Selected for: high overall quality, smooth motion, minimal artifacts
     
     📄 Report saved: Generator/videos/ltx/shot_001/shot_001_variant_selection.json
-    """)
+    """
+    )
 
 
 def example_manual_override():
     """Example: Manually override automatic selection."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("Example 2: Manual Override")
-    print("="*70)
-    
-    print("""
+    print("=" * 70)
+
+    print(
+        """
 Scenario: The automatic selection picked variant 1, but you prefer 
 the artistic style of variant 2 for creative reasons.
-    """)
-    
+    """
+    )
+
     print("Code:")
-    print("""
+    print(
+        """
     from Tools.VideoVariantSelector import VideoVariantSelector
     
     selector = VideoVariantSelector()
@@ -90,29 +101,35 @@ the artistic style of variant 2 for creative reasons.
     
     print(f"Selected: {selected}")
     print(f"Override: {report['manual_override']}")
-    """)
-    
+    """
+    )
+
     print("\nExpected Output:")
-    print("""
+    print(
+        """
     Selected: Generator/videos/interpolated/shot_001/variant_interp.mp4
     Override: True
     Reason: Manual override: User selected variant 1
-    """)
+    """
+    )
 
 
 def example_batch_processing():
     """Example: Process multiple shots at once."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("Example 3: Batch Processing")
-    print("="*70)
-    
-    print("""
+    print("=" * 70)
+
+    print(
+        """
 Scenario: You have multiple shots, each with 2-3 variants, and want
 to process them all at once.
-    """)
-    
+    """
+    )
+
     print("Step 1: Create batch config JSON file:")
-    print("""
+    print(
+        """
     # variants_config.json
     {
       "shot_001": [
@@ -129,15 +146,19 @@ to process them all at once.
         "Generator/videos/stable/shot_003/variant_stable.mp4"
       ]
     }
-    """)
-    
+    """
+    )
+
     print("\nStep 2: Run batch selection (CLI):")
-    print("""
+    print(
+        """
     python scripts/select_video_variant.py --batch variants_config.json
-    """)
-    
+    """
+    )
+
     print("\nStep 2 (Alternative): Run batch selection (Python API):")
-    print("""
+    print(
+        """
     from Tools.VideoVariantSelector import VideoVariantSelector
     import json
     
@@ -155,10 +176,12 @@ to process them all at once.
     for shot_id, (selected_path, report) in results.items():
         score = report['selected_score']['overall_score']
         print(f"{shot_id}: {selected_path} (score: {score}/100)")
-    """)
-    
+    """
+    )
+
     print("\nExpected Output:")
-    print("""
+    print(
+        """
     ======================================================================
     Batch Variant Selection: 3 shots
     ======================================================================
@@ -183,22 +206,26 @@ to process them all at once.
     ======================================================================
     
     📄 Batch report saved: batch_variant_selection.json
-    """)
+    """
+    )
 
 
 def example_custom_thresholds():
     """Example: Customize quality thresholds."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("Example 4: Custom Quality Thresholds")
-    print("="*70)
-    
-    print("""
+    print("=" * 70)
+
+    print(
+        """
 Scenario: You have stricter quality requirements and want to adjust
 the minimum acceptable thresholds.
-    """)
-    
+    """
+    )
+
     print("Code:")
-    print("""
+    print(
+        """
     from Tools.VideoVariantSelector import VideoVariantSelector
     
     selector = VideoVariantSelector()
@@ -226,22 +253,26 @@ the minimum acceptable thresholds.
         for check, passed in checks.items():
             if not passed:
                 print(f"  - {check}: FAILED")
-    """)
+    """
+    )
 
 
 def example_report_analysis():
     """Example: Analyze selection report."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("Example 5: Analyzing Selection Reports")
-    print("="*70)
-    
-    print("""
+    print("=" * 70)
+
+    print(
+        """
 Scenario: After batch processing, you want to review which shots had
 lower quality scores and may need attention.
-    """)
-    
+    """
+    )
+
     print("Code:")
-    print("""
+    print(
+        """
     import json
     from pathlib import Path
     
@@ -278,35 +309,39 @@ lower quality scores and may need attention.
     print(f"  Temporal Consistency: {score['temporal_consistency']:.2f}")
     print(f"  Artifact Ratio: {score['artifact_ratio']:.2f}")
     print(f"  Overall Score: {score['overall_score']}/100")
-    """)
+    """
+    )
 
 
 def main():
     """Run all examples."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("VideoVariantSelector Usage Examples")
-    print("="*70)
-    
-    print("""
+    print("=" * 70)
+
+    print(
+        """
 This demonstration shows various ways to use the VideoVariantSelector
 for selecting the best video variant from multiple generation methods.
-    """)
-    
+    """
+    )
+
     examples = [
         example_single_selection,
         example_manual_override,
         example_batch_processing,
         example_custom_thresholds,
-        example_report_analysis
+        example_report_analysis,
     ]
-    
+
     for example in examples:
         example()
-    
-    print("\n" + "="*70)
+
+    print("\n" + "=" * 70)
     print("Additional Resources")
-    print("="*70)
-    print("""
+    print("=" * 70)
+    print(
+        """
 Documentation:
   - Implementation Summary: issues/resolved/video-production/GROUP_8_VIDEO_VARIANT_SELECTION_SUMMARY.md
   - Source Code: src/Python/Tools/VideoVariantSelector.py
@@ -322,11 +357,12 @@ Quick Start:
   
   # Run tests
   python tests/test_video_variant_selector.py
-    """)
-    
-    print("\n" + "="*70)
+    """
+    )
+
+    print("\n" + "=" * 70)
     print("✅ Examples Complete")
-    print("="*70)
+    print("=" * 70)
 
 
 if __name__ == "__main__":
