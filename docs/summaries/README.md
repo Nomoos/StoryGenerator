@@ -22,6 +22,7 @@ This directory contains completion summaries and status reports for various phas
 
 - [Issue Reorganization Summary](ISSUE_REORGANIZATION_SUMMARY.md)
 - [Obsolete Cleanup Summary](OBSOLETE_CLEANUP_SUMMARY.md)
+- [Repository Reorganization Summary](REPOSITORY_REORGANIZATION_SUMMARY.md) - ⭐ This reorganization (2025-10-10)
 
 ---
 
