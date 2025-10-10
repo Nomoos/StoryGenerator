@@ -157,8 +157,8 @@ metadata:
   description: "Pipeline description"
   author: "Your Name"
   tags:
-    - category1
-    - category2
+    - story-generation
+    - video-processing
 ```
 
 ### Stage Configuration
@@ -283,7 +283,7 @@ retry:
   delay_seconds: 2
   exponential_backoff: true
   backoff_multiplier: 2.0
-  # Delays: 2s, 4s, 8s, 16s, 32s
+  # Retry attempt delays: 2s, 4s, 8s, 16s, 32s (for each successive retry)
 
 stages:
   - id: "api_call"
@@ -480,7 +480,7 @@ public class OrchestrationResult
 ## Related Documentation
 
 - [Quick Start Guide](../../docs/quickstarts/general/QUICK_START_GUIDE.md)
-- [Pipeline Configuration](../../config/pipeline.yaml)
+- [Pipeline Configuration Examples](../../config/pipeline-orchestration.yaml)
 - [Task Execution Matrix](../../docs/roadmaps/planning/TASK_EXECUTION_MATRIX.md)
 
 ## Support
