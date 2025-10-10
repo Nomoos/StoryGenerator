@@ -154,7 +154,11 @@ python youtube_channel_scraper.py @storyChannel --top 50 --story-only --download
 
 - **Bandwidth**: Downloading videos consumes significant bandwidth
 - **Storage**: Each short can be 5-50 MB depending on quality and length
-- **Time**: Downloads can take 30-60 seconds per video
+- **Time**: Downloads typically take 30 seconds to 2 minutes per video, depending on:
+  - Network connection speed
+  - Video resolution and quality
+  - File size (shorts can range from a few MB to 50+ MB)
+  - YouTube server response times
 - **Timeout**: Each download has a 5-minute timeout to prevent hanging
 
 ### Best Practices
