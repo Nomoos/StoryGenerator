@@ -16,9 +16,9 @@ Usage:
     python examples/wordpress_integration_example.py --site-url https://mysite.com
 """
 
-import sys
-import os
 import argparse
+import os
+import sys
 from pathlib import Path
 
 # Add providers to path
@@ -38,16 +38,16 @@ def example_basic_usage():
     provider = WordPressProvider(
         site_url="https://example.wordpress.com",
         username="admin",
-        app_password="your_app_password_here"
+        app_password="your_app_password_here",
     )
 
     # Create a draft post
     result = provider.create_draft_post(
         title="An Amazing Short Story",
-        content="Once upon a time, in a digital realm far away, there lived a story generator..."
+        content="Once upon a time, in a digital realm far away, there lived a story generator...",
     )
 
-    if result['success']:
+    if result["success"]:
         print(f"✅ Draft post created successfully!")
         print(f"   Post ID: {result['post_id']}")
         print(f"   Post URL: {result['post_url']}")
@@ -65,8 +65,8 @@ def example_with_script_data():
 
     # Sample script data (normally this would come from core.script_development)
     script_data = {
-        'title': 'The Mystery of the Forgotten Algorithm',
-        'content': """In the depths of an old server room, Sarah discovered something remarkable.
+        "title": "The Mystery of the Forgotten Algorithm",
+        "content": """In the depths of an old server room, Sarah discovered something remarkable.
         
 A piece of code, written decades ago, still running silently in the background.
 
@@ -79,10 +79,10 @@ The algorithm predicted market trends with uncanny accuracy. But why was it hidd
 Sarah soon learned some innovations are too powerful to share.
 
 And some secrets are meant to stay buried in the code.""",
-        'target_gender': 'women',
-        'target_age': '18-23',
-        'word_count': 97,
-        'estimated_duration': 45.0
+        "target_gender": "women",
+        "target_age": "18-23",
+        "word_count": 97,
+        "estimated_duration": 45.0,
     }
 
     # Initialize provider (using environment variables)
@@ -98,14 +98,12 @@ And some secrets are meant to stay buried in the code.""",
 
     # Create draft with metadata
     excerpt = f"A short story for {script_data['target_gender']} aged {script_data['target_age']}"
-    
+
     result = provider.create_draft_post(
-        title=script_data['title'],
-        content=script_data['content'],
-        excerpt=excerpt
+        title=script_data["title"], content=script_data["content"], excerpt=excerpt
     )
 
-    if result['success']:
+    if result["success"]:
         print(f"✅ Draft post created from script!")
         print(f"   Post ID: {result['post_id']}")
         print(f"   Edit URL: {result['edit_url']}")
@@ -126,17 +124,17 @@ def example_batch_posts():
     # Sample stories
     stories = [
         {
-            'title': 'The Last Message',
-            'content': 'In 2095, archaeologists found an old smartphone. It had one unread message...'
+            "title": "The Last Message",
+            "content": "In 2095, archaeologists found an old smartphone. It had one unread message...",
         },
         {
-            'title': 'Three Seconds',
-            'content': 'Time froze for everyone except me. I had three seconds to make a choice...'
+            "title": "Three Seconds",
+            "content": "Time froze for everyone except me. I had three seconds to make a choice...",
         },
         {
-            'title': 'The Memory Thief',
-            'content': 'She could steal memories with a touch. But every memory she took, she had to keep...'
-        }
+            "title": "The Memory Thief",
+            "content": "She could steal memories with a touch. But every memory she took, she had to keep...",
+        },
     ]
 
     provider = WordPressProvider()
@@ -149,13 +147,10 @@ def example_batch_posts():
 
     for i, story in enumerate(stories, 1):
         print(f"[{i}/{len(stories)}] Creating: {story['title']}")
-        
-        result = provider.create_draft_post(
-            title=story['title'],
-            content=story['content']
-        )
-        
-        if result['success']:
+
+        result = provider.create_draft_post(title=story["title"], content=story["content"])
+
+        if result["success"]:
             print(f"   ✅ Created (ID: {result['post_id']})")
         else:
             print(f"   ❌ Failed: {result['error']}")
@@ -177,16 +172,13 @@ def example_update_and_publish():
 
     # Create a draft
     print("\n1. Creating draft post...")
-    result = provider.create_draft_post(
-        title="Initial Title",
-        content="Initial content..."
-    )
+    result = provider.create_draft_post(title="Initial Title", content="Initial content...")
 
-    if not result['success']:
+    if not result["success"]:
         print(f"❌ Failed to create draft: {result['error']}")
         return
 
-    post_id = result['post_id']
+    post_id = result["post_id"]
     print(f"   ✅ Draft created (ID: {post_id})")
 
     # Update the draft
@@ -194,10 +186,10 @@ def example_update_and_publish():
     update_result = provider.update_post(
         post_id=post_id,
         title="The Improved Title - Now With Better Content",
-        content="This is the improved content after review and editing..."
+        content="This is the improved content after review and editing...",
     )
 
-    if update_result['success']:
+    if update_result["success"]:
         print(f"   ✅ Draft updated")
     else:
         print(f"   ❌ Update failed: {update_result['error']}")
@@ -205,12 +197,9 @@ def example_update_and_publish():
 
     # Publish the post
     print("\n3. Publishing the post...")
-    publish_result = provider.update_post(
-        post_id=post_id,
-        status='publish'
-    )
+    publish_result = provider.update_post(post_id=post_id, status="publish")
 
-    if publish_result['success']:
+    if publish_result["success"]:
         print(f"   ✅ Post published!")
         print(f"   URL: {publish_result['post_url']}")
     else:
@@ -220,39 +209,37 @@ def example_update_and_publish():
 def main():
     """Run all examples."""
     parser = argparse.ArgumentParser(
-        description='WordPress Integration Examples',
+        description="WordPress Integration Examples",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=__doc__
+        epilog=__doc__,
     )
 
     parser.add_argument(
-        '--site-url',
-        help='WordPress site URL (overrides WORDPRESS_SITE_URL env var)'
+        "--site-url", help="WordPress site URL (overrides WORDPRESS_SITE_URL env var)"
     )
     parser.add_argument(
-        '--username',
-        help='WordPress username (overrides WORDPRESS_USERNAME env var)'
+        "--username", help="WordPress username (overrides WORDPRESS_USERNAME env var)"
     )
     parser.add_argument(
-        '--app-password',
-        help='WordPress application password (overrides WORDPRESS_APP_PASSWORD env var)'
+        "--app-password",
+        help="WordPress application password (overrides WORDPRESS_APP_PASSWORD env var)",
     )
     parser.add_argument(
-        '--example',
+        "--example",
         type=int,
         choices=[1, 2, 3, 4],
-        help='Run specific example (1-4), or all if not specified'
+        help="Run specific example (1-4), or all if not specified",
     )
 
     args = parser.parse_args()
 
     # Set environment variables if provided
     if args.site_url:
-        os.environ['WORDPRESS_SITE_URL'] = args.site_url
+        os.environ["WORDPRESS_SITE_URL"] = args.site_url
     if args.username:
-        os.environ['WORDPRESS_USERNAME'] = args.username
+        os.environ["WORDPRESS_USERNAME"] = args.username
     if args.app_password:
-        os.environ['WORDPRESS_APP_PASSWORD'] = args.app_password
+        os.environ["WORDPRESS_APP_PASSWORD"] = args.app_password
 
     print("\n" + "█" * 70)
     print("WordPress Integration - Usage Examples")
@@ -261,13 +248,13 @@ def main():
     try:
         if args.example == 1 or not args.example:
             example_basic_usage()
-        
+
         if args.example == 2 or not args.example:
             example_with_script_data()
-        
+
         if args.example == 3 or not args.example:
             example_batch_posts()
-        
+
         if args.example == 4 or not args.example:
             example_update_and_publish()
 
@@ -288,6 +275,7 @@ def main():
     except Exception as e:
         print(f"\n❌ Error: {e}")
         import traceback
+
         traceback.print_exc()
         return 1
 
