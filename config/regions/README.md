@@ -35,8 +35,14 @@ Each region file contains:
 - Analytics benchmarks
 
 **Available Regions:**
-- `US.json` - United States (Tier 1, highest CPM)
-- More regions to be added (UK, CA, AU, DE, JP, FR, etc.)
+- `US.json` - United States (Tier 1, highest CPM) - Main Channel: Nom Stories (EN)
+- `ES.json` - Spain (Tier 2) - Nom Scary Stories ES
+- `CZ.json` - Czech Republic (Tier 3) - Nom Scary Stories CZ
+- `PL.json` - Poland (Tier 2) - Nom Scary Stories PL
+- `HI.json` - India (Tier 3) - Nom Scary Stories HI
+- `DE.json` - Germany (Tier 1) - Nom Scary Stories DE
+- `JP.json` - Japan (Tier 2)
+- More regions to be added (UK, CA, AU, FR, IT, etc.)
 
 ## Usage
 
@@ -254,6 +260,14 @@ cp .env.example .env
 
 ## Related Documentation
 
+### Branding & Channel Strategy
+- [Branding Documentation](../docs/branding/) - Complete branding and channel strategy
+- [Channel Naming Strategy](../docs/branding/CHANNEL_NAMING_STRATEGY.md) - Global naming conventions
+- [Persona Definition](../docs/branding/PERSONA_NOM_STORIES_EN.md) - US target audience (Nom Stories EN)
+- [Metadata Guidelines](../docs/branding/METADATA_GUIDELINES.md) - Localized SEO best practices
+- [Channel Templates](../docs/branding/CHANNEL_TEMPLATES.md) - Ready-to-use channel setup templates
+
+### System Design & Research
 - [SHORT_VIDEO_SYSTEM_DESIGN.md](../research/SHORT_VIDEO_SYSTEM_DESIGN.md) - Complete system design
 - [SHORT_VIDEO_SYSTEM_DESIGN_CS.md](../research/SHORT_VIDEO_SYSTEM_DESIGN_CS.md) - Czech summary
 - [VIRAL_VIDEO_REQUIREMENTS.md](../research/VIRAL_VIDEO_REQUIREMENTS.md) - Video requirements spec

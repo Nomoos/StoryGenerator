@@ -1,0 +1,202 @@
+{
+  "region": {
+    "code": "HI",
+    "name": "India (Hindi)",
+    "locale": "hi-IN",
+    "language": "Hindi",
+    "timezone": "Asia/Kolkata",
+    "currency": "INR"
+  },
+  
+  "monetization": {
+    "cpm_estimate": 1.5,
+    "cpm_range": [0.8, 3],
+    "currency": "INR",
+    "priority_tier": 3,
+    "notes": "Massive audience but lower CPM. High volume can compensate. Growing market."
+  },
+  
+  "platforms": {
+    "youtube": {
+      "enabled": true,
+      "content_types": ["shorts"],
+      "optimal_posting_times": ["09:00", "14:00", "20:00", "22:00"],
+      "optimal_days": ["Tuesday", "Thursday", "Saturday", "Sunday"],
+      "hashtag_limit": 3,
+      "title_max_length": 100,
+      "description_max_length": 5000,
+      "notes": "YouTube is extremely popular in India. Shorts have massive reach. Hindi content highly demanded."
+    },
+    "instagram": {
+      "enabled": true,
+      "content_types": ["reels"],
+      "optimal_posting_times": ["11:00", "15:00", "21:00"],
+      "optimal_days": ["Friday", "Saturday", "Sunday"],
+      "hashtag_limit": 30,
+      "caption_max_length": 2200,
+      "notes": "Instagram Reels very popular. Strong visual content culture."
+    },
+    "tiktok": {
+      "enabled": false,
+      "notes": "TikTok banned in India. Do not use this platform."
+    }
+  },
+  
+  "voice": {
+    "provider": "azure",
+    "voice_id": "hi-IN-SwaraNeural",
+    "voice_name": "Swara",
+    "gender": "female",
+    "age_range": "young_adult",
+    "accent": "standard_hindi",
+    "style": "friendly",
+    "description": "Clear Hindi voice. Friendly and engaging tone.",
+    "alternatives": [
+      {
+        "voice_id": "hi-IN-MadhurNeural",
+        "voice_name": "Madhur",
+        "gender": "male",
+        "age_range": "adult",
+        "style": "authoritative",
+        "description": "Male Hindi voice for serious content"
+      }
+    ]
+  },
+  
+  "localization": {
+    "translation_required": true,
+    "cultural_adaptation_level": "very_high",
+    "reference_examples": [
+      "Use Indian cultural references (Bollywood, cricket, festivals)",
+      "Adapt measurement units to metric (kilometers, Celsius)",
+      "Educational references: board exams, CBSE, JEE, NEET",
+      "Food: chai, samosa, biryani references work well",
+      "Use respectful terms: ji, bhai, didi appropriately",
+      "Family structure: joint families, respect for elders",
+      "Religious festivals: Diwali, Holi (multi-religious country)"
+    ],
+    "avoid": [
+      "Religious mockery or disrespect (multi-religious society)",
+      "Caste system references",
+      "India-Pakistan political tensions",
+      "Beef references (sacred cow)",
+      "Alcohol consumption (controversial)",
+      "Dating and relationships (more conservative)",
+      "Overly Western content without adaptation"
+    ]
+  },
+  
+  "content_preferences": {
+    "trending_topics": [
+      "Horror stories (डरावनी कहानियाँ)",
+      "Ghost stories (भूतिया कहानियां)",
+      "Real life mysteries",
+      "Paranormal experiences",
+      "Urban legends (शहरी किंवदंतियाँ)",
+      "Family drama stories",
+      "Motivational content",
+      "Educational content"
+    ],
+    "avoid_topics": [
+      "Religious controversies",
+      "Caste discrimination",
+      "Political content",
+      "India-Pakistan tensions",
+      "Explicit romantic content",
+      "Alcohol or substance use",
+      "Non-vegetarian food in some contexts"
+    ],
+    "popular_formats": [
+      "डरावनी कहानियाँ (scary stories)",
+      "यह मेरे साथ हुआ (this happened to me)",
+      "Top 5/10 (listicles in Hindi)",
+      "सच्ची कहानियाँ (true stories)",
+      "रहस्यमय कहानियाँ (mysterious stories)"
+    ]
+  },
+  
+  "demographics": {
+    "primary_age_groups": [
+      {"range": [13, 17], "percentage": 35, "platforms": ["youtube", "instagram"]},
+      {"range": [18, 24], "percentage": 40, "platforms": ["youtube", "instagram"]},
+      {"range": [25, 34], "percentage": 20, "platforms": ["youtube", "instagram"]},
+      {"range": [35, 44], "percentage": 5, "platforms": ["youtube"]}
+    ],
+    "gender_split": {
+      "male": 65,
+      "female": 33,
+      "other": 2,
+      "notes": "Male-skewed audience typical for Indian content. Growing female viewership."
+    },
+    "device_usage": {
+      "mobile": 95,
+      "desktop": 3,
+      "tablet": 2,
+      "notes": "Extremely mobile-first market. Optimize heavily for mobile viewing."
+    }
+  },
+  
+  "compliance": {
+    "coppa_applicable": false,
+    "age_restrictions": 13,
+    "content_rating": "general",
+    "disclosure_required": true,
+    "disclosure_text": "प्रायोजित सामग्री (Sponsored content)",
+    "local_regulations": true,
+    "notes": "Indian IT Act and Intermediary Guidelines apply. Content should be culturally sensitive."
+  },
+  
+  "seo_keywords": {
+    "high_volume": [
+      "डरावनी कहानियाँ",
+      "भूतिया कहानियां",
+      "हॉरर स्टोरी",
+      "सच्ची कहानी",
+      "डर",
+      "भूत की कहानी",
+      "डरावनी कहानियां हिंदी",
+      "short horror stories hindi",
+      "scary stories in hindi",
+      "bhootiya kahaniya"
+    ],
+    "trending_hashtags": [
+      "#डरावनीकहानी",
+      "#हॉरर",
+      "#भूत",
+      "#HorrorStory",
+      "#ScaryStories",
+      "#Hindi",
+      "#Shorts",
+      "#Viral",
+      "#India",
+      "#DarawaniKahani"
+    ]
+  },
+  
+  "analytics": {
+    "track_metrics": true,
+    "key_performance_indicators": [
+      "CPM",
+      "Watch time",
+      "CTR",
+      "Engagement rate",
+      "Subscriber conversion",
+      "Share rate (very important in India)"
+    ],
+    "benchmarks": {
+      "cpm_target": 1.5,
+      "watch_time_target": 70,
+      "ctr_target": 5.0,
+      "engagement_rate_target": 8.0,
+      "notes": "Lower CPM but expect higher engagement and sharing in Indian market."
+    }
+  },
+  
+  "channel": {
+    "name": "Nom Scary Stories HI",
+    "handle": "@NomScaryStoriesHI",
+    "genre": "Horror/Scary Stories",
+    "target_audience": "Hindi-speaking teens and young adults (13-25)",
+    "content_focus": "Real life horror stories, ghost stories, paranormal experiences"
+  }
+}
