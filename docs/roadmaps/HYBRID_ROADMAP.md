@@ -12,8 +12,13 @@
 This roadmap tracks the implementation of StoryGenerator's hybrid architecture, combining C# for orchestration with Python for ML model inference. The project uses a phased approach, organizing tasks by completion status and priority.
 
 **Overall Progress:**
+<<<<<<< HEAD
 - ✅ **Completed:** 55 tasks (100% of Phase 1, 100% of Phase 2, 74% of Phase 3)
 - 🔄 **In Progress:** 12 tasks (remaining Phase 3 tasks in parallel groups)
+=======
+- ✅ **Completed:** 50 tasks (100% of Phase 1, 100% of Phase 2, 64% of Phase 3)
+- 🔄 **In Progress:** 20 tasks (17 Phase 3 + 3 Group 2 content enhancements)
+>>>>>>> 14e686583c3facc69ec03b8a846a9ab70308505c
 - 📋 **Not Started:** 18 tasks (Phase 4 P2 features)
 
 **Key Achievements:**
@@ -259,7 +264,20 @@ This roadmap tracks the implementation of StoryGenerator's hybrid architecture, 
 - ✅ Thumbnail Generation
 - ✅ Platform-specific Encoding
 
+<<<<<<< HEAD
 **✅ NEW: Main Progress Hub Enhancement Tasks:**
+=======
+**🔄 In Progress Groups (active in issues/p1-high/ and issues/group_2/):**
+
+#### Group 2: Content Pipeline Enhancements (3 tasks) - 📋 NOT STARTED
+- [ ] Enhanced Reddit Scraper - Multi-subreddit, incremental updates, duplicate detection
+- [ ] Social Media Sources - Instagram and TikTok content collection
+- [ ] Content Deduplication System - Fuzzy matching and semantic similarity
+
+**Location:** `issues/group_2/`  
+**Effort:** 14-20 hours  
+**Priority:** P1 (High)
+>>>>>>> 14e686583c3facc69ec03b8a846a9ab70308505c
 
 #### Group 3 Enhancements (2 tasks) - ✅ COMPLETE
 - ✅ Voice Cloning System (Coqui TTS integration, ~8h)
@@ -270,6 +288,7 @@ This roadmap tracks the implementation of StoryGenerator's hybrid architecture, 
 - 43+ unit tests, all passing
 - 890+ lines of documentation
 
+<<<<<<< HEAD
 #### Group 4 Enhancements (3 tasks) - ✅ COMPLETE
 - ✅ Video Variant Selection (quality metrics, ~3h)
 - ✅ Automated Quality Control System (~6h)
@@ -297,6 +316,12 @@ This roadmap tracks the implementation of StoryGenerator's hybrid architecture, 
 **Remaining:** 12 tasks in parallel groups
 **Total P1 Effort:** 160-250 hours (~165h completed)
 **Timeline:** 1-2 weeks remaining with parallel team execution
+=======
+**Completed:** 30/47 tasks (64%)
+**Remaining:** 20 tasks (17 original + 3 content enhancements)
+**Total P1 Effort:** 174-270 hours (~150h completed)
+**Timeline:** 2-3 weeks remaining with team
+>>>>>>> 14e686583c3facc69ec03b8a846a9ab70308505c
 
 **References:**
 - [P1 High Priority Issues](../issues/p1-high/README.md)
