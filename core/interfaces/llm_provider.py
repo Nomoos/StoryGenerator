@@ -6,7 +6,14 @@ enabling easy swapping between different LLM implementations (OpenAI, local mode
 """
 
 from abc import ABC, abstractmethod
-from typing import TypedDict, NotRequired
+import sys
+
+# NotRequired is only in typing module in Python 3.11+
+if sys.version_info >= (3, 11):
+    from typing import TypedDict, NotRequired
+else:
+    from typing import TypedDict
+    from typing_extensions import NotRequired
 
 
 class ChatMessage(TypedDict):
