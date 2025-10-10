@@ -6,13 +6,22 @@ This guide will help you get up and running with the StoryGenerator pipeline in 
 
 Before you begin, ensure you have:
 
+### Required
 - **.NET 9.0 SDK or later** - [Download here](https://dotnet.microsoft.com/download/dotnet/9.0)
 - **Git** - For cloning the repository
-- **API Keys** (for production use):
+
+### For Cloud API Usage (Recommended for Production)
+- **API Keys**:
   - [OpenAI API Key](https://platform.openai.com/api-keys) - For GPT-based script generation
   - [ElevenLabs API Key](https://elevenlabs.io/app/settings/api-keys) - For voice generation
-- **Optional**: Python 3.11+ (for ML model inference like Whisper ASR, SDXL, LTX-Video)
-- **Optional**: CUDA-capable GPU (for local ML model inference)
+
+### Optional (For Local Models & Research)
+- **Python 3.8+** - For ML model inference (Whisper ASR, SDXL, LTX-Video)
+- **FFmpeg** - For audio/video processing in research prototypes
+- **Ollama** - For local LLM inference (alternative to cloud APIs)
+- **CUDA-capable GPU** - For faster local model inference
+
+> 📖 **For detailed installation of optional dependencies, see [Optional Dependencies Guide](../../guides/setup/OPTIONAL_DEPENDENCIES.md)**
 
 ## Quick Start (5 Minutes)
 
@@ -52,6 +61,30 @@ cp .env.example .env
 # - OpenAI__ApiKey=your-openai-key
 # - ElevenLabs__ApiKey=your-elevenlabs-key
 ```
+
+### 6. (Optional) Install Local Model Dependencies
+
+For local model inference and research features, install the optional dependencies:
+
+```powershell
+# Install FFmpeg for audio/video processing
+choco install ffmpeg
+
+# Install Ollama for local LLM inference
+# Download from: https://ollama.com/download/windows
+# Then download models: ollama pull llama2
+
+# Install Python + faster-whisper for speech-to-text
+pip install faster-whisper>=0.10.0
+```
+
+➡️ **[Complete Windows installation guide for optional dependencies](../../guides/setup/OPTIONAL_DEPENDENCIES.md)**
+
+These dependencies enable:
+- ✅ Running all integration tests
+- ✅ Local model experimentation
+- ✅ Cost-effective prototyping
+- ✅ Privacy-focused workflows
 
 ## Understanding the Architecture
 
