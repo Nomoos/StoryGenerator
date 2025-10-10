@@ -14,6 +14,22 @@ The pipeline is split into 5 discrete steps, each with its own `.bat` script:
 
 ## Prerequisites
 
+### Automated Setup (Recommended)
+
+From the repository root, run:
+
+```cmd
+.\quickstart.bat
+```
+
+This will automatically:
+- Check Python 3.10+ installation
+- Create virtual environment at `env\`
+- Install all dependencies (requirements.txt + requirements-dev.txt)
+- Run tests to verify installation
+
+### Manual Setup
+
 1. **Python Environment**: Set up a Python virtual environment at `<repo_root>\env\`
    ```cmd
    python -m venv env

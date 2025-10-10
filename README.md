@@ -119,11 +119,32 @@ StoryGenerator uses a **hybrid C# + Python architecture**:
 ### Prerequisites
 - **.NET 9.0 SDK** - [Download](https://dotnet.microsoft.com/download/dotnet/9.0)
 - **Git** - For cloning the repository
+- **Python 3.10+** - For pipeline scripts
 - **API Keys** (optional): [OpenAI](https://platform.openai.com/api-keys), [ElevenLabs](https://elevenlabs.io/app/settings/api-keys)
 
 > 💡 **For local model inference**: Install [optional dependencies](docs/guides/setup/OPTIONAL_DEPENDENCIES.md) (FFmpeg, Ollama, Python/faster-whisper)
 
-### Get Started in 5 Minutes
+### Windows Quick Start (Automated Setup)
+
+**One-command setup for Windows:**
+
+```cmd
+# 1. Clone the repository
+git clone https://github.com/Nomoos/StoryGenerator.git
+cd StoryGenerator
+
+# 2. Run automated setup
+.\quickstart.bat
+```
+
+The `quickstart.bat` script will:
+- ✅ Check Python 3.10+ installation
+- ✅ Create and activate virtual environment
+- ✅ Install all dependencies
+- ✅ Run tests to verify installation
+- ✅ Show next steps
+
+### Manual Setup (All Platforms)
 
 ```bash
 # 1. Clone the repository
@@ -170,7 +191,22 @@ pip install faster-whisper>=0.10.0
 
 StoryGenerator now includes a **step-based Windows pipeline** with `.bat` scripts for discrete, composable processing.
 
-### Setup
+### Quick Start (One Command)
+
+Run the automated setup script:
+
+```cmd
+.\quickstart.bat
+```
+
+This will:
+- ✅ Check Python installation (requires 3.10+)
+- ✅ Create virtual environment
+- ✅ Install all dependencies
+- ✅ Run tests to verify installation
+- ✅ Show next steps
+
+### Manual Setup
 
 1. **Create Python virtual environment:**
    ```cmd

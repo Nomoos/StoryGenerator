@@ -2,6 +2,17 @@
 
 ## Setup (One-Time)
 
+### Automated Setup (Recommended)
+
+From repository root:
+```cmd
+.\quickstart.bat
+```
+
+This will check Python, create venv, install dependencies, and run tests.
+
+### Manual Setup
+
 ```cmd
 REM 1. Create virtual environment
 python -m venv env
