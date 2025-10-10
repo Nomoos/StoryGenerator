@@ -443,7 +443,29 @@ simple_provider = OptimizedOpenAIProvider(model="gpt-4o-mini")
 complex_provider = OptimizedOpenAIProvider(model="gpt-4o")
 ```
 
-### 4. Count Tokens Before Long Requests
+### 4. Use Batch Pricing for Bulk Operations
+
+```python
+# Use batch pricing for non-real-time bulk operations (50% cost savings)
+batch_provider = OptimizedOpenAIProvider(
+    model="gpt-4o-mini",
+    pricing_tier="batch"
+)
+
+# Estimate and compare costs before processing
+comparison = batch_provider.compare_pricing_tiers(input_tokens=1000, output_tokens=500)
+print(f"Batch API saves {comparison['savings_percent']:.1f}%")
+
+# Calculate video production costs
+video_cost = batch_provider.estimate_video_cost(
+    avg_input_tokens_per_request=1067,
+    avg_output_tokens_per_request=1350,
+    requests_per_video=3
+)
+print(f"Cost per video: ${video_cost['cost_per_video']:.6f}")
+```
+
+### 5. Count Tokens Before Long Requests
 
 ```python
 provider = OptimizedOpenAIProvider()
@@ -504,8 +526,14 @@ Implements `ILLMProvider` interface.
 
 #### Methods
 
-##### `__init__(api_key, model, enable_cache, cache_ttl, cache_backend)`
+##### `__init__(api_key, model, enable_cache, cache_ttl, cache_backend, pricing_tier)`
 Initialize provider.
+- `api_key` (str, optional): OpenAI API key
+- `model` (str): Model name (default: "gpt-4o-mini")
+- `enable_cache` (bool): Enable response caching (default: True)
+- `cache_ttl` (int): Cache TTL in seconds (default: 3600)
+- `cache_backend` (str): Cache backend - 'file' or 'redis' (default: 'file')
+- `pricing_tier` (str): Pricing tier - 'standard' or 'batch' (default: 'standard')
 
 ##### `generate_completion(prompt, temperature, max_tokens, **kwargs) -> str`
 Generate completion from prompt.
@@ -519,11 +547,32 @@ Count tokens in text.
 ##### `count_messages_tokens(messages: list) -> int`
 Count tokens in messages.
 
-##### `estimate_cost(input_tokens: int, output_tokens: int) -> float`
+##### `estimate_cost(input_tokens: int, output_tokens: int, pricing_tier: str = None) -> float`
 Estimate cost for given token counts.
+- `input_tokens` (int): Number of input tokens
+- `output_tokens` (int): Number of output tokens
+- `pricing_tier` (str, optional): Override pricing tier for this calculation
+
+##### `compare_pricing_tiers(input_tokens: int, output_tokens: int) -> dict`
+Compare costs between standard and batch pricing tiers.
+Returns dictionary with:
+- `standard_cost`: Cost using standard pricing
+- `batch_cost`: Cost using batch pricing
+- `savings`: Amount saved
+- `savings_percent`: Percentage saved
+
+##### `estimate_video_cost(avg_input_tokens_per_request, avg_output_tokens_per_request, requests_per_video, pricing_tier=None) -> dict`
+Estimate the cost per video based on average token usage.
+Returns dictionary with:
+- `cost_per_request`: Cost per API request
+- `cost_per_video`: Total cost per video
+- `total_tokens_per_video`: Total tokens used
+- `requests_per_video`: Number of API requests
+- `pricing_tier`: Pricing tier used
+- `model`: Model name
 
 ##### `get_usage_stats() -> dict`
-Get usage statistics.
+Get usage statistics including pricing tier information.
 
 ##### `reset_stats()`
 Reset usage statistics.

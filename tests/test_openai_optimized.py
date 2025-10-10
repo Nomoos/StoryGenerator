@@ -98,8 +98,8 @@ def test_estimate_cost(provider):
     # Cost should be positive and calculated from pricing
     assert cost > 0
     
-    # Verify calculation
-    pricing = PRICING["gpt-4o-mini"]
+    # Verify calculation using standard tier (provider's default)
+    pricing = PRICING["gpt-4o-mini"]["standard"]
     expected_cost = (
         (input_tokens / 1_000_000) * pricing["input"] +
         (output_tokens / 1_000_000) * pricing["output"]
@@ -254,3 +254,156 @@ def test_retry_on_rate_limit(mock_openai_client, mock_tiktoken):
         
         # Should have been called twice (original + 1 retry)
         assert mock_openai_client.chat.completions.create.call_count == 2
+
+
+def test_pricing_tier_parameter(mock_tiktoken):
+    """Test that pricing_tier parameter is accepted and stored."""
+    with patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}):
+        with patch("providers.openai_optimized.OpenAI"):
+            # Test standard tier (default)
+            provider_standard = OptimizedOpenAIProvider(pricing_tier="standard")
+            assert provider_standard.pricing_tier == "standard"
+            
+            # Test batch tier
+            provider_batch = OptimizedOpenAIProvider(pricing_tier="batch")
+            assert provider_batch.pricing_tier == "batch"
+
+
+def test_invalid_pricing_tier(mock_tiktoken):
+    """Test that invalid pricing_tier raises ValueError."""
+    with patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}):
+        with patch("providers.openai_optimized.OpenAI"):
+            with pytest.raises(ValueError, match="Invalid pricing_tier"):
+                OptimizedOpenAIProvider(pricing_tier="invalid")
+
+
+def test_estimate_cost_with_pricing_tier(provider):
+    """Test cost estimation with different pricing tiers."""
+    input_tokens = 100
+    output_tokens = 50
+    
+    # Standard pricing (default)
+    standard_cost = provider.estimate_cost(input_tokens, output_tokens, pricing_tier="standard")
+    
+    # Batch pricing
+    batch_cost = provider.estimate_cost(input_tokens, output_tokens, pricing_tier="batch")
+    
+    # Batch should be cheaper (50% discount)
+    assert batch_cost < standard_cost
+    assert batch_cost == pytest.approx(standard_cost * 0.5, rel=0.01)
+
+
+def test_estimate_cost_uses_default_tier(mock_tiktoken):
+    """Test that estimate_cost uses provider's default pricing tier when not specified."""
+    with patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}):
+        with patch("providers.openai_optimized.OpenAI"):
+            # Create provider with batch pricing
+            provider = OptimizedOpenAIProvider(pricing_tier="batch")
+            
+            input_tokens = 1000
+            output_tokens = 500
+            
+            # When no tier is specified, should use provider's default (batch)
+            cost_default = provider.estimate_cost(input_tokens, output_tokens)
+            cost_batch = provider.estimate_cost(input_tokens, output_tokens, pricing_tier="batch")
+            
+            assert cost_default == cost_batch
+
+
+def test_compare_pricing_tiers(provider):
+    """Test the compare_pricing_tiers method."""
+    input_tokens = 1000
+    output_tokens = 500
+    
+    comparison = provider.compare_pricing_tiers(input_tokens, output_tokens)
+    
+    # Check all expected keys are present
+    assert "standard_cost" in comparison
+    assert "batch_cost" in comparison
+    assert "savings" in comparison
+    assert "savings_percent" in comparison
+    
+    # Verify the calculations
+    assert comparison["batch_cost"] < comparison["standard_cost"]
+    assert comparison["savings"] == comparison["standard_cost"] - comparison["batch_cost"]
+    assert comparison["savings_percent"] == pytest.approx(50.0, rel=0.1)
+
+
+def test_estimate_video_cost(provider):
+    """Test the estimate_video_cost method."""
+    avg_input = 1000
+    avg_output = 500
+    requests_per_video = 3
+    
+    video_cost = provider.estimate_video_cost(
+        avg_input_tokens_per_request=avg_input,
+        avg_output_tokens_per_request=avg_output,
+        requests_per_video=requests_per_video
+    )
+    
+    # Check all expected keys are present
+    assert "cost_per_request" in video_cost
+    assert "cost_per_video" in video_cost
+    assert "total_tokens_per_video" in video_cost
+    assert "requests_per_video" in video_cost
+    assert "pricing_tier" in video_cost
+    assert "model" in video_cost
+    
+    # Verify calculations
+    assert video_cost["requests_per_video"] == requests_per_video
+    assert video_cost["total_tokens_per_video"] == (avg_input + avg_output) * requests_per_video
+    assert video_cost["cost_per_video"] == pytest.approx(
+        video_cost["cost_per_request"] * requests_per_video, rel=0.01
+    )
+
+
+def test_estimate_video_cost_with_different_tiers(provider):
+    """Test video cost estimation with different pricing tiers."""
+    avg_input = 1000
+    avg_output = 500
+    requests_per_video = 3
+    
+    standard_video_cost = provider.estimate_video_cost(
+        avg_input, avg_output, requests_per_video, pricing_tier="standard"
+    )
+    
+    batch_video_cost = provider.estimate_video_cost(
+        avg_input, avg_output, requests_per_video, pricing_tier="batch"
+    )
+    
+    # Batch should be cheaper
+    assert batch_video_cost["cost_per_video"] < standard_video_cost["cost_per_video"]
+    assert batch_video_cost["cost_per_video"] == pytest.approx(
+        standard_video_cost["cost_per_video"] * 0.5, rel=0.01
+    )
+
+
+def test_usage_stats_includes_pricing_tier(provider):
+    """Test that usage stats include pricing tier information."""
+    stats = provider.get_usage_stats()
+    
+    assert "pricing_tier" in stats
+    assert stats["pricing_tier"] == "standard"  # Provider fixture uses standard by default
+
+
+def test_batch_pricing_values():
+    """Test that batch pricing is correctly defined in PRICING dict."""
+    from providers.openai_optimized import PRICING
+    
+    # Check that all models have both standard and batch pricing
+    for model, pricing_data in PRICING.items():
+        assert "standard" in pricing_data, f"Model {model} missing standard pricing"
+        assert "batch" in pricing_data, f"Model {model} missing batch pricing"
+        
+        standard = pricing_data["standard"]
+        batch = pricing_data["batch"]
+        
+        # Verify structure
+        assert "input" in standard
+        assert "output" in standard
+        assert "input" in batch
+        assert "output" in batch
+        
+        # Batch should be 50% of standard
+        assert batch["input"] == pytest.approx(standard["input"] * 0.5, rel=0.01)
+        assert batch["output"] == pytest.approx(standard["output"] * 0.5, rel=0.01)
