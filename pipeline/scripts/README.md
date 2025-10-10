@@ -79,7 +79,7 @@ Or with a specific story ID:
 - ✅ **Automatic retry** with configurable `MAX_TRIES` and `SLEEP_SECS`
 - ✅ **Acceptance criteria checking** - each step validates output quality
 - ✅ **Story ID auto-selection** - picks pending stories when none specified
-- ✅ **Database tracking** - optional SQLite/PostgreSQL tracking (see [Database Guide](../DATABASE_TRACKING.md))
+- ✅ **Database tracking** - optional SQLite tracking (see [Database Guide](../DATABASE_TRACKING.md))
 - ✅ **Exit codes**: `0` = success, `1` = config error, `2` = runtime error, `3` = acceptance not met
 - ✅ **Run tracking** - execution metadata saved in `.runs/`
 
@@ -201,12 +201,8 @@ DEFAULT_STORY_ID=STORY-123
 Enable database-backed story tracking for better visibility:
 
 ```env
-# SQLite (default - no config needed)
-DB_URL=sqlite:///data/pipeline_stories.db
-
-# Or PostgreSQL for multi-user setups
-DB_URL=postgresql+psycopg://user:pass@localhost:5432/storygen
-DB_SCHEMA=public
+# SQLite database (default - no config needed)
+DB_PATH=data/pipeline_stories.db
 ```
 
 Query story status:

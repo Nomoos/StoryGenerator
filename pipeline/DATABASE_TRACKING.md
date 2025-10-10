@@ -1,6 +1,6 @@
 # Database-Backed Story Tracking
 
-The Windows pipeline now includes optional database-backed story tracking for improved visibility and management of pipeline execution.
+The Windows pipeline includes database-backed story tracking using SQLite for improved visibility and management of pipeline execution.
 
 ## Features
 
@@ -12,35 +12,21 @@ The Windows pipeline now includes optional database-backed story tracking for im
 
 ## Database Support
 
-The system supports two database backends:
+The system uses **SQLite** for simple, zero-configuration storage:
 
-### SQLite (Default)
 - **No configuration needed** - works out of the box
 - Database stored at: `data/pipeline_stories.db`
-- Perfect for single-machine setups
+- Perfect for single-machine and multi-user setups
 - Zero external dependencies
-
-### PostgreSQL (Optional)
-- Recommended for multi-user or distributed setups
-- Requires `psycopg` package: `pip install psycopg[binary]`
-- Configure via `.env`:
-  ```env
-  DB_URL=postgresql+psycopg://user:pass@localhost:5432/storygen
-  DB_SCHEMA=public
-  ```
+- Lightweight and fast
 
 ## Configuration
 
-Add to your `.env` file:
+Add to your `.env` file (optional - has sensible defaults):
 
 ```env
-# Database Configuration (optional)
-# Leave empty or use sqlite:/// for SQLite (default)
-DB_URL=sqlite:///data/pipeline_stories.db
-
-# Or use PostgreSQL
-# DB_URL=postgresql+psycopg://user:pass@localhost:5432/storygen
-# DB_SCHEMA=public
+# Database Configuration
+DB_PATH=data/pipeline_stories.db
 ```
 
 ## Database Schema
@@ -219,10 +205,10 @@ C:\StoryGenerator> env\Scripts\python.exe pipeline\orchestration\run_step.py ^
 - Analyze bottlenecks (which steps take longest)
 - Track success rates per step
 
-### 4. **Multi-User Support**
-- With PostgreSQL, multiple users can share the same pipeline state
-- Coordinate work across distributed systems
-- Avoid duplicate processing
+### 4. **Lightweight & Portable**
+- SQLite database is a single file
+- Easy to back up and transfer
+- No external database server required
 
 ## Monitoring Queries
 
@@ -310,17 +296,6 @@ WARNING - Database initialization failed: ... Using filesystem-only mode.
 
 The pipeline continues to work normally, just without database tracking.
 
-### PostgreSQL Not Installed
-
-If you specify a PostgreSQL URL but `psycopg` isn't installed:
-
-```
-ImportError: psycopg is required for PostgreSQL support.
-Install it with: pip install psycopg[binary]
-```
-
-Install the package and restart.
-
 ### Database Schema Out of Date
 
 If you upgrade and the schema has changed, re-initialize:
@@ -335,14 +310,11 @@ db.initialize()  # Creates or updates tables
 ## Performance Considerations
 
 ### SQLite
-- Suitable for: 100s-1000s of stories
-- Single writer at a time
+- Suitable for: 1000s-10000s of stories
+- Single writer at a time (reads are concurrent)
 - Fast for single-machine setups
-
-### PostgreSQL
-- Suitable for: 1000s-millions of stories
-- Multiple concurrent writers
-- Network latency considerations
+- Database file can grow to several GB without performance issues
+- Lightweight and portable
 
 ### Indexes
 

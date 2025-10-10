@@ -65,11 +65,10 @@ class StepOrchestrator:
         self.use_db = use_db and DB_AVAILABLE
         if self.use_db:
             try:
-                db_url = os.getenv("DB_URL")
-                db_schema = os.getenv("DB_SCHEMA", "public")
-                self.db = StoryDatabase(db_url=db_url, schema=db_schema)
+                db_path = os.getenv("DB_PATH", "data/pipeline_stories.db")
+                self.db = StoryDatabase(db_path=db_path)
                 self.db.initialize()
-                logger.info(f"[{self.step_name}] Database tracking enabled")
+                logger.info(f"[{self.step_name}] Database tracking enabled (SQLite)")
             except Exception as e:
                 logger.warning(f"[{self.step_name}] Database initialization failed: {e}. Using filesystem-only mode.")
                 self.db = None
@@ -688,9 +687,8 @@ def main():
             sys.exit(1)
         
         try:
-            db_url = os.getenv("DB_URL")
-            db_schema = os.getenv("DB_SCHEMA", "public")
-            db = StoryDatabase(db_url=db_url, schema=db_schema)
+            db_path = os.getenv("DB_PATH", "data/pipeline_stories.db")
+            db = StoryDatabase(db_path=db_path)
             db.initialize()
             
             status = db.get_story_status(args.story_id)
@@ -711,9 +709,8 @@ def main():
             sys.exit(1)
         
         try:
-            db_url = os.getenv("DB_URL")
-            db_schema = os.getenv("DB_SCHEMA", "public")
-            db = StoryDatabase(db_url=db_url, schema=db_schema)
+            db_path = os.getenv("DB_PATH", "data/pipeline_stories.db")
+            db = StoryDatabase(db_path=db_path)
             db.initialize()
             
             stats = db.get_step_statistics()

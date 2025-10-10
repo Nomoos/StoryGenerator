@@ -36,7 +36,6 @@ class TestStoryDatabase:
         db = StoryDatabase(db_url=self.db_url)
         db.initialize()
         
-        assert db.db_type == "sqlite"
         assert db.db_path.exists()
         
         # Check tables were created

@@ -49,23 +49,14 @@ class StoryDatabase:
     - Acceptance check results
     """
 
-    def __init__(self, db_path: Optional[str] = None, db_url: Optional[str] = None):
+    def __init__(self, db_path: Optional[str] = None):
         """
         Initialize SQLite database connection.
         
         Args:
             db_path: Path to SQLite database file. 
                     If None, uses data/pipeline_stories.db
-            db_url: Database URL (backward compatibility). 
-                   Format: sqlite:///path/to/db.db
-                   If provided, db_path is ignored.
         """
-        # Support both db_path and db_url for backward compatibility
-        if db_url:
-            if not db_url.startswith("sqlite:///"):
-                raise ValueError("Only SQLite databases are supported. Use sqlite:///path/to/db.db format")
-            db_path = db_url.replace("sqlite:///", "")
-        
         if db_path is None:
             db_path = os.getenv("DB_PATH", "data/pipeline_stories.db")
         
@@ -170,11 +161,18 @@ class StoryDatabase:
             str: The story_id
         """
         cursor = self.connection.cursor()
-        metadata_value = json.dumps(metadata or {})
+        table_prefix = f"{self.schema}." if self.db_type == "postgresql" else ""
+        
+        metadata_value = json.dumps(metadata or {}) if self.db_type == "sqlite" else metadata or {}
         
         try:
-            cursor.execute("""
-                INSERT OR REPLACE INTO stories (story_id, title, source, metadata, updated_at)
+            cursor.execute(f"""
+                INSERT INTO {table_prefix}stories (story_id, title, source, metadata)
+                VALUES (%s, %s, %s, %s)
+                ON CONFLICT (story_id) DO UPDATE
+                SET updated_at = CURRENT_TIMESTAMP
+            """ if self.db_type == "postgresql" else f"""
+                INSERT OR REPLACE INTO {table_prefix}stories (story_id, title, source, metadata, updated_at)
                 VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
             """, (story_id, title, source, metadata_value))
             
@@ -207,6 +205,7 @@ class StoryDatabase:
             acceptance_details: Details about acceptance check
         """
         cursor = self.connection.cursor()
+        table_prefix = f"{self.schema}." if self.db_type == "postgresql" else ""
         
         # Update step_status table
         if status == "running":
@@ -219,7 +218,25 @@ class StoryDatabase:
             started_at = None
             completed_at = None
         
-        cursor.execute("""
+        if self.db_type == "postgresql":
+            cursor.execute(f"""
+                INSERT INTO {self.schema}.step_status 
+                (story_id, step_name, status, run_id, error_message, acceptance_passed, 
+                 acceptance_details, started_at, completed_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (story_id, step_name) DO UPDATE
+                SET status = EXCLUDED.status,
+                    run_id = COALESCE(EXCLUDED.run_id, {self.schema}.step_status.run_id),
+                    error_message = EXCLUDED.error_message,
+                    acceptance_passed = EXCLUDED.acceptance_passed,
+                    acceptance_details = EXCLUDED.acceptance_details,
+                    started_at = COALESCE(EXCLUDED.started_at, {self.schema}.step_status.started_at),
+                    completed_at = COALESCE(EXCLUDED.completed_at, {self.schema}.step_status.completed_at),
+                    created_at = CURRENT_TIMESTAMP
+            """, (story_id, step_name, status, run_id, error_message, acceptance_passed,
+                  acceptance_details, started_at, completed_at))
+        else:
+            cursor.execute(f"""
                 INSERT OR REPLACE INTO step_status 
                 (story_id, step_name, status, run_id, error_message, acceptance_passed, 
                  acceptance_details, started_at, completed_at)
@@ -251,7 +268,16 @@ class StoryDatabase:
             execution_time_ms: Execution time in milliseconds
         """
         cursor = self.connection.cursor()
-        cursor.execute("""
+        table_prefix = f"{self.schema}." if self.db_type == "postgresql" else ""
+        
+        if self.db_type == "postgresql":
+            cursor.execute(f"""
+                INSERT INTO {self.schema}.step_history 
+                (story_id, step_name, run_id, status, error_message, execution_time_ms)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, (story_id, step_name, run_id, status, error_message, execution_time_ms))
+        else:
+            cursor.execute(f"""
                 INSERT INTO step_history 
                 (story_id, step_name, run_id, status, error_message, execution_time_ms)
                 VALUES (?, ?, ?, ?, ?, ?)
@@ -275,6 +301,8 @@ class StoryDatabase:
             List of story IDs
         """
         cursor = self.connection.cursor()
+        table_prefix = f"{self.schema}." if self.db_type == "postgresql" else ""
+        
         # Extract step number
         step_num = int(step_name.split("_")[0])
         
@@ -282,12 +310,12 @@ class StoryDatabase:
             # First step - get stories without step_status entry for this step
             cursor.execute(f"""
                 SELECT s.story_id
-                FROM stories s
-                LEFT JOIN step_status ss 
-                    ON s.story_id = ss.story_id AND ss.step_name = {'?'}
-                WHERE ss.story_id IS NULL OR ss.status != {'?'}
+                FROM {table_prefix}stories s
+                LEFT JOIN {table_prefix}step_status ss 
+                    ON s.story_id = ss.story_id AND ss.step_name = {'%s' if self.db_type == 'postgresql' else '?'}
+                WHERE ss.story_id IS NULL OR ss.status != {'%s' if self.db_type == 'postgresql' else '?'}
                 ORDER BY s.created_at
-                LIMIT {'?'}
+                LIMIT {'%s' if self.db_type == 'postgresql' else '?'}
             """, (step_name, "completed", limit))
         else:
             # Subsequent steps - previous step must be completed, current step not completed
@@ -303,21 +331,24 @@ class StoryDatabase:
             
             cursor.execute(f"""
                 SELECT s.story_id
-                FROM stories s
-                JOIN step_status ss_prev 
+                FROM {table_prefix}stories s
+                JOIN {table_prefix}step_status ss_prev 
                     ON s.story_id = ss_prev.story_id 
-                    AND ss_prev.step_name = {'?'}
-                    AND ss_prev.status = {'?'}
-                LEFT JOIN step_status ss_curr 
+                    AND ss_prev.step_name = {'%s' if self.db_type == 'postgresql' else '?'}
+                    AND ss_prev.status = {'%s' if self.db_type == 'postgresql' else '?'}
+                LEFT JOIN {table_prefix}step_status ss_curr 
                     ON s.story_id = ss_curr.story_id 
-                    AND ss_curr.step_name = {'?'}
-                WHERE ss_curr.story_id IS NULL OR ss_curr.status != {'?'}
+                    AND ss_curr.step_name = {'%s' if self.db_type == 'postgresql' else '?'}
+                WHERE ss_curr.story_id IS NULL OR ss_curr.status != {'%s' if self.db_type == 'postgresql' else '?'}
                 ORDER BY s.created_at
-                LIMIT {'?'}
+                LIMIT {'%s' if self.db_type == 'postgresql' else '?'}
             """, (prev_step_name, "completed", step_name, "completed", limit))
         
         rows = cursor.fetchall()
-        return [row[0] for row in rows]
+        if self.db_type == "postgresql":
+            return [row["story_id"] for row in rows]
+        else:
+            return [row[0] for row in rows]
     
     def get_story_status(self, story_id: str) -> Dict[str, Any]:
         """
@@ -330,10 +361,12 @@ class StoryDatabase:
             Dict with story info and step statuses
         """
         cursor = self.connection.cursor()
+        table_prefix = f"{self.schema}." if self.db_type == "postgresql" else ""
+        
         # Get story info
         cursor.execute(f"""
-            SELECT * FROM stories
-            WHERE story_id = {'?'}
+            SELECT * FROM {table_prefix}stories
+            WHERE story_id = {'%s' if self.db_type == 'postgresql' else '?'}
         """, (story_id,))
         
         story_row = cursor.fetchone()
@@ -344,8 +377,8 @@ class StoryDatabase:
         
         # Get step statuses
         cursor.execute(f"""
-            SELECT * FROM step_status
-            WHERE story_id = {'?'}
+            SELECT * FROM {table_prefix}step_status
+            WHERE story_id = {'%s' if self.db_type == 'postgresql' else '?'}
             ORDER BY step_name
         """, (story_id,))
         
@@ -364,12 +397,14 @@ class StoryDatabase:
             Dict with statistics per step
         """
         cursor = self.connection.cursor()
+        table_prefix = f"{self.schema}." if self.db_type == "postgresql" else ""
+        
         cursor.execute(f"""
             SELECT 
                 step_name,
                 status,
                 COUNT(*) as count
-            FROM step_status
+            FROM {table_prefix}step_status
             GROUP BY step_name, status
             ORDER BY step_name, status
         """)
