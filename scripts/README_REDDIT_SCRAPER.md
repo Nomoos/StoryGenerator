@@ -1,17 +1,25 @@
-# Reddit Story Scraper
+# Reddit Story Scraper (Enhanced)
 
 ## Overview
 
-The Reddit Story Scraper (`reddit_scraper.py`) mines high-quality stories from target subreddits, filtered by audience segment (gender) and age demographics. It's a critical component of the content pipeline that sources raw material for story generation.
+The Enhanced Reddit Story Scraper (`reddit_scraper.py`) mines high-quality stories from target subreddits, filtered by audience segment (gender) and age demographics. Version 2.0 adds incremental scraping, persistent duplicate tracking, and advanced rate limiting for production use.
 
 ## Features
 
+### Core Features
 - ✅ **Demographic Targeting**: Scrapes content for 6 segments (women/men × 10-13/14-17/18-23)
-- ✅ **Quality Filtering**: Minimum 500+ upvotes and engagement metrics
+- ✅ **Quality Filtering**: Configurable thresholds per age group (upvotes, comments, text length)
 - ✅ **Age Appropriateness**: Keyword-based filtering for younger audiences
-- ✅ **Rate Limiting**: Respects Reddit API limits with automatic delays
 - ✅ **Rich Metadata**: Captures upvotes, comments, awards, and top comment context
 - ✅ **JSON Output**: Structured data ready for downstream processing
+
+### ✨ Enhanced Features (v2.0)
+- ✅ **Incremental Scraping**: Only fetch new posts since last run (saves API calls)
+- ✅ **Persistent Duplicate Tracking**: SQLite database tracks seen posts across scrapes
+- ✅ **Exponential Backoff**: Automatic retry with exponential backoff on rate limits
+- ✅ **Configurable Thresholds**: Different quality bars for each age demographic
+- ✅ **Flexible CLI**: Command-line options for single segments or full scrapes
+- ✅ **Detailed Statistics**: Track duplicates, filtering stats, and scrape metrics
 
 ## Prerequisites
 
@@ -66,17 +74,62 @@ REDDIT_CLIENT_SECRET=your_secret_here
 
 ### Basic Usage
 
-Run the scraper for all segments:
+Run the scraper for all segments (with incremental mode and duplicate tracking enabled by default):
 
 ```bash
 python3 scripts/reddit_scraper.py
 ```
 
 This will:
-1. Scrape stories from all 18 target subreddits (3 per segment)
-2. Filter by upvotes (500+) and age-appropriateness
-3. Save top 100 stories per segment to JSON files
-4. Output files to `Generator/sources/reddit/{gender}/{age}/YYYYMMDD_reddit_stories.json`
+1. Check last scrape time for each subreddit (incremental mode)
+2. Scrape only new stories from all 18 target subreddits (3 per segment)
+3. Filter by age-appropriate quality thresholds and content keywords
+4. Skip duplicate posts (tracked in SQLite database)
+5. Save top 100 stories per segment to JSON files
+6. Output files to `Generator/sources/reddit/{gender}/{age}/YYYYMMDD_reddit_stories.json`
+
+### Advanced Usage
+
+#### Scrape a Single Segment
+
+```bash
+# Scrape only women/18-23
+python3 scripts/reddit_scraper.py --segment women --age 18-23
+```
+
+#### Force Full Scrape (Disable Incremental Mode)
+
+```bash
+# Get all top posts from last week, not just new ones
+python3 scripts/reddit_scraper.py --force-full
+# Or equivalently:
+python3 scripts/reddit_scraper.py --no-incremental
+```
+
+#### Disable Duplicate Tracking
+
+```bash
+# Don't check for duplicates (useful for testing)
+python3 scripts/reddit_scraper.py --no-dedup
+```
+
+#### Combine Options
+
+```bash
+# Full scrape of single segment without dedup
+python3 scripts/reddit_scraper.py --segment men --age 14-17 --force-full --no-dedup
+```
+
+### Command-Line Options
+
+| Option | Description |
+|--------|-------------|
+| `--segment SEGMENT` | Target specific gender (e.g., 'women', 'men') |
+| `--age AGE` | Target specific age (e.g., '10-13', '14-17', '18-23') |
+| `--no-incremental` | Disable incremental scraping (fetch all top posts) |
+| `--no-dedup` | Disable duplicate tracking |
+| `--force-full` | Alias for --no-incremental |
+| `--help` | Show help message and exit |
 
 ### Target Subreddits
 
@@ -93,17 +146,28 @@ The scraper uses predefined subreddit mappings:
 
 ## Output Format
 
-Each segment gets a JSON file with this structure:
+Each segment gets a JSON file with this structure (enhanced fields marked with 🆕):
 
 ```json
 {
   "segment": "women",
   "age_bucket": "18-23",
   "subreddits": ["r/relationships", "r/dating_advice", "r/confession"],
+  "quality_thresholds": {
+    "min_upvotes": 500,
+    "min_comments": 40,
+    "min_text_length": 200
+  },
   "total_scraped": 250,
   "after_filtering": 180,
   "selected": 100,
   "scraped_at": "2024-01-15T10:30:00",
+  "incremental_mode": true,
+  "duplicate_tracking": true,
+  "duplicate_stats": {
+    "total_seen": 1523,
+    "avg_scrapes": 1.8
+  },
   "stories": [
     {
       "id": "abc123",
@@ -113,6 +177,7 @@ Each segment gets a JSON file with this structure:
       "upvotes": 1250,
       "num_comments": 340,
       "created_utc": "2024-01-10T15:20:00",
+      "created_utc_timestamp": 1704892800.0,
       "subreddit": "r/relationships",
       "author": "username",
       "awards": 5,
@@ -124,6 +189,55 @@ Each segment gets a JSON file with this structure:
   ]
 }
 ```
+
+## Enhanced Features Detail
+
+### Incremental Scraping
+
+The scraper maintains state in `data/reddit_scraper_state.json`:
+
+```json
+{
+  "r/relationships": 1704892800.0,
+  "r/dating_advice": 1704889200.0,
+  "r/confession": 1704895400.0
+}
+```
+
+On subsequent runs:
+- Only fetches posts newer than the stored timestamp
+- Significantly reduces API usage
+- Faster execution for regular scrapes
+- Automatically updates timestamps after each successful scrape
+
+### Duplicate Tracking
+
+The scraper uses SQLite database at `data/reddit_scraper_duplicates.db` to track:
+- Post IDs seen across all scrapes
+- First seen timestamp
+- Number of times encountered
+- Original title and subreddit
+
+Benefits:
+- Prevents re-processing the same stories
+- Works across multiple scrape sessions
+- Provides statistics on duplicate rate
+- Helps identify frequently reposted content
+
+### Quality Thresholds
+
+Different age demographics have different thresholds:
+
+| Age Group | Min Upvotes | Min Comments | Min Text Length |
+|-----------|-------------|--------------|-----------------|
+| 10-13 | 300 | 20 | 100 chars |
+| 14-17 | 400 | 30 | 150 chars |
+| 18-23 | 500 | 40 | 200 chars |
+
+This ensures:
+- More engaging content for each demographic
+- Age-appropriate complexity
+- Better quality stories for production use
 
 ## Age Filtering
 
@@ -137,7 +251,9 @@ The scraper implements keyword-based filtering for age-appropriateness:
 
 ## Testing
 
-Run the test suite to verify setup:
+### Basic Tests
+
+Run the basic test suite to verify setup:
 
 ```bash
 python3 tests/test_reddit_scraper.py
@@ -146,17 +262,41 @@ python3 tests/test_reddit_scraper.py
 This tests:
 - ✅ PRAW library installation
 - ✅ Subreddit map configuration
-- ✅ Age filtering logic
+- ✅ Age filtering logic (backward compatible)
 - ✅ Environment variable setup (warnings only)
 - ✅ Output directory creation
 
-## Rate Limiting
+### Enhanced Feature Tests
 
-The scraper respects Reddit's API rate limits:
+Run the comprehensive test suite for v2.0 features:
 
-- Maximum 60 requests per minute
-- 2-second delay between subreddit scrapes
-- Automatic error handling and logging
+```bash
+python3 -m pytest tests/test_reddit_scraper_enhanced.py -v
+```
+
+This tests:
+- ✅ DuplicateTracker: Database creation, duplicate detection, statistics
+- ✅ ScraperState: State persistence, timestamp tracking
+- ✅ Rate Limiting: Exponential backoff, retry logic
+- ✅ Quality Thresholds: Configuration and age-appropriate filtering
+- ✅ Enhanced Filtering: Text length, quality thresholds
+
+**Test Results:**
+- 16 tests total
+- Covers all new features
+- Includes integration scenarios
+
+## Rate Limiting (Enhanced)
+
+The scraper respects Reddit's API rate limits with advanced handling:
+
+- **Base Rate Limiting**: 2-second delay between subreddit scrapes
+- **Exponential Backoff**: Automatic retry on 429 (rate limit) errors
+  - 1st retry: 5 seconds
+  - 2nd retry: 10 seconds
+  - 3rd retry: 20 seconds
+- **Error Detection**: Recognizes rate limit errors from PRAW exceptions
+- **Graceful Degradation**: Continues with next subreddit on persistent errors
 
 ## Error Handling
 
