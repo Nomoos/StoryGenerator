@@ -17,6 +17,7 @@ class PlatformType(Enum):
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
+    FACEBOOK = "facebook"
 
 
 class PrivacyStatus(Enum):

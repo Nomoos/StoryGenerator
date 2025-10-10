@@ -42,6 +42,14 @@ except ImportError:
     InstagramUploader = None
     InstagramAnalytics = None
 
+try:
+    from .facebook_provider import FacebookUploader, FacebookAnalytics
+    _has_facebook = True
+except ImportError:
+    _has_facebook = False
+    FacebookUploader = None
+    FacebookAnalytics = None
+
 __all__ = [
     "MockLLMProvider",
     "AsyncMockLLMProvider",
@@ -69,5 +77,11 @@ if _has_instagram:
     __all__.extend([
         "InstagramUploader",
         "InstagramAnalytics",
+    ])
+
+if _has_facebook:
+    __all__.extend([
+        "FacebookUploader",
+        "FacebookAnalytics",
     ])
 
