@@ -6,7 +6,9 @@
 
 ## Overview
 
-This folder contains high-priority issues that form the core pipeline implementation and critical architecture improvements. These tasks should be started after P0 critical issues are complete. Many of these tasks can be worked on in parallel once dependencies are met.
+This folder contains high-priority issues that form the core pipeline implementation and critical architecture improvements. Many Phase 3 groups have been completed and moved to `/issues/resolved/`. This folder now focuses on remaining implementation work.
+
+**Recent Update:** 30+ completed Phase 3 tasks and Phase 4 Pipeline Orchestration have been moved to `/issues/resolved/` to maintain focus on active work.
 
 ## New Architecture & Code Quality Issues
 
@@ -72,34 +74,25 @@ This folder contains high-priority issues that form the core pipeline implementa
 
 [View Issue →](infrastructure-logging/issue.md)
 
-## Current Issues
-
-### C# Implementation
-
-#### csharp-phase4-pipeline-orchestration
-**Status:** Not Started  
-**Effort:** 24-32 hours  
-**Priority:** P1 (High)  
-**Description:** Build the complete pipeline orchestration system that connects all generators
-
-**Requires:** Phase 3 completion (P0)
-
 ## Implementation Groups
 
-### Content Generation (7 tasks)
-**Location:** `idea-generation/`
+### ✅ COMPLETED - Moved to Resolved
 
-Story idea generation and selection pipeline:
-- Reddit story adaptation
-- LLM-based generation
-- Topic clustering
-- Title generation
-- Title scoring
-- Voice recommendation
-- Top selection
+The following groups have been completed and moved to `/issues/resolved/phase-3-implementation/`:
+- ✅ **Group 2: Idea Generation** (7 tasks) - All complete
+- ✅ **Group 4: Scene Planning** (3 tasks) - All complete
+- ✅ **Group 6: Subtitle Creation** (2 tasks) - All complete
+- ✅ **Group 7: Image Generation** (4 tasks) - All complete
+- ✅ **Group 9: Post-Production** (6 tasks) - All complete
+- ✅ **Group 8: Video Production** (2 of 3 tasks) - Partial completion
 
-### Script Development (5 tasks)
-**Location:** `script-development/`
+Phase 4 Pipeline Orchestration has also been completed and moved to `/issues/resolved/phase-4-pipeline-orchestration/`.
+
+### 🚧 REMAINING ACTIVE GROUPS
+
+### Script Development (5 tasks) - GROUP 3
+**Location:** `script-development/`  
+**Status:** ❌ NOT STARTED
 
 Script creation and refinement:
 - Raw script generation
@@ -108,71 +101,48 @@ Script creation and refinement:
 - GPT-based enhancement
 - Title optimization
 
-### Scene Planning (3 tasks)
-**Location:** `scene-planning/`
+**Priority:** Must complete for end-to-end pipeline
 
-Visual storyboard and shot planning:
-- Beat sheet creation
-- Shot list generation
-- Draft subtitle preparation
-
-### Audio Production (2 tasks)
-**Location:** `audio-production/`
+### Audio Production (2 tasks) - GROUP 5
+**Location:** `audio-production/`  
+**Status:** ❌ NOT STARTED
 
 Voice and audio generation:
 - TTS (Text-to-Speech) generation
 - Audio normalization (LUFS)
 
-### Subtitle Creation (2 tasks)
-**Location:** `subtitle-creation/`
+**Priority:** Critical for video synthesis and subtitle timing
 
-Subtitle timing and synchronization:
-- Forced alignment with Whisper
-- Scene-to-subtitle mapping
+### Video Production (1 task remaining) - GROUP 8
+**Location:** `video-production/`  
+**Status:** ⚠️ PARTIALLY COMPLETE (2 of 3 done)
 
-### Image Generation (4 tasks)
-**Location:** `image-generation/`
+Remaining task:
+- ❌ Variant selection (10-video-03) - NOT IMPLEMENTED
 
-SDXL keyframe generation:
-- Prompt builder
-- Keyframe generation (Batch A)
-- Keyframe generation (Batch B) - variants
-- Selection and quality assessment
+**Note:** LTX generation and interpolation tasks are complete and moved to resolved.
 
-### Video Production (3 tasks)
-**Location:** `video-production/`
-
-Video synthesis from keyframes:
-- LTX-Video generation
-- Frame interpolation (RIFE/FILM)
-- Variant selection
-
-### Post-Production (6 tasks)
-**Location:** `post-production/`
-
-Video finishing and effects:
-- Crop and resize (9:16)
-- Subtitle burn-in
-- Background music & SFX
-- Video concatenation
-- Transitions
-- Color grading
-
-### Quality Control (3 tasks)
-**Location:** `quality-control/`
+### Quality Control (3 tasks) - GROUP 10
+**Location:** `quality-control/`  
+**Status:** ❌ NOT STARTED
 
 Validation and testing:
 - Device preview generation
 - A/V sync checking
 - Quality report generation
 
-### Export & Delivery (3 tasks)
-**Location:** `export-delivery/`
+**Priority:** Pre-delivery validation
+
+### Export & Delivery (3 tasks) - GROUP 11
+**Location:** `export-delivery/`  
+**Status:** ❌ NOT STARTED
 
 Final output preparation:
 - Final encoding
 - Thumbnail generation
 - Metadata preparation
+
+**Priority:** Final encoding and metadata generation
 
 ## Best Practices
 
@@ -202,36 +172,47 @@ Final output preparation:
 
 ## Task Organization
 
-**Total P1 Tasks:** 41 implementation tasks + 1 orchestration task
+**Total P1 Tasks Remaining:** ~14 implementation tasks
 
-### By Category:
-- **Content:** 7 tasks
-- **Scripts:** 5 tasks
-- **Scenes:** 3 tasks
-- **Audio:** 2 tasks
-- **Subtitles:** 2 tasks
-- **Images:** 4 tasks
-- **Video:** 3 tasks
-- **Post:** 6 tasks
-- **QC:** 3 tasks
-- **Export:** 3 tasks
-- **Orchestration:** 1 task
+### Remaining Tasks By Category:
+- **Scripts:** 5 tasks (Group 3)
+- **Audio:** 2 tasks (Group 5)
+- **Video:** 1 task (Group 8 - variant selection)
+- **QC:** 3 tasks (Group 10)
+- **Export:** 3 tasks (Group 11)
 
-### Recommended Order:
-1. **Content pipeline** (if not complete from P0)
-2. **Idea generation** → Script development
-3. **Scene planning** → Audio production
-4. **Image generation** → Video production
-5. **Post-production** → Quality control
-6. **Export & delivery**
-7. **Pipeline orchestration** (integrates all)
+### Completed and Moved to Resolved:
+- **Content/Ideas:** 7 tasks (Group 2) ✅
+- **Scenes:** 3 tasks (Group 4) ✅
+- **Subtitles:** 2 tasks (Group 6) ✅
+- **Images:** 4 tasks (Group 7) ✅
+- **Video:** 2 tasks (Group 8 - partial) ✅
+- **Post:** 6 tasks (Group 9) ✅
+- **Orchestration:** 1 task (Phase 4) ✅
+- **Orchestration:** 1 task (Phase 4) ✅
+
+### Recommended Order for Remaining Work:
+1. **Script Development (Group 3)** - 5 tasks - Required for end-to-end pipeline
+2. **Audio Production (Group 5)** - 2 tasks - Required for video synthesis
+3. **Video variant selection (Group 8)** - 1 task - Quality improvement
+4. **Quality Control (Group 10)** - 3 tasks - Pre-delivery validation
+5. **Export & Delivery (Group 11)** - 3 tasks - Final encoding and metadata
 
 ## Dependencies
 
 **Requires:**
 - ✅ Phase 1: Interface complete
 - ✅ Phase 2: Prototype complete
-- ⏳ P0: Critical tasks (in progress)
+- ✅ P0: Critical tasks complete
+- ✅ Phase 3: Groups 1, 2, 4, 6, 7, 9 complete
+- ✅ Phase 3: Group 8 partially complete
+- ✅ Phase 4: Pipeline orchestration complete
+
+**Remaining Work:**
+- ❌ Phase 3: Group 3 (Script Development) - 5 tasks
+- ❌ Phase 3: Group 5 (Audio Production) - 2 tasks
+- ❌ Phase 3: Group 8 (Video variant selection) - 1 task
+- ❌ Phase 3: Groups 10-11 (QC & Export) - 6 tasks
 
 **Enables:**
 - P2: Publishing and analytics
@@ -240,9 +221,10 @@ Final output preparation:
 
 ---
 
-**Total P1 Issues:** 42 tasks  
-**Estimated Total Effort:** 120-200 hours  
-**Parallelization:** Many tasks can be done simultaneously within groups
+**Total P1 Issues Remaining:** ~14 tasks  
+**Completed and Moved:** 30+ tasks  
+**Estimated Remaining Effort:** 40-60 hours  
+**Progress:** ~68% complete (30 of 44 tasks done)
 
 ## Documentation
 
