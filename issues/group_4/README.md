@@ -1,11 +1,12 @@
-# Group 4: Post-Production & Distribution
+# Group 4: Video Assembly & Distribution
 
 **Focus Areas:**
-- Subtitle creation and timing
+- Video synthesis and composition
 - Post-production effects
-- Quality control
-- Export and delivery
-- Platform distribution
+- Quality control and validation
+- Export and platform distribution
+
+**Independence Level:** ⚡ **Terminal Independent** - Consumes assets from Group 3, handles final assembly and delivery without depending on other groups' ongoing work
 
 ---
 
@@ -20,17 +21,17 @@ See [.NEXT.MD](.NEXT.MD) for the current priority item.
 
 ## 🎯 Responsibilities
 
-### Subtitle Creation
-- Forced alignment with audio
-- Word-level timing
-- Scene mapping
-- Subtitle styling
+### Video Synthesis
+- LTX-Video generation from keyframes
+- Frame interpolation
+- Audio-visual synchronization
+- Video synthesis parameter tuning
 
 ### Post-Production
 - Video variant selection
 - Effects and transitions
-- Color grading
-- Final composition
+- Color grading and enhancement
+- Final composition and rendering
 
 ### Quality Control
 - Automated quality checks
@@ -39,7 +40,7 @@ See [.NEXT.MD](.NEXT.MD) for the current priority item.
 - Compliance verification
 
 ### Export & Delivery
-- Final video export
+- Final video export in multiple formats
 - Metadata generation
 - Thumbnail creation
 - Package preparation
@@ -50,6 +51,17 @@ See [.NEXT.MD](.NEXT.MD) for the current priority item.
 - Instagram publishing
 - Facebook distribution
 - Cross-platform analytics
+
+---
+
+## 🔄 Pipeline Independence
+
+This group operates as the **final assembly and delivery stage**:
+- **Input:** Audio files, keyframe images, and subtitles from Group 3
+- **Output:** Final published videos across platforms
+- **Dependencies:** Assets from Group 3, infrastructure from Group 1
+- **Consumers:** End users and platform audiences
+- **Parallelization:** Multiple platform distributions can occur simultaneously
 
 ---
 

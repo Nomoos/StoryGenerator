@@ -1,10 +1,12 @@
-# Group 3: Media Production
+# Group 3: Audio & Visual Assets
 
 **Focus Areas:**
+- Scene planning and shot lists
 - Audio production (TTS, normalization)
 - Image generation (SDXL keyframes)
-- Video synthesis (LTX-Video)
-- Scene planning
+- Subtitle generation and timing
+
+**Independence Level:** ⚡ **Parallel Independent** - Works with completed scripts, produces multiple asset types in parallel without internal dependencies
 
 ---
 
@@ -23,11 +25,11 @@ See [.NEXT.MD](.NEXT.MD) for the current priority item.
 - Beat sheet creation from scripts
 - Shot list generation
 - Visual prompt engineering
-- Draft subtitle generation
+- Scene-to-shot breakdown
 
 ### Audio Production
 - Text-to-speech generation
-- Audio normalization
+- Audio normalization and enhancement
 - Voice selection and recommendation
 - Audio quality control
 
@@ -35,13 +37,24 @@ See [.NEXT.MD](.NEXT.MD) for the current priority item.
 - SDXL keyframe generation
 - Visual prompt optimization
 - Image quality assessment
-- Style consistency
+- Style consistency validation
 
-### Video Synthesis
-- LTX-Video generation
-- Frame interpolation
-- Video quality control
-- Synthesis parameter tuning
+### Subtitle Generation
+- Forced alignment with audio
+- Word-level timing
+- Subtitle formatting (SRT)
+- Scene-subtitle mapping
+
+---
+
+## 🔄 Pipeline Independence
+
+This group operates in **parallel asset production mode**:
+- **Input:** Completed scripts from Group 2
+- **Output:** Audio files, keyframe images, and timed subtitles
+- **Dependencies:** Scripts from Group 2, infrastructure from Group 1
+- **Consumers:** Provides assets to Group 4 for video assembly
+- **Parallelization:** Audio, images, and subtitles can be produced simultaneously
 
 ---
 

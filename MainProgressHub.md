@@ -103,28 +103,81 @@ Each child issue in `.ISSUES/` should follow this structure:
 - Configuration management
 - Error handling and retry logic
 - Performance monitoring
+- Cross-cutting infrastructure concerns
 
-### Group 2: Content & Ideas
+**Independence:** Provides foundational services used by all groups but doesn't depend on pipeline content
+
+### Group 2: Content to Script Pipeline
 **Focus Areas:**
 - Content collection and sourcing
-- Idea generation
+- Idea generation and scoring
 - Script development and iteration
-- Quality scoring
+- Script quality evaluation
 
-### Group 3: Media Production
+**Independence:** Self-contained from content sourcing through final script, minimal dependencies on other groups
+
+### Group 3: Audio & Visual Assets
 **Focus Areas:**
+- Scene planning and shot lists
 - Audio production (TTS, normalization)
 - Image generation (SDXL keyframes)
-- Video synthesis (LTX-Video)
-- Scene planning
+- Subtitle generation and timing
 
-### Group 4: Post-Production & Distribution
+**Independence:** Works with completed scripts from Group 2, produces assets independently in parallel
+
+### Group 4: Video Assembly & Distribution
 **Focus Areas:**
-- Subtitle creation and timing
+- Video synthesis and composition
 - Post-production effects
-- Quality control
-- Export and delivery
-- Platform distribution
+- Quality control and validation
+- Export and platform distribution
+
+**Independence:** Consumes assets from Group 3, handles final assembly and delivery independently
+
+---
+
+## 🔗 Group Independence Model
+
+The groups are designed to minimize inter-dependencies and enable parallel work:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ Group 1: Foundation & Infrastructure                    │
+│ ✅ No pipeline dependencies                             │
+│ → Provides services to all groups                       │
+└─────────────────────────────────────────────────────────┘
+                         ↓
+┌─────────────────────────────────────────────────────────┐
+│ Group 2: Content to Script Pipeline                     │
+│ ✅ Independent end-to-end pipeline stage                │
+│ → Input: External content sources                       │
+│ → Output: Completed scripts                             │
+└─────────────────────────────────────────────────────────┘
+                         ↓
+┌─────────────────────────────────────────────────────────┐
+│ Group 3: Audio & Visual Assets                          │
+│ ⚡ Parallel asset production (audio, images, subtitles) │
+│ → Input: Scripts from Group 2                           │
+│ → Output: Production assets                             │
+│ → Internal parallelization: No dependencies between     │
+│   audio, image, and subtitle generation                 │
+└─────────────────────────────────────────────────────────┘
+                         ↓
+┌─────────────────────────────────────────────────────────┐
+│ Group 4: Video Assembly & Distribution                  │
+│ ✅ Terminal pipeline stage                              │
+│ → Input: Assets from Group 3                            │
+│ → Output: Published videos                              │
+│ → Internal parallelization: Platform distributions      │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Key Independence Features:**
+- **Sequential dependency only:** Group N+1 depends on Group N's output, not its process
+- **Parallel execution within groups:** Tasks within each group can run simultaneously
+- **Clear handoff points:** Script completion, asset completion, video completion
+- **No circular dependencies:** Linear pipeline flow prevents deadlocks
+- **Infrastructure isolation:** Group 1 provides services without blocking others
 
 ---
 

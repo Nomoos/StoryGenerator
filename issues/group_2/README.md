@@ -1,10 +1,12 @@
-# Group 2: Content & Ideas
+# Group 2: Content to Script Pipeline
 
 **Focus Areas:**
 - Content collection and sourcing
-- Idea generation
+- Idea generation and scoring
 - Script development and iteration
-- Quality scoring
+- Script quality evaluation
+
+**Independence Level:** ✅ **Highly Independent** - Self-contained from content sourcing through final script, minimal dependencies on other groups
 
 ---
 
@@ -32,16 +34,26 @@ See [.NEXT.MD](.NEXT.MD) for the current priority item.
 - Title generation from ideas
 
 ### Script Development
-- Raw script generation
+- Raw script generation from ideas
 - Script scoring and evaluation
-- Iterative improvement
-- GPT-based enhancement
+- Iterative improvement cycles
+- GPT-based script enhancement
 
 ### Quality Scoring
 - Viral potential scoring
 - Content quality metrics
 - Hook and pacing analysis
-- Top idea selection
+- Top idea/script selection
+
+---
+
+## 🔄 Pipeline Independence
+
+This group operates as a **complete pipeline stage**:
+- **Input:** External content sources (Reddit, social media)
+- **Output:** Final, scored scripts ready for production
+- **Dependencies:** Only requires infrastructure from Group 1
+- **Consumers:** Provides scripts to Group 3 for asset production
 
 ---
 
