@@ -248,7 +248,9 @@ def retry_api_call(
     Example:
         @retry_api_call(max_attempts=5)
         def get_openai_completion(prompt: str):
-            response = openai.Completion.create(prompt=prompt)
+            from providers import OpenAIProvider
+            provider = OpenAIProvider()
+            response = provider.generate_completion(prompt)
             return response
     """
     return retry_with_backoff(

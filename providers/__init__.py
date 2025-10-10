@@ -17,6 +17,14 @@ except ImportError:
     OpenAIProvider = None
     AsyncOpenAIProvider = None
 
+# Conditionally import optimized OpenAI provider
+try:
+    from .openai_optimized import OptimizedOpenAIProvider
+    _has_openai_optimized = True
+except ImportError:
+    _has_openai_optimized = False
+    OptimizedOpenAIProvider = None
+
 # Conditionally import platform providers
 try:
     from .youtube_provider import YouTubeUploader, YouTubeAnalytics
@@ -59,6 +67,11 @@ if _has_openai:
     __all__.extend([
         "OpenAIProvider",
         "AsyncOpenAIProvider",
+    ])
+
+if _has_openai_optimized:
+    __all__.extend([
+        "OptimizedOpenAIProvider",
     ])
 
 if _has_youtube:
