@@ -175,6 +175,7 @@ public class JobRepositoryTests : IDisposable
         // Assert
         Assert.True(result.IsSuccess);
         Assert.Equal(2, result.Value!.Count());
+        Assert.NotNull(result.Value);
         Assert.All(result.Value, job => Assert.Equal(JobStatus.Created, job.Status));
     }
 }

@@ -160,6 +160,11 @@ namespace StoryGenerator.Research
             var jsonStr = output.Substring(jsonStart, jsonEnd - jsonStart);
             var measurements = JsonSerializer.Deserialize<LoudnessMeasurements>(jsonStr);
 
+            if (measurements == null)
+            {
+                throw new Exception("Failed to deserialize loudness measurements");
+            }
+
             return measurements;
         }
 
@@ -206,14 +211,22 @@ namespace StoryGenerator.Research
 
             var format = root.GetProperty("format");
 
+            var durationStr = format.GetProperty("duration").GetString();
+            var codecStr = audioStream.Value.GetProperty("codec_name").GetString();
+
+            if (string.IsNullOrEmpty(durationStr))
+            {
+                throw new Exception("Duration not found in audio info");
+            }
+
             return new AudioInfo
             {
-                Duration = double.Parse(format.GetProperty("duration").GetString()),
+                Duration = double.Parse(durationStr),
                 SampleRate = audioStream.Value.GetProperty("sample_rate").GetInt32(),
                 Channels = audioStream.Value.GetProperty("channels").GetInt32(),
-                Codec = audioStream.Value.GetProperty("codec_name").GetString(),
-                BitRate = audioStream.Value.TryGetProperty("bit_rate", out var br) 
-                    ? int.Parse(br.GetString()) 
+                Codec = codecStr ?? "unknown",
+                BitRate = audioStream.Value.TryGetProperty("bit_rate", out var br) && br.GetString() is string brStr
+                    ? int.Parse(brStr) 
                     : 0
             };
         }

@@ -33,7 +33,7 @@ namespace StoryGenerator.Core.Services
         /// </summary>
         public async Task<string> GenerateAlignedSubtitlesAsync(
             string audioPath,
-            string language = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default)
         {
@@ -60,7 +60,7 @@ namespace StoryGenerator.Core.Services
         public async Task<string> GenerateAndSaveSrtAsync(
             string audioPath,
             string outputPath,
-            string language = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default)
         {
@@ -91,7 +91,7 @@ namespace StoryGenerator.Core.Services
         public async Task<string> GenerateAndSaveVttAsync(
             string audioPath,
             string outputPath,
-            string language = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default)
         {
@@ -123,7 +123,7 @@ namespace StoryGenerator.Core.Services
             string audioPath,
             Shotlist shotlist,
             string titleId,
-            string language = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default)
         {
@@ -204,7 +204,7 @@ namespace StoryGenerator.Core.Services
             Shotlist shotlist,
             string titleId,
             string outputPath,
-            string language = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default)
         {

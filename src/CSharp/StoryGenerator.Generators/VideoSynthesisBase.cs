@@ -22,8 +22,8 @@ namespace StoryGenerator.Generators
         /// </summary>
         protected async Task<bool> ExecutePythonScriptAsync(
             string script,
-            Action<string> outputHandler = null,
-            Action<string> errorHandler = null)
+            Action<string>? outputHandler = null,
+            Action<string>? errorHandler = null)
         {
             // Save script to temporary file
             string tempScript = Path.Combine(
@@ -123,7 +123,7 @@ namespace StoryGenerator.Generators
         {
             try
             {
-                string directory = Path.GetDirectoryName(outputPath);
+                string? directory = Path.GetDirectoryName(outputPath);
                 if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                 {
                     Directory.CreateDirectory(directory);

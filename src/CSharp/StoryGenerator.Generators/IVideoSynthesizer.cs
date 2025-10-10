@@ -60,8 +60,8 @@ namespace StoryGenerator.Generators
             string sceneDescription,
             string motionHint,
             string outputPath,
-            string startKeyframe = null,
-            string endKeyframe = null,
+            string? startKeyframe = null,
+            string? endKeyframe = null,
             double duration = 5.0);
     }
     
@@ -82,7 +82,7 @@ namespace StoryGenerator.Generators
             List<string> keyframePaths,
             string outputPath,
             double totalDuration,
-            string audioPath = null);
+            string? audioPath = null);
         
         /// <summary>
         /// Generate complete scene with automatic keyframe generation
@@ -97,8 +97,8 @@ namespace StoryGenerator.Generators
             string sceneDescription,
             string outputPath,
             double duration,
-            string audioPath = null,
-            List<string> stylePrompts = null);
+            string? audioPath = null,
+            List<string>? stylePrompts = null);
     }
     
     /// <summary>

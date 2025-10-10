@@ -105,7 +105,7 @@ namespace StoryGenerator.Research
         public async Task<AudioProcessingResult> ProcessAudioAsync(
             string audioPath,
             string outputDir,
-            string language = null,
+            string? language = null,
             CancellationToken cancellationToken = default)
         {
             Directory.CreateDirectory(outputDir);
@@ -291,9 +291,9 @@ namespace StoryGenerator.Research
     /// </summary>
     public class StoryScript
     {
-        public string Idea { get; set; }
-        public string Script { get; set; }
-        public List<string> SceneDescriptions { get; set; }
+        public string Idea { get; set; } = string.Empty;
+        public string Script { get; set; } = string.Empty;
+        public List<string> SceneDescriptions { get; set; } = new();
         public DateTime GeneratedAt { get; set; }
     }
 
@@ -303,13 +303,13 @@ namespace StoryGenerator.Research
     public class VideoPipelineResult
     {
         public bool Success { get; set; }
-        public string ErrorMessage { get; set; }
-        public StoryScript StoryScript { get; set; }
-        public string ScriptPath { get; set; }
-        public string VoiceoverPath { get; set; }
-        public List<string> KeyframePaths { get; set; }
-        public string FinalVideoPath { get; set; }
-        public string OutputDirectory { get; set; }
+        public string ErrorMessage { get; set; } = string.Empty;
+        public StoryScript StoryScript { get; set; } = new();
+        public string ScriptPath { get; set; } = string.Empty;
+        public string VoiceoverPath { get; set; } = string.Empty;
+        public List<string> KeyframePaths { get; set; } = new();
+        public string FinalVideoPath { get; set; } = string.Empty;
+        public string OutputDirectory { get; set; } = string.Empty;
         public DateTime CompletedAt { get; set; }
     }
 

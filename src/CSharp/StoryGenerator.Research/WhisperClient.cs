@@ -35,8 +35,8 @@ namespace StoryGenerator.Research
             string modelSize = "large-v3",
             string device = "auto",
             string computeType = "float16",
-            string pythonExecutable = null,
-            string scriptPath = null)
+            string? pythonExecutable = null,
+            string? scriptPath = null)
         {
             _modelSize = modelSize;
             _device = device;
@@ -110,7 +110,7 @@ namespace StoryGenerator.Research
         /// <returns>Transcription result</returns>
         public async Task<TranscriptionResult> TranscribeAsync(
             string audioPath,
-            string language = null,
+            string? language = null,
             string task = "transcribe",
             bool wordTimestamps = true,
             bool vadFilter = true,
@@ -163,9 +163,9 @@ namespace StoryGenerator.Research
             // Parse JSON result
             var jsonResponse = JsonSerializer.Deserialize<WhisperJsonResponse>(jsonResult);
 
-            if (!jsonResponse.Success)
+            if (jsonResponse == null || !jsonResponse.Success)
             {
-                throw new Exception($"Whisper transcription failed: {jsonResponse.Error}");
+                throw new Exception($"Whisper transcription failed: {jsonResponse?.Error ?? "Unknown error"}");
             }
 
             // Convert to TranscriptionResult
@@ -205,8 +205,8 @@ namespace StoryGenerator.Research
         /// <returns>SRT content as string</returns>
         public async Task<string> TranscribeToSrtAsync(
             string audioPath,
-            string outputPath = null,
-            string language = null,
+            string? outputPath = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default)
         {
@@ -215,6 +215,11 @@ namespace StoryGenerator.Research
                 language,
                 wordTimestamps: true,
                 cancellationToken: cancellationToken);
+
+            if (result.Words == null)
+            {
+                throw new InvalidOperationException("Transcription did not include word timestamps");
+            }
 
             var srtContent = WordsToSrt(result.Words, maxWordsPerLine);
 
@@ -237,8 +242,8 @@ namespace StoryGenerator.Research
         /// <returns>VTT content as string</returns>
         public async Task<string> TranscribeToVttAsync(
             string audioPath,
-            string outputPath = null,
-            string language = null,
+            string? outputPath = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default)
         {
@@ -247,6 +252,11 @@ namespace StoryGenerator.Research
                 language,
                 wordTimestamps: true,
                 cancellationToken: cancellationToken);
+
+            if (result.Words == null)
+            {
+                throw new InvalidOperationException("Transcription did not include word timestamps");
+            }
 
             var vttContent = WordsToVtt(result.Words, maxWordsPerLine);
 
@@ -376,9 +386,9 @@ namespace StoryGenerator.Research
             // Parse JSON result
             var jsonResponse = JsonSerializer.Deserialize<LanguageDetectionResponse>(jsonResult);
 
-            if (!jsonResponse.Success)
+            if (jsonResponse == null || !jsonResponse.Success)
             {
-                throw new Exception($"Language detection failed: {jsonResponse.Error}");
+                throw new Exception($"Language detection failed: {jsonResponse?.Error ?? "Unknown error"}");
             }
 
             return (jsonResponse.Language, jsonResponse.Confidence);
@@ -496,22 +506,22 @@ namespace StoryGenerator.Research
         public bool Success { get; set; }
 
         [JsonPropertyName("error")]
-        public string Error { get; set; }
+        public string? Error { get; set; }
 
         [JsonPropertyName("text")]
-        public string Text { get; set; }
+        public string Text { get; set; } = string.Empty;
 
         [JsonPropertyName("language")]
-        public string Language { get; set; }
+        public string Language { get; set; } = string.Empty;
 
         [JsonPropertyName("languageProbability")]
         public double LanguageProbability { get; set; }
 
         [JsonPropertyName("segments")]
-        public List<JsonSegment> Segments { get; set; }
+        public List<JsonSegment>? Segments { get; set; }
 
         [JsonPropertyName("words")]
-        public List<JsonWord> Words { get; set; }
+        public List<JsonWord>? Words { get; set; }
     }
 
     /// <summary>
@@ -529,7 +539,7 @@ namespace StoryGenerator.Research
         public double End { get; set; }
 
         [JsonPropertyName("text")]
-        public string Text { get; set; }
+        public string Text { get; set; } = string.Empty;
 
         [JsonPropertyName("confidence")]
         public double? Confidence { get; set; }
@@ -541,7 +551,7 @@ namespace StoryGenerator.Research
     internal class JsonWord
     {
         [JsonPropertyName("word")]
-        public string Word { get; set; }
+        public string Word { get; set; } = string.Empty;
 
         [JsonPropertyName("start")]
         public double Start { get; set; }
@@ -562,10 +572,10 @@ namespace StoryGenerator.Research
         public bool Success { get; set; }
 
         [JsonPropertyName("error")]
-        public string Error { get; set; }
+        public string? Error { get; set; }
 
         [JsonPropertyName("language")]
-        public string Language { get; set; }
+        public string Language { get; set; } = string.Empty;
 
         [JsonPropertyName("confidence")]
         public double Confidence { get; set; }
