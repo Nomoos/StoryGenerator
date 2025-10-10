@@ -60,8 +60,7 @@ obsolete/
 **Root directory now clean:**
 - README.md (essential)
 - CONTRIBUTING.md (essential)
-- CLEANUP.md (maintenance guide)
-- REPOSITORY_CLEANUP_GUIDE.md (maintenance guide)
+- CLEANUP_REPO.md (comprehensive maintenance guide)
 
 ### 3. Deduplication & Canonical Sources ✅
 

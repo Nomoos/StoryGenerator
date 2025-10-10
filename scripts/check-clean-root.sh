@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-allowed_regex='^(\.git|\.gitignore|\.gitattributes|\.editorconfig|\.flake8|\.pre-commit-config\.yaml|README\.md|LICENSE|QUICKSTART\.md|CLEANUP\.md|REPOSITORY_CLEANUP_GUIDE\.md|IMPLEMENTATION_SUMMARY\.md|P0_SECURITY_RESOLUTION_SUMMARY\.md|P1_PARALLEL_TASK_GROUPS\.md|package\.json|pyproject\.toml|pom\.xml|build\.gradle|requirements\.txt|requirements-dev\.txt|\.env\.example|coverage\.xml|src|tests|docs|scripts|assets|examples|data|issues|obsolete|research|config|core|providers|\.github|\.idea|\.pytest_cache)$'
+allowed_regex='^(\.git|\.gitignore|\.gitattributes|\.editorconfig|\.flake8|\.pre-commit-config\.yaml|README\.md|LICENSE|QUICKSTART\.md|CLEANUP_REPO\.md|CONTRIBUTING\.md|package\.json|pyproject\.toml|pom\.xml|build\.gradle|requirements\.txt|requirements-dev\.txt|\.env\.example|coverage\.xml|src|tests|docs|scripts|assets|examples|data|issues|obsolete|research|config|core|providers|\.github|\.idea|\.pytest_cache)$'
 bad=0
 while IFS= read -r entry; do
   base="$(basename "$entry")"
