@@ -141,20 +141,20 @@ Tasks within each phase can be worked in parallel by different team members.
 ## Links
 
 ### Documentation
-- **Hub:** [MainProgressHub.md](MainProgressHub.md) - Overall progress structure
-- **Roadmap:** [docs/roadmaps/HYBRID_ROADMAP.md](docs/roadmaps/HYBRID_ROADMAP.md) - Project roadmap
-- **Status:** [issues/group_1/GROUP_1_STATUS.md](issues/group_1/GROUP_1_STATUS.md) - Detailed Group 1 status
+- **Hub:** [MainProgressHub.md](../../MainProgressHub.md) - Overall progress structure
+- **Roadmap:** [docs/roadmaps/HYBRID_ROADMAP.md](../../docs/roadmaps/HYBRID_ROADMAP.md) - Project roadmap
+- **Status:** [GROUP_1_STATUS.md](GROUP_1_STATUS.md) - Detailed Group 1 status
 
 ### Group 1 Resources
-- **README:** [issues/group_1/README.md](issues/group_1/README.md)
-- **Current Focus:** [issues/group_1/.NEXT.MD](issues/group_1/.NEXT.MD)
-- **Open Issues:** [issues/group_1/.ISSUES/](issues/group_1/.ISSUES/)
-- **Completed:** [issues/group_1/.DONE/](issues/group_1/.DONE/)
+- **README:** [README.md](README.md)
+- **Current Focus:** [.NEXT.MD](.NEXT.MD)
+- **Open Issues:** [.ISSUES/](.ISSUES/)
+- **Completed:** [.DONE/](.DONE/)
 
 ### Related Work
-- **Infrastructure Summary:** [docs/implementation/csharp/INFRASTRUCTURE_IMPLEMENTATION.md](docs/implementation/csharp/INFRASTRUCTURE_IMPLEMENTATION.md)
-- **P1 High Priority:** [issues/p1-high/README.md](issues/p1-high/README.md)
-- **Other Groups:** [group_2](issues/group_2/), [group_3](issues/group_3/), [group_4](issues/group_4/)
+- **Infrastructure Summary:** [docs/implementation/csharp/INFRASTRUCTURE_IMPLEMENTATION.md](../../docs/implementation/csharp/INFRASTRUCTURE_IMPLEMENTATION.md)
+- **P1 High Priority:** [issues/p1-high/README.md](../p1-high/README.md)
+- **Other Groups:** [group_2](../group_2/), [group_3](../group_3/), [group_4](../group_4/)
 
 ---
 
