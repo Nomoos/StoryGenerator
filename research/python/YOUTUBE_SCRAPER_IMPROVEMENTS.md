@@ -255,8 +255,73 @@ These improvements make the YouTube Channel Scraper:
 - ✅ Less error-prone (no overwrites)
 - ✅ More maintainable (clear data structure)
 - ✅ Backward compatible (existing scripts work)
+- ✅ **NEW: Download high-view shorts** (10M+ views by default)
+
+## NEW: Download High-View Shorts Feature
+
+### Overview
+
+The scraper can now automatically download shorts that exceed a view threshold (default: 10 million views). This is useful for analyzing viral content and understanding what makes shorts successful.
+
+### Usage
+
+```bash
+# Download shorts with over 10M views
+python youtube_channel_scraper.py @channel --top 20 --download-high-views
+
+# Custom threshold (e.g., 5M views)
+python youtube_channel_scraper.py @channel --top 20 --download-high-views --view-threshold 5000000
+
+# Combined with story filtering
+python youtube_channel_scraper.py @channel --top 30 --story-only --download-high-views
+```
+
+### Output Structure
+
+When downloads are enabled, a `downloads/` subdirectory is created:
+
+```
+/tmp/youtube_channel_data/
+└── UCxxx_ChannelName/
+    ├── channel_report.md
+    ├── channel_data.json
+    ├── channel_data_summary.md
+    ├── downloads/              # NEW: Downloaded videos
+    │   ├── video1.mp4
+    │   ├── video2.mp4
+    │   └── ...
+    ├── video1.info.json
+    └── ...
+```
+
+### Command Line Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `--download-high-views` | flag | disabled | Enable downloading of high-view shorts |
+| `--view-threshold` | integer | 10000000 | Minimum view count to download (10 million) |
+
+### Example Output
+
+```
+📺 Channel: @channel
+📊 Shorts to scrape: Top 20
+📖 Story-Only Mode: DISABLED (will include all videos)
+📥 Download Mode: ENABLED (will download shorts with >10,000,000 views)
+
+[Processing...]
+
+✅ Scraping complete!
+📁 Channel-specific output directory: /tmp/youtube_channel_data/UCxxx_Channel
+📄 Report: channel_report.md
+💾 JSON data: channel_data.json
+📥 Downloaded 5 shorts with >10,000,000 views
+📁 Downloads directory: downloads/
+```
+
+For complete documentation on the download feature, see [DOWNLOAD_FEATURE.md](DOWNLOAD_FEATURE.md).
 
 ---
 
 **Updated**: January 2025
-**Version**: 2.0
+**Version**: 2.1

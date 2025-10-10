@@ -136,13 +136,15 @@ class YouTubeChannelScraper:
         'podcast', 'interview', 'q&a', 'q and a', 'challenge', 'prank',
     ]
     
-    def __init__(self, output_dir: str = "/tmp/youtube_channel_data", story_only: bool = False):
+    def __init__(self, output_dir: str = "/tmp/youtube_channel_data", story_only: bool = False, download_high_views: bool = False, view_threshold: int = 10000000):
         """
         Initialize scraper.
         
         Args:
             output_dir: Directory to store scraped data
             story_only: If True, only include videos detected as story videos
+            download_high_views: If True, download videos with views above threshold
+            view_threshold: Minimum view count to download videos (default: 10 million)
         """
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -151,6 +153,70 @@ class YouTubeChannelScraper:
         self.channel_name: Optional[str] = None
         self.story_only = story_only
         self.filtered_count = 0  # Track how many videos were filtered out
+        self.download_high_views = download_high_views
+        self.view_threshold = view_threshold
+        self.downloaded_videos: List[str] = []  # Track downloaded video IDs
+    
+    def download_video(self, video_id: str, video_metadata: VideoMetadata) -> bool:
+        """
+        Download a video if its view count exceeds the threshold.
+        
+        Args:
+            video_id: YouTube video ID
+            video_metadata: VideoMetadata object with view count info
+            
+        Returns:
+            True if download was successful, False otherwise
+        """
+        if not self.download_high_views:
+            return False
+        
+        # Check if views exceed threshold
+        if video_metadata.view_count < self.view_threshold:
+            return False
+        
+        print(f"    🎯 Video has {video_metadata.view_count:,} views (threshold: {self.view_threshold:,})")
+        print(f"    📥 Downloading video...")
+        
+        video_url = f"https://www.youtube.com/watch?v={video_id}"
+        
+        # Get channel-specific directory for downloads
+        channel_dir = self._get_channel_output_dir()
+        downloads_dir = channel_dir / "downloads"
+        downloads_dir.mkdir(parents=True, exist_ok=True)
+        
+        output_template = str(downloads_dir / f"{video_id}.%(ext)s")
+        
+        # Download command with best quality
+        cmd = [
+            "yt-dlp",
+            "-f", "best",  # Download best quality
+            "-o", output_template,
+            video_url
+        ]
+        
+        try:
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=300  # 5 minutes timeout for download
+            )
+            
+            if result.returncode == 0:
+                self.downloaded_videos.append(video_id)
+                print(f"    ✅ Downloaded: {video_id}")
+                return True
+            else:
+                print(f"    ⚠️ Download failed for {video_id}: {result.stderr[:200]}")
+                return False
+                
+        except subprocess.TimeoutExpired:
+            print(f"    ⚠️ Download timeout for {video_id}")
+            return False
+        except Exception as e:
+            print(f"    ⚠️ Download error for {video_id}: {e}")
+            return False
     
     def check_dependencies(self) -> bool:
         """Check if required dependencies are installed."""
@@ -441,6 +507,10 @@ class YouTubeChannelScraper:
                 return None
             
             self.videos.append(metadata)
+            
+            # Download video if enabled and view threshold is met
+            if self.download_high_views:
+                self.download_video(video_id, metadata)
             
             # Save video info as markdown for easier viewing
             self._save_video_info_as_markdown(metadata)
@@ -753,6 +823,11 @@ class YouTubeChannelScraper:
         # Calculate format-specific statistics
         shorts = [v for v in self.videos if v.video_format == 'short']
         
+        # Calculate story video statistics
+        story_videos = [v for v in self.videos if v.is_story_video]
+        non_story_videos = [v for v in self.videos if not v.is_story_video]
+        avg_story_confidence = sum(v.story_confidence_score for v in self.videos if v.story_confidence_score) / len(self.videos) if self.videos else 0
+        
         # Build report title with channel info
         channel_info = ""
         if self.channel_name:
@@ -760,19 +835,13 @@ class YouTubeChannelScraper:
         if self.channel_id:
             channel_info += f" ({self.channel_id})"
         
-        report = f"""# YouTube Channel Scraping Report{channel_info}
+        report = f"""# YouTube Channel Scraping Report (Shorts Only){channel_info}
 
 ## Channel Information
 
 - **Channel Name**: {self.channel_name or 'N/A'}
 - **Channel ID**: {self.channel_id or 'N/A'}
 - **Scrape Date**: {self._get_timestamp()}
-        # Calculate story video statistics
-        story_videos = [v for v in self.videos if v.is_story_video]
-        non_story_videos = [v for v in self.videos if not v.is_story_video]
-        avg_story_confidence = sum(v.story_confidence_score for v in self.videos if v.story_confidence_score) / len(self.videos) if self.videos else 0
-        
-        report = f"""# YouTube Channel Scraping Report (Shorts Only)
 
 ## Summary Statistics
 
@@ -801,6 +870,18 @@ class YouTubeChannelScraper:
 - **Story Videos Detected**: {len(story_videos)} ({len(story_videos)/len(self.videos)*100:.1f}% of total)
 - **Non-Story Videos**: {len(non_story_videos)} ({len(non_story_videos)/len(self.videos)*100:.1f}% of total)
 - **Average Story Confidence**: {avg_story_confidence:.2f}
+"""
+        
+        # Add download information if download mode was used
+        if self.download_high_views:
+            high_view_videos = [v for v in self.videos if v.view_count >= self.view_threshold]
+            report += f"""
+## Video Downloads (High Views)
+
+- **Download Threshold**: {self.view_threshold:,} views
+- **Videos Above Threshold**: {len(high_view_videos)} ({len(high_view_videos)/len(self.videos)*100:.1f}% of total)
+- **Videos Downloaded**: {len(self.downloaded_videos)}
+- **Downloads Directory**: `downloads/`
 """
         
         report += f"""
@@ -1118,6 +1199,13 @@ Common words in titles:
                 'average_story_confidence': round(avg_story_confidence, 2),
                 'story_videos_percentage': round(len(story_videos) / len(self.videos) * 100, 1) if self.videos else 0,
             },
+            'download_info': {
+                'download_enabled': self.download_high_views,
+                'view_threshold': self.view_threshold,
+                'videos_above_threshold': len([v for v in self.videos if v.view_count >= self.view_threshold]),
+                'videos_downloaded': len(self.downloaded_videos),
+                'downloaded_video_ids': self.downloaded_videos,
+            },
             'shorts_breakdown': {
                 'count': len(shorts),
                 'total_views': sum(v.view_count for v in shorts),
@@ -1149,8 +1237,7 @@ Common words in titles:
             json.dump(data, f, indent=2)
         
         print(f"✅ JSON data saved to: {output_path}")
-        print(f"   📊 Included {len(self.videos)} videos with comprehensive analytics")
-        print(f"   🎬 Shorts: {len(shorts)}, 📹 Long: {len(longs)}")
+        print(f"   📊 Included {len(self.videos)} shorts with comprehensive analytics")
         
         # Create markdown version for easier GitHub viewing
         md_path = output_path.replace('.json', '_summary.md')
@@ -1295,6 +1382,17 @@ def main():
         action='store_true',
         help='Only include videos detected as story videos in the analysis (filters out non-story content)'
     )
+    parser.add_argument(
+        '--download-high-views',
+        action='store_true',
+        help='Download shorts with views above the threshold (default: 10 million views)'
+    )
+    parser.add_argument(
+        '--view-threshold',
+        type=int,
+        default=10000000,
+        help='Minimum view count to download videos (default: 10000000 = 10 million)'
+    )
     
     args = parser.parse_args()
     
@@ -1323,11 +1421,21 @@ def main():
     print(f"📺 Channel: {channel}")
     print(f"📊 Shorts to scrape: Top {args.top}")
     if args.story_only:
-        print("📖 Story-Only Mode: ENABLED (will filter out non-story videos)\n")
+        print("📖 Story-Only Mode: ENABLED (will filter out non-story videos)")
     else:
-        print("📖 Story-Only Mode: DISABLED (will include all videos)\n")
+        print("📖 Story-Only Mode: DISABLED (will include all videos)")
+    if args.download_high_views:
+        print(f"📥 Download Mode: ENABLED (will download shorts with >{args.view_threshold:,} views)")
+    else:
+        print("📥 Download Mode: DISABLED")
+    print()
     
-    scraper = YouTubeChannelScraper(output_dir=args.output, story_only=args.story_only)
+    scraper = YouTubeChannelScraper(
+        output_dir=args.output, 
+        story_only=args.story_only,
+        download_high_views=args.download_high_views,
+        view_threshold=args.view_threshold
+    )
     videos = scraper.scrape_channel(channel, args.top)
     
     if videos:
@@ -1345,11 +1453,12 @@ def main():
         print(f"📄 Report: {channel_dir / 'channel_report.md'}")
         print(f"💾 JSON data: {channel_dir / 'channel_data.json'}")
         print(f"📄 Markdown summary: {channel_dir / 'channel_data_summary.md'}")
-        print(f"📁 Output directory: {args.output}")
-        print(f"📄 Report: {report_path}")
-        print(f"💾 JSON data: {json_path}")
         if args.story_only and scraper.filtered_count > 0:
             print(f"📖 Filtered out {scraper.filtered_count} non-story videos")
+        if args.download_high_views:
+            print(f"📥 Downloaded {len(scraper.downloaded_videos)} shorts with >{args.view_threshold:,} views")
+            if scraper.downloaded_videos:
+                print(f"📁 Downloads directory: {channel_dir / 'downloads'}")
     else:
         print("\n❌ No videos scraped")
         sys.exit(1)
