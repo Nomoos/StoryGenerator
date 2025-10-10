@@ -393,6 +393,26 @@ This documentation set was created in **January 2025** as part of a comprehensiv
 
 ---
 
+## 📁 Project Status & Reports
+
+**Implementation Status & Summaries:**
+
+- **[HYBRID_ROADMAP.md](HYBRID_ROADMAP.md)** - 🎯 **PRIMARY STATUS SOURCE** - Complete implementation roadmap with progress tracking
+- **[ROADMAP_ANALYSIS.md](ROADMAP_ANALYSIS.md)** - Current status and next steps analysis
+- **[CONTENT_FILTER.md](CONTENT_FILTER.md)** - ⭐ **NEW** - Demonetization word filtering and content safety
+- **[summaries/](summaries/)** - Completion summaries for phases and groups
+  - Group implementation summaries (Groups 3, 4, 5)
+  - Phase completion summaries (Phase 4, Implementation)
+  - Priority completion summaries (P0 Security)
+  - Repository organization summaries
+- **[reports/](reports/)** - Technical reports and analysis
+  - Pipeline compatibility report
+- **[NEXT_STEPS.md](NEXT_STEPS.md)** - Next steps and planning
+- **[NEXT_PHASE3_TASKS.md](NEXT_PHASE3_TASKS.md)** - Phase 3 task planning
+- **[P1_PARALLEL_TASK_GROUPS.md](P1_PARALLEL_TASK_GROUPS.md)** - P1 task execution groups
+
+---
+
 **Happy story generating! 🎬✨**
 
 For questions or issues, refer to the appropriate documentation above or open a GitHub issue.

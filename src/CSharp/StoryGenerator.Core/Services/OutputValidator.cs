@@ -14,10 +14,12 @@ namespace StoryGenerator.Core.Services
     public class OutputValidator
     {
         private readonly ILogger<OutputValidator> _logger;
+        private readonly IContentFilter? _contentFilter;
 
-        public OutputValidator(ILogger<OutputValidator> logger)
+        public OutputValidator(ILogger<OutputValidator> logger, IContentFilter? contentFilter = null)
         {
             _logger = logger;
+            _contentFilter = contentFilter;
         }
 
         /// <summary>
@@ -95,8 +97,9 @@ namespace StoryGenerator.Core.Services
         /// </summary>
         /// <param name="filePath">Path to text file</param>
         /// <param name="minLength">Minimum expected length in characters</param>
+        /// <param name="checkDemonetization">Whether to check for demonetized content</param>
         /// <returns>Tuple of (is_valid, metrics_dict)</returns>
-        public (bool IsValid, OutputMetrics Metrics) ValidateTextFile(string filePath, int minLength = 100)
+        public (bool IsValid, OutputMetrics Metrics) ValidateTextFile(string filePath, int minLength = 100, bool checkDemonetization = false)
         {
             var metrics = new OutputMetrics
             {
@@ -140,6 +143,22 @@ namespace StoryGenerator.Core.Services
                 {
                     _logger.LogWarning("Text file is empty or whitespace only: {FilePath}", filePath);
                     return (false, metrics);
+                }
+
+                // Check for demonetized content if requested and filter is available
+                if (checkDemonetization && _contentFilter != null)
+                {
+                    var filterResult = _contentFilter.CheckContent(content);
+                    metrics.ContentFilterResult = filterResult;
+                    
+                    if (!filterResult.IsClean)
+                    {
+                        _logger.LogWarning("Content contains {Count} potentially demonetized words/phrases: {FilePath}",
+                            filterResult.FlaggedWords.Count, filePath);
+                        
+                        // Don't fail validation, just warn
+                        // This allows the content to proceed but alerts the user
+                    }
                 }
 
                 metrics.IsValid = true;
@@ -366,5 +385,6 @@ namespace StoryGenerator.Core.Services
         public double DurationSeconds { get; set; }
         public int Bitrate { get; set; }
         public bool IsValid { get; set; }
+        public ContentFilterResult? ContentFilterResult { get; set; }
     }
 }

@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <!-- Treat warnings as errors in Release builds -->
+    <TreatWarningsAsErrors Condition="'$(Configuration)' == 'Release'">true</TreatWarningsAsErrors>
+    
+    <!-- For now, only treat specific high-priority warnings as errors in Debug -->
+    <!-- This allows gradual improvement without blocking development -->
+    <WarningsAsErrors Condition="'$(Configuration)' == 'Debug'">CS8600;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625</WarningsAsErrors>
+  </PropertyGroup>
+</Project>

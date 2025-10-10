@@ -14,49 +14,46 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "Python"))
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from Generators.GVision import GVision
-from Tools.VisionUtils import (
-    check_gpu_available,
-    estimate_vram_usage,
-    find_keyframe_images
-)
+from Tools.VisionUtils import check_gpu_available, estimate_vram_usage, find_keyframe_images
 
 
 def example_basic_usage():
     """Example: Basic initialization and model info."""
-    print("="*60)
+    print("=" * 60)
     print("Example 1: Basic Initialization")
-    print("="*60)
-    
+    print("=" * 60)
+
     # Check GPU availability
     gpu_available, device_name = check_gpu_available()
     print(f"\nDevice: {device_name}")
-    
+
     # Initialize generator (without loading model)
     generator = GVision(model_name="phi-3.5-vision", load_model=False)
-    
+
     print("\nSupported models:")
     for name in GVision.SUPPORTED_MODELS.keys():
         vram = estimate_vram_usage(name)
         print(f"  - {name}: {vram} VRAM")
-    
+
     print("\n✅ Generator initialized successfully")
     print("Note: Model will be loaded on first use\n")
 
 
 def example_caption_generation():
     """Example: Generate captions for images (requires model)."""
-    print("="*60)
+    print("=" * 60)
     print("Example 2: Caption Generation")
-    print("="*60)
-    
+    print("=" * 60)
+
     print("\nThis example requires transformers library and model download")
     print("To run this example:")
     print("1. Install transformers: pip install transformers")
     print("2. Ensure you have sufficient RAM/VRAM")
     print("3. First run will download the model (~3-8GB)")
-    
+
     print("\nExample code:")
-    print("""
+    print(
+        """
     from Python.Generators.GVision import GVision
     
     # Initialize with model loading
@@ -66,19 +63,21 @@ def example_caption_generation():
     caption = generator.generate_caption("path/to/image.jpg")
     print(f"Caption: {caption.caption}")
     print(f"Model: {caption.model_used}")
-    """)
+    """
+    )
 
 
 def example_quality_assessment():
     """Example: Assess image quality (requires model)."""
-    print("="*60)
+    print("=" * 60)
     print("Example 3: Quality Assessment")
-    print("="*60)
-    
+    print("=" * 60)
+
     print("\nThis example requires transformers library")
-    
+
     print("\nExample code:")
-    print("""
+    print(
+        """
     from Python.Generators.GVision import GVision
     
     # Initialize generator
@@ -93,19 +92,21 @@ def example_quality_assessment():
     print(f"Average: {quality.average_score():.1f}/10")
     print(f"Artifacts Detected: {quality.artifacts_detected}")
     print(f"Reasoning: {quality.reasoning}")
-    """)
+    """
+    )
 
 
 def example_consistency_check():
     """Example: Check consistency between images (requires model)."""
-    print("="*60)
+    print("=" * 60)
     print("Example 4: Consistency Check")
-    print("="*60)
-    
+    print("=" * 60)
+
     print("\nThis example requires transformers library")
-    
+
     print("\nExample code:")
-    print("""
+    print(
+        """
     from Python.Generators.GVision import GVision
     
     # Initialize generator
@@ -126,19 +127,21 @@ def example_consistency_check():
         print("Inconsistencies found:")
         for issue in consistency.inconsistencies:
             print(f"  - {issue}")
-    """)
+    """
+    )
 
 
 def example_storyboard_validation():
     """Example: Validate entire storyboard (requires model)."""
-    print("="*60)
+    print("=" * 60)
     print("Example 5: Storyboard Validation")
-    print("="*60)
-    
+    print("=" * 60)
+
     print("\nThis example requires transformers library")
-    
+
     print("\nExample code:")
-    print("""
+    print(
+        """
     from Python.Generators.GVision import GVision
     from Python.Tools.VisionUtils import find_keyframe_images
     
@@ -174,19 +177,21 @@ def example_storyboard_validation():
     
     # Clean up resources
     generator.cleanup()
-    """)
+    """
+    )
 
 
 def example_integration_with_pipeline():
     """Example: Integration with video pipeline."""
-    print("="*60)
+    print("=" * 60)
     print("Example 6: Pipeline Integration")
-    print("="*60)
-    
+    print("=" * 60)
+
     print("\nIntegrating vision guidance with keyframe generation:")
-    
+
     print("\nExample code:")
-    print("""
+    print(
+        """
     from Python.Generators.GVision import GVision
     from Python.Generators.GKeyframeGenerator import KeyframeGenerator
     
@@ -216,28 +221,29 @@ def example_integration_with_pipeline():
     
     # Clean up
     vision_gen.cleanup()
-    """)
+    """
+    )
 
 
 def main():
     """Run all examples."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("VISION GUIDANCE - USAGE EXAMPLES")
-    print("="*60 + "\n")
-    
+    print("=" * 60 + "\n")
+
     example_basic_usage()
     example_caption_generation()
     example_quality_assessment()
     example_consistency_check()
     example_storyboard_validation()
     example_integration_with_pipeline()
-    
-    print("\n" + "="*60)
+
+    print("\n" + "=" * 60)
     print("For more information, see:")
     print("  - PIPELINE.md (Section 4: Vision Guidance)")
     print("  - docs/CHILD_ISSUES.md (Vision Guidance Integration)")
     print("  - tests/test_vision.py (Working examples)")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
 
 
 if __name__ == "__main__":

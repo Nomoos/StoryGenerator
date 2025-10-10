@@ -12,9 +12,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "Python"))
 # Add project root for config
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-print("="*60)
+print("=" * 60)
 print("Vision Guidance Utilities Demo")
-print("="*60)
+print("=" * 60)
 
 # Demo 1: Data Models
 print("\n1. Data Models Demo")
@@ -31,7 +31,7 @@ quality = QualityScore(
     lighting=7.5,
     subject_clarity=8.0,
     artifacts_detected=False,
-    reasoning="High quality image with excellent composition"
+    reasoning="High quality image with excellent composition",
 )
 
 print(f"Quality Score: {quality.average_score():.1f}/10")
@@ -46,7 +46,7 @@ consistency = ConsistencyScore(
     lighting_consistency=8.0,
     visual_continuity=9.0,
     inconsistencies=["Minor lighting variation"],
-    reasoning="Excellent consistency with only minor variations"
+    reasoning="Excellent consistency with only minor variations",
 )
 
 print(f"\nConsistency Score: {consistency.average_score():.1f}/10")
@@ -128,24 +128,24 @@ print("-" * 60)
 
 try:
     from Generators.GVision import GVision
-    
+
     print("Supported models:")
     for name, model_id in GVision.SUPPORTED_MODELS.items():
         vram = estimate_vram_usage(name)
         print(f"  - {name}")
         print(f"    Model ID: {model_id}")
         print(f"    VRAM: {vram}")
-    
+
     print("\n✅ GVision generator available")
     print("Note: transformers library required for actual inference")
-    
+
 except ImportError as e:
     print(f"⚠️  GVision not fully available: {e}")
     print("This is expected if transformers is not installed")
 
-print("\n" + "="*60)
+print("\n" + "=" * 60)
 print("Demo Complete!")
-print("="*60)
+print("=" * 60)
 print("\nFor full examples with model inference, see:")
 print("  - examples/vision_guidance_example.py")
 print("  - docs/VISION_GUIDANCE.md")
