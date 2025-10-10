@@ -13,18 +13,18 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 <td width="50%">
 
 ### 🏁 Getting Started
-- **[Quick Start Guide](docs/GETTING_STARTED.md)** - Get up and running in 15 minutes
-- **[Installation](docs/INSTALLATION.md)** - Detailed setup instructions
-- **[Hardware Requirements](docs/HARDWARE_REQUIREMENTS.md)** - Choose the right hardware
-- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Common issues and solutions
+- **[Quick Start Guide](docs/quickstarts/general/GETTING_STARTED.md)** - Get up and running in 15 minutes
+- **[Installation](docs/guides/setup/INSTALLATION.md)** - Detailed setup instructions
+- **[Hardware Requirements](docs/hardware/HARDWARE_REQUIREMENTS.md)** - Choose the right hardware
+- **[Troubleshooting](docs/guides/general/TROUBLESHOOTING.md)** - Common issues and solutions
 
 </td>
 <td width="50%">
 
 ### 📖 Core Documentation
-- **[Features](docs/FEATURES.md)** - Complete feature list
-- **[Pipeline Overview](docs/PIPELINE.md)** - How the pipeline works
-- **[Architecture](docs/ARCHITECTURE.md)** - System design
+- **[Features](docs/features/FEATURES.md)** - Complete feature list
+- **[Pipeline Overview](docs/pipeline/PIPELINE.md)** - How the pipeline works
+- **[Architecture](docs/architecture/ARCHITECTURE.md)** - System design
 - **[Examples](docs/EXAMPLES.md)** - Input/output examples
 
 </td>
@@ -34,20 +34,20 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 
 ### 🔨 For Developers
 - **[C# Implementation Guide](src/CSharp/IMPLEMENTATION_GUIDE.md)** - Development guide
-- **[Pipeline Quick Start](docs/QUICK_START_GUIDE.md)** - Developer quick start
+- **[Pipeline Quick Start](docs/quickstarts/general/QUICK_START_GUIDE.md)** - Developer quick start
 - **[SOLID Principles](src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md)** - Code standards
-- **[Testing Guide](docs/TDD_GUIDE.md)** - Test-driven development
+- **[Testing Guide](docs/testing/tdd/TDD_GUIDE.md)** - Test-driven development
 - **[Contributing](CONTRIBUTING.md)** - How to contribute
 
 </td>
 <td>
 
 ### 🎨 For Content Creators
-- **[Idea Collector](docs/IDEA_COLLECTOR.md)** - Content source collection
-- **[Script Improvement](docs/SCRIPT_IMPROVEMENT_QUICKSTART.md)** - Enhance scripts
-- **[Title Optimization](docs/TITLE_IMPROVEMENT.md)** - Viral title generation
-- **[Video Export](docs/VIDEO_EXPORT.md)** - Export and metadata
-- **[Quality Control](docs/VIDEO_QUALITY_CONTROL.md)** - QC reports
+- **[Idea Collector](docs/content/ideas/IDEA_COLLECTOR.md)** - Content source collection
+- **[Script Improvement](docs/quickstarts/content/SCRIPT_IMPROVEMENT_QUICKSTART.md)** - Enhance scripts
+- **[Title Optimization](docs/content/ideas/TITLE_IMPROVEMENT.md)** - Viral title generation
+- **[Video Export](docs/content/video/VIDEO_EXPORT.md)** - Export and metadata
+- **[Quality Control](docs/content/video/VIDEO_QUALITY_CONTROL.md)** - QC reports
 
 </td>
 </tr>
@@ -55,23 +55,23 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 <td>
 
 ### 🔬 Research & Architecture
-- **[Technology Stack](docs/TECHNOLOGY_STACK_FINAL.md)** - C# + Python + SQLite
-- **[Hybrid Architecture](docs/HYBRID_ARCHITECTURE_QUICKREF.md)** - Architecture guide
-- **[Hybrid Roadmap](docs/HYBRID_ROADMAP.md)** - 📋 Complete implementation status
-- **[Roadmap Analysis](docs/ROADMAP_ANALYSIS.md)** - 🎯 **NEW: Current status & next steps**
-- **[GPU Comparison](docs/GPU_COMPARISON.md)** - Hardware benchmarks
-- **[Models Documentation](docs/MODELS.md)** - ML model references
-- **[C# vs Python](docs/CSHARP_VS_PYTHON_COMPARISON.md)** - Technology comparison
+- **[Technology Stack](docs/architecture/hybrid/TECHNOLOGY_STACK_FINAL.md)** - C# + Python + SQLite
+- **[Hybrid Architecture](docs/architecture/hybrid/HYBRID_ARCHITECTURE_QUICKREF.md)** - Architecture guide
+- **[Hybrid Roadmap](docs/roadmaps/HYBRID_ROADMAP.md)** - 📋 Complete implementation status
+- **[Roadmap Analysis](docs/roadmaps/ROADMAP_ANALYSIS.md)** - 🎯 **NEW: Current status & next steps**
+- **[GPU Comparison](docs/hardware/GPU_COMPARISON.md)** - Hardware benchmarks
+- **[Models Documentation](docs/features/MODELS.md)** - ML model references
+- **[C# vs Python](docs/architecture/hybrid/CSHARP_VS_PYTHON_COMPARISON.md)** - Technology comparison
 
 </td>
 <td>
 
 ### 🔐 Security & Maintenance
-- **[Security Checklist](docs/SECURITY_CHECKLIST.md)** - Security procedures
+- **[Security Checklist](docs/features/system/SECURITY_CHECKLIST.md)** - Security procedures
 - **[Repository Cleanup](CLEANUP_REPO.md)** - Maintenance guide
-- **[Issue Tracking](docs/ISSUE_TRACKING.md)** - Task management
+- **[Issue Tracking](docs/guides/issues/ISSUE_TRACKING.md)** - Task management
 - **[Migration Guide](src/CSharp/MIGRATION_GUIDE.md)** - Python to C#
-- **[Roadmap](docs/IMPLEMENTATION_ROADMAP.md)** - Development timeline
+- **[Roadmap](docs/roadmaps/IMPLEMENTATION_ROADMAP.md)** - Development timeline
 
 </td>
 </tr>
@@ -91,7 +91,7 @@ StoryGenerator automates the creation of emotional, dramatic vertical stories ta
 - 🎬 Complete video export with metadata and thumbnails
 - 📊 Automated quality control and reporting
 
-➡️ **[See full feature list](docs/FEATURES.md)**
+➡️ **[See full feature list](docs/features/FEATURES.md)**
 
 ---
 
@@ -107,7 +107,7 @@ StoryGenerator uses a **hybrid C# + Python architecture**:
 - Python gives access to the rich ML ecosystem
 - Best of both worlds for production-grade content generation
 
-➡️ **[Learn more about the architecture](docs/ARCHITECTURE.md)**
+➡️ **[Learn more about the architecture](docs/architecture/ARCHITECTURE.md)**
 
 ---
 
@@ -140,7 +140,7 @@ cp .env.example .env
 # Edit .env and add your API keys
 ```
 
-➡️ **[Complete setup guide](docs/GETTING_STARTED.md)** | **[Troubleshooting](docs/TROUBLESHOOTING.md)**
+➡️ **[Complete setup guide](docs/quickstarts/general/GETTING_STARTED.md)** | **[Troubleshooting](docs/guides/general/TROUBLESHOOTING.md)**
 
 ---
 
@@ -161,7 +161,7 @@ The complete pipeline consists of several major stages:
 | **Video Synthesis** | 🔄 Planned | LTX-Video or Stable Video Diffusion |
 | **Post-Production** | 🔄 Planned | Subtitle overlay and final rendering |
 
-➡️ **[Detailed pipeline documentation](docs/PIPELINE.md)** | **[Implementation roadmap](docs/IMPLEMENTATION_ROADMAP.md)**
+➡️ **[Detailed pipeline documentation](docs/pipeline/PIPELINE.md)** | **[Implementation roadmap](docs/roadmaps/IMPLEMENTATION_ROADMAP.md)**
 
 ---
 
@@ -181,7 +181,7 @@ StoryGenerator/
 └── research/                      # Research prototypes
 ```
 
-➡️ **[Complete structure documentation](docs/REPOSITORY_STRUCTURE.md)**
+➡️ **[Complete structure documentation](docs/architecture/structure/REPOSITORY_STRUCTURE.md)**
 
 ---
 
@@ -195,7 +195,7 @@ StoryGenerator/
 - **SDXL** - Image generation (planned)
 - **LTX-Video** - Video synthesis (planned)
 
-➡️ **[Complete model documentation](docs/MODELS.md)** | **[Technology stack details](docs/TECHNOLOGY_STACK_FINAL.md)**
+➡️ **[Complete model documentation](docs/features/MODELS.md)** | **[Technology stack details](docs/architecture/hybrid/TECHNOLOGY_STACK_FINAL.md)**
 
 ---
 
@@ -206,7 +206,7 @@ StoryGenerator/
 - **Platforms**: TikTok, YouTube Shorts, Instagram Reels
 - **Content Style**: Emotional drama, identity, connection, viral-optimized
 
-➡️ **[Content strategy guide](docs/CONTENT_RANKING.md)**
+➡️ **[Content strategy guide](docs/content/ideas/CONTENT_RANKING.md)**
 
 ---
 
@@ -221,23 +221,23 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 4. Write tests for your changes
 5. Submit a pull request
 
-➡️ **[Contributing guidelines](CONTRIBUTING.md)** | **[Code standards](src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md)** | **[Testing guide](docs/TDD_GUIDE.md)**
+➡️ **[Contributing guidelines](CONTRIBUTING.md)** | **[Code standards](src/CSharp/SOLID_OOP_CLEAN_CODE_GUIDE.md)** | **[Testing guide](docs/testing/tdd/TDD_GUIDE.md)**
 
 ---
 
 ## 📋 Project Status & Roadmap
 
-> **📊 For complete implementation status, progress tracking, and detailed roadmap, see [Hybrid Architecture Roadmap](docs/HYBRID_ROADMAP.md)**
+> **📊 For complete implementation status, progress tracking, and detailed roadmap, see [Hybrid Architecture Roadmap](docs/roadmaps/HYBRID_ROADMAP.md)**
 
 **Current Status:**
 - ✅ Phase 1: Foundation Complete (15/15 tasks, 100%)
-- 🔄 Phase 2: Pipeline Orchestration (In active development)
-- 📋 Phase 3: P1 High Priority (47 tasks planned)
-- 📋 Phase 4: P2 Medium Priority (18 tasks planned)
+- 🔄 Phase 2: Pipeline Orchestration (0/5 tasks, 15%)
+- 🔄 Phase 3: P1 High Priority (30/47 tasks, 64%)
+- 📋 Phase 4: P2 Medium Priority (0/18 tasks, 0%)
 
 **Quick Links:**
-- [Hybrid Roadmap](docs/HYBRID_ROADMAP.md) - Complete status and progress tracking
-- [Roadmap Analysis](docs/ROADMAP_ANALYSIS.md) - Current status and next steps
+- [Hybrid Roadmap](docs/roadmaps/HYBRID_ROADMAP.md) - Complete status and progress tracking
+- [Roadmap Analysis](docs/roadmaps/ROADMAP_ANALYSIS.md) - Current status and next steps
 - [Issue Tracking](issues/README.md) - Task organization by priority
 
 ---
@@ -251,7 +251,7 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 - Rotate API keys regularly
 - Follow security best practices
 
-➡️ **[Security checklist](docs/SECURITY_CHECKLIST.md)** | **[Security procedures](docs/SECURITY_CHECKLIST.md)**
+➡️ **[Security checklist](docs/features/system/SECURITY_CHECKLIST.md)** | **[Security procedures](docs/features/system/SECURITY_CHECKLIST.md)**
 
 ---
 
@@ -260,7 +260,7 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 - 📖 **Documentation**: [INDEX.md](docs/INDEX.md) - Complete documentation index
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Nomoos/StoryGenerator/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/Nomoos/StoryGenerator/discussions)
-- 🆘 **Troubleshooting**: [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
+- 🆘 **Troubleshooting**: [TROUBLESHOOTING.md](docs/guides/general/TROUBLESHOOTING.md)
 
 ---
 
@@ -284,6 +284,6 @@ We welcome contributions! Whether you're fixing bugs, adding features, or improv
 
 **Built with ❤️ using C# .NET 9.0 and Python**
 
-[Getting Started](docs/GETTING_STARTED.md) • [Documentation](docs/INDEX.md) • [GitHub](https://github.com/Nomoos/StoryGenerator)
+[Getting Started](docs/quickstarts/general/GETTING_STARTED.md) • [Documentation](docs/INDEX.md) • [GitHub](https://github.com/Nomoos/StoryGenerator)
 
 </div>

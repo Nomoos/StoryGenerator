@@ -2,20 +2,20 @@
 
 This directory contains issue tracking for the C# implementation of StoryGenerator, organized by priority and status for optimal workflow management.
 
-> **📋 NEW:** See the [Hybrid Architecture Roadmap](../docs/HYBRID_ROADMAP.md) for a comprehensive view of completed, in-progress, and planned work across the entire project.
+> **📋 NEW:** See the [Hybrid Architecture Roadmap](../docs/roadmaps/HYBRID_ROADMAP.md) for a comprehensive view of completed, in-progress, and planned work across the entire project.
 
 ## 🚀 Quick Status
 
 **Current Phase:** Phase 2 - Pipeline Orchestration Foundation
 
-> **📋 For comprehensive progress tracking and status details, see [Hybrid Architecture Roadmap](../docs/HYBRID_ROADMAP.md)**
+> **📋 For comprehensive progress tracking and status details, see [Hybrid Architecture Roadmap](../docs/roadmaps/HYBRID_ROADMAP.md)**
 
 | Phase | Status | Progress |
 |-------|--------|----------|
-| Phase 1: Foundation | ✅ Complete | 15/15 tasks |
-| Phase 2: Orchestration | 🔄 In Progress | 5 tasks |
-| Phase 3: P1 Pipeline | 📋 Planned | 47 tasks |
-| Phase 4: P2 Features | 📋 Planned | 18 tasks |
+| Phase 1: Foundation | ✅ Complete | 15/15 tasks (100%) |
+| Phase 2: Orchestration | 🔄 In Progress | 0/5 tasks (15%) |
+| Phase 3: P1 Pipeline | 🔄 In Progress | 30/47 tasks (64%) |
+| Phase 4: P2 Features | 📋 Not Started | 0/18 tasks (0%) |
 
 ---
 
@@ -76,18 +76,18 @@ Core pipeline implementation tasks:
 
 ## 📊 Status Overview
 
-> **💡 For detailed progress tracking, architecture overview, and current status, see the [Hybrid Architecture Roadmap](../docs/HYBRID_ROADMAP.md) - the single source of truth for project status.**
+> **💡 For detailed progress tracking, architecture overview, and current status, see the [Hybrid Architecture Roadmap](../docs/roadmaps/HYBRID_ROADMAP.md) - the single source of truth for project status.**
 
 **Quick Summary:**
 - ✅ Phase 1 Foundation: 100% Complete (15/15 tasks)
-- 🔄 Phase 2 Orchestration: In Progress (5 tasks)
-- 📋 Phase 3 P1 Pipeline: Planned (47 tasks)
-- 📋 Phase 4 P2 Features: Planned (18 tasks)
+- 🔄 Phase 2 Orchestration: In Progress (0/5 tasks, 15%)
+- 🔄 Phase 3 P1 Pipeline: In Progress (30/47 tasks, 64%)
+- 📋 Phase 4 P2 Features: Not Started (0/18 tasks, 0%)
 
 **Issue Organization:**
 - All closed/resolved issues have been verified and moved to `resolved/` directory
 - Active work is tracked in priority-based directories (p1-high, p2-medium)
-- See [HYBRID_ROADMAP.md](../docs/HYBRID_ROADMAP.md) for complete status
+- See [HYBRID_ROADMAP.md](../docs/roadmaps/HYBRID_ROADMAP.md) for complete status
 
 ---
 
@@ -224,7 +224,7 @@ cd issues/resolved/
 
 ## Related Documentation
 
-- `/docs/MICROSTEP_VALIDATION.md` - Microstep validation system
-- `/docs/GENERATOR_STRUCTURE.md` - Generator folder structure
-- `/docs/PIPELINE.md` - Complete pipeline documentation
+- `/docs/testing/validation/MICROSTEP_VALIDATION.md` - Microstep validation system
+- `/docs/architecture/structure/GENERATOR_STRUCTURE.md` - Generator folder structure
+- `/docs/pipeline/PIPELINE.md` - Complete pipeline documentation
 - `atomic/README.md` - Parallel workflow guide
