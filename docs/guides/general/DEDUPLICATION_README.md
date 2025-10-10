@@ -1,21 +1,28 @@
-# Content Deduplication
+# Content Deduplication (Enhanced v2.0)
 
-Detects and removes duplicate stories from quality-scored content using multiple strategies.
+Detects and removes duplicate stories from quality-scored content using multiple strategies including advanced fuzzy matching and semantic similarity.
 
 ## Overview
 
-The deduplication system prevents duplicate content from entering the pipeline by using three detection strategies:
+The enhanced deduplication system (v2.0) prevents duplicate content from entering the pipeline by using six detection strategies:
 
+### Core Strategies
 1. **Exact ID Matching** - Catches identical content from the same source
 2. **Fuzzy Title Matching** - Catches near-duplicates with similar titles (case-insensitive)
-3. **Content Similarity** - Catches stories with different titles but similar content
+3. **Content Similarity** - Catches stories with different titles but similar content (hash-based)
+
+### ✨ Enhanced Strategies (v2.0)
+4. **Advanced Fuzzy Matching** - Uses Levenshtein distance for typos and variations
+5. **Fuzzy Content Matching** - Detects similar content with slight wording changes
+6. **Semantic Similarity** - Uses AI embeddings to catch paraphrased content
 
 When duplicates are found, the **highest scoring item is always kept**.
 
 ## Quick Start
 
+### Basic Usage (with all enhancements)
 ```bash
-# Process all demographic segments
+# Process all demographic segments with fuzzy and semantic matching
 python scripts/deduplicate_content.py --all
 
 # Process specific segment
@@ -25,6 +32,24 @@ python scripts/deduplicate_content.py --segment women --age 18-23
 python scripts/deduplicate_content.py --all --date 2025-01-15
 ```
 
+### Advanced Usage (v2.0 Features)
+```bash
+# Disable semantic matching (faster, less memory)
+python scripts/deduplicate_content.py --all --no-semantic
+
+# Disable fuzzy matching (basic mode only)
+python scripts/deduplicate_content.py --all --no-fuzzy
+
+# Adjust fuzzy threshold (higher = stricter)
+python scripts/deduplicate_content.py --all --fuzzy-threshold 90
+
+# Adjust semantic threshold
+python scripts/deduplicate_content.py --all --semantic-threshold 0.85
+
+# Basic mode only (v1.0 compatibility)
+python scripts/deduplicate_content.py --all --no-fuzzy --no-semantic
+```
+
 ## Usage
 
 ### Command Line Options
@@ -32,11 +57,19 @@ python scripts/deduplicate_content.py --all --date 2025-01-15
 ```bash
 python scripts/deduplicate_content.py [options]
 
-Options:
+Basic Options:
   --segment {women,men}        Process specific gender segment
   --age {10-13,14-17,18-23}   Process specific age bucket
   --date YYYY-MM-DD           Date string (defaults to today)
   --all                       Process all segments
+
+Enhanced Options (v2.0):
+  --no-fuzzy                  Disable advanced fuzzy matching
+  --no-semantic               Disable semantic similarity detection
+  --fuzzy-threshold N         Fuzzy similarity threshold (0-100, default: 85)
+  --semantic-threshold N      Semantic similarity threshold (0-1, default: 0.90)
+  
+Other:
   -h, --help                  Show help message
 ```
 
@@ -164,6 +197,66 @@ Detects stories with similar text content (first 500 characters) even if titles 
 {"title": "Weight Loss Success", "text": "After years of struggling...", "score": 75}
 ```
 
+### 4. Advanced Fuzzy Matching (v2.0) 🆕
+
+Uses Levenshtein distance to detect titles with typos, minor variations, or different word order.
+
+**Requirements:** `pip install fuzzywuzzy python-Levenshtein`
+
+**Example:**
+```json
+// Original
+{"title": "The Quick Brown Fox Jumped Over", "score": 85}
+
+// Duplicate (removed - 87% similar)
+{"title": "The Quik Brown Fox Jumpd Over", "score": 75}
+```
+
+**Configuration:**
+- Default threshold: 85% similarity
+- Adjustable with `--fuzzy-threshold`
+- Uses token_sort_ratio for word-order independence
+
+### 5. Fuzzy Content Matching (v2.0) 🆕
+
+Applies fuzzy matching to content text (first 500 chars) to catch stories with slight wording changes.
+
+**Example:**
+```json
+// Original
+{"text": "I was walking down the street when suddenly...", "score": 85}
+
+// Duplicate (removed - 88% similar)
+{"text": "I was strolling down the road when suddenly...", "score": 75}
+```
+
+### 6. Semantic Similarity (v2.0) 🆕
+
+Uses AI sentence embeddings to detect semantically similar content (paraphrases, rewrites).
+
+**Requirements:** `pip install sentence-transformers torch`
+
+**Example:**
+```json
+// Original
+{"text": "The weather was terrible with heavy rain and strong winds", "score": 85}
+
+// Duplicate (removed - 0.92 semantic similarity)
+{"text": "It was raining cats and dogs with powerful gusts of wind", "score": 75}
+```
+
+**Configuration:**
+- Default threshold: 0.90 (90% similarity)
+- Adjustable with `--semantic-threshold`
+- Default model: `all-MiniLM-L6-v2` (80MB, fast)
+- GPU acceleration if available
+
+**Performance Notes:**
+- First run downloads model (~80MB)
+- CPU: ~50-100ms per item
+- GPU: ~10ms per item
+- Model is cached after first use
+
 ## How It Works
 
 1. **Load** - Reads quality-scored content from input file
@@ -181,8 +274,9 @@ Detects stories with similar text content (first 500 characters) even if titles 
 
 ## Testing
 
+### Basic Tests
 ```bash
-# Run comprehensive test suite (9 tests)
+# Run basic test suite (9 tests - v1.0 features)
 python tests/test_deduplication.py
 
 # Expected output:
@@ -196,6 +290,21 @@ python tests/test_deduplication.py
 # ✅ PASS: Filesystem Integration
 # ✅ PASS: Report Structure
 # Total: 9/9 tests passed
+```
+
+### Enhanced Tests (v2.0)
+```bash
+# Run enhanced feature test suite (6 tests - v2.0 features)
+python tests/test_deduplication_enhanced.py
+
+# Expected output:
+# ✅ PASS: Fuzzy Matching
+# ✅ PASS: Fuzzy Threshold
+# ✅ PASS: Fuzzy Content Matching
+# ✅ PASS: Semantic Matching
+# ✅ PASS: Backward Compatibility
+# ✅ PASS: Enhanced Report Structure
+# Total: 6/6 tests passed (5/6 if sentence-transformers not installed)
 ```
 
 ## Integration with Pipeline
