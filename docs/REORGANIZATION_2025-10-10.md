@@ -24,6 +24,8 @@ This reorganization implements the ≤7 files per folder rule across the entire 
    - Phase 3: Now shows "30/47 tasks, 64%" instead of "47 tasks planned"
    - Phase 4: Now shows "0/18 tasks, 0%" for consistency
 
+**Note:** Phase 2 shows 15% even with 0/5 tasks completed because work has started but no tasks are fully complete yet. This matches the canonical HYBRID_ROADMAP.md which tracks both effort and task completion.
+
 **Result:** All files now reference and match the canonical HYBRID_ROADMAP.md
 
 ### B) Documentation Reorganization ✅
@@ -39,7 +41,7 @@ docs/
 ├── EXAMPLES.md (input/output examples)
 ├── CHANGELOG.md (project changelog)
 │
-├── architecture/ (2 files)
+├── architecture/ (4 items: 2 files + 2 folders)
 │   ├── README.md
 │   ├── ARCHITECTURE.md
 │   ├── hybrid/ (4 files)
@@ -88,7 +90,7 @@ docs/
 │   ├── issues/ (2 files)
 │   └── video/ (3 files)
 │
-├── content/ (4 files)
+├── content/ (6 items: 4 files + 2 folders)
 │   ├── README.md
 │   ├── ideas/ (7 files)
 │   ├── video/ (7 files)
@@ -124,7 +126,7 @@ docs/
 │   ├── HARDWARE_REQUIREMENTS.md
 │   └── GPU_COMPARISON.md
 │
-├── summaries/ (2 files)
+├── summaries/ (7 items: 2 files + 5 folders)
 │   ├── README.md
 │   ├── SUMMARY.md
 │   ├── groups/ (5 files)
@@ -159,7 +161,10 @@ Updated all documentation references in:
 ## Verification
 
 ### File Count Compliance
-✅ All folders now have ≤7 files (including README.md)
+
+**Important:** The ≤7 files rule counts only FILES in each folder, not subfolders. Subfolders are counted separately.
+
+✅ All folders now have ≤7 files (not counting subfolders)
 ✅ No folder exceeds the limit
 ✅ Clear subfolder hierarchy for navigation
 
