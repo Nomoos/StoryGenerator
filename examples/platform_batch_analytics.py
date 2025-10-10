@@ -112,7 +112,9 @@ def collect_youtube_analytics(video_id: str, title_id: str) -> Optional[VideoAna
         
         data = analytics.get_video_analytics(video_id)
         if data:
-            data.title_id = title_id
+            # Create a new instance with title_id set (preserves immutability)
+            from dataclasses import replace
+            data = replace(data, title_id=title_id)
             save_analytics(data, "youtube", title_id)
         return data
     except Exception as e:
@@ -133,7 +135,9 @@ def collect_tiktok_analytics(video_id: str, title_id: str) -> Optional[VideoAnal
         
         data = analytics.get_video_analytics(video_id)
         if data:
-            data.title_id = title_id
+            # Create a new instance with title_id set (preserves immutability)
+            from dataclasses import replace
+            data = replace(data, title_id=title_id)
             save_analytics(data, "tiktok", title_id)
         return data
     except Exception as e:
@@ -159,7 +163,9 @@ def collect_instagram_analytics(media_id: str, title_id: str) -> Optional[VideoA
         
         data = analytics.get_video_analytics(media_id)
         if data:
-            data.title_id = title_id
+            # Create a new instance with title_id set (preserves immutability)
+            from dataclasses import replace
+            data = replace(data, title_id=title_id)
             save_analytics(data, "instagram", title_id)
         return data
     except Exception as e:

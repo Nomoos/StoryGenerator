@@ -44,6 +44,8 @@ def upload_video_example():
         return None
     
     # Prepare video metadata
+    # Note: This example uses engaging, attention-grabbing style common on TikTok.
+    # Adjust tone and emoji usage based on your content strategy and audience.
     metadata = VideoMetadata(
         title="Epic AI Story",
         caption="You won't believe what happened next! 😱 This story is WILD!",

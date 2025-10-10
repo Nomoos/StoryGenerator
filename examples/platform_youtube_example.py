@@ -45,6 +45,8 @@ def upload_video_example():
         description=(
             "An incredible AI-generated story that will keep you on the edge of your seat!\n\n"
             "This short-form video was created using our StoryGenerator pipeline.\n\n"
+            # Note: Hashtags in description are treated differently from tags.
+            # Description hashtags appear as clickable links; tags are for search/categorization.
             "#Shorts #AI #Story #Storytelling #Viral"
         ),
         tags=["shorts", "ai", "story", "viral", "entertainment", "storytelling"],
