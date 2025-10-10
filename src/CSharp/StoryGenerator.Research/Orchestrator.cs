@@ -340,7 +340,12 @@ namespace StoryGenerator.Research
             CancellationToken cancellationToken = default)
         {
             // For prototype, delegate to existing method
-            var outputDir = Path.GetDirectoryName(outputAudioPath) ?? ".";
+            var outputDir = Path.GetDirectoryName(outputAudioPath);
+            if (string.IsNullOrEmpty(outputDir))
+            {
+                outputDir = Path.GetTempPath();
+            }
+            
             return await orchestrator.ProcessAudioAsync(
                 inputAudioPath,
                 outputDir,
