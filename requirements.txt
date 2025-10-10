@@ -56,6 +56,8 @@ whisperx>=3.0.0
 transformers>=4.40.0
 scipy>=1.10.0
 accelerate>=0.20.0
+# Voice cloning
+TTS>=0.20.0
 # Alternative content source scrapers
 beautifulsoup4>=4.12.0
 tweepy>=4.14.0
