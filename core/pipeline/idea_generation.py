@@ -9,7 +9,6 @@ import json
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional
 
 from core.interfaces.llm_provider import ILLMProvider
 
@@ -36,10 +35,10 @@ class IdeaAdapter:
     
     def adapt_story(
         self, 
-        story: Dict, 
+        story: dict[str, object], 
         gender: str, 
         age_bucket: str
-    ) -> Dict:
+    ) -> dict[str, object]:
         """
         Adapt a Reddit story into a video idea.
         
@@ -84,10 +83,10 @@ class IdeaAdapter:
     
     def adapt_stories(
         self,
-        stories: List[Dict],
+        stories: list[dict[str, object]],
         gender: str,
         age_bucket: str
-    ) -> List[Dict]:
+    ) -> list[dict[str, object]]:
         """
         Adapt multiple Reddit stories into video ideas.
         
@@ -113,7 +112,7 @@ class IdeaAdapter:
     
     def save_ideas(
         self,
-        ideas: List[Dict],
+        ideas: list[dict[str, object]],
         output_dir: Path,
         filename: str = "reddit_adapted.json"
     ) -> Path:
@@ -139,7 +138,7 @@ class IdeaAdapter:
     
     def _build_adaptation_prompt(
         self,
-        story: Dict,
+        story: dict[str, object],
         gender: str,
         age_bucket: str
     ) -> str:
@@ -188,7 +187,7 @@ class IdeaGenerator:
         gender: str,
         age_bucket: str,
         count: int = 20
-    ) -> List[Dict]:
+    ) -> list[dict[str, object]]:
         """
         Generate original video ideas.
         
@@ -219,7 +218,7 @@ class IdeaGenerator:
     
     def save_ideas(
         self,
-        ideas: List[Dict],
+        ideas: list[dict[str, object]],
         output_dir: Path,
         filename: str = "llm_generated.json"
     ) -> Path:

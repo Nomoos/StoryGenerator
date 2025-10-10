@@ -6,7 +6,26 @@ enabling easy swapping between different LLM implementations (OpenAI, local mode
 """
 
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional
+import sys
+
+# NotRequired is only in typing module in Python 3.11+
+if sys.version_info >= (3, 11):
+    from typing import TypedDict, NotRequired
+else:
+    from typing import TypedDict
+    from typing_extensions import NotRequired
+
+
+class ChatMessage(TypedDict):
+    """
+    Structured message format for chat completions.
+    
+    This TypedDict ensures type safety when building chat messages
+    for LLM providers following OpenAI's chat format.
+    """
+    role: str  # "system", "user", or "assistant"
+    content: str
+    name: NotRequired[str]  # Optional: name of the message author
 
 
 class ILLMProvider(ABC):
@@ -28,7 +47,7 @@ class ILLMProvider(ABC):
         self,
         prompt: str,
         temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
+        max_tokens: int | None = None,
         **kwargs,
     ) -> str:
         """
@@ -51,16 +70,16 @@ class ILLMProvider(ABC):
     @abstractmethod
     def generate_chat(
         self,
-        messages: List[Dict[str, str]],
+        messages: list[ChatMessage],
         temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
+        max_tokens: int | None = None,
         **kwargs,
     ) -> str:
         """
         Generate a chat completion from a conversation history.
 
         Args:
-            messages: List of message dicts with 'role' and 'content' keys
+            messages: List of ChatMessage TypedDicts with role and content
             temperature: Sampling temperature (0-2, default: 0.7)
             max_tokens: Maximum tokens in response (optional)
             **kwargs: Additional provider-specific parameters
@@ -98,7 +117,7 @@ class IAsyncLLMProvider(ABC):
         self,
         prompt: str,
         temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
+        max_tokens: int | None = None,
         **kwargs,
     ) -> str:
         """
@@ -121,16 +140,16 @@ class IAsyncLLMProvider(ABC):
     @abstractmethod
     async def generate_chat(
         self,
-        messages: List[Dict[str, str]],
+        messages: list[ChatMessage],
         temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
+        max_tokens: int | None = None,
         **kwargs,
     ) -> str:
         """
         Generate an async chat completion from a conversation history.
 
         Args:
-            messages: List of message dicts with 'role' and 'content' keys
+            messages: List of ChatMessage TypedDicts with role and content
             temperature: Sampling temperature (0-2, default: 0.7)
             max_tokens: Maximum tokens in response (optional)
             **kwargs: Additional provider-specific parameters

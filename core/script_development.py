@@ -15,7 +15,6 @@ import re
 from dataclasses import dataclass, field, asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 
 from core.interfaces.llm_provider import ILLMProvider
 
@@ -52,7 +51,7 @@ class ScriptQualityScores:
             self.hook_strength * weights['hook_strength']
         )
     
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict[str, float]:
         """Convert to dictionary."""
         data = asdict(self)
         data['overall_score'] = self.overall_score
@@ -70,11 +69,11 @@ class Script:
     version: int
     word_count: int
     estimated_duration: float  # in seconds
-    quality_scores: Optional[ScriptQualityScores] = None
+    quality_scores: ScriptQualityScores | None = None
     generated_at: str = field(default_factory=lambda: datetime.now().isoformat())
-    metadata: Dict = field(default_factory=dict)
+    metadata: dict[str, object] = field(default_factory=dict)
     
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict[str, object]:
         """Convert to dictionary."""
         data = asdict(self)
         if self.quality_scores:
@@ -94,7 +93,7 @@ class ScriptGenerator:
     short-form video content (30-60 seconds).
     """
     
-    def __init__(self, llm_provider: ILLMProvider, output_root: Optional[str] = None):
+    def __init__(self, llm_provider: ILLMProvider, output_root: str | None = None):
         """
         Initialize ScriptGenerator.
         
@@ -388,7 +387,7 @@ class ScriptIterator:
         script: Script,
         max_iterations: int = 3,
         target_score: float = 80.0
-    ) -> List[Script]:
+    ) -> list[Script]:
         """
         Iteratively improve a script until target score is reached or max iterations.
         

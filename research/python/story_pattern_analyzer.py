@@ -13,7 +13,6 @@ import os
 import re
 import sys
 from dataclasses import dataclass, asdict
-from typing import List, Dict, Optional
 from pathlib import Path
 from collections import Counter
 import json
@@ -29,15 +28,15 @@ class StoryAnalysis:
     avg_words_per_sentence: float
     hook_first_sentence: str
     hook_word_count: int
-    story_arc: List[str]
-    emotional_words: List[str]
+    story_arc: list[str]
+    emotional_words: list[str]
     dialogue_present: bool
     dialogue_count: int
-    time_markers: List[str]
-    conflict_indicators: List[str]
+    time_markers: list[str]
+    conflict_indicators: list[str]
     resolution_present: bool
     
-    def to_dict(self):
+    def to_dict(self) -> dict[str, object]:
         return asdict(self)
 
 
@@ -68,7 +67,7 @@ class StoryPatternAnalyzer:
     ]
     
     def __init__(self):
-        self.analyses: List[StoryAnalysis] = []
+        self.analyses: list[StoryAnalysis] = []
     
     def extract_title_from_filename(self, filename: str) -> str:
         """Extract readable title from filename."""
@@ -96,7 +95,7 @@ class StoryPatternAnalyzer:
             return hook, word_count
         return "", 0
     
-    def find_emotional_words(self, text: str) -> List[str]:
+    def find_emotional_words(self, text: str) -> list[str]:
         """Find emotional trigger words in the text."""
         text_lower = text.lower()
         found = []
@@ -105,7 +104,7 @@ class StoryPatternAnalyzer:
                 found.append(word)
         return found
     
-    def find_time_markers(self, text: str) -> List[str]:
+    def find_time_markers(self, text: str) -> list[str]:
         """Find time progression markers."""
         text_lower = text.lower()
         found = []
@@ -114,7 +113,7 @@ class StoryPatternAnalyzer:
                 found.append(marker)
         return found
     
-    def find_conflict_indicators(self, text: str) -> List[str]:
+    def find_conflict_indicators(self, text: str) -> list[str]:
         """Find conflict indicators."""
         text_lower = text.lower()
         found = []
@@ -132,7 +131,7 @@ class StoryPatternAnalyzer:
         ]
         return any(word in text_lower for word in resolution_words)
     
-    def analyze_story_arc(self, text: str) -> List[str]:
+    def analyze_story_arc(self, text: str) -> list[str]:
         """Identify story arc components."""
         arc = []
         text_lower = text.lower()
@@ -207,7 +206,7 @@ class StoryPatternAnalyzer:
         self.analyses.append(analysis)
         return analysis
     
-    def analyze_batch(self, filepaths: List[str]) -> List[StoryAnalysis]:
+    def analyze_batch(self, filepaths: list[str]) -> list[StoryAnalysis]:
         """Analyze multiple files."""
         for filepath in filepaths:
             if os.path.exists(filepath):
@@ -217,7 +216,7 @@ class StoryPatternAnalyzer:
                 print(f"⚠️ File not found: {filepath}")
         return self.analyses
     
-    def extract_success_patterns(self) -> Dict:
+    def extract_success_patterns(self) -> dict[str, object]:
         """Extract common patterns from all analyzed stories."""
         if not self.analyses:
             return {}
@@ -238,7 +237,7 @@ class StoryPatternAnalyzer:
         
         return patterns
     
-    def _get_most_common_words(self, word_lists: List[List[str]], top_n: int = 10) -> List[tuple]:
+    def _get_most_common_words(self, word_lists: list[list[str]], top_n: int = 10) -> list[tuple[str, int]]:
         """Get most common words across all stories."""
         all_words = []
         for word_list in word_lists:
@@ -246,7 +245,7 @@ class StoryPatternAnalyzer:
         counter = Counter(all_words)
         return counter.most_common(top_n)
     
-    def _get_most_common_arc(self) -> List[str]:
+    def _get_most_common_arc(self) -> list[str]:
         """Determine the most common story arc structure."""
         if not self.analyses:
             return []

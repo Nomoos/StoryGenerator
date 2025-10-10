@@ -14,7 +14,6 @@ import subprocess
 from dataclasses import dataclass, field, asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 import tempfile
 
 logger = logging.getLogger(__name__)
@@ -27,10 +26,10 @@ class AudioMetadata:
     sample_rate: int = 44100
     channels: int = 1  # Mono for voice
     bit_depth: int = 16
-    lufs: Optional[float] = None  # Loudness Units relative to Full Scale
-    peak_db: Optional[float] = None
+    lufs: float | None = None  # Loudness Units relative to Full Scale
+    peak_db: float | None = None
     
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict[str, object]:
         """Convert to dictionary."""
         return asdict(self)
 
@@ -43,13 +42,13 @@ class VoiceoverAudio:
     content_text: str
     voice_gender: str
     voice_provider: str  # 'elevenlabs', 'openai', 'local'
-    voice_id: Optional[str] = None  # Provider-specific voice ID
-    raw_path: Optional[str] = None  # Path to raw TTS output
-    normalized_path: Optional[str] = None  # Path to normalized audio
+    voice_id: str | None = None  # Provider-specific voice ID
+    raw_path: str | None = None  # Path to raw TTS output
+    normalized_path: str | None = None  # Path to normalized audio
     metadata: AudioMetadata = field(default_factory=lambda: AudioMetadata(0.0))
     generated_at: str = field(default_factory=lambda: datetime.now().isoformat())
     
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict[str, object]:
         """Convert to dictionary."""
         data = asdict(self)
         data['metadata'] = self.metadata.to_dict()
@@ -71,8 +70,8 @@ class TTSGenerator:
     def __init__(
         self,
         provider: str = "elevenlabs",
-        api_key: Optional[str] = None,
-        output_root: Optional[str] = None
+        api_key: str | None = None,
+        output_root: str | None = None
     ):
         """
         Initialize TTSGenerator.
@@ -89,7 +88,7 @@ class TTSGenerator:
         
         logger.info(f"Initialized TTSGenerator with provider: {provider}")
     
-    def _init_client(self):
+    def _init_client(self) -> None:
         """Initialize TTS client based on provider."""
         if self._client is not None:
             return
@@ -115,9 +114,9 @@ class TTSGenerator:
     
     def generate_tts(
         self,
-        script: Dict,
+        script: dict[str, object],
         voice_gender: str = "female",
-        voice_id: Optional[str] = None,
+        voice_id: str | None = None,
         model: str = "eleven_turbo_v2"
     ) -> VoiceoverAudio:
         """
@@ -299,7 +298,7 @@ class AudioNormalizer:
     for consistent volume across videos. Standard: -14 LUFS for YouTube/TikTok.
     """
     
-    def __init__(self, output_root: Optional[str] = None):
+    def __init__(self, output_root: str | None = None):
         """
         Initialize AudioNormalizer.
         
@@ -499,13 +498,13 @@ class AudioNormalizer:
 
 # Convenience function for complete audio production workflow
 def produce_audio(
-    script: Dict,
+    script: dict[str, object],
     tts_provider: str = "elevenlabs",
-    api_key: Optional[str] = None,
+    api_key: str | None = None,
     voice_gender: str = "female",
-    voice_id: Optional[str] = None,
+    voice_id: str | None = None,
     target_lufs: float = -14.0,
-    output_root: Optional[str] = None
+    output_root: str | None = None
 ) -> VoiceoverAudio:
     """
     Complete audio production workflow: TTS generation + normalization.
