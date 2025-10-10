@@ -56,6 +56,77 @@ Features:
 - Tracks call count and last inputs
 - Perfect for unit testing
 
+### Platform Integration Providers
+
+#### YouTubeUploader & YouTubeAnalytics
+Upload videos to YouTube and retrieve analytics via YouTube Data API v3.
+
+```python
+from providers import YouTubeUploader, YouTubeAnalytics
+from core.interfaces.platform_provider import VideoMetadata, PrivacyStatus
+
+# Upload a video
+uploader = YouTubeUploader()
+uploader.authenticate()
+metadata = VideoMetadata(
+    title="My Video #Shorts",
+    description="Amazing content!",
+    tags=["shorts", "viral"],
+    privacy_status=PrivacyStatus.PUBLIC
+)
+result = uploader.upload_video("video.mp4", metadata)
+
+# Get analytics
+analytics = YouTubeAnalytics()
+analytics.authenticate()
+data = analytics.get_video_analytics(result.video_id)
+print(f"Views: {data.views}, Likes: {data.likes}")
+```
+
+#### TikTokUploader & TikTokAnalytics
+Upload videos to TikTok and retrieve analytics via TikTok Content Posting API.
+
+```python
+from providers import TikTokUploader, TikTokAnalytics
+
+# Upload a video
+uploader = TikTokUploader(access_token="YOUR_TOKEN")
+metadata = VideoMetadata(
+    title="Epic Story",
+    caption="Check this out! #fyp",
+    hashtags=["fyp", "viral"]
+)
+result = uploader.upload_video("video.mp4", metadata)
+
+# Get analytics
+analytics = TikTokAnalytics(access_token="YOUR_TOKEN")
+data = analytics.get_video_analytics(result.video_id)
+```
+
+#### InstagramUploader & InstagramAnalytics
+Upload Reels to Instagram and retrieve analytics via Instagram Graph API.
+
+```python
+from providers import InstagramUploader, InstagramAnalytics
+
+# Upload a Reel (requires public video URL)
+uploader = InstagramUploader(
+    access_token="YOUR_TOKEN",
+    instagram_user_id="YOUR_ID"
+)
+metadata = VideoMetadata(caption="Amazing Reel! #reels")
+result = uploader.upload_video("https://example.com/video.mp4", metadata)
+
+# Get analytics
+analytics = InstagramAnalytics(
+    access_token="YOUR_TOKEN",
+    instagram_user_id="YOUR_ID"
+)
+data = analytics.get_video_analytics(result.video_id)
+```
+
+**📖 Full Documentation:** See [Platform Integration Guide](../docs/guides/integration/PLATFORM_INTEGRATION.md)
+
 ## Usage Examples
 
 ### Basic Usage

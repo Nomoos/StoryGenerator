@@ -48,6 +48,7 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 - **[Title Optimization](docs/content/ideas/TITLE_IMPROVEMENT.md)** - Viral title generation
 - **[Video Export](docs/content/video/VIDEO_EXPORT.md)** - Export and metadata
 - **[Quality Control](docs/content/video/VIDEO_QUALITY_CONTROL.md)** - QC reports
+- **[Platform Integration](docs/guides/integration/PLATFORM_INTEGRATION.md)** - 🚀 **NEW: YouTube, TikTok, Instagram**
 
 </td>
 </tr>
@@ -90,6 +91,8 @@ StoryGenerator automates the creation of emotional, dramatic vertical stories ta
 - 📝 Word-level subtitle alignment with WhisperX
 - 🎬 Complete video export with metadata and thumbnails
 - 📊 Automated quality control and reporting
+- 🚀 **Platform integration for YouTube, TikTok, and Instagram**
+- 📈 **Analytics collection and performance tracking**
 
 ➡️ **[See full feature list](docs/features/FEATURES.md)**
 
