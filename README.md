@@ -121,6 +121,8 @@ StoryGenerator uses a **hybrid C# + Python architecture**:
 - **Git** - For cloning the repository
 - **API Keys** (optional): [OpenAI](https://platform.openai.com/api-keys), [ElevenLabs](https://elevenlabs.io/app/settings/api-keys)
 
+> 💡 **For local model inference**: Install [optional dependencies](docs/guides/setup/OPTIONAL_DEPENDENCIES.md) (FFmpeg, Ollama, Python/faster-whisper)
+
 ### Get Started in 5 Minutes
 
 ```bash
@@ -142,6 +144,25 @@ dotnet test
 cp .env.example .env
 # Edit .env and add your API keys
 ```
+
+### Optional: Install Local Model Dependencies
+
+For local model inference (alternative to cloud APIs):
+
+```bash
+# Install FFmpeg (audio/video processing)
+# Ubuntu: sudo apt install ffmpeg
+# macOS: brew install ffmpeg
+# Windows: choco install ffmpeg
+
+# Install Ollama (local LLM)
+# Visit: https://ollama.com/download
+
+# Install Python + faster-whisper (speech-to-text)
+pip install faster-whisper>=0.10.0
+```
+
+➡️ **[Complete local setup guide](docs/guides/setup/OPTIONAL_DEPENDENCIES.md)**
 
 ➡️ **[Complete setup guide](docs/quickstarts/general/GETTING_STARTED.md)** | **[Troubleshooting](docs/guides/general/TROUBLESHOOTING.md)**
 
