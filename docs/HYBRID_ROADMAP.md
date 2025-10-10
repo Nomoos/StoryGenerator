@@ -223,6 +223,7 @@ This roadmap tracks the implementation of StoryGenerator's hybrid architecture, 
 - [ ] Script Scoring Stage
 - [ ] Script Revision Stage
 - [ ] Script Enhancement Stage
+- ✅ **Content Filter Service** - Demonetization word detection and filtering (NEW)
 
 #### Group 5: Audio Production (2 tasks) - 🔄 PARTIAL
 - [ ] Voice Generation Stage

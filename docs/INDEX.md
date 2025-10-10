@@ -399,6 +399,7 @@ This documentation set was created in **January 2025** as part of a comprehensiv
 
 - **[HYBRID_ROADMAP.md](HYBRID_ROADMAP.md)** - 🎯 **PRIMARY STATUS SOURCE** - Complete implementation roadmap with progress tracking
 - **[ROADMAP_ANALYSIS.md](ROADMAP_ANALYSIS.md)** - Current status and next steps analysis
+- **[CONTENT_FILTER.md](CONTENT_FILTER.md)** - ⭐ **NEW** - Demonetization word filtering and content safety
 - **[summaries/](summaries/)** - Completion summaries for phases and groups
   - Group implementation summaries (Groups 3, 4, 5)
   - Phase completion summaries (Phase 4, Implementation)
