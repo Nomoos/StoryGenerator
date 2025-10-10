@@ -7,8 +7,9 @@ This example demonstrates:
 - Estimating cost per video based on token usage
 - Calculating savings for bulk video production
 
-Note: This example requires network access for tiktoken initialization.
-If OPENAI_API_KEY is not set, it uses a dummy key for cost calculations only.
+Note: No OpenAI API calls are made - this performs cost calculations only.
+However, tiktoken initialization may require network access on first run to
+download tokenization files.
 """
 
 import os

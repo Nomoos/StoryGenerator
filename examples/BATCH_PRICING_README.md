@@ -15,16 +15,18 @@ This example demonstrates OpenAI's Batch API pricing (50% discount) and how to c
 python examples/batch_pricing_example.py
 ```
 
-No API key is required - this example only performs cost calculations without making actual API calls.
+**Note:** No OpenAI API calls are made - this example only performs cost calculations. However, the tiktoken library initialization may require network access on first run to download tokenization files.
 
 ## Key Findings
 
 ### Cost Per Video (gpt-4o-mini)
 
-Based on typical story generation pipeline:
+Based on typical story generation pipeline (example values):
 - Average: ~1,067 input tokens per request
 - Average: ~1,350 output tokens per request  
 - Requests per video: 3 (script generation, revision, titles)
+
+*These token counts are examples based on observed patterns in video script generation. Your actual token usage may vary depending on story complexity, prompt engineering, and output requirements. Use the `count_tokens()` and `count_messages_tokens()` methods to measure your specific usage.*
 
 | Pricing Tier | Cost per Video | Cost for 1000 Videos |
 |--------------|----------------|---------------------|
