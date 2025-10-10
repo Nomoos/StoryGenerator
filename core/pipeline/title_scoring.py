@@ -9,7 +9,6 @@ import logging
 import re
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional
 
 import yaml
 
@@ -24,7 +23,7 @@ class TitleScorer:
     clarity, replay value, and shareability.
     """
     
-    def __init__(self, config_path: Optional[Path] = None):
+    def __init__(self, config_path: Path | None = None):
         """
         Initialize TitleScorer.
         
@@ -34,7 +33,7 @@ class TitleScorer:
         self.config = self._load_config(config_path)
         logger.info("Initialized TitleScorer with viral scoring rubric")
     
-    def score_title(self, title: Dict) -> Dict:
+    def score_title(self, title: dict[str, object]) -> dict[str, object]:
         """
         Score a single title across all dimensions.
         
@@ -79,8 +78,8 @@ class TitleScorer:
     
     def score_all_titles(
         self,
-        titles_by_topic: Dict[str, List[Dict]]
-    ) -> Dict[str, List[Dict]]:
+        titles_by_topic: dict[str, list[dict[str, object]]]
+    ) -> dict[str, list[dict[str, object]]]:
         """
         Score all titles across all topics.
         
@@ -104,7 +103,7 @@ class TitleScorer:
     
     def save_scored_titles(
         self,
-        scored_titles: Dict[str, List[Dict]],
+        scored_titles: dict[str, list[dict[str, object]]],
         output_dir: Path,
         filename: str = "titles_scored.json"
     ) -> Path:
@@ -146,7 +145,7 @@ class TitleScorer:
         logger.info(f"Saved {total_titles} scored titles to {output_path}")
         return output_path
     
-    def _load_config(self, config_path: Optional[Path]) -> Dict:
+    def _load_config(self, config_path: Path | None) -> dict[str, object]:
         """Load scoring configuration from YAML file."""
         if config_path is None:
             # Use default config path
@@ -161,7 +160,7 @@ class TitleScorer:
             logger.warning(f"Config not found at {config_path}, using defaults")
             return self._get_default_config()
     
-    def _get_default_config(self) -> Dict:
+    def _get_default_config(self) -> dict[str, object]:
         """Return default scoring configuration."""
         return {
             'viral': {
