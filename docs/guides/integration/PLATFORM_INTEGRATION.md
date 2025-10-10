@@ -1,12 +1,14 @@
-# Platform Integration Guide (Milestone 6)
+# Platform Integration Guide (Milestone 6 + Updates)
 
-This guide covers the implementation of platform integration for YouTube, TikTok, and Instagram, including video uploads and analytics collection as outlined in Milestone 6.
+This guide covers the implementation of platform integration for YouTube, TikTok, Instagram, and Facebook, including video uploads, analytics collection, database storage, and cross-platform performance comparison.
 
 ## Overview
 
 The platform integration module provides:
-- **Video Upload**: Automated video publishing to YouTube, TikTok, and Instagram
+- **Video Upload**: Automated video publishing to YouTube, TikTok, Instagram, and **Facebook**
 - **Analytics Collection**: Performance metrics retrieval from platform APIs
+- **Database Storage**: SQLite-based storage for all text data and analytics
+- **Cross-Platform Comparison**: Performance analysis and optimization insights
 - **Error Handling**: Robust retry logic and error recovery
 - **OAuth Support**: Secure authentication for all platforms
 
@@ -19,11 +21,36 @@ providers/
 ├── youtube_provider.py     # YouTube Data API v3 & Analytics
 ├── tiktok_provider.py      # TikTok Content Posting API
 ├── instagram_provider.py   # Instagram Graph API
+├── facebook_provider.py    # Facebook Graph API (NEW)
 └── __init__.py            # Provider exports
 
-core/interfaces/
-└── platform_provider.py    # Provider interfaces
+core/
+├── interfaces/
+│   └── platform_provider.py    # Provider interfaces
+├── database.py                 # SQLite database for text data (NEW)
+└── platform_comparison.py      # Cross-platform analysis (NEW)
+
+examples/
+├── platform_youtube_example.py
+├── platform_tiktok_example.py
+├── platform_instagram_example.py
+├── platform_facebook_example.py          # NEW
+├── platform_batch_analytics.py
+└── platform_database_comparison.py       # NEW
 ```
+
+### Data Storage Strategy
+
+**Text Data → Database (SQLite)**:
+- Video titles and descriptions
+- Tags and hashtags
+- Analytics metrics (views, likes, engagement rates)
+- Upload metadata and timestamps
+
+**Media Files → File System**:
+- Video files (MP4, etc.)
+- Thumbnail images (JPG, PNG)
+- Stored in organized directory structure
 
 ### Interfaces
 
@@ -37,6 +64,7 @@ All platform providers implement standard interfaces:
 ### YouTube Integration
 
 #### Setup
+
 
 1. **Create Google Cloud Project**:
    - Go to [Google Cloud Console](https://console.cloud.google.com/)
@@ -335,6 +363,258 @@ print(f"Reach: {account_stats['reach']}")
    - Use trending audio when appropriate
    - Post consistently (1-2 Reels per day)
    - Monitor insights to optimize posting times
+
+### Facebook Integration
+
+#### Setup
+
+1. **Facebook Page**:
+   - Create a Facebook Business Page
+   - Get Page access token from Facebook Developers
+
+2. **Graph API Setup**:
+   - Create Facebook App at developers.facebook.com
+   - Enable required permissions:
+     - `pages_manage_posts`
+     - `pages_read_engagement`
+     - `pages_show_list`
+   - Get Page access token
+
+3. **Environment Variables**:
+   ```bash
+   export FACEBOOK_ACCESS_TOKEN="your_page_access_token_here"
+   export FACEBOOK_PAGE_ID="your_page_id"
+   ```
+
+#### Usage
+
+**Upload a Video:**
+
+```python
+from providers import FacebookUploader
+from core.interfaces.platform_provider import VideoMetadata
+
+# Initialize uploader
+uploader = FacebookUploader(
+    access_token="YOUR_ACCESS_TOKEN",
+    page_id="YOUR_PAGE_ID"
+)
+
+# Prepare metadata
+metadata = VideoMetadata(
+    title="Amazing Story",
+    description="Check out this incredible AI-generated story!",
+    hashtags=["AI", "Story", "Video"],
+)
+
+# Upload video (local file or URL)
+result = uploader.upload_video("output/video.mp4", metadata)
+# Or from URL: result = uploader.upload_video("https://cdn.example.com/video.mp4", metadata)
+
+if result.success:
+    print(f"Video published: {result.url}")
+    print(f"Video ID: {result.video_id}")
+else:
+    print(f"Upload failed: {result.error_message}")
+```
+
+**Retrieve Analytics:**
+
+```python
+from providers import FacebookAnalytics
+
+# Initialize analytics
+analytics = FacebookAnalytics(
+    access_token="YOUR_ACCESS_TOKEN",
+    page_id="YOUR_PAGE_ID"
+)
+
+# Get video analytics
+video_data = analytics.get_video_analytics("VIDEO_ID")
+
+if video_data:
+    print(f"Views: {video_data.views:,}")
+    print(f"Likes: {video_data.likes:,}")
+    print(f"Comments: {video_data.comments:,}")
+    print(f"Shares: {video_data.shares:,}")
+    print(f"Engagement rate: {video_data.engagement_rate:.2f}%")
+
+# Get page analytics
+page_stats = analytics.get_channel_analytics()
+print(f"Fans: {page_stats.get('fan_count', 0):,}")
+```
+
+#### Best Practices
+
+1. **Content Strategy**:
+   - Use engaging titles (max 65 characters)
+   - Write descriptive captions
+   - Include relevant hashtags
+   - Post during peak engagement times
+
+2. **Video Requirements**:
+   - Format: MP4 (recommended)
+   - Resolution: 720p or higher
+   - Duration: 1 second to 240 minutes
+   - File size: Up to 4GB (or use URL)
+
+3. **Engagement Tips**:
+   - Create shareable content
+   - Use Facebook's native upload (better reach than YouTube links)
+   - Respond to comments quickly
+   - Monitor Page Insights for optimal posting times
+
+## Database Integration
+
+The platform integration includes SQLite database storage for all text data and analytics.
+
+### Setting Up the Database
+
+```python
+from core.database import PlatformDatabase
+
+# Initialize database
+db = PlatformDatabase("data/platform_analytics.db")
+db.initialize()
+```
+
+### Storing Upload Results
+
+```python
+from core.interfaces.platform_provider import UploadResult, PlatformType
+from datetime import datetime
+
+# After successful upload
+result = uploader.upload_video("video.mp4", metadata)
+
+if result.success:
+    # Save to database
+    db.save_upload_result(
+        result,
+        title_id="story_123",
+        title="Amazing Story",
+        description="An incredible AI-generated story",
+        tags=["ai", "story", "shorts"],
+        hashtags=["Shorts", "AI", "Viral"],
+    )
+```
+
+### Storing Analytics
+
+```python
+# Collect analytics
+analytics_data = analytics.get_video_analytics(video_id)
+
+if analytics_data:
+    # Save to database
+    db.save_analytics(analytics_data)
+```
+
+### Querying Data
+
+```python
+# Get video by title ID and platform
+video = db.get_video_by_title_id("story_123", "youtube")
+
+# Get latest analytics
+latest = db.get_latest_analytics("VIDEO_ID", "youtube")
+
+# Get all videos for a platform
+videos = db.get_all_videos(platform="youtube", limit=50)
+```
+
+## Cross-Platform Performance Comparison
+
+Analyze and compare video performance across all platforms.
+
+### Basic Comparison
+
+```python
+from core.platform_comparison import PlatformComparator
+
+# Initialize comparator
+comparator = PlatformComparator("data/platform_analytics.db")
+
+# Compare performance for a specific video
+comparison = comparator.compare_video("story_123")
+
+if comparison:
+    print(f"Title: {comparison.title}")
+    print(f"Total Views: {comparison.total_views:,}")
+    print(f"Total Engagement: {comparison.total_engagement:,}")
+    print(f"Average Engagement Rate: {comparison.average_engagement_rate:.2f}%")
+    
+    # Get best platform
+    best = comparison.get_best_platform("engagement_rate")
+    print(f"Best Platform: {best.platform} ({best.engagement_rate:.2f}%)")
+    
+    # Get rankings
+    rankings = comparison.get_platform_ranking("views")
+    for rank, (platform, views) in enumerate(rankings, 1):
+        print(f"{rank}. {platform}: {int(views):,} views")
+```
+
+### Generating Insights
+
+```python
+# Get optimization insights
+insights = comparator.generate_insights("story_123")
+
+print(f"Summary:")
+print(f"  Total Views: {insights['summary']['total_views']:,}")
+print(f"  Average Engagement: {insights['summary']['average_engagement_rate']:.2f}%")
+
+print(f"\nBest Performers:")
+for metric, platform in insights['best_performers'].items():
+    print(f"  {metric}: {platform}")
+
+print(f"\nRecommendations:")
+for rec in insights['recommendations']:
+    print(f"  • {rec}")
+```
+
+### Platform Trends
+
+```python
+# Analyze trends for a specific platform
+trends = comparator.get_platform_trends("youtube", limit=10)
+
+print(f"YouTube Trends:")
+print(f"  Videos Analyzed: {trends['video_count']}")
+print(f"  Average Views: {trends['average_views']:,}")
+print(f"  Average Engagement: {trends['average_engagement']:,}")
+
+# Compare all platforms
+overall = comparator.compare_all_platforms()
+print(f"\nOverall: {overall['total_videos']} videos, {overall['total_views']:,} total views")
+```
+
+### Example Output
+
+```
+📊 Performance Summary:
+  Total Views: 85,500
+  Total Engagement: 7,480
+  Average Engagement Rate: 7.73%
+
+🏆 Platform Rankings:
+  By Views:
+    1. tiktok: 50,000 views
+    2. youtube: 15,000 views
+    3. facebook: 12,000 views
+    4. instagram: 8,500 views
+
+  By Engagement Rate:
+    1. tiktok: 10.30%
+    2. facebook: 6.90%
+    3. instagram: 6.90%
+    4. youtube: 6.80%
+
+💡 Recommendations:
+  1. Best engagement on tiktok (10.30%). Consider focusing on this platform.
+  2. tiktok shows high virality (score: 0.55). Content style resonates well here.
+  3. instagram underperforming (engagement: 6.90%). Consider adjusting content strategy.
+```
 
 ## Error Handling
 
