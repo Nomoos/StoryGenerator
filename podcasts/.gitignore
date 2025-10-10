@@ -1,0 +1,19 @@
+# Ignore all audio files
+*.mp3
+*.m4a
+*.wav
+*.aac
+*.ogg
+*.flac
+
+# Ignore all image files (artwork)
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.webp
+
+# Keep the README
+!README.md
+!.gitignore
