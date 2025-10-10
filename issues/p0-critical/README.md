@@ -93,7 +93,6 @@ Moved to: [`/issues/resolved/p0-content-pipeline/`](../resolved/p0-content-pipel
 ---
 
 **Total P0 Issues:** 0 remaining  
-**Estimated Effort:** 0 hours  
 **Status:** ✅ 9/9 complete (100%)  
 
 ### Issue Breakdown:

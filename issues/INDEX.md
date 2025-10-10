@@ -72,8 +72,6 @@ All P0 critical issues have been completed and moved to resolved/:
 - ✅ Quality control (3 tasks) - Complete
 - ✅ Export & delivery (3 tasks) - Complete
 
-**Estimated Effort:** 40-50 hours remaining (architecture and code quality improvements only)
-
 ### 🟢 P2 - Medium Priority (16 tasks - Future)
 **Location:** [`p2-medium/`](p2-medium/README.md)
 
@@ -91,21 +89,19 @@ All P0 critical issues have been completed and moved to resolved/:
 - Platform distribution (4 tasks)
 - Analytics & optimization (4 tasks)
 
-**Estimated Effort:** 110-135 hours (50-55 hours for new features + 60-80 hours for publishing)
-
 > **Note:** The Python-based sequential step issues (step-00 through step-14) have been archived to `obsolete/issues/` as they represent the obsolete Python implementation plan.
 
 ## 🎯 C# Implementation Issues
 
-| Priority | Count | Estimated Effort | Location |
-|----------|-------|------------------|----------|
-| ✅ **Resolved** | 15 tasks | ~65 hours (done) | [resolved/](resolved/) |
-| 🔴 **P0 Critical** | 0 tasks | 0 hours (ALL COMPLETE ✅) | [p0-critical/](p0-critical/) |
-| 🟡 **P1 High** | 50 tasks | 160-250 hours | [p1-high/](p1-high/) |
-| 🟢 **P2 Medium** | 16 tasks | 110-135 hours | [p2-medium/](p2-medium/) |
+| Priority | Count | Status | Location |
+|----------|-------|--------|----------|
+| ✅ **Resolved** | 15 tasks | Complete | [resolved/](resolved/) |
+| 🔴 **P0 Critical** | 0 tasks | ALL COMPLETE ✅ | [p0-critical/](p0-critical/) |
+| 🟡 **P1 High** | 50 tasks | Mostly Complete | [p1-high/](p1-high/) |
+| 🟢 **P2 Medium** | 16 tasks | Future Work | [p2-medium/](p2-medium/) |
 | **Master Roadmap** | Overview | N/A | [csharp-master-roadmap/](csharp-master-roadmap/) |
 
-**Total:** 81 tasks | 270-385 hours remaining effort (includes 17 new architecture/quality issues)
+**Total:** 81 tasks
 
 ## 📋 Detailed Breakdown by Priority
 
