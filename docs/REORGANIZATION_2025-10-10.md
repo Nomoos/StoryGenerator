@@ -41,7 +41,7 @@ docs/
 ├── EXAMPLES.md (input/output examples)
 ├── CHANGELOG.md (project changelog)
 │
-├── architecture/ (4 items: 2 files + 2 folders)
+├── architecture/ (2 files)
 │   ├── README.md
 │   ├── ARCHITECTURE.md
 │   ├── hybrid/ (4 files)
@@ -90,13 +90,13 @@ docs/
 │   ├── issues/ (2 files)
 │   └── video/ (3 files)
 │
-├── content/ (6 items: 4 files + 2 folders)
+├── content/ (4 files)
 │   ├── README.md
-│   ├── ideas/ (7 files)
-│   ├── video/ (7 files)
 │   ├── DATABASE_RECOMMENDATIONS.md
 │   ├── LOCAL_STORAGE_STRATEGY.md
-│   └── RESEARCH_AND_IMPROVEMENTS.md
+│   ├── RESEARCH_AND_IMPROVEMENTS.md
+│   ├── ideas/ (7 files)
+│   └── video/ (7 files)
 │
 ├── features/ (7 files)
 │   ├── README.md
@@ -126,7 +126,7 @@ docs/
 │   ├── HARDWARE_REQUIREMENTS.md
 │   └── GPU_COMPARISON.md
 │
-├── summaries/ (7 items: 2 files + 5 folders)
+├── summaries/ (2 files)
 │   ├── README.md
 │   ├── SUMMARY.md
 │   ├── groups/ (5 files)
