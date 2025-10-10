@@ -21,7 +21,7 @@ namespace StoryGenerator.Research
         /// <returns>Generated text</returns>
         Task<string> GenerateAsync(
             string prompt,
-            string system = null,
+            string? system = null,
             float temperature = 0.7f,
             int? maxTokens = null,
             CancellationToken cancellationToken = default);

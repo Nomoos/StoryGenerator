@@ -21,7 +21,7 @@ namespace StoryGenerator.Research
         /// <returns>Transcription result</returns>
         Task<TranscriptionResult> TranscribeAsync(
             string audioPath,
-            string language = null,
+            string? language = null,
             string task = "transcribe",
             bool wordTimestamps = true,
             bool vadFilter = true,
@@ -38,8 +38,8 @@ namespace StoryGenerator.Research
         /// <returns>SRT content as string</returns>
         Task<string> TranscribeToSrtAsync(
             string audioPath,
-            string outputPath = null,
-            string language = null,
+            string? outputPath = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default);
 
@@ -54,8 +54,8 @@ namespace StoryGenerator.Research
         /// <returns>VTT content as string</returns>
         Task<string> TranscribeToVttAsync(
             string audioPath,
-            string outputPath = null,
-            string language = null,
+            string? outputPath = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default);
 

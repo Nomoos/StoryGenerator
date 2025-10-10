@@ -38,7 +38,7 @@ namespace StoryGenerator.Research
         /// <returns>Generated text</returns>
         public async Task<string> GenerateAsync(
             string prompt,
-            string system = null,
+            string? system = null,
             float temperature = 0.7f,
             int? maxTokens = null,
             CancellationToken cancellationToken = default)
@@ -108,7 +108,7 @@ namespace StoryGenerator.Research
         {
             // Convert messages to single prompt for CLI
             var promptBuilder = new StringBuilder();
-            string systemMessage = null;
+            string? systemMessage = null;
 
             foreach (var message in messages)
             {

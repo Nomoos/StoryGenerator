@@ -19,7 +19,7 @@ namespace StoryGenerator.Core.Interfaces
         /// <returns>Subtitle content in SRT format with word-level alignment.</returns>
         Task<string> GenerateAlignedSubtitlesAsync(
             string audioPath,
-            string language = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default);
 
@@ -35,7 +35,7 @@ namespace StoryGenerator.Core.Interfaces
         Task<string> GenerateAndSaveSrtAsync(
             string audioPath,
             string outputPath,
-            string language = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default);
 
@@ -51,7 +51,7 @@ namespace StoryGenerator.Core.Interfaces
         Task<string> GenerateAndSaveVttAsync(
             string audioPath,
             string outputPath,
-            string language = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default);
 
@@ -69,7 +69,7 @@ namespace StoryGenerator.Core.Interfaces
             string audioPath,
             Shotlist shotlist,
             string titleId,
-            string language = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default);
 
@@ -89,7 +89,7 @@ namespace StoryGenerator.Core.Interfaces
             Shotlist shotlist,
             string titleId,
             string outputPath,
-            string language = null,
+            string? language = null,
             int maxWordsPerLine = 10,
             CancellationToken cancellationToken = default);
     }
