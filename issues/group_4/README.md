@@ -12,10 +12,11 @@
 
 ## 📋 Current Status
 
-See [.NEXT.MD](.NEXT.MD) for the current priority item.
+**Current Priority:** [.NEXT.MD](.NEXT.MD) - Video Variant Selection  
+**Overall Progress:** [GROUP_4_TRACKING.md](GROUP_4_TRACKING.md) - 0 of 3 tasks complete (19-24h total)
 
-**Open Issues:** See [.ISSUES/](.ISSUES/) folder  
-**Completed Issues:** See [.DONE/](.DONE/) folder
+**Open Issues:** See [.ISSUES/](.ISSUES/) folder (3 issues)  
+**Completed Issues:** See [.DONE/](.DONE/) folder (0 completed)
 
 ---
 
