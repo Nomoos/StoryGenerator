@@ -218,10 +218,12 @@ Or with a specific story ID:
 - ✅ **Automatic retry** with configurable `MAX_TRIES` and `SLEEP_SECS`
 - ✅ **Acceptance criteria checking** - each step validates output quality
 - ✅ **Story ID auto-selection** - picks pending stories when none specified
+- ✅ **Database tracking** - optional SQLite/PostgreSQL tracking for visibility
 - ✅ **Exit codes**: `0` = success, `1` = config error, `2` = runtime error, `3` = acceptance not met
 - ✅ **Run tracking** - execution metadata saved in `.runs/`
 
 ➡️ **[Windows Pipeline Documentation](pipeline/scripts/README.md)**
+➡️ **[Database Tracking Guide](pipeline/DATABASE_TRACKING.md)**
 
 ---
 

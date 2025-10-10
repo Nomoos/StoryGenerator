@@ -58,9 +58,14 @@ Or with a specific story ID:
 .\pipeline\scripts\03_generate.bat STORY-123
 ```
 
-## How It Works
+## Features
 
-Each `.bat` script:
+- ✅ **Automatic retry** with configurable `MAX_TRIES` and `SLEEP_SECS`
+- ✅ **Acceptance criteria checking** - each step validates output quality
+- ✅ **Story ID auto-selection** - picks pending stories when none specified
+- ✅ **Database tracking** - optional SQLite/PostgreSQL tracking (see [Database Guide](../DATABASE_TRACKING.md))
+- ✅ **Exit codes**: `0` = success, `1` = config error, `2` = runtime error, `3` = acceptance not met
+- ✅ **Run tracking** - execution metadata saved in `.runs/`
 
 1. **Loads configuration** from `.env` file at repo root
 2. **Picks a story ID** if not provided (using `pick-one` action)
@@ -174,6 +179,31 @@ Process the same story across pipeline runs:
 ```env
 DEFAULT_STORY_ID=STORY-123
 ```
+
+### Database Tracking
+
+Enable database-backed story tracking for better visibility:
+
+```env
+# SQLite (default - no config needed)
+DB_URL=sqlite:///data/pipeline_stories.db
+
+# Or PostgreSQL for multi-user setups
+DB_URL=postgresql+psycopg://user:pass@localhost:5432/storygen
+DB_SCHEMA=public
+```
+
+Query story status:
+```cmd
+python pipeline\orchestration\run_step.py --action status --story-id STORY-123
+```
+
+Get pipeline statistics:
+```cmd
+python pipeline\orchestration\run_step.py --action stats
+```
+
+See the [Database Tracking Guide](../DATABASE_TRACKING.md) for complete documentation.
 
 ### Debugging
 

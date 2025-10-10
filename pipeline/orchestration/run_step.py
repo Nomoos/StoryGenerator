@@ -18,6 +18,7 @@ import json
 import logging
 import os
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
@@ -33,11 +34,19 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Import database module (optional)
+try:
+    from pipeline.orchestration.story_db import StoryDatabase
+    DB_AVAILABLE = True
+except ImportError:
+    DB_AVAILABLE = False
+    logger.warning("Database module not available - using filesystem-only mode")
+
 
 class StepOrchestrator:
     """Orchestrates pipeline steps with pick-one, run, and acceptance checking."""
     
-    def __init__(self, step_name: str, run_id: str, story_id: Optional[str] = None):
+    def __init__(self, step_name: str, run_id: str, story_id: Optional[str] = None, use_db: bool = True):
         self.step_name = step_name
         self.run_id = run_id
         self.story_id = story_id
@@ -51,11 +60,37 @@ class StepOrchestrator:
         self.step_output_dir = self.output_dir / self.step_name
         self.step_output_dir.mkdir(parents=True, exist_ok=True)
         
+        # Initialize database if available and enabled
+        self.db = None
+        self.use_db = use_db and DB_AVAILABLE
+        if self.use_db:
+            try:
+                db_url = os.getenv("DB_URL")
+                db_schema = os.getenv("DB_SCHEMA", "public")
+                self.db = StoryDatabase(db_url=db_url, schema=db_schema)
+                self.db.initialize()
+                logger.info(f"[{self.step_name}] Database tracking enabled")
+            except Exception as e:
+                logger.warning(f"[{self.step_name}] Database initialization failed: {e}. Using filesystem-only mode.")
+                self.db = None
+                self.use_db = False
+        
     def pick_one_candidate(self) -> Optional[str]:
         """Pick one pending story ID for this step."""
         logger.info(f"[{self.step_name}] Picking one candidate story...")
         
-        # Get list of pending stories for this step
+        # Try database first if available
+        if self.use_db and self.db:
+            try:
+                pending = self.db.get_pending_stories(self.step_name, limit=1)
+                if pending:
+                    story_id = pending[0]
+                    logger.info(f"[{self.step_name}] Selected story from database: {story_id}")
+                    return story_id
+            except Exception as e:
+                logger.warning(f"[{self.step_name}] Database query failed: {e}. Falling back to filesystem.")
+        
+        # Fall back to filesystem-based logic
         candidates = self._get_pending_stories()
         
         if not candidates:
@@ -65,6 +100,14 @@ class StepOrchestrator:
         # Return the first pending story
         story_id = candidates[0]
         logger.info(f"[{self.step_name}] Selected story: {story_id}")
+        
+        # Register in database if available
+        if self.use_db and self.db:
+            try:
+                self.db.register_story(story_id, source="auto-generated")
+            except Exception as e:
+                logger.warning(f"[{self.step_name}] Failed to register story in database: {e}")
+        
         return story_id
     
     def _get_pending_stories(self) -> List[str]:
@@ -128,6 +171,27 @@ class StepOrchestrator:
             
         logger.info(f"[{self.step_name}] Running step for story: {self.story_id}")
         
+        # Register story in database if not exists
+        if self.use_db and self.db:
+            try:
+                self.db.register_story(self.story_id, source="pipeline")
+            except Exception as e:
+                logger.warning(f"[{self.step_name}] Failed to register story: {e}")
+        
+        # Update database status to running
+        if self.use_db and self.db:
+            try:
+                self.db.update_step_status(
+                    self.story_id,
+                    self.step_name,
+                    "running",
+                    run_id=self.run_id
+                )
+            except Exception as e:
+                logger.warning(f"[{self.step_name}] Failed to update status in database: {e}")
+        
+        start_time = time.time()
+        
         try:
             # Get step-specific handler
             handler = self._get_step_handler()
@@ -135,16 +199,83 @@ class StepOrchestrator:
             # Execute the step
             result = handler()
             
+            execution_time_ms = int((time.time() - start_time) * 1000)
+            
             if result:
                 # Record execution in run metadata
                 self._record_execution()
+                
+                # Update database status to completed
+                if self.use_db and self.db:
+                    try:
+                        self.db.update_step_status(
+                            self.story_id,
+                            self.step_name,
+                            "completed",
+                            run_id=self.run_id
+                        )
+                        self.db.add_step_history(
+                            self.story_id,
+                            self.step_name,
+                            self.run_id,
+                            "completed",
+                            execution_time_ms=execution_time_ms
+                        )
+                    except Exception as e:
+                        logger.warning(f"[{self.step_name}] Failed to update database: {e}")
+                
                 logger.info(f"[{self.step_name}] Step completed successfully for {self.story_id}")
             else:
+                # Update database status to failed
+                if self.use_db and self.db:
+                    try:
+                        self.db.update_step_status(
+                            self.story_id,
+                            self.step_name,
+                            "failed",
+                            run_id=self.run_id,
+                            error_message="Step execution returned False"
+                        )
+                        self.db.add_step_history(
+                            self.story_id,
+                            self.step_name,
+                            self.run_id,
+                            "failed",
+                            error_message="Step execution returned False",
+                            execution_time_ms=execution_time_ms
+                        )
+                    except Exception as e:
+                        logger.warning(f"[{self.step_name}] Failed to update database: {e}")
+                
                 logger.error(f"[{self.step_name}] Step failed for {self.story_id}")
                 
             return result
             
         except Exception as e:
+            execution_time_ms = int((time.time() - start_time) * 1000)
+            error_msg = str(e)
+            
+            # Update database status to failed
+            if self.use_db and self.db:
+                try:
+                    self.db.update_step_status(
+                        self.story_id,
+                        self.step_name,
+                        "failed",
+                        run_id=self.run_id,
+                        error_message=error_msg
+                    )
+                    self.db.add_step_history(
+                        self.story_id,
+                        self.step_name,
+                        self.run_id,
+                        "failed",
+                        error_message=error_msg,
+                        execution_time_ms=execution_time_ms
+                    )
+                except Exception as db_e:
+                    logger.warning(f"[{self.step_name}] Failed to update database: {db_e}")
+            
             logger.error(f"[{self.step_name}] Error running step: {e}", exc_info=True)
             return False
     
@@ -351,6 +482,19 @@ class StepOrchestrator:
             # Check acceptance
             passed, reason = checker()
             
+            # Update database with acceptance results
+            if self.use_db and self.db:
+                try:
+                    self.db.update_step_status(
+                        self.story_id,
+                        self.step_name,
+                        "completed" if passed else "failed",
+                        acceptance_passed=passed,
+                        acceptance_details=reason
+                    )
+                except Exception as e:
+                    logger.warning(f"[{self.step_name}] Failed to update acceptance in database: {e}")
+            
             if passed:
                 logger.info(f"[{self.step_name}] Acceptance check passed for {self.story_id}")
             else:
@@ -522,20 +666,76 @@ class StepOrchestrator:
 def main():
     """Main entry point."""
     parser = argparse.ArgumentParser(description="Pipeline Step Orchestrator")
-    parser.add_argument("--step", required=True, help="Step name (e.g., 01_ingest)")
+    parser.add_argument("--step", help="Step name (e.g., 01_ingest)")
     parser.add_argument("--run-id", help="Run ID")
     parser.add_argument("--story-id", help="Story ID")
     parser.add_argument("--action", required=True, 
-                       choices=["pick-one", "run", "check-acceptance"],
+                       choices=["pick-one", "run", "check-acceptance", "status", "stats"],
                        help="Action to perform")
+    parser.add_argument("--no-db", action="store_true",
+                       help="Disable database tracking (use filesystem only)")
     
     args = parser.parse_args()
+    
+    # Handle status and stats actions (don't require step)
+    if args.action == "status":
+        if not args.story_id:
+            logger.error("--story-id is required for status action")
+            sys.exit(1)
+        
+        if not DB_AVAILABLE:
+            logger.error("Database module not available")
+            sys.exit(1)
+        
+        try:
+            db_url = os.getenv("DB_URL")
+            db_schema = os.getenv("DB_SCHEMA", "public")
+            db = StoryDatabase(db_url=db_url, schema=db_schema)
+            db.initialize()
+            
+            status = db.get_story_status(args.story_id)
+            if not status:
+                print(f"Story {args.story_id} not found")
+                sys.exit(1)
+            
+            # Print status as JSON
+            print(json.dumps(status, indent=2, default=str))
+            sys.exit(0)
+        except Exception as e:
+            logger.error(f"Failed to get status: {e}")
+            sys.exit(1)
+    
+    elif args.action == "stats":
+        if not DB_AVAILABLE:
+            logger.error("Database module not available")
+            sys.exit(1)
+        
+        try:
+            db_url = os.getenv("DB_URL")
+            db_schema = os.getenv("DB_SCHEMA", "public")
+            db = StoryDatabase(db_url=db_url, schema=db_schema)
+            db.initialize()
+            
+            stats = db.get_step_statistics()
+            
+            # Print stats as JSON
+            print(json.dumps(stats, indent=2))
+            sys.exit(0)
+        except Exception as e:
+            logger.error(f"Failed to get statistics: {e}")
+            sys.exit(1)
+    
+    # For other actions, step is required
+    if not args.step:
+        logger.error("--step is required for this action")
+        sys.exit(1)
     
     # Generate run_id if not provided
     run_id = args.run_id or datetime.now().strftime("%Y%m%d-%H%M%S")
     
     # Create orchestrator
-    orchestrator = StepOrchestrator(args.step, run_id, args.story_id)
+    use_db = not args.no_db
+    orchestrator = StepOrchestrator(args.step, run_id, args.story_id, use_db=use_db)
     
     # Execute action
     if args.action == "pick-one":
