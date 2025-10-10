@@ -410,3 +410,4 @@ example_output/
 # =============================================================================
 .runs/
 outputs/
+data/pipeline_stories.db
