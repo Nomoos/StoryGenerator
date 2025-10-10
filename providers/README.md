@@ -125,7 +125,33 @@ analytics = InstagramAnalytics(
 data = analytics.get_video_analytics(result.video_id)
 ```
 
-**📖 Full Documentation:** See [Platform Integration Guide](../docs/guides/integration/PLATFORM_INTEGRATION.md)
+#### WordPressProvider
+Create draft posts in WordPress with story titles and content.
+
+```python
+from providers import WordPressProvider
+
+# Initialize provider
+provider = WordPressProvider(
+    site_url="https://mysite.wordpress.com",
+    username="admin",
+    app_password="xxxx xxxx xxxx xxxx"
+)
+
+# Create draft post
+result = provider.create_draft_post(
+    title="My Story Title",
+    content="This is the story content..."
+)
+
+if result['success']:
+    print(f"Draft created: {result['edit_url']}")
+    print(f"Post ID: {result['post_id']}")
+```
+
+**📖 Full Documentation:** 
+- [Platform Integration Guide](../docs/guides/integration/PLATFORM_INTEGRATION.md)
+- [WordPress Integration Guide](../docs/guides/integration/WORDPRESS_INTEGRATION.md)
 
 ## Usage Examples
 
