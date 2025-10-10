@@ -4,7 +4,7 @@ This document summarizes the implementation of additional Python Enhancement Pro
 
 ## 📋 Overview
 
-**Date:** 2025-10-10  
+**Date:** Implementation in progress  
 **Scope:** Extended Python coding guidelines with practical PEPs for typing, data modeling, and language features  
 **Python Version:** 3.10+ (with 3.11+ features where available)
 
@@ -77,8 +77,9 @@ class ChatMessage(TypedDict):
 - Clear API documentation
 - Catches errors at type-check time
 
-**Compatibility:** Added version check for Python 3.10 support:
+**Compatibility:** Added version check to support Python 3.10 (NotRequired is in typing_extensions for 3.10, in typing for 3.11+):
 ```python
+# For Python 3.10 compatibility
 if sys.version_info >= (3, 11):
     from typing import TypedDict, NotRequired
 else:
