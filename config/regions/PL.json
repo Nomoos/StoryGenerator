@@ -1,0 +1,194 @@
+{
+  "region": {
+    "code": "PL",
+    "name": "Poland",
+    "locale": "pl-PL",
+    "language": "Polish",
+    "timezone": "Europe/Warsaw",
+    "currency": "PLN"
+  },
+  
+  "monetization": {
+    "cpm_estimate": 5.0,
+    "cpm_range": [3.5, 7],
+    "currency": "PLN",
+    "priority_tier": 2,
+    "notes": "Growing European market. Good engagement. Less competition than Western Europe."
+  },
+  
+  "platforms": {
+    "youtube": {
+      "enabled": true,
+      "content_types": ["shorts"],
+      "optimal_posting_times": ["08:00", "13:00", "19:00", "21:00"],
+      "optimal_days": ["Tuesday", "Thursday", "Saturday"],
+      "hashtag_limit": 3,
+      "title_max_length": 100,
+      "description_max_length": 5000,
+      "notes": "YouTube is the dominant video platform in Poland. Strong horror content community."
+    },
+    "tiktok": {
+      "enabled": true,
+      "content_types": ["short_video"],
+      "optimal_posting_times": ["09:00", "15:00", "20:00"],
+      "optimal_days": ["Friday", "Saturday", "Sunday"],
+      "hashtag_limit": 30,
+      "caption_max_length": 150,
+      "notes": "TikTok growing rapidly in Poland. Young audience very active."
+    },
+    "instagram": {
+      "enabled": true,
+      "content_types": ["reels"],
+      "optimal_posting_times": ["11:00", "14:00", "19:00"],
+      "optimal_days": ["Wednesday", "Friday", "Sunday"],
+      "hashtag_limit": 30,
+      "caption_max_length": 2200,
+      "notes": "Instagram Reels popular among younger demographics."
+    }
+  },
+  
+  "voice": {
+    "provider": "azure",
+    "voice_id": "pl-PL-ZofiaNeural",
+    "voice_name": "Zofia",
+    "gender": "female",
+    "age_range": "young_adult",
+    "accent": "standard_polish",
+    "style": "warm",
+    "description": "Clear Polish accent. Engaging and expressive.",
+    "alternatives": [
+      {
+        "voice_id": "pl-PL-MarekNeural",
+        "voice_name": "Marek",
+        "gender": "male",
+        "age_range": "adult",
+        "style": "authoritative",
+        "description": "Male Polish voice for serious content"
+      }
+    ]
+  },
+  
+  "localization": {
+    "translation_required": true,
+    "cultural_adaptation_level": "high",
+    "reference_examples": [
+      "Use Polish-specific references (Polish cities, cultural elements)",
+      "Adapt measurement units to metric (kilometers, Celsius)",
+      "Educational references: matura, liceum",
+      "Food: pierogi, bigos, żurek references work well",
+      "Use formal 'Pan/Pani' appropriately for respect"
+    ],
+    "avoid": [
+      "Sensitive WWII topics (can be very emotional)",
+      "Religious content (Poland is Catholic, but be respectful)",
+      "Strong political content",
+      "Negative stereotypes about Poland or Polish people"
+    ]
+  },
+  
+  "content_preferences": {
+    "trending_topics": [
+      "Horror stories (historie grozy)",
+      "True crime",
+      "Paranormal and supernatural",
+      "Urban legends (miejskie legendy)",
+      "Real life mysteries",
+      "School and friendship drama",
+      "Creepypasta translated to Polish"
+    ],
+    "avoid_topics": [
+      "Political controversies",
+      "Religious mockery",
+      "WWII topics (unless very respectful)",
+      "Negative national stereotypes"
+    ],
+    "popular_formats": [
+      "Historie grozy (horror stories)",
+      "To mi się naprawdę przydarzyło (this really happened to me)",
+      "Top 5/10 (listicles)",
+      "POV: (point of view scenarios)",
+      "Niewyjaśnione tajemnice (unexplained mysteries)"
+    ]
+  },
+  
+  "demographics": {
+    "primary_age_groups": [
+      {"range": [13, 17], "percentage": 40, "platforms": ["tiktok", "youtube"]},
+      {"range": [18, 24], "percentage": 35, "platforms": ["youtube", "instagram", "tiktok"]},
+      {"range": [25, 34], "percentage": 20, "platforms": ["youtube", "instagram"]},
+      {"range": [35, 44], "percentage": 5, "platforms": ["youtube"]}
+    ],
+    "gender_split": {
+      "male": 48,
+      "female": 50,
+      "other": 2
+    },
+    "device_usage": {
+      "mobile": 88,
+      "desktop": 9,
+      "tablet": 3
+    }
+  },
+  
+  "compliance": {
+    "coppa_applicable": false,
+    "age_restrictions": 13,
+    "content_rating": "general",
+    "disclosure_required": true,
+    "disclosure_text": "Płatna współpraca",
+    "gdpr_applicable": true,
+    "notes": "GDPR compliance required. Polish data protection regulations apply."
+  },
+  
+  "seo_keywords": {
+    "high_volume": [
+      "historie grozy",
+      "straszne opowieści",
+      "horrory",
+      "przerażające historie",
+      "straszne historie",
+      "creepypasta po polsku",
+      "prawdziwe historie grozy",
+      "horrory po polsku",
+      "strach",
+      "mroczne historie"
+    ],
+    "trending_hashtags": [
+      "#HistorieGrozy",
+      "#Horror",
+      "#Straszne",
+      "#PolskiHorror",
+      "#Przerażające",
+      "#CreepypastaPL",
+      "#Shorts",
+      "#Viral",
+      "#PolskiTikTok",
+      "#Strach"
+    ]
+  },
+  
+  "analytics": {
+    "track_metrics": true,
+    "key_performance_indicators": [
+      "CPM",
+      "Watch time",
+      "CTR",
+      "Engagement rate",
+      "Subscriber conversion"
+    ],
+    "benchmarks": {
+      "cpm_target": 5.0,
+      "watch_time_target": 75,
+      "ctr_target": 4.5,
+      "engagement_rate_target": 6.5
+    }
+  },
+  
+  "channel": {
+    "name": "Nom Scary Stories PL",
+    "handle": "@NomScaryStoriesPL",
+    "genre": "Horror/Scary Stories",
+    "target_audience": "Polish-speaking teens and young adults (13-25)",
+    "content_focus": "Real life horror stories, urban legends, paranormal experiences"
+  }
+}

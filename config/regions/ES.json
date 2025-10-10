@@ -1,0 +1,193 @@
+{
+  "region": {
+    "code": "ES",
+    "name": "Spain",
+    "locale": "es-ES",
+    "language": "Spanish",
+    "timezone": "Europe/Madrid",
+    "currency": "EUR"
+  },
+  
+  "monetization": {
+    "cpm_estimate": 6.5,
+    "cpm_range": [4, 10],
+    "currency": "EUR",
+    "priority_tier": 2,
+    "notes": "Strong European market. Good CPM. Also targets Latin America."
+  },
+  
+  "platforms": {
+    "youtube": {
+      "enabled": true,
+      "content_types": ["shorts"],
+      "optimal_posting_times": ["08:00", "14:00", "20:00", "22:00"],
+      "optimal_days": ["Tuesday", "Thursday", "Saturday"],
+      "hashtag_limit": 3,
+      "title_max_length": 100,
+      "description_max_length": 5000,
+      "notes": "YouTube Shorts very popular. Strong engagement on horror content."
+    },
+    "tiktok": {
+      "enabled": true,
+      "content_types": ["short_video"],
+      "optimal_posting_times": ["10:00", "16:00", "21:00"],
+      "optimal_days": ["Friday", "Saturday", "Sunday"],
+      "hashtag_limit": 30,
+      "caption_max_length": 150,
+      "notes": "TikTok is huge in Spain. High engagement platform."
+    },
+    "instagram": {
+      "enabled": true,
+      "content_types": ["reels"],
+      "optimal_posting_times": ["12:00", "15:00", "20:00"],
+      "optimal_days": ["Wednesday", "Friday", "Sunday"],
+      "hashtag_limit": 30,
+      "caption_max_length": 2200,
+      "notes": "Instagram Reels very popular. Strong visual culture."
+    }
+  },
+  
+  "voice": {
+    "provider": "elevenlabs",
+    "voice_id": "Domi",
+    "voice_name": "Domi",
+    "gender": "female",
+    "age_range": "young_adult",
+    "accent": "castilian_spanish",
+    "style": "warm",
+    "description": "Clear Castilian Spanish. Engaging and warm tone.",
+    "alternatives": [
+      {
+        "voice_id": "latin_american",
+        "voice_name": "María (Latin American)",
+        "gender": "female",
+        "age_range": "young_adult",
+        "style": "friendly",
+        "description": "Latin American Spanish for broader appeal"
+      }
+    ]
+  },
+  
+  "localization": {
+    "translation_required": true,
+    "cultural_adaptation_level": "high",
+    "reference_examples": [
+      "Use Spain-specific references (La Liga, famous Spanish cities)",
+      "Adapt measurement units to metric (kilometers, Celsius)",
+      "Use 'vosotros' form (Castilian Spanish)",
+      "Educational references: Bachillerato, Selectividad",
+      "Food: tapas, paella, churros references work well"
+    ],
+    "avoid": [
+      "Sensitive historical topics (Civil War, Franco era)",
+      "Regional politics (Catalonia, Basque Country)",
+      "Religious content (can be divisive)",
+      "Bullfighting (controversial)"
+    ]
+  },
+  
+  "content_preferences": {
+    "trending_topics": [
+      "Horror and mystery stories",
+      "True crime (crimen real)",
+      "Paranormal experiences",
+      "Urban legends (leyendas urbanas)",
+      "Reddit stories translated",
+      "Real life drama",
+      "School and friendship stories"
+    ],
+    "avoid_topics": [
+      "Regional independence movements",
+      "Strong political content",
+      "Religious controversies"
+    ],
+    "popular_formats": [
+      "Historias de terror (horror stories)",
+      "Esto me pasó a mí (this happened to me)",
+      "Top 5/10 (listicles)",
+      "POV: (point of view scenarios)",
+      "Misterios sin resolver (unsolved mysteries)"
+    ]
+  },
+  
+  "demographics": {
+    "primary_age_groups": [
+      {"range": [13, 17], "percentage": 35, "platforms": ["tiktok", "youtube"]},
+      {"range": [18, 24], "percentage": 40, "platforms": ["tiktok", "instagram", "youtube"]},
+      {"range": [25, 34], "percentage": 20, "platforms": ["instagram", "youtube"]},
+      {"range": [35, 44], "percentage": 5, "platforms": ["youtube"]}
+    ],
+    "gender_split": {
+      "male": 45,
+      "female": 53,
+      "other": 2
+    },
+    "device_usage": {
+      "mobile": 90,
+      "desktop": 7,
+      "tablet": 3
+    }
+  },
+  
+  "compliance": {
+    "coppa_applicable": false,
+    "age_restrictions": 13,
+    "content_rating": "general",
+    "disclosure_required": true,
+    "disclosure_text": "Colaboración pagada",
+    "gdpr_applicable": true,
+    "notes": "GDPR compliance required. Spanish data protection law applies."
+  },
+  
+  "seo_keywords": {
+    "high_volume": [
+      "historias de terror",
+      "cuentos de miedo",
+      "terror real",
+      "historias reales",
+      "miedo",
+      "escalofriante",
+      "aterrador",
+      "relatos de terror",
+      "horror",
+      "creepypasta español"
+    ],
+    "trending_hashtags": [
+      "#HistoriasDeTerror",
+      "#Terror",
+      "#Miedo",
+      "#Horror",
+      "#TerrorReal",
+      "#HistoriasReales",
+      "#Escalofriante",
+      "#Shorts",
+      "#ParaTi",
+      "#Viral"
+    ]
+  },
+  
+  "analytics": {
+    "track_metrics": true,
+    "key_performance_indicators": [
+      "CPM",
+      "Watch time",
+      "CTR",
+      "Engagement rate",
+      "Subscriber conversion"
+    ],
+    "benchmarks": {
+      "cpm_target": 6.5,
+      "watch_time_target": 75,
+      "ctr_target": 4.5,
+      "engagement_rate_target": 6.0
+    }
+  },
+  
+  "channel": {
+    "name": "Nom Scary Stories ES",
+    "handle": "@NomScaryStoriesES",
+    "genre": "Horror/Scary Stories",
+    "target_audience": "Spanish-speaking teens and young adults (13-25)",
+    "content_focus": "Real life horror stories, urban legends, paranormal experiences"
+  }
+}
