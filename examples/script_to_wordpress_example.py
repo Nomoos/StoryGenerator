@@ -15,7 +15,8 @@ import sys
 from pathlib import Path
 
 # Add core and providers to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
 
 from providers import WordPressProvider
 
@@ -77,19 +78,20 @@ From herself. 30 years in the future.
 Some discoveries change everything.
 
 And some questions have no safe answers.""",
-        "target_gender": "women",
-        "target_age": "18-23",
     }
 
     print("\n📝 Script Details:")
     print(f"   Title: {script_data['title']}")
     print(f"   Length: {len(script_data['content'].split())} words")
-    print(f"   Target: {script_data['target_gender']}, {script_data['target_age']}")
 
     print("\n🌐 Creating WordPress draft...")
 
     # Create WordPress draft
-    result = create_wordpress_draft_from_script(script_data)
+    try:
+        result = create_wordpress_draft_from_script(script_data)
+    except Exception as e:
+        print(f"\n❌ Unexpected error: {e}")
+        result = {"success": False, "error": str(e)}
 
     if result["success"]:
         print("\n✅ Success! Draft post created in WordPress")
