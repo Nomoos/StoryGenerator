@@ -75,5 +75,21 @@ namespace StoryGenerator.Core.Interfaces
         /// <param name="outputPath">Path to save JSON file</param>
         /// <returns>Path to saved file</returns>
         Task<string> SaveManifestAsync(KeyframeManifest manifest, string outputPath);
+
+        /// <summary>
+        /// Generate keyframes from a simple scene description and optional subtitles
+        /// </summary>
+        /// <param name="sceneDescription">Description of the scene to generate</param>
+        /// <param name="subtitles">Optional subtitle text to include in the scene</param>
+        /// <param name="titleId">Title identifier for file organization</param>
+        /// <param name="config">Generation configuration</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Keyframe manifest with generated keyframes</returns>
+        Task<KeyframeManifest> GenerateKeyframesFromSceneAsync(
+            string sceneDescription,
+            string? subtitles,
+            string titleId,
+            KeyframeGenerationConfig config,
+            CancellationToken cancellationToken = default);
     }
 }

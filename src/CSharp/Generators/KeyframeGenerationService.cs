@@ -359,5 +359,78 @@ namespace StoryGenerator.Generators
 
             return outputPath;
         }
+
+        /// <summary>
+        /// Generate keyframes from a simple scene description and optional subtitles
+        /// </summary>
+        public async Task<KeyframeManifest> GenerateKeyframesFromSceneAsync(
+            string sceneDescription,
+            string? subtitles,
+            string titleId,
+            KeyframeGenerationConfig config,
+            CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(sceneDescription))
+                throw new ArgumentException("Scene description cannot be null or empty", nameof(sceneDescription));
+
+            if (string.IsNullOrWhiteSpace(titleId))
+                throw new ArgumentException("Title ID cannot be null or empty", nameof(titleId));
+
+            // Create a simple shotlist with a single shot from the scene description
+            var shotlist = new StructuredShotlist
+            {
+                StoryTitle = titleId,
+                TotalDuration = 10f, // Default duration for a single scene
+                OverallMood = "neutral",
+                Style = "cinematic",
+                TargetAudience = "general"
+            };
+
+            // Build visual prompt combining scene description and subtitles
+            string visualPrompt = sceneDescription;
+            if (!string.IsNullOrWhiteSpace(subtitles))
+            {
+                visualPrompt = $"{sceneDescription}. Text overlay: \"{subtitles}\"";
+            }
+
+            // Create a single shot from the scene description
+            var shot = new StructuredShot
+            {
+                ShotNumber = 1,
+                StartTime = 0f,
+                EndTime = 10f,
+                Duration = 10f,
+                SceneDescription = sceneDescription,
+                VisualPrompt = visualPrompt,
+                PrimaryEmotion = "neutral",
+                Mood = "general",
+                CameraDirection = new CameraDirection
+                {
+                    ShotType = "medium shot",
+                    Angle = "eye level",
+                    Movement = "static",
+                    Composition = "balanced"
+                },
+                Lighting = "natural lighting",
+                ColorPalette = "balanced colors"
+            };
+
+            // Add subtitles to the audio description if provided
+            if (!string.IsNullOrWhiteSpace(subtitles))
+            {
+                shot.AudioDescription = subtitles;
+            }
+
+            shotlist.Shots.Add(shot);
+
+            // Use the existing GenerateKeyframesAsync method
+            return await GenerateKeyframesAsync(
+                shotlist,
+                titleId,
+                segment: "single-scene",
+                age: config.AgeSafeContent ? "all-ages" : "general",
+                config,
+                cancellationToken);
+        }
     }
 }
