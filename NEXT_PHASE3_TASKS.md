@@ -1,7 +1,7 @@
 # Next Tasks to Implement from Phase 3
 
-**Status as of:** 2025-01-11 - Post-Cleanup  
-**Last Completed:** Groups 1, 2, 4, 6, 7, 8 (partial), 9 + Phase 4 (moved to resolved)  
+**Status as of:** 2025-10-10 - Group 10 Completed  
+**Last Completed:** Groups 1, 2, 4, 6, 7, 8 (partial), 9, 10 + Phase 4 (moved to resolved)  
 **Next Priority:** Group 3 (Script Development) - Lowest incomplete group
 
 ---
@@ -58,13 +58,20 @@ Assemble and enhance final videos.
 - Crop/resize, subtitle burning, BGM/SFX
 - Concatenation, transitions, color grading
 
+### Group 10: Quality Control (3 tasks) - P1 ✅
+**Location:** `/issues/resolved/phase-3-implementation/group-10-quality-control/`
+
+Validate video quality and readiness.
+- Device preview generation, A/V sync checking
+- Quality report generation with pass/fail determination
+
 ### Phase 4: Pipeline Orchestration (1 task) - P1 ✅
 **Location:** `/issues/resolved/phase-4-pipeline-orchestration/`
 
 Complete end-to-end pipeline orchestrator.
 - Full pipeline orchestration with state management
 
-**Total Completed:** 30+ tasks from 7 groups (plus Phase 4)
+**Total Completed:** 33+ tasks from 8 groups (plus Phase 4)
 
 ---
 
@@ -175,19 +182,7 @@ issues/p1-high/audio-production/
 
 **Location:** `/issues/p1-high/video-production/10-video-03-variant-selection/`
 
-### Priority 4: Quality Control (Group 10)
-
-**Tasks (3):**
-1. **12-qc-01-device-preview** - Generate preview for different devices
-2. **12-qc-02-sync-check** - Verify audio/video sync
-3. **12-qc-03-quality-report** - Generate quality metrics report
-
-**Estimated Effort:** 8-10 hours (2 developers, 1 day)  
-**Priority Level:** P1 (HIGH)
-
-**Location:** `/issues/p1-high/quality-control/`
-
-### Priority 5: Export & Delivery (Group 11)
+### Priority 3: Export & Delivery (Group 11)
 
 **Tasks (3):**
 1. **13-export-01-final-encode** - Final video encoding for distribution

@@ -84,6 +84,7 @@ The following groups have been completed and moved to `/issues/resolved/phase-3-
 - ✅ **Group 6: Subtitle Creation** (2 tasks) - All complete
 - ✅ **Group 7: Image Generation** (4 tasks) - All complete
 - ✅ **Group 9: Post-Production** (6 tasks) - All complete
+- ✅ **Group 10: Quality Control** (3 tasks) - All complete
 - ✅ **Group 8: Video Production** (2 of 3 tasks) - Partial completion
 
 Phase 4 Pipeline Orchestration has also been completed and moved to `/issues/resolved/phase-4-pipeline-orchestration/`.
@@ -121,17 +122,6 @@ Remaining task:
 - ❌ Variant selection (10-video-03) - NOT IMPLEMENTED
 
 **Note:** LTX generation and interpolation tasks are complete and moved to resolved.
-
-### Quality Control (3 tasks) - GROUP 10
-**Location:** `quality-control/`  
-**Status:** ❌ NOT STARTED
-
-Validation and testing:
-- Device preview generation
-- A/V sync checking
-- Quality report generation
-
-**Priority:** Pre-delivery validation
 
 ### Export & Delivery (3 tasks) - GROUP 11
 **Location:** `export-delivery/`  
@@ -172,13 +162,12 @@ Final output preparation:
 
 ## Task Organization
 
-**Total P1 Tasks Remaining:** ~14 implementation tasks
+**Total P1 Tasks Remaining:** ~11 implementation tasks
 
 ### Remaining Tasks By Category:
 - **Scripts:** 5 tasks (Group 3)
 - **Audio:** 2 tasks (Group 5)
 - **Video:** 1 task (Group 8 - variant selection)
-- **QC:** 3 tasks (Group 10)
 - **Export:** 3 tasks (Group 11)
 
 ### Completed and Moved to Resolved:
@@ -188,15 +177,14 @@ Final output preparation:
 - **Images:** 4 tasks (Group 7) ✅
 - **Video:** 2 tasks (Group 8 - partial) ✅
 - **Post:** 6 tasks (Group 9) ✅
-- **Orchestration:** 1 task (Phase 4) ✅
+- **QC:** 3 tasks (Group 10) ✅
 - **Orchestration:** 1 task (Phase 4) ✅
 
 ### Recommended Order for Remaining Work:
 1. **Script Development (Group 3)** - 5 tasks - Required for end-to-end pipeline
 2. **Audio Production (Group 5)** - 2 tasks - Required for video synthesis
 3. **Video variant selection (Group 8)** - 1 task - Quality improvement
-4. **Quality Control (Group 10)** - 3 tasks - Pre-delivery validation
-5. **Export & Delivery (Group 11)** - 3 tasks - Final encoding and metadata
+4. **Export & Delivery (Group 11)** - 3 tasks - Final encoding and metadata
 
 ## Dependencies
 
