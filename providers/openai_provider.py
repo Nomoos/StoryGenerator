@@ -7,7 +7,6 @@ retry logic, and support for both synchronous and asynchronous operations.
 
 import os
 import logging
-from typing import Dict, List, Optional
 from openai import OpenAI, AsyncOpenAI
 from openai import OpenAIError, RateLimitError, APIError, APIConnectionError
 from tenacity import (
@@ -17,7 +16,7 @@ from tenacity import (
     retry_if_exception_type,
 )
 
-from core.interfaces.llm_provider import ILLMProvider, IAsyncLLMProvider
+from core.interfaces.llm_provider import ILLMProvider, IAsyncLLMProvider, ChatMessage
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +37,7 @@ class OpenAIProvider(ILLMProvider):
         >>> print(response)
     """
 
-    def __init__(self, api_key: Optional[str] = None, model: str = "gpt-4o-mini"):
+    def __init__(self, api_key: str | None = None, model: str = "gpt-4o-mini"):
         """
         Initialize OpenAI provider.
 
@@ -69,7 +68,7 @@ class OpenAIProvider(ILLMProvider):
         self,
         prompt: str,
         temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
+        max_tokens: int | None = None,
         **kwargs,
     ) -> str:
         """
@@ -87,21 +86,21 @@ class OpenAIProvider(ILLMProvider):
         Returns:
             Generated text content as string
         """
-        messages = [{"role": "user", "content": prompt}]
+        messages: list[ChatMessage] = [{"role": "user", "content": prompt}]
         return self.generate_chat(messages, temperature, max_tokens, **kwargs)
 
     def generate_chat(
         self,
-        messages: List[Dict[str, str]],
+        messages: list[ChatMessage],
         temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
+        max_tokens: int | None = None,
         **kwargs,
     ) -> str:
         """
         Generate chat completion (implements ILLMProvider).
 
         Args:
-            messages: List of message dicts with 'role' and 'content' keys
+            messages: List of ChatMessage TypedDicts with role and content
             temperature: Sampling temperature (0-2, default: 0.7)
             max_tokens: Maximum tokens in response (optional)
             **kwargs: Additional parameters to pass to the API
@@ -123,16 +122,16 @@ class OpenAIProvider(ILLMProvider):
     )
     def chat_completion(
         self,
-        messages: List[Dict[str, str]],
+        messages: list[ChatMessage],
         temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
+        max_tokens: int | None = None,
         **kwargs,
     ) -> str:
         """
         Generate chat completion with automatic retry on rate limits.
 
         Args:
-            messages: List of message dicts with 'role' and 'content' keys
+            messages: List of ChatMessage TypedDicts with role and content
             temperature: Sampling temperature (0-2, default: 0.7)
             max_tokens: Maximum tokens in response (optional)
             **kwargs: Additional parameters to pass to the API
@@ -225,7 +224,7 @@ class AsyncOpenAIProvider(IAsyncLLMProvider):
         >>> print(response)
     """
 
-    def __init__(self, api_key: Optional[str] = None, model: str = "gpt-4o-mini"):
+    def __init__(self, api_key: str | None = None, model: str = "gpt-4o-mini"):
         """
         Initialize async OpenAI provider.
 
@@ -256,7 +255,7 @@ class AsyncOpenAIProvider(IAsyncLLMProvider):
         self,
         prompt: str,
         temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
+        max_tokens: int | None = None,
         **kwargs,
     ) -> str:
         """
@@ -274,21 +273,21 @@ class AsyncOpenAIProvider(IAsyncLLMProvider):
         Returns:
             Generated text content as string
         """
-        messages = [{"role": "user", "content": prompt}]
+        messages: list[ChatMessage] = [{"role": "user", "content": prompt}]
         return await self.generate_chat(messages, temperature, max_tokens, **kwargs)
 
     async def generate_chat(
         self,
-        messages: List[Dict[str, str]],
+        messages: list[ChatMessage],
         temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
+        max_tokens: int | None = None,
         **kwargs,
     ) -> str:
         """
         Generate async chat completion (implements IAsyncLLMProvider).
 
         Args:
-            messages: List of message dicts with 'role' and 'content' keys
+            messages: List of ChatMessage TypedDicts with role and content
             temperature: Sampling temperature (0-2, default: 0.7)
             max_tokens: Maximum tokens in response (optional)
             **kwargs: Additional parameters to pass to the API

@@ -8,7 +8,6 @@ generating draft subtitle timing for video production.
 import re
 import json
 from dataclasses import dataclass, field, asdict
-from typing import List, Dict, Optional
 from datetime import datetime
 from pathlib import Path
 
@@ -24,7 +23,7 @@ class Shot:
     visual_prompt: str
     narration: str
     
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict[str, object]:
         """Convert shot to dictionary."""
         return {
             'shotNumber': self.shot_number,
@@ -44,9 +43,9 @@ class BeatSheet:
     total_duration: float
     total_shots: int
     generated_at: str
-    shots: List[Shot] = field(default_factory=list)
+    shots: list[Shot] = field(default_factory=list)
     
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict[str, object]:
         """Convert beat sheet to dictionary."""
         return {
             'titleId': self.title_id,

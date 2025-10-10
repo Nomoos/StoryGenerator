@@ -188,6 +188,278 @@ Python 3.11+ includes an adaptive interpreter that specializes bytecode based on
 - Especially beneficial for loops and type-consistent code
 - Works best with type hints
 
+### PEP 526 – Syntax for Variable Annotations
+**Status:** ✅ Adopted  
+**Python Version:** 3.6+  
+**Impact:** Explicit type annotations for variables
+
+Variable annotations allow you to specify types for variables without assignment, improving clarity and enabling better static analysis.
+
+**Example:**
+```python
+# Class attributes
+class Config:
+    debug_mode: bool
+    max_retries: int = 3
+    timeout: float
+
+# Module-level variables
+total_count: int
+items: list[str] = []
+
+# In functions
+def process() -> None:
+    result: str | None = None
+    if condition:
+        result = "success"
+```
+
+### PEP 557 – Data Classes
+**Status:** ✅ Adopted  
+**Python Version:** 3.7+  
+**Impact:** Simplified creation of classes that store data
+
+Data classes eliminate boilerplate for simple data containers by auto-generating `__init__`, `__repr__`, `__eq__`, and other methods.
+
+**Example:**
+```python
+from dataclasses import dataclass, field
+
+@dataclass
+class Script:
+    """Represents a video script."""
+    script_id: str
+    content: str
+    title: str
+    version: int
+    quality_score: float = 0.0
+    metadata: dict[str, str] = field(default_factory=dict)
+    
+    def to_dict(self) -> dict[str, object]:
+        """Convert to dictionary."""
+        return asdict(self)
+```
+
+**Benefits:**
+- Automatic `__init__` generation
+- Built-in `__repr__` for debugging
+- Type hints are enforced
+- Immutable variants with `@dataclass(frozen=True)`
+- Field defaults and factories
+
+### PEP 589 – TypedDict
+**Status:** ✅ Adopted  
+**Python Version:** 3.8+  
+**Impact:** Type hints for dictionaries with fixed keys
+
+TypedDict provides a way to specify the structure of dictionaries with known keys, enabling better type checking for JSON/API data.
+
+**Example:**
+```python
+from typing import TypedDict
+
+class ChatMessage(TypedDict):
+    """OpenAI chat message format."""
+    role: str  # "system", "user", or "assistant"
+    content: str
+
+class ScriptMetadata(TypedDict):
+    """Metadata for a generated script."""
+    script_id: str
+    word_count: int
+    duration: float
+    tags: list[str]
+
+# Usage with type checking
+def send_message(message: ChatMessage) -> str:
+    return llm.generate_chat([message])
+
+msg: ChatMessage = {"role": "user", "content": "Hello"}
+```
+
+**Benefits:**
+- Type-safe dictionary access
+- Better IDE autocomplete
+- Clear documentation of expected structure
+- Compatible with JSON serialization
+
+### PEP 655 – Marking Individual TypedDict Items as Required or Not-Required
+**Status:** ✅ Adopted  
+**Python Version:** 3.11+  
+**Impact:** Fine-grained control over optional TypedDict fields
+
+Allows marking specific fields in TypedDict as required or optional, providing more flexibility than total=False.
+
+**Example:**
+```python
+from typing import TypedDict, NotRequired, Required
+
+class APIResponse(TypedDict, total=False):
+    """API response with optional fields."""
+    status: Required[str]  # Always required
+    data: Required[dict[str, object]]  # Always required
+    error: NotRequired[str]  # Optional
+    warning: NotRequired[str]  # Optional
+
+class ConfigDict(TypedDict):
+    """Configuration with some optional fields."""
+    model: str
+    temperature: float
+    max_tokens: NotRequired[int]  # Optional
+    timeout: NotRequired[float]  # Optional
+```
+
+### PEP 673 – Self Type
+**Status:** ✅ Adopted  
+**Python Version:** 3.11+  
+**Impact:** Better typing for methods returning self
+
+The `Self` type simplifies typing methods that return the instance itself (fluent interfaces/builder pattern).
+
+**Example:**
+```python
+from typing import Self
+
+class ScriptBuilder:
+    """Fluent interface for building scripts."""
+    
+    def __init__(self) -> None:
+        self._content = ""
+        self._metadata: dict[str, str] = {}
+    
+    def add_content(self, text: str) -> Self:
+        """Add content and return self for chaining."""
+        self._content += text
+        return self
+    
+    def set_metadata(self, key: str, value: str) -> Self:
+        """Set metadata and return self for chaining."""
+        self._metadata[key] = value
+        return self
+    
+    def build(self) -> str:
+        """Build final script."""
+        return self._content
+
+# Usage
+script = (ScriptBuilder()
+    .add_content("Once upon a time...")
+    .set_metadata("genre", "fantasy")
+    .build())
+```
+
+**Benefits:**
+- No need to use generic TypeVar
+- Works correctly with inheritance
+- Clearer intent
+
+### PEP 634/635/636 – Structural Pattern Matching
+**Status:** ✅ Adopted  
+**Python Version:** 3.10+  
+**Impact:** More expressive branching with match/case statements
+
+Pattern matching provides a more powerful and readable alternative to if-elif chains, especially for complex conditional logic.
+
+**Example:**
+```python
+# Instead of if-elif chains
+def handle_response(response: dict[str, object]) -> str:
+    match response:
+        case {"status": "success", "data": data}:
+            return f"Success: {data}"
+        case {"status": "error", "message": msg}:
+            return f"Error: {msg}"
+        case {"status": "pending"}:
+            return "Processing..."
+        case _:
+            return "Unknown response"
+
+# Pattern matching with types
+def process_value(value: str | int | list) -> str:
+    match value:
+        case str(s) if len(s) > 100:
+            return "Long string"
+        case str(s):
+            return f"String: {s}"
+        case int(n) if n < 0:
+            return "Negative number"
+        case int(n):
+            return f"Number: {n}"
+        case []:
+            return "Empty list"
+        case [x, *rest]:
+            return f"List starting with {x}"
+        case _:
+            return "Unknown type"
+
+# Pattern matching with dataclasses
+@dataclass
+class Result:
+    status: str
+    value: object
+
+def handle_result(result: Result) -> None:
+    match result:
+        case Result(status="ok", value=v):
+            print(f"Success: {v}")
+        case Result(status="error", value=msg):
+            print(f"Error: {msg}")
+```
+
+**Benefits:**
+- More readable than nested if-elif
+- Destructuring in patterns
+- Type narrowing support
+- Guard clauses with `if`
+
+### PEP 420 – Implicit Namespace Packages
+**Status:** ✅ Recognized  
+**Python Version:** 3.3+  
+**Impact:** Simplified package structure
+
+Namespace packages allow package directories without `__init__.py`, enabling split packages across different locations.
+
+**Example:**
+```python
+# Directory structure (no __init__.py needed in some cases)
+src/
+    plugins/
+        # No __init__.py - namespace package
+        plugin_a/
+            __init__.py
+            code.py
+        plugin_b/
+            __init__.py
+            code.py
+```
+
+**Note:** In most cases, we still use explicit `__init__.py` for better clarity and IDE support.
+
+### PEP 440 – Version Identification and Dependency Specification
+**Status:** ✅ Adopted  
+**Python Version:** All  
+**Impact:** Standardized versioning scheme
+
+Defines the standard versioning format for Python packages (X.Y.Z, X.Y.Za1, X.Y.Zb1, X.Y.Zrc1, etc.).
+
+**Example:**
+```python
+# In pyproject.toml
+[project]
+version = "0.1.0"  # Major.Minor.Patch
+
+# Version progression:
+# 0.1.0 -> 0.1.1 (patch)
+# 0.1.1 -> 0.2.0 (minor)
+# 0.2.0 -> 1.0.0 (major)
+
+# Pre-release versions:
+# 1.0.0a1 (alpha 1)
+# 1.0.0b1 (beta 1)
+# 1.0.0rc1 (release candidate 1)
+# 1.0.0 (final release)
+```
+
 ## Type Checking Configuration
 
 ### mypy
@@ -322,17 +594,38 @@ Address any type errors reported by mypy.
 
 ## References
 
+**Core Type Hints:**
 - [PEP 484 – Type Hints](https://peps.python.org/pep-0484/)
+- [PEP 526 – Syntax for Variable Annotations](https://peps.python.org/pep-0526/)
 - [PEP 585 – Type Hinting Generics](https://peps.python.org/pep-0585/)
 - [PEP 604 – Union Operators](https://peps.python.org/pep-0604/)
 - [PEP 612 – Parameter Specification](https://peps.python.org/pep-0612/)
+- [PEP 673 – Self Type](https://peps.python.org/pep-0673/)
+
+**Data Structures:**
+- [PEP 557 – Data Classes](https://peps.python.org/pep-0557/)
+- [PEP 589 – TypedDict](https://peps.python.org/pep-0589/)
+- [PEP 655 – Required/NotRequired for TypedDict](https://peps.python.org/pep-0655/)
+
+**Language Features:**
 - [PEP 618 – zip strict](https://peps.python.org/pep-0618/)
-- [PEP 621 – Project Metadata](https://peps.python.org/pep-0621/)
-- [PEP 668 – Externally Managed Environments](https://peps.python.org/pep-0668/)
+- [PEP 634 – Structural Pattern Matching: Tutorial](https://peps.python.org/pep-0634/)
+- [PEP 635 – Structural Pattern Matching: Motivation](https://peps.python.org/pep-0635/)
+- [PEP 636 – Structural Pattern Matching: Examples](https://peps.python.org/pep-0636/)
+
+**Async & Performance:**
 - [PEP 525 – Async Generators](https://peps.python.org/pep-0525/)
 - [PEP 530 – Async Comprehensions](https://peps.python.org/pep-0530/)
 - [PEP 567 – Context Variables](https://peps.python.org/pep-0567/)
 - [PEP 659 – Specialized Interpreter](https://peps.python.org/pep-0659/)
+
+**Packaging:**
+- [PEP 420 – Implicit Namespace Packages](https://peps.python.org/pep-0420/)
+- [PEP 440 – Version Identification](https://peps.python.org/pep-0440/)
+- [PEP 621 – Project Metadata](https://peps.python.org/pep-0621/)
+- [PEP 668 – Externally Managed Environments](https://peps.python.org/pep-0668/)
+
+**Tools:**
 - [mypy Documentation](https://mypy.readthedocs.io/)
 
 ## Status

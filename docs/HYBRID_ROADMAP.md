@@ -328,16 +328,33 @@ This roadmap tracks the implementation of StoryGenerator's hybrid architecture, 
 #### Adopted Python Enhancement Proposals (PEPs)
 For maintainability and modern Python practices:
 
+**Core Type Hints:**
 - **PEP 484** – Type Hints (all public functions typed)
+- **PEP 526** – Syntax for variable annotations
 - **PEP 585** – Type Hinting Generics (`list[str]` instead of `List[str]`)
 - **PEP 604** – Union types with `|` (`str | int` instead of `Union[str, int]`)
 - **PEP 612** – Parameter specification variables for decorators
+- **PEP 673** – `Self` type for methods returning instance
+
+**Data Structures:**
+- **PEP 557** – Data Classes for structured data containers
+- **PEP 589** – TypedDict for structured dictionaries (JSON/API data)
+- **PEP 655** – Required/NotRequired for fine-grained TypedDict control
+
+**Language Features:**
 - **PEP 618** – Optional length-checking in `zip(strict=True)`
-- **PEP 621** – Standard project metadata in `pyproject.toml` ✅
-- **PEP 668** – Externally managed environments (use virtual envs)
+- **PEP 634–636** – Structural pattern matching (`match`/`case` statements)
+
+**Async & Performance:**
 - **PEP 525/530** – Async generators & comprehensions
 - **PEP 567** – Context variables for async-safe storage
 - **PEP 659** – Adaptive interpreter (3.11+ performance boost)
+
+**Packaging:**
+- **PEP 420** – Implicit namespace packages
+- **PEP 440** – Version identification and dependency specification
+- **PEP 621** – Standard project metadata in `pyproject.toml` ✅
+- **PEP 668** – Externally managed environments (use virtual envs)
 
 📖 **See [Python PEP Guidelines](PYTHON_PEP_GUIDELINES.md) for detailed information**
 
