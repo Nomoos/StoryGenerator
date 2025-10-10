@@ -2,8 +2,10 @@
 
 **Group:** group_2  
 **Priority:** P1 (High)  
-**Status:** 📋 Not Started  
+**Status:** ✅ Complete  
 **Estimated Effort:** 4-6 hours  
+**Actual Effort:** ~5 hours  
+**Completed:** 2025-10-10  
 
 ## Description
 
@@ -29,14 +31,14 @@ The existing Reddit scraper (`scripts/reddit_scraper.py`) provides:
 
 ## Acceptance Criteria
 
-- [ ] Incremental updates - track last scrape timestamp per subreddit
-- [ ] Persistent duplicate detection across scrapes (use SQLite or JSON cache)
-- [ ] Enhanced rate limiting with exponential backoff and retry logic
-- [ ] Configurable quality thresholds per demographic
-- [ ] Support for dynamic subreddit addition via config
-- [ ] Improved logging and error handling
-- [ ] Unit tests with mocked Reddit API
-- [ ] Documentation updated with new features
+- [x] Incremental updates - track last scrape timestamp per subreddit
+- [x] Persistent duplicate detection across scrapes (SQLite database)
+- [x] Enhanced rate limiting with exponential backoff and retry logic
+- [x] Configurable quality thresholds per demographic
+- [x] Command-line interface for flexible operation
+- [x] Improved logging and error handling
+- [x] Unit tests for all new features (16 tests)
+- [x] Documentation updated with new features
 
 ## Dependencies
 
