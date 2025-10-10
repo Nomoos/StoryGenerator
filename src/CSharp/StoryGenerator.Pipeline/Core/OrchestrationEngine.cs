@@ -150,27 +150,27 @@ public class OrchestrationEngine : IOrchestrationEngine
         OrchestrationResult result,
         CancellationToken cancellationToken)
     {
-        var maxRetries = stage.MaxRetries > 0 ? stage.MaxRetries : _errorHandlingConfig.RetryCount;
+        // Use stage-specific retries if set (even if 0), otherwise use global config
+        var maxRetries = stage.MaxRetries >= 0 ? stage.MaxRetries : _errorHandlingConfig.RetryCount;
         var retryDelay = stage.RetryDelaySeconds > 0 ? stage.RetryDelaySeconds : _errorHandlingConfig.RetryDelay;
+
+        // Fire OnStageStart event once at the beginning
+        var startEventArgs = new StageLifecycleEventArgs
+        {
+            StageName = stage.Name,
+            Timestamp = DateTime.Now,
+            Context = new Dictionary<string, object>
+            {
+                ["Id"] = stage.Id,
+                ["Order"] = stage.Order
+            }
+        };
+        OnStageStart?.Invoke(this, startEventArgs);
 
         for (int attempt = 0; attempt <= maxRetries; attempt++)
         {
             try
             {
-                // Fire OnStageStart event
-                var startEventArgs = new StageLifecycleEventArgs
-                {
-                    StageName = stage.Name,
-                    Timestamp = DateTime.Now,
-                    Context = new Dictionary<string, object>
-                    {
-                        ["Id"] = stage.Id,
-                        ["Order"] = stage.Order,
-                        ["Attempt"] = attempt
-                    }
-                };
-                OnStageStart?.Invoke(this, startEventArgs);
-
                 _logger.StartTimer(stage.Id);
                 _logger.LogInfo($"\n▶️  Executing stage: {stage.Name}");
                 if (attempt > 0)
