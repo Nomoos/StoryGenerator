@@ -66,21 +66,19 @@ cp .env.example .env
 
 For local model inference and research features, install the optional dependencies:
 
-```bash
+```powershell
 # Install FFmpeg for audio/video processing
-# Ubuntu/Debian: sudo apt install ffmpeg
-# macOS: brew install ffmpeg
-# Windows: choco install ffmpeg
+choco install ffmpeg
 
 # Install Ollama for local LLM inference
-# Visit: https://ollama.com/download
+# Download from: https://ollama.com/download/windows
 # Then download models: ollama pull llama2
 
 # Install Python + faster-whisper for speech-to-text
 pip install faster-whisper>=0.10.0
 ```
 
-➡️ **[Complete installation guide for optional dependencies](../../guides/setup/OPTIONAL_DEPENDENCIES.md)**
+➡️ **[Complete Windows installation guide for optional dependencies](../../guides/setup/OPTIONAL_DEPENDENCIES.md)**
 
 These dependencies enable:
 - ✅ Running all integration tests

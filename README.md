@@ -149,20 +149,18 @@ cp .env.example .env
 
 For local model inference (alternative to cloud APIs):
 
-```bash
+```powershell
 # Install FFmpeg (audio/video processing)
-# Ubuntu: sudo apt install ffmpeg
-# macOS: brew install ffmpeg
-# Windows: choco install ffmpeg
+choco install ffmpeg
 
 # Install Ollama (local LLM)
-# Visit: https://ollama.com/download
+# Download from: https://ollama.com/download/windows
 
 # Install Python + faster-whisper (speech-to-text)
 pip install faster-whisper>=0.10.0
 ```
 
-➡️ **[Complete local setup guide](docs/guides/setup/OPTIONAL_DEPENDENCIES.md)**
+➡️ **[Complete Windows setup guide](docs/guides/setup/OPTIONAL_DEPENDENCIES.md)**
 
 ➡️ **[Complete setup guide](docs/quickstarts/general/GETTING_STARTED.md)** | **[Troubleshooting](docs/guides/general/TROUBLESHOOTING.md)**
 

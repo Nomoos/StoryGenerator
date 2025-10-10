@@ -1,6 +1,6 @@
-# Optional Dependencies Guide
+# Optional Dependencies Guide - Windows
 
-This guide covers installation of optional dependencies for local model inference and research features. These tools enable you to run StoryGenerator with local models instead of cloud APIs, which can be more cost-effective and privacy-friendly for experimentation.
+This guide covers installation of optional dependencies for local model inference and research features on Windows. These tools enable you to run StoryGenerator with local models instead of cloud APIs, which can be more cost-effective and privacy-friendly for experimentation.
 
 ## Overview
 
@@ -24,22 +24,11 @@ The optional dependencies are:
 
 FFmpeg is used for audio and video processing in research prototypes.
 
-### Ubuntu/Debian
-
-```bash
-sudo apt update
-sudo apt install ffmpeg
-
-# Verify installation
-ffmpeg -version
-```
-
-### Windows
-
 **Option 1: Using Chocolatey (Recommended)**
 ```powershell
 # Install Chocolatey if not already installed
-# See: https://chocolatey.org/install
+# Run in PowerShell as Administrator:
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 # Install FFmpeg
 choco install ffmpeg
@@ -49,25 +38,19 @@ ffmpeg -version
 ```
 
 **Option 2: Manual Installation**
-1. Download from [ffmpeg.org](https://ffmpeg.org/download.html)
+1. Download from [ffmpeg.org](https://ffmpeg.org/download.html#build-windows)
 2. Extract to `C:\Program Files\ffmpeg`
-3. Add `C:\Program Files\ffmpeg\bin` to PATH
+3. Add `C:\Program Files\ffmpeg\bin` to PATH:
+   - Open System Properties → Environment Variables
+   - Edit "Path" under System variables
+   - Add new entry: `C:\Program Files\ffmpeg\bin`
+   - Click OK to save
 4. Restart terminal and verify: `ffmpeg -version`
 
-### macOS
+**Verification**
 
-```bash
-# Using Homebrew
-brew install ffmpeg
-
-# Verify installation
-ffmpeg -version
-```
-
-### Verification
-
-After installation, run:
-```bash
+After installation, open PowerShell or Command Prompt and run:
+```powershell
 ffmpeg -version
 ffprobe -version
 ```
@@ -95,49 +78,21 @@ Ollama enables local LLM inference for script generation and experimentation. Th
 - **Storage**: 10GB+ per model
 - **GPU** (optional): NVIDIA GPU with 8GB+ VRAM for faster inference
 
-### Ubuntu/Debian
+### Windows Installation
 
-```bash
-# Download and install Ollama
-curl -fsSL https://ollama.com/install.sh | sh
-
-# Start Ollama service
-ollama serve &
-
-# Verify installation
-ollama --version
-```
-
-### Windows
-
-1. Download installer from [ollama.com](https://ollama.com/download/windows)
-2. Run the installer
-3. Ollama will start automatically as a service
+1. Download the Ollama installer from [ollama.com/download/windows](https://ollama.com/download/windows)
+2. Run the installer (OllamaSetup.exe)
+3. Ollama will start automatically as a Windows service
 4. Open Command Prompt or PowerShell and verify:
    ```powershell
    ollama --version
    ```
 
-### macOS
-
-```bash
-# Download and install
-# Visit https://ollama.com/download/mac
-# Or use:
-brew install ollama
-
-# Start Ollama
-ollama serve &
-
-# Verify installation
-ollama --version
-```
-
 ### Installing Models
 
 After installing Ollama, download models you want to use:
 
-```bash
+```powershell
 # For script generation (recommended for StoryGenerator)
 ollama pull llama2          # Meta's Llama 2 (7B)
 ollama pull mistral         # Mistral 7B
@@ -158,12 +113,12 @@ ollama list
 
 ### Testing Ollama
 
-```bash
+```powershell
 # Test with a simple prompt
 ollama run llama2 "Write a short story about a robot."
 
 # Test from C# code (after running tests)
-cd /home/runner/work/StoryGenerator/StoryGenerator/src/CSharp
+cd src\CSharp
 dotnet test --filter "Category=Integration&FullyQualifiedName~OllamaClient"
 ```
 
@@ -172,31 +127,32 @@ dotnet test --filter "Category=Integration&FullyQualifiedName~OllamaClient"
 Ollama runs as a service on `http://localhost:11434` by default.
 
 **Check if Ollama is running**:
-```bash
+```powershell
 curl http://localhost:11434/api/version
 ```
 
-**Start Ollama manually** (if not running as service):
-```bash
-ollama serve
+**Restart Ollama service** (if needed):
+```powershell
+# Stop Ollama
+net stop Ollama
+
+# Start Ollama
+net start Ollama
 ```
 
 ### Troubleshooting Ollama
 
 **Issue**: "Failed to connect to Ollama"
-```bash
+```powershell
 # Check if service is running
-ps aux | grep ollama
+Get-Service Ollama
 
-# Start service
-ollama serve &
-
-# Or restart service
-sudo systemctl restart ollama  # Linux with systemd
+# Restart service
+Restart-Service Ollama
 ```
 
 **Issue**: "Model not found"
-```bash
+```powershell
 # List installed models
 ollama list
 
@@ -207,7 +163,7 @@ ollama pull llama2
 **Issue**: "Out of memory"
 - Use smaller models (7B instead of 13B or 70B)
 - Close other applications
-- Increase system swap space
+- Increase system virtual memory
 - Consider using quantized models
 
 ---
@@ -223,49 +179,52 @@ faster-whisper provides high-quality automatic speech recognition (ASR) for subt
 
 ### Installation
 
-**Step 1: Verify Python Installation**
-```bash
-python3 --version
+**Step 1: Install Python**
+
+Download and install Python from [python.org](https://www.python.org/downloads/windows/)
+
+During installation:
+- ✅ Check "Add Python to PATH"
+- ✅ Check "Install pip"
+
+Verify installation:
+```powershell
+python --version
 # Should show Python 3.8 or higher
 ```
 
 **Step 2: Install faster-whisper**
-```bash
+```powershell
 # Using pip
 pip install faster-whisper>=0.10.0
 
 # Or install from requirements
-pip install -r research/python/requirements.txt
+cd StoryGenerator\research\python
+pip install -r requirements.txt
 ```
 
 **Step 3: Install GPU Support (Optional)**
 
 If you have an NVIDIA GPU with CUDA:
-```bash
-# Install CUDA Toolkit first
-# See: https://developer.nvidia.com/cuda-downloads
 
-# Install PyTorch with CUDA support
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-
-# Verify CUDA is available
-python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
-```
+1. Install CUDA Toolkit from [NVIDIA](https://developer.nvidia.com/cuda-downloads)
+2. Install PyTorch with CUDA support:
+   ```powershell
+   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+   ```
+3. Verify CUDA is available:
+   ```powershell
+   python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
+   ```
 
 ### Testing faster-whisper
 
-```bash
+```powershell
 # Test from Python
-python3 << EOF
-from faster_whisper import WhisperModel
-
-# Load model (will download on first use)
-model = WhisperModel("base", device="cpu", compute_type="int8")
-print("✅ faster-whisper is working!")
-EOF
+python -c "from faster_whisper import WhisperModel; model = WhisperModel('base', device='cpu', compute_type='int8'); print('✅ faster-whisper is working!')"
 
 # Test from C# integration tests
-cd /home/runner/work/StoryGenerator/StoryGenerator/src/CSharp
+cd src\CSharp
 dotnet test --filter "Category=Integration&FullyQualifiedName~WhisperClient"
 ```
 
@@ -289,7 +248,7 @@ faster-whisper supports multiple model sizes:
 ### Configuration in Code
 
 The WhisperClient in StoryGenerator.Research automatically:
-- Detects Python executable (`python` vs `python3`)
+- Detects Python executable
 - Finds the `whisper_subprocess.py` script
 - Uses appropriate device (CPU/CUDA)
 
@@ -303,8 +262,8 @@ var client = new WhisperClient(
     modelSize: "large-v3",
     device: "cuda",           // or "cpu", "auto"
     computeType: "float16",   // or "int8", "float32"
-    pythonExecutable: "python3",
-    scriptPath: "/path/to/whisper_subprocess.py"
+    pythonExecutable: "python",
+    scriptPath: @"C:\path\to\whisper_subprocess.py"
 );
 
 // Transcribe audio
@@ -322,13 +281,13 @@ var result = await client.TranscribeAsync(
 After installing the optional dependencies, you can run the full integration test suite:
 
 ### Run All Integration Tests
-```bash
-cd src/CSharp
+```powershell
+cd src\CSharp
 dotnet test --filter "Category=Integration"
 ```
 
 ### Run Specific Integration Tests
-```bash
+```powershell
 # Test FFmpeg functionality
 dotnet test --filter "Category=Integration&FullyQualifiedName~FFmpegClient"
 
@@ -340,7 +299,7 @@ dotnet test --filter "Category=Integration&FullyQualifiedName~WhisperClient"
 ```
 
 ### Run Unit Tests Only (No Dependencies Required)
-```bash
+```powershell
 dotnet test --filter "Category!=Integration"
 ```
 
@@ -348,62 +307,65 @@ dotnet test --filter "Category!=Integration"
 
 ## Verifying Installation
 
-Use this script to verify all optional dependencies are installed correctly:
+Use this PowerShell script to verify all optional dependencies are installed correctly:
 
-```bash
-#!/bin/bash
-# save as: scripts/verify_optional_deps.sh
+```powershell
+# Save as: scripts\verify_optional_deps.ps1
 
-echo "🔍 Verifying Optional Dependencies..."
-echo ""
+Write-Host "🔍 Verifying Optional Dependencies..." -ForegroundColor Cyan
+Write-Host ""
 
 # Check FFmpeg
-if command -v ffmpeg &> /dev/null; then
-    echo "✅ FFmpeg installed: $(ffmpeg -version | head -n1)"
-else
-    echo "❌ FFmpeg not found"
-fi
+if (Get-Command ffmpeg -ErrorAction SilentlyContinue) {
+    $ffmpegVersion = (ffmpeg -version 2>&1 | Select-Object -First 1)
+    Write-Host "✅ FFmpeg installed: $ffmpegVersion" -ForegroundColor Green
+} else {
+    Write-Host "❌ FFmpeg not found" -ForegroundColor Red
+}
 
 # Check Ollama
-if command -v ollama &> /dev/null; then
-    echo "✅ Ollama installed: $(ollama --version)"
+if (Get-Command ollama -ErrorAction SilentlyContinue) {
+    $ollamaVersion = (ollama --version 2>&1)
+    Write-Host "✅ Ollama installed: $ollamaVersion" -ForegroundColor Green
     
     # Check if Ollama is running
-    if curl -s http://localhost:11434/api/version &> /dev/null; then
-        echo "✅ Ollama service is running"
+    try {
+        $response = Invoke-WebRequest -Uri "http://localhost:11434/api/version" -UseBasicParsing -ErrorAction SilentlyContinue
+        Write-Host "✅ Ollama service is running" -ForegroundColor Green
         
         # List installed models
-        echo "📦 Installed Ollama models:"
+        Write-Host "📦 Installed Ollama models:" -ForegroundColor Cyan
         ollama list
-    else
-        echo "⚠️  Ollama installed but not running (run: ollama serve)"
-    fi
-else
-    echo "❌ Ollama not found"
-fi
+    } catch {
+        Write-Host "⚠️  Ollama installed but not running (run: ollama serve)" -ForegroundColor Yellow
+    }
+} else {
+    Write-Host "❌ Ollama not found" -ForegroundColor Red
+}
 
 # Check Python and faster-whisper
-if command -v python3 &> /dev/null; then
-    echo "✅ Python installed: $(python3 --version)"
+if (Get-Command python -ErrorAction SilentlyContinue) {
+    $pythonVersion = (python --version 2>&1)
+    Write-Host "✅ Python installed: $pythonVersion" -ForegroundColor Green
     
     # Check faster-whisper
-    if python3 -c "import faster_whisper" 2>/dev/null; then
-        echo "✅ faster-whisper installed"
-    else
-        echo "❌ faster-whisper not found (run: pip install faster-whisper)"
-    fi
-else
-    echo "❌ Python 3 not found"
-fi
+    $whisperCheck = python -c "import faster_whisper" 2>&1
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "✅ faster-whisper installed" -ForegroundColor Green
+    } else {
+        Write-Host "❌ faster-whisper not found (run: pip install faster-whisper)" -ForegroundColor Red
+    }
+} else {
+    Write-Host "❌ Python not found" -ForegroundColor Red
+}
 
-echo ""
-echo "✨ Verification complete!"
+Write-Host ""
+Write-Host "✨ Verification complete!" -ForegroundColor Cyan
 ```
 
-Make it executable and run:
-```bash
-chmod +x scripts/verify_optional_deps.sh
-./scripts/verify_optional_deps.sh
+Run the script:
+```powershell
+.\scripts\verify_optional_deps.ps1
 ```
 
 ---
@@ -467,15 +429,17 @@ chmod +x scripts/verify_optional_deps.sh
 ## Performance Tips
 
 ### FFmpeg
-- Use hardware acceleration where available (`-hwaccel cuda`)
+- Use hardware acceleration where available (NVENC for NVIDIA GPUs)
 - Process videos in batches
 - Use appropriate codecs for your use case
+- Example: `ffmpeg -hwaccel cuda -i input.mp4 output.mp4`
 
 ### Ollama
 - Start with smaller models (7B) for testing
 - Use GPU acceleration when available
 - Keep models in memory between requests
 - Monitor RAM usage with large models
+- Use Windows Task Manager to monitor resource usage
 
 ### faster-whisper
 - Use GPU acceleration for 5-10x speedup
@@ -491,25 +455,33 @@ chmod +x scripts/verify_optional_deps.sh
 ### General Issues
 
 **Issue**: Command not found after installation
-```bash
-# Restart your terminal
-# Or reload PATH
-source ~/.bashrc  # Linux/macOS
-# Or restart PowerShell on Windows
+```powershell
+# Restart PowerShell or Command Prompt
+# Or reload PATH environment variables
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 ```
 
 **Issue**: Permission denied
-```bash
-# Linux/macOS: Use sudo for system-wide installation
-sudo apt install ffmpeg
-
-# Or install in user space
-pip install --user faster-whisper
+```powershell
+# Run PowerShell or Command Prompt as Administrator
+# Right-click → "Run as administrator"
 ```
 
 ### FFmpeg Issues
 
-See [INSTALLATION.md](INSTALLATION.md#troubleshooting) for FFmpeg-specific issues.
+**Issue**: FFmpeg not in PATH
+```powershell
+# Add to PATH manually
+$env:Path += ";C:\Program Files\ffmpeg\bin"
+
+# Or add permanently via System Properties → Environment Variables
+```
+
+**Issue**: Codec not found
+```powershell
+# Verify FFmpeg build includes required codecs
+ffmpeg -codecs | findstr h264
+```
 
 ### Ollama Issues
 
@@ -519,28 +491,49 @@ See [INSTALLATION.md](INSTALLATION.md#troubleshooting) for FFmpeg-specific issue
 - Use `ollama pull model_name` to pre-download
 
 **Issue**: Inference is slow
-- Use GPU-accelerated models
+- Use GPU-accelerated models (requires NVIDIA GPU)
 - Use smaller models for testing
 - Close other GPU applications
-- Increase system RAM/swap
+- Increase system RAM/virtual memory
+
+**Issue**: Service won't start
+```powershell
+# Check Windows services
+Get-Service Ollama
+
+# Restart service
+Restart-Service Ollama
+
+# Check event logs
+Get-EventLog -LogName Application -Source Ollama -Newest 10
+```
 
 ### faster-whisper Issues
 
 **Issue**: ImportError after installation
-```bash
+```powershell
 # Reinstall with dependencies
 pip uninstall faster-whisper
 pip install faster-whisper>=0.10.0 --no-cache-dir
 ```
 
 **Issue**: CUDA not available
-```bash
+```powershell
 # Install CUDA toolkit
-# See: https://developer.nvidia.com/cuda-downloads
+# Download from: https://developer.nvidia.com/cuda-downloads
 
 # Verify CUDA
 nvidia-smi
 python -c "import torch; print(torch.cuda.is_available())"
+```
+
+**Issue**: Python not found
+```powershell
+# Verify Python installation
+python --version
+
+# If not found, reinstall Python and check "Add to PATH"
+# Download from: https://www.python.org/downloads/windows/
 ```
 
 ---
@@ -560,3 +553,4 @@ For issues with optional dependencies:
 ---
 
 *Last Updated: 2025-10-10*
+*Platform: Windows*
