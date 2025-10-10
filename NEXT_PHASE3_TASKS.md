@@ -1,8 +1,8 @@
 # Next Tasks to Implement from Phase 3
 
-**Status as of:** 2025-10-10 - Group 10 Completed  
-**Last Completed:** Groups 1, 2, 4, 6, 7, 8 (partial), 9, 10 + Phase 4 (moved to resolved)  
-**Next Priority:** Group 3 (Script Development) - Lowest incomplete group
+**Status as of:** 2025-10-10 - Groups 3 & 10 Completed  
+**Last Completed:** Groups 1, 2, 3, 4, 6, 7, 8 (partial), 9, 10 + Phase 4 (moved to resolved)  
+**Next Priority:** Group 5 (Audio Production) - Lowest incomplete group
 
 ---
 
@@ -23,6 +23,13 @@ Source and process raw content for video ideas.
 Transform content into video titles and concepts.
 - Reddit adaptation, LLM generation, clustering
 - Title generation, scoring, voice recommendation, top selection
+
+### Group 3: Script Development (5 tasks) - P1 ✅
+**Location:** `/issues/resolved/phase-3-implementation/group-3-script-development/`
+
+Generate and refine scripts for videos.
+- Raw script generation, scoring, iteration
+- GPT-based improvement, title optimization
 
 ### Group 4: Scene Planning (3 tasks) - P1 ✅
 **Location:** `/issues/resolved/phase-3-implementation/group-4-scene-planning/`
@@ -71,66 +78,21 @@ Validate video quality and readiness.
 Complete end-to-end pipeline orchestrator.
 - Full pipeline orchestration with state management
 
-**Total Completed:** 33+ tasks from 8 groups (plus Phase 4)
+**Total Completed:** 38+ tasks from 9 groups (plus Phase 4)
 
 ---
 
 ## 🎯 RECOMMENDED: Next Groups to Implement (In Priority Order)
 
-### Priority 1: Script Development (Group 3) - NEXT RECOMMENDED ⭐
+### Priority 1: Audio Production (Group 5) - NEXT RECOMMENDED ⭐
 
 **Why This is Critical:**
 - ✅ Content pipeline is ready (Group 1)
 - ✅ Ideas are being generated (Group 2)
-- ❌ **BLOCKING:** Scripts are needed for scene planning
-- 🔥 **This is the LOWEST numbered incomplete group**
-- 🎯 **Blocks entire downstream pipeline**
-
-**Tasks (5):**
-1. **05-script-01-raw-generation** (P1) - Generate initial video script
-   - Use selected ideas from Group 2
-   - Apply storytelling structure
-   - Create engaging narrative flow
-   - Output: `Generator/scripts/raw/{title_id}.json`
-
-2. **05-script-02-script-scorer** (P1) - Score script quality
-   - Evaluate engagement, clarity, pacing
-   - Check for storytelling elements
-   - Assess target demographic fit
-   - Output: Quality scores and metrics
-
-3. **05-script-03-iteration** (P1) - Iteratively improve scripts
-   - Multiple refinement passes
-   - Address low-scoring areas
-   - Optimize for target audience
-   - Output: Improved script versions
-
-4. **05-script-04-gpt-improvement** (P1) - GPT-based enhancement
-   - Use GPT-4 for creative improvement
-   - Enhance engagement and flow
-   - Polish dialogue and narration
-   - Output: Enhanced script
-
-5. **05-script-05-title-improvement** (P1) - Optimize video title
-   - Refine title based on final script
-   - Ensure clickability and SEO
-   - A/B test variations
-   - Output: Final optimized title
-
-**Estimated Effort:** 15-20 hours (3 developers, 2 days)  
-**Blocking:** All downstream groups (scenes, audio, video, etc.)  
-**Priority Level:** P1 (CRITICAL)
-
-**Location:** `/issues/p1-high/script-development/`
-
-### Priority 2: Audio Production (Group 5) - SECOND PRIORITY
-
-**Why This is Next:**
-- ✅ Scripts will be ready (from Group 3)
-- ✅ Scene timing is established (from Group 4)
-- 🔥 Audio is needed for forced subtitle alignment
-- 🔥 Audio duration is required for accurate video timing
-- 🎯 **Blocks multiple downstream tasks**
+- ✅ Scripts are complete (Group 3)
+- ✅ Scene planning is complete (Group 4)
+- ❌ **BLOCKING:** Audio is needed for subtitle timing
+- 🎯 **Required for video synthesis and final output**
 
 **Tasks (2):**
 1. **07-audio-01-tts-generation** (P1) - Generate voiceover using TTS
@@ -144,26 +106,12 @@ Complete end-to-end pipeline orchestrator.
    - YouTube/TikTok standard: -14 LUFS
    - Output: `Generator/audio/normalized/{gender}/{age}/{title_id}.mp3`
 
-**Estimated Effort:** 3-5 hours  
-**Dependencies:** Scripts (Group 3) ✅  
-**Blocks:** 
-- Subtitle Creation (Group 6) - needs audio for forced alignment
-- Video Production (Group 8) - needs audio duration for timing
-- Post-Production (Group 9) - needs audio for final mix
-
-**Implementation Path:**
-```
-issues/p1-high/audio-production/
-├── 07-audio-01-tts-generation/
-└── 07-audio-02-normalization/
-```
-
 **Estimated Effort:** 8-10 hours (2 developers, 1 day)  
 **Priority Level:** P1 (HIGH)
 
 **Location:** `/issues/p1-high/audio-production/`
 
-### Priority 3: Video Variant Selection (Group 8 remainder)
+### Priority 2: Video Variant Selection (Group 8 remainder)
 
 **Why This is Remaining:**
 - ✅ LTX generation and interpolation are complete (moved to resolved)
@@ -179,8 +127,6 @@ issues/p1-high/audio-production/
 
 **Estimated Effort:** 4-5 hours (1 developer, 0.5 day)  
 **Priority Level:** P2 (MEDIUM)
-
-**Location:** `/issues/p1-high/video-production/10-video-03-variant-selection/`
 
 ### Priority 3: Export & Delivery (Group 11)
 
@@ -200,22 +146,14 @@ issues/p1-high/audio-production/
 
 ### Updated Execution Plan
 
-**Wave 1: Script Development (Now - Next 2 days)**
-```
-Developer Team (3 devs):
-├── 05-script-01-raw-generation
-├── 05-script-02-script-scorer
-├── 05-script-03-iteration
-├── 05-script-04-gpt-improvement
-└── 05-script-05-title-improvement
-```
-
-**Wave 2: Audio Production (After Wave 1 - Next 1 day)**
+**Wave 1: Audio Production (Now - Next 1 day)**
 ```
 Developer Team (2 devs):
 ├── 07-audio-01-tts-generation
 └── 07-audio-02-normalization
 ```
+
+**Wave 2: Export & Delivery (After Wave 1 - Next 1 day)**
 
 **Wave 3: Quality & Export (After Wave 2 - Next 2 days)**
 ```

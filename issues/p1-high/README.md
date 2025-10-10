@@ -80,6 +80,7 @@ This folder contains high-priority issues that form the core pipeline implementa
 
 The following groups have been completed and moved to `/issues/resolved/phase-3-implementation/`:
 - ✅ **Group 2: Idea Generation** (7 tasks) - All complete
+- ✅ **Group 3: Script Development** (5 tasks) - All complete
 - ✅ **Group 4: Scene Planning** (3 tasks) - All complete
 - ✅ **Group 6: Subtitle Creation** (2 tasks) - All complete
 - ✅ **Group 7: Image Generation** (4 tasks) - All complete
@@ -90,19 +91,6 @@ The following groups have been completed and moved to `/issues/resolved/phase-3-
 Phase 4 Pipeline Orchestration has also been completed and moved to `/issues/resolved/phase-4-pipeline-orchestration/`.
 
 ### 🚧 REMAINING ACTIVE GROUPS
-
-### Script Development (5 tasks) - GROUP 3
-**Location:** `script-development/`  
-**Status:** ❌ NOT STARTED
-
-Script creation and refinement:
-- Raw script generation
-- Script scoring
-- Iterative improvement
-- GPT-based enhancement
-- Title optimization
-
-**Priority:** Must complete for end-to-end pipeline
 
 ### Audio Production (2 tasks) - GROUP 5
 **Location:** `audio-production/`  
@@ -162,16 +150,16 @@ Final output preparation:
 
 ## Task Organization
 
-**Total P1 Tasks Remaining:** ~11 implementation tasks
+**Total P1 Tasks Remaining:** ~6 implementation tasks
 
 ### Remaining Tasks By Category:
-- **Scripts:** 5 tasks (Group 3)
 - **Audio:** 2 tasks (Group 5)
 - **Video:** 1 task (Group 8 - variant selection)
 - **Export:** 3 tasks (Group 11)
 
 ### Completed and Moved to Resolved:
 - **Content/Ideas:** 7 tasks (Group 2) ✅
+- **Scripts:** 5 tasks (Group 3) ✅
 - **Scenes:** 3 tasks (Group 4) ✅
 - **Subtitles:** 2 tasks (Group 6) ✅
 - **Images:** 4 tasks (Group 7) ✅
@@ -181,10 +169,9 @@ Final output preparation:
 - **Orchestration:** 1 task (Phase 4) ✅
 
 ### Recommended Order for Remaining Work:
-1. **Script Development (Group 3)** - 5 tasks - Required for end-to-end pipeline
-2. **Audio Production (Group 5)** - 2 tasks - Required for video synthesis
-3. **Video variant selection (Group 8)** - 1 task - Quality improvement
-4. **Export & Delivery (Group 11)** - 3 tasks - Final encoding and metadata
+1. **Audio Production (Group 5)** - 2 tasks - Required for video synthesis
+2. **Video variant selection (Group 8)** - 1 task - Quality improvement
+3. **Export & Delivery (Group 11)** - 3 tasks - Final encoding and metadata
 
 ## Dependencies
 
