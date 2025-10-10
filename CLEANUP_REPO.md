@@ -567,8 +567,9 @@ done
 - `scripts/detect-orphans.sh` - Script for detecting orphaned files (if exists)
 - `scripts/detect-dead-code.py` - Python dead code detector (if exists)
 - `scripts/check-clean-root.sh` - Root cleanliness validation script
-- `docs/REORGANIZATION_SUMMARY.md` - Summary of completed reorganization work
-- `docs/FINAL_REORGANIZATION.md` - Recent reorganization documentation
+- `docs/summaries/REORGANIZATION_SUMMARY_2025-10-07.md` - Summary of October 7 reorganization
+- `docs/summaries/REORGANIZATION_SUMMARY_2025-10-08.md` - Summary of October 8 reorganization
+- `docs/summaries/REPOSITORY_REORGANIZATION_SUMMARY.md` - Summary of October 10 reorganization
 - `docs/TEST_FILES.md` - Git tracking policy for test and content files
 
 ---

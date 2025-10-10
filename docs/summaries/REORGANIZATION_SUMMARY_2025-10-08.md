@@ -163,7 +163,7 @@ Update any documentation that references:
 ## Related Documentation
 
 - `CLEANUP_REPO.md` - Comprehensive cleanup and reorganization guide
-- `docs/REORGANIZATION_SUMMARY.md` - Previous reorganization summary
+- `docs/summaries/REORGANIZATION_SUMMARY_2025-10-07.md` - Previous reorganization summary
 - `obsolete/README.md` - Information about archived code
 
 ---
