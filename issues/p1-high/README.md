@@ -82,6 +82,7 @@ The following groups have been completed and moved to `/issues/resolved/phase-3-
 - ✅ **Group 2: Idea Generation** (7 tasks) - All complete
 - ✅ **Group 3: Script Development** (5 tasks) - All complete
 - ✅ **Group 4: Scene Planning** (3 tasks) - All complete
+- ✅ **Group 5: Audio Production** (2 tasks) - All complete
 - ✅ **Group 6: Subtitle Creation** (2 tasks) - All complete
 - ✅ **Group 7: Image Generation** (4 tasks) - All complete
 - ✅ **Group 9: Post-Production** (6 tasks) - All complete
@@ -91,16 +92,6 @@ The following groups have been completed and moved to `/issues/resolved/phase-3-
 Phase 4 Pipeline Orchestration has also been completed and moved to `/issues/resolved/phase-4-pipeline-orchestration/`.
 
 ### 🚧 REMAINING ACTIVE GROUPS
-
-### Audio Production (2 tasks) - GROUP 5
-**Location:** `audio-production/`  
-**Status:** ❌ NOT STARTED
-
-Voice and audio generation:
-- TTS (Text-to-Speech) generation
-- Audio normalization (LUFS)
-
-**Priority:** Critical for video synthesis and subtitle timing
 
 ### Video Production (1 task remaining) - GROUP 8
 **Location:** `video-production/`  
@@ -150,10 +141,9 @@ Final output preparation:
 
 ## Task Organization
 
-**Total P1 Tasks Remaining:** ~6 implementation tasks
+**Total P1 Tasks Remaining:** ~4 implementation tasks
 
 ### Remaining Tasks By Category:
-- **Audio:** 2 tasks (Group 5)
 - **Video:** 1 task (Group 8 - variant selection)
 - **Export:** 3 tasks (Group 11)
 
@@ -161,6 +151,7 @@ Final output preparation:
 - **Content/Ideas:** 7 tasks (Group 2) ✅
 - **Scripts:** 5 tasks (Group 3) ✅
 - **Scenes:** 3 tasks (Group 4) ✅
+- **Audio:** 2 tasks (Group 5) ✅
 - **Subtitles:** 2 tasks (Group 6) ✅
 - **Images:** 4 tasks (Group 7) ✅
 - **Video:** 2 tasks (Group 8 - partial) ✅
@@ -169,9 +160,8 @@ Final output preparation:
 - **Orchestration:** 1 task (Phase 4) ✅
 
 ### Recommended Order for Remaining Work:
-1. **Audio Production (Group 5)** - 2 tasks - Required for video synthesis
-2. **Video variant selection (Group 8)** - 1 task - Quality improvement
-3. **Export & Delivery (Group 11)** - 3 tasks - Final encoding and metadata
+1. **Video variant selection (Group 8)** - 1 task - Quality improvement
+2. **Export & Delivery (Group 11)** - 3 tasks - Final encoding and metadata
 
 ## Dependencies
 

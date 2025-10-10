@@ -1,8 +1,8 @@
 # Next Tasks to Implement from Phase 3
 
-**Status as of:** 2025-10-10 - Groups 3 & 10 Completed  
-**Last Completed:** Groups 1, 2, 3, 4, 6, 7, 8 (partial), 9, 10 + Phase 4 (moved to resolved)  
-**Next Priority:** Group 5 (Audio Production) - Lowest incomplete group
+**Status as of:** 2025-10-10 - Groups 3, 5, & 10 Completed  
+**Last Completed:** Groups 1, 2, 3, 4, 5, 6, 7, 8 (partial), 9, 10 + Phase 4 (moved to resolved)  
+**Next Priority:** Group 11 (Export & Delivery) - Final pipeline stage
 
 ---
 
@@ -37,6 +37,13 @@ Generate and refine scripts for videos.
 Break scripts into scenes and shots.
 - Beat sheet creation, shot lists
 - Draft subtitle generation
+
+### Group 5: Audio Production (2 tasks) - P1 ✅
+**Location:** `/issues/resolved/phase-3-implementation/group-5-audio-production/`
+
+Generate and normalize audio for videos.
+- TTS voiceover generation with multi-provider support
+- LUFS normalization to -14.0 (YouTube/TikTok standard)
 
 ### Group 6: Subtitle Creation (2 tasks) - P1 ✅
 **Location:** `/issues/resolved/phase-3-implementation/group-6-subtitle-creation/`
@@ -78,45 +85,21 @@ Validate video quality and readiness.
 Complete end-to-end pipeline orchestrator.
 - Full pipeline orchestration with state management
 
-**Total Completed:** 38+ tasks from 9 groups (plus Phase 4)
+**Total Completed:** 40+ tasks from 10 groups (plus Phase 4)
 
 ---
 
 ## 🎯 RECOMMENDED: Next Groups to Implement (In Priority Order)
 
-### Priority 1: Audio Production (Group 5) - NEXT RECOMMENDED ⭐
+### Priority 1: Video Variant Selection (Group 8 remainder) - QUALITY IMPROVEMENT
 
-**Why This is Critical:**
-- ✅ Content pipeline is ready (Group 1)
-- ✅ Ideas are being generated (Group 2)
-- ✅ Scripts are complete (Group 3)
-- ✅ Scene planning is complete (Group 4)
-- ❌ **BLOCKING:** Audio is needed for subtitle timing
-- 🎯 **Required for video synthesis and final output**
+**Why This Helps:**
+- ✅ All core pipeline groups complete (1-7, 9-10)
+- ✅ Audio production is ready (Group 5)
+- 🎯 Improves video output quality
+- 💡 Non-blocking enhancement
 
-**Tasks (2):**
-1. **07-audio-01-tts-generation** (P1) - Generate voiceover using TTS
-   - ElevenLabs or OpenAI TTS
-   - Select appropriate voice for demographics
-   - Generate audio files from scripts
-   - Output: `Generator/audio/tts/{gender}/{age}/{title_id}.mp3`
-
-2. **07-audio-02-normalization** (P1) - Normalize audio to -14 LUFS
-   - Use pyloudnorm for LUFS normalization
-   - YouTube/TikTok standard: -14 LUFS
-   - Output: `Generator/audio/normalized/{gender}/{age}/{title_id}.mp3`
-
-**Estimated Effort:** 8-10 hours (2 developers, 1 day)  
-**Priority Level:** P1 (HIGH)
-
-**Location:** `/issues/p1-high/audio-production/`
-
-### Priority 2: Video Variant Selection (Group 8 remainder)
-
-**Why This is Remaining:**
-- ✅ LTX generation and interpolation are complete (moved to resolved)
-- ❌ Variant selection quality assessment NOT YET IMPLEMENTED
-- 🎯 Would improve video quality but not blocking
+**Tasks (1):**
 
 **Tasks (1):**
 1. **10-video-03-variant-selection** (P2) - Select best video variant
@@ -146,14 +129,13 @@ Complete end-to-end pipeline orchestrator.
 
 ### Updated Execution Plan
 
-**Wave 1: Audio Production (Now - Next 1 day)**
+**Wave 1: Video Variant Selection (Optional - Quality Enhancement)**
 ```
-Developer Team (2 devs):
-├── 07-audio-01-tts-generation
-└── 07-audio-02-normalization
+Developer (1 dev, 0.5 day):
+└── 10-video-03-variant-selection
 ```
 
-**Wave 2: Export & Delivery (After Wave 1 - Next 1 day)**
+**Wave 2: Export & Delivery (Final Stage - 1 day)**
 
 **Wave 3: Quality & Export (After Wave 2 - Next 2 days)**
 ```
