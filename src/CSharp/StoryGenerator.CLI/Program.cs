@@ -30,6 +30,7 @@ class Program
         rootCommand.AddCommand(CreateFullPipelineCommand());
         rootCommand.AddCommand(CreatePipelineResumeCommand());
         rootCommand.AddCommand(CreatePipelineValidateCommand());
+        rootCommand.AddCommand(CreateRunCommand());
 
         return await rootCommand.InvokeAsync(args);
     }
@@ -462,6 +463,133 @@ class Program
                 Environment.Exit(1);
             }
         }, configPathOption);
+
+        return command;
+    }
+
+    static Command CreateRunCommand()
+    {
+        var pipelineConfigOption = new Option<string>(
+            name: "--pipeline-config",
+            description: "Path to pipeline orchestration configuration file (YAML or JSON)")
+        { IsRequired = true };
+        pipelineConfigOption.AddAlias("-c");
+
+        var storyTitleOption = new Option<string>(
+            name: "--story-title",
+            description: "Story title (optional, will be generated if not provided)");
+        storyTitleOption.AddAlias("-t");
+
+        var verboseOption = new Option<bool>(
+            name: "--verbose",
+            description: "Enable verbose logging",
+            getDefaultValue: () => false);
+        verboseOption.AddAlias("-v");
+
+        var dryRunOption = new Option<bool>(
+            name: "--dry-run",
+            description: "Show execution plan without running the pipeline",
+            getDefaultValue: () => false);
+
+        var command = new Command("run", "Run pipeline using orchestration configuration")
+        {
+            pipelineConfigOption,
+            storyTitleOption,
+            verboseOption,
+            dryRunOption
+        };
+
+        command.SetHandler(async (string configPath, string? storyTitle, bool verbose, bool dryRun) =>
+        {
+            try
+            {
+                if (!File.Exists(configPath))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"❌ Configuration file not found: {configPath}");
+                    Console.ResetColor();
+                    Environment.Exit(1);
+                    return;
+                }
+
+                // Note: Full implementation would require proper DI setup
+                // This is a minimal implementation to demonstrate the command structure
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("⚠️  Note: The 'run' command with orchestration is in preview.");
+                Console.WriteLine("    Full integration with the orchestration engine is in progress.");
+                Console.ResetColor();
+
+                Console.WriteLine($"\n🔧 Loading pipeline configuration from: {configPath}");
+                Console.WriteLine($"📖 Story Title: {storyTitle ?? "(will be generated)"}");
+                Console.WriteLine($"🔍 Verbose: {verbose}");
+                Console.WriteLine($"🏃 Dry Run: {dryRun}");
+
+                // Load configuration
+                var loader = new StoryGenerator.Pipeline.Config.PipelineOrchestrationConfigLoader();
+                var config = await loader.LoadFromFileAsync(configPath);
+
+                Console.WriteLine($"\n✅ Loaded pipeline: {config.Metadata.Name} v{config.Metadata.Version}");
+                Console.WriteLine($"   {config.Metadata.Description}");
+                Console.WriteLine($"\n📋 Execution Plan:");
+                Console.WriteLine(new string('-', 80));
+
+                var enabledStages = config.Stages
+                    .Where(s => s.Enabled)
+                    .OrderBy(s => s.Order)
+                    .ToList();
+
+                for (int i = 0; i < enabledStages.Count; i++)
+                {
+                    var stage = enabledStages[i];
+                    var number = (i + 1).ToString().PadLeft(2);
+                    Console.WriteLine($"  {number}. {stage.Name ?? stage.Id}");
+                    if (verbose)
+                    {
+                        Console.WriteLine($"      Order: {stage.Order}, Max Retries: {stage.MaxRetries ?? 0}");
+                        if (!string.IsNullOrEmpty(stage.Condition))
+                        {
+                            Console.WriteLine($"      Condition: {stage.Condition}");
+                        }
+                    }
+                }
+
+                Console.WriteLine(new string('-', 80));
+                Console.WriteLine($"\n📊 Summary:");
+                Console.WriteLine($"   Total stages: {config.Stages.Count}");
+                Console.WriteLine($"   Enabled: {enabledStages.Count}");
+                Console.WriteLine($"   Disabled: {config.Stages.Count - enabledStages.Count}");
+
+                if (dryRun)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("\n🏃 Dry run mode - pipeline execution skipped");
+                    Console.ResetColor();
+                    return;
+                }
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\n🚀 Pipeline execution will start here (full implementation in progress)");
+                Console.ResetColor();
+                Console.WriteLine("   Use 'full-pipeline' command for legacy pipeline execution");
+
+                // TODO: Actual execution would happen here with proper service setup
+                // await ExecutePipelineWithOrchestration(config, storyTitle, verbose);
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"\n❌ Error: {ex.Message}");
+                Console.ResetColor();
+                
+                if (verbose)
+                {
+                    Console.WriteLine($"\n📋 Stack Trace:");
+                    Console.WriteLine(ex.StackTrace);
+                }
+                
+                Environment.Exit(1);
+            }
+        }, pipelineConfigOption, storyTitleOption, verboseOption, dryRunOption);
 
         return command;
     }

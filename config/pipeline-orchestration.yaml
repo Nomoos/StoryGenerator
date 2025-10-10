@@ -1,0 +1,159 @@
+# Example Pipeline Orchestration Configuration
+# This configuration defines a complete video generation pipeline
+
+metadata:
+  name: "StoryGenerator Full Pipeline"
+  version: "1.0.0"
+  description: "Complete pipeline from idea generation to final video"
+  author: "StoryGenerator Team"
+  tags:
+    - video-generation
+    - storytelling
+    - automated
+
+# Global error handling settings
+error_handling:
+  continue_on_error: false
+  retry_count: 3
+  retry_delay: 5
+
+# Global retry configuration
+retry:
+  max_retries: 3
+  delay_seconds: 5
+  exponential_backoff: true
+  backoff_multiplier: 2.0
+
+# Logging configuration
+logging:
+  level: "INFO"
+  console: true
+  file: "pipeline.log"
+  format: "[{timestamp}] {level}: {message}"
+
+# Pipeline variables (can be referenced in stage parameters)
+variables:
+  story_title: "${STORY_TITLE}"
+  output_root: "./Stories"
+  enable_video_generation: true
+  skip_intermediate_stages: false
+
+# Pipeline stages in execution order
+stages:
+  - id: "story_idea"
+    name: "Story Idea Generation"
+    enabled: true
+    order: 10
+    continue_on_error: false
+    max_retries: 3
+    parameters:
+      topic: "friendship"
+      tone: "emotional"
+      theme: "personal growth"
+      count: 1
+
+  - id: "script_generation"
+    name: "Script Generation"
+    enabled: true
+    order: 20
+    continue_on_error: false
+    max_retries: 3
+    parameters:
+      target_length: 360
+
+  - id: "script_revision"
+    name: "Script Revision"
+    enabled: true
+    order: 30
+    continue_on_error: false
+    max_retries: 2
+    parameters:
+      optimize_for_voice: true
+
+  - id: "script_enhancement"
+    name: "Script Enhancement"
+    enabled: true
+    order: 40
+    continue_on_error: false
+    max_retries: 2
+    parameters:
+      add_voice_tags: true
+
+  - id: "voice_synthesis"
+    name: "Voice Synthesis"
+    enabled: true
+    order: 50
+    continue_on_error: false
+    max_retries: 3
+    parameters:
+      voice_id: "${ELEVENLABS_VOICE_ID}"
+      model: "eleven_multilingual_v2"
+      stability: 0.5
+      similarity_boost: 0.75
+
+  - id: "asr_subtitles"
+    name: "ASR & Subtitles"
+    enabled: true
+    order: 60
+    continue_on_error: false
+    max_retries: 2
+    parameters:
+      model: "large-v2"
+      language: "en"
+
+  - id: "scene_analysis"
+    name: "Scene Analysis"
+    enabled: true
+    order: 70
+    continue_on_error: false
+    max_retries: 2
+    condition: "variables.enable_video_generation == true"
+    parameters:
+      min_duration: 3.0
+      max_duration: 10.0
+
+  - id: "scene_description"
+    name: "Scene Description"
+    enabled: true
+    order: 80
+    continue_on_error: false
+    max_retries: 2
+    condition: "variables.enable_video_generation == true"
+    parameters:
+      use_llm: true
+
+  - id: "keyframe_generation"
+    name: "Keyframe Generation"
+    enabled: true
+    order: 90
+    continue_on_error: false
+    max_retries: 2
+    condition: "variables.enable_video_generation == true"
+    parameters:
+      model: "stabilityai/stable-diffusion-xl-base-1.0"
+      steps: 30
+
+  - id: "video_interpolation"
+    name: "Video Interpolation"
+    enabled: true
+    order: 100
+    continue_on_error: false
+    max_retries: 2
+    condition: "variables.enable_video_generation == true"
+    timeout_seconds: 3600
+    parameters:
+      method: "ltx"
+      fps: 30
+
+  - id: "video_composition"
+    name: "Final Video Composition"
+    enabled: true
+    order: 110
+    continue_on_error: false
+    max_retries: 2
+    condition: "variables.enable_video_generation == true"
+    parameters:
+      codec: "libx264"
+      bitrate: "8M"
+      include_subtitles: true
+      include_audio: true
