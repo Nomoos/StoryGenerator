@@ -1,8 +1,8 @@
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
-using StoryGenerator.Core.Models;
-using StoryGenerator.Core.Services;
-using StoryGenerator.Core.Utils;
+using PrismQ.Shared.Models;
+using PrismQ.Shared.Core.Services;
+using PrismQ.Shared.Core;
 using StoryGenerator.Providers.OpenAI;
 
 namespace PrismQ.IdeaScraper;

@@ -1,8 +1,8 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
-using StoryGenerator.Core.Services;
-using StoryGenerator.Core.Utils;
+using PrismQ.Shared.Core.Services;
+using PrismQ.Shared.Core;
 using StoryGenerator.Providers.OpenAI;
 
 namespace PrismQ.SubtitleGenerator;

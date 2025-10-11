@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Logging;
-using StoryGenerator.Core.Services;
+using PrismQ.Shared.Core.Services;
 using StoryGenerator.Providers.ElevenLabs;
 
 namespace PrismQ.VoiceOverGenerator;

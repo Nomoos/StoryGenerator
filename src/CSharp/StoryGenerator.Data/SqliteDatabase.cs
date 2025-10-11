@@ -1,6 +1,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
 using PrismQ.Shared.Core;
+using PrismQ.Shared.Core.Configuration;
 using PrismQ.Shared.Interfaces;
 using PrismQ.Shared.Models;
 
@@ -41,7 +42,7 @@ public class SqliteDatabase : IDatabase
         }
         catch (Exception ex)
         {
-            return Result<bool>.Failure($"Failed to initialize database: {ex.Message}", ex);
+            return Result<bool>.Failure($"Failed to initialize database: {ex.Message}");
         }
     }
 

@@ -1,3 +1,4 @@
+using PrismQ.Shared.Models;
 using System.Text.Json;
 using StoryGenerator.Pipeline.Core;
 using StoryGenerator.Pipeline.Interfaces;
