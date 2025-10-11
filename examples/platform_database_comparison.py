@@ -18,9 +18,9 @@ from datetime import datetime, timedelta
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from core.database import PlatformDatabase
-from core.platform_comparison import PlatformComparator
-from core.interfaces.platform_provider import (
+from PrismQ.Shared.database import PlatformDatabase
+from PrismQ.Shared.platform_comparison import PlatformComparator
+from PrismQ.Shared.interfaces.platform_provider import (
     PlatformType,
     UploadResult,
     VideoAnalytics,

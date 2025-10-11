@@ -4,7 +4,7 @@ Tests for core.errors module - custom exception hierarchy.
 
 import pytest
 
-from core.errors import (
+from PrismQ.Shared.errors import (
     APIError,
     AuthenticationError,
     ConfigurationError,

@@ -7,8 +7,8 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from core.errors import APIError, RateLimitError, TimeoutError
-from core.retry import (
+from PrismQ.Shared.errors import APIError, RateLimitError, TimeoutError
+from PrismQ.Shared.retry import (
     CircuitBreaker,
     RetryContext,
     retry_api_call,

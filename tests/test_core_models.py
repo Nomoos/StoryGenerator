@@ -3,7 +3,7 @@
 import pytest
 from pydantic import ValidationError
 
-from core.models import (APIResponse, AudioConfig, BatchRequest, ContentSource,
+from PrismQ.Shared.models import (APIResponse, AudioConfig, BatchRequest, ContentSource,
                          ImageConfig, ScriptConfig, StoryIdea, TargetAge,
                          TargetGender, TitleConfig, VideoConfig)
 

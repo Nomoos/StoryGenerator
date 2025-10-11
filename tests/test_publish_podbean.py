@@ -21,7 +21,7 @@ if project_root not in sys.path:
 # Import the module
 import publish_podbean
 
-from core.errors import APIError, AuthenticationError, ValidationError
+from PrismQ.Shared.errors import APIError, AuthenticationError, ValidationError
 
 
 class TestGetToken:

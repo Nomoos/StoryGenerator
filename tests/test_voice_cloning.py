@@ -17,7 +17,7 @@ from pathlib import Path
 from unittest.mock import Mock, patch, MagicMock
 import numpy as np
 
-from core.pipeline.voice_cloning import (
+from PrismQ.VoiceOverGenerator.voice_cloning import (
     VoiceCloner,
     VoiceProfile,
     VoiceQualityMetrics

@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from core.cache import CacheManager, get_cache
+from PrismQ.Shared.cache import CacheManager, get_cache
 
 
 @pytest.fixture

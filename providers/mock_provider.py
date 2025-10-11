@@ -6,7 +6,7 @@ for use in unit tests and development.
 """
 
 from typing import Dict, List, Optional
-from core.interfaces.llm_provider import ILLMProvider, IAsyncLLMProvider
+from PrismQ.Shared.interfaces.llm_provider import ILLMProvider, IAsyncLLMProvider
 
 
 class MockLLMProvider(ILLMProvider):

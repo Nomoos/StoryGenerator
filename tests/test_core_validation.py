@@ -3,8 +3,8 @@
 import pytest
 from pydantic import ValidationError
 
-from core.models import APIResponse, ScriptConfig, StoryIdea
-from core.validation import (get_validation_errors, is_valid, validate_call,
+from PrismQ.Shared.models import APIResponse, ScriptConfig, StoryIdea
+from PrismQ.Shared.validation import (get_validation_errors, is_valid, validate_call,
                              validate_dict, validate_input, validate_output)
 
 

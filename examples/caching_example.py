@@ -9,7 +9,7 @@ This example demonstrates the caching functionality:
 """
 
 import time
-from core.cache import CacheManager, get_cache
+from PrismQ.Shared.cache import CacheManager, get_cache
 
 
 def example_basic_caching():

@@ -7,7 +7,7 @@ import pytest
 from pathlib import Path
 from unittest.mock import Mock
 
-from core.pipeline.idea_generation import (
+from PrismQ.IdeaScraper.idea_generation import (
     IdeaAdapter,
     IdeaGenerator,
     merge_and_save_all_ideas

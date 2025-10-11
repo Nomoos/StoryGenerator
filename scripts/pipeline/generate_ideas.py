@@ -25,12 +25,12 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from core.pipeline.idea_generation import IdeaAdapter, IdeaGenerator, merge_and_save_all_ideas
-from core.pipeline.topic_clustering import TopicClusterer
-from core.pipeline.title_generation import TitleGenerator
-from core.pipeline.title_scoring import TitleScorer
-from core.pipeline.voice_recommendation import VoiceRecommender
-from core.pipeline.top_selection import TopSelector
+from PrismQ.IdeaScraper.idea_generation import IdeaAdapter, IdeaGenerator, merge_and_save_all_ideas
+from PrismQ.IdeaScraper.topic_clustering import TopicClusterer
+from PrismQ.StoryTitleProcessor.title_generation import TitleGenerator
+from PrismQ.StoryTitleScoring.title_scoring import TitleScorer
+from PrismQ.VoiceOverGenerator.voice_recommendation import VoiceRecommender
+from PrismQ.StoryTitleScoring.top_selection import TopSelector
 from providers.mock_provider import MockLLMProvider
 
 # Configure logging

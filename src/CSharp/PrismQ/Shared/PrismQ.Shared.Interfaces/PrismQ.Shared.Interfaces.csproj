@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>PrismQ.Shared.Interfaces</RootNamespace>
+    <AssemblyName>PrismQ.Shared.Interfaces</AssemblyName>
+    <Description>Interface definitions for PrismQ providers and services</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="../../../stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PrismQ.Shared.Models\PrismQ.Shared.Models.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -18,7 +18,7 @@ from unittest.mock import Mock, patch, MagicMock
 import numpy as np
 from PIL import Image
 
-from core.pipeline.style_consistency import (
+from PrismQ.StoryGenerator.style_consistency import (
     StyleConsistencyManager,
     StyleProfile,
     ConsistencyMetrics

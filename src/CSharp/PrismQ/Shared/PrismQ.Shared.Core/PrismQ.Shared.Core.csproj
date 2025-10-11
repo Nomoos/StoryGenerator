@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>PrismQ.Shared.Core</RootNamespace>
+    <AssemblyName>PrismQ.Shared.Core</AssemblyName>
+    <Description>Core utilities and base classes for PrismQ</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="../../../stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
+  </ItemGroup>
+
+</Project>
