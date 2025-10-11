@@ -74,12 +74,30 @@ PrismQ/
 │  ├─ facebook_provider.py     # Facebook platform provider
 │  └─ wordpress_provider.py    # WordPress publishing provider
 │
-└─ Pipeline/                   # Pipeline orchestration and execution
-   ├─ orchestration/           # Pipeline step orchestration
-   │  ├─ run_step.py           # Step execution logic
-   │  └─ story_db.py           # Story database management
-   └─ scripts/                 # Pipeline batch scripts
-      └─ *.bat                 # Windows batch files for pipeline steps
+├─ Pipeline/                   # Pipeline orchestration and execution
+│  ├─ orchestration/           # Pipeline step orchestration
+│  │  ├─ run_step.py           # Step execution logic
+│  │  └─ story_db.py           # Story database management
+│  └─ scripts/                 # Pipeline batch scripts
+│     └─ *.bat                 # Windows batch files for pipeline steps
+│
+├─ Tools/                      # Video publishing and quality tools
+│  ├─ MultiPlatformPublisher.py  # Multi-platform video distribution
+│  ├─ VideoQualityChecker.py     # Video quality validation
+│  └─ VideoVariantSelector.py    # Video variant selection
+│
+├─ Examples/                   # Usage examples and demonstrations
+│  ├─ basic_pipeline.py        # Basic pipeline usage
+│  ├─ platform_*_example.py    # Platform integration examples
+│  └─ ...                      # Various feature demonstrations
+│
+└─ Scripts/                    # Utility scripts and tools
+   ├─ pipeline/                # Pipeline execution scripts
+   ├─ scrapers/                # Content scraping scripts
+   ├─ reddit_scraper.py        # Reddit content scraper
+   ├─ title_improve.py         # Title improvement script
+   ├─ title_score.py           # Title scoring script
+   └─ ...                      # Various utility scripts
 ```
 
 ## Import Convention
@@ -95,6 +113,8 @@ from PrismQ.StoryTitleScoring.title_scoring import TitleScorer
 from PrismQ.VoiceOverGenerator.voice_recommendation import VoiceRecommender
 from PrismQ.Providers import OpenAIProvider, MockLLMProvider
 from PrismQ.Pipeline.orchestration.run_step import StepOrchestrator
+from PrismQ.Tools import MultiPlatformPublisher, VideoQualityChecker
+from PrismQ.Scripts import reddit_scraper, title_improve
 ```
 
 ### Backward Compatibility

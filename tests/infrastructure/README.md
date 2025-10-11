@@ -143,7 +143,7 @@ Follow this template:
 
 ```python
 import pytest
-from src.Python.config import Settings
+from PrismQ.Shared.config import Settings
 
 class TestNewFeature:
     """Test suite for new feature."""
@@ -217,7 +217,7 @@ open htmlcov/index.html
 python -c "import sys; print('\n'.join(sys.path))"
 
 # Try importing directly
-python -c "from src.Python.config import get_settings; print(get_settings())"
+python -c "from PrismQ.Shared.config import settings; print(get_settings())"
 ```
 
 ## See Also
