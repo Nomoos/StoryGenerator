@@ -1,3 +1,5 @@
+using PrismQ.Shared.Interfaces;
+
 namespace PrismQ.StoryGenerator;
 
 /// <summary>

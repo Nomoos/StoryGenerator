@@ -1,4 +1,4 @@
-namespace PrismQ.Shared.Core;
+namespace PrismQ.Shared.Models;
 
 /// <summary>
 /// Represents the result of an operation that can succeed or fail.

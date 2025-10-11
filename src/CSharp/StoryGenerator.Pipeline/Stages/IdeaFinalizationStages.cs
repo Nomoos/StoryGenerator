@@ -1,3 +1,4 @@
+using PrismQ.Shared.Models;
 using System.Text.Json;
 using StoryGenerator.Pipeline.Core;
 using StoryGenerator.Pipeline.Interfaces;
@@ -44,7 +45,7 @@ public class IdeaValidationStage : BasePipelineStage<IdeaValidationInput, IdeaVa
         };
     }
 
-    private ValidatedIdea ValidateIdea(StoryGenerator.Core.Models.StoryIdea idea)
+    private ValidatedIdea ValidateIdea(StoryIdea idea)
     {
         var validated = new ValidatedIdea
         {
@@ -135,11 +136,11 @@ public class IdeaRegistryUpdateStage : BasePipelineStage<IdeaRegistryUpdateInput
         }
 
         // Load existing registry if it exists
-        var registry = new List<StoryGenerator.Core.Models.StoryIdea>();
+        var registry = new List<StoryIdea>();
         if (File.Exists(_registryPath))
         {
             var existingJson = await File.ReadAllTextAsync(_registryPath, cancellationToken);
-            var existing = JsonSerializer.Deserialize<List<StoryGenerator.Core.Models.StoryIdea>>(existingJson);
+            var existing = JsonSerializer.Deserialize<List<StoryIdea>>(existingJson);
             if (existing != null)
             {
                 registry.AddRange(existing);

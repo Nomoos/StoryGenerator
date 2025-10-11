@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using StoryGenerator.Core.Collectors;
-using StoryGenerator.Core.Models;
-using StoryGenerator.Core.Services;
+using PrismQ.Shared.Core;
+using PrismQ.Shared.Core.Collectors;
+using PrismQ.Shared.Models;
+using PrismQ.Shared.Core.Services;
 using Xunit;
 
 namespace StoryGenerator.Tests.Collectors;

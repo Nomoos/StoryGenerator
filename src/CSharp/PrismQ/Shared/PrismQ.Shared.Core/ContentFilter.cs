@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
+using PrismQ.Shared.Models;
+using PrismQ.Shared.Interfaces;
 
 namespace PrismQ.Shared.Core.Services
 {
@@ -266,36 +268,5 @@ namespace PrismQ.Shared.Core.Services
         Lenient,   // Only flag high-severity words
         Moderate,  // Flag high and medium severity
         Strict     // Flag all potentially problematic content
-    }
-
-    /// <summary>
-    /// Result of content filtering.
-    /// </summary>
-    public class ContentFilterResult
-    {
-        public bool IsClean { get; set; }
-        public List<FlaggedWord> FlaggedWords { get; set; } = new List<FlaggedWord>();
-        public string Message { get; set; } = string.Empty;
-    }
-
-    /// <summary>
-    /// Information about a flagged word.
-    /// </summary>
-    public class FlaggedWord
-    {
-        public string Word { get; set; } = string.Empty;
-        public string Category { get; set; } = string.Empty;
-        public FlagSeverity Severity { get; set; }
-        public string Context { get; set; } = string.Empty;
-    }
-
-    /// <summary>
-    /// Severity levels for flagged content.
-    /// </summary>
-    public enum FlagSeverity
-    {
-        Low,
-        Medium,
-        High
     }
 }

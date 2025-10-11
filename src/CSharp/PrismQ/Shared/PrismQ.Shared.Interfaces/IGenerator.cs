@@ -1,4 +1,4 @@
-namespace StoryGenerator.Generators;
+namespace PrismQ.Shared.Interfaces;
 
 /// <summary>
 /// Base interface for all generators in the pipeline.

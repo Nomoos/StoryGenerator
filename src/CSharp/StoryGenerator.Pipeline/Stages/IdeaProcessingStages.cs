@@ -1,3 +1,4 @@
+using PrismQ.Shared.Models;
 using StoryGenerator.Pipeline.Core;
 using StoryGenerator.Pipeline.Interfaces;
 using StoryGenerator.Pipeline.Stages.Models;
@@ -35,7 +36,7 @@ public class IdeaClusteringStage : BasePipelineStage<IdeaClusteringInput, IdeaCl
                 clusters[themeKey] = new IdeaCluster
                 {
                     Name = themeKey,
-                    Ideas = new List<StoryGenerator.Core.Models.StoryIdea>()
+                    Ideas = new List<StoryIdea>()
                 };
             }
 

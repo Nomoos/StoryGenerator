@@ -1,8 +1,10 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
-using StoryGenerator.Core;
-using StoryGenerator.Core.Configuration;
-using StoryGenerator.Core.Interfaces;
+using PrismQ.Shared.Core;
+using PrismQ.Shared.Core.Configuration;
+using PrismQ.Shared.Core.Utils;
+using PrismQ.Shared.Interfaces;
+using PrismQ.Shared.Models;
 
 namespace StoryGenerator.Data;
 
@@ -41,7 +43,7 @@ public class SqliteDatabase : IDatabase
         }
         catch (Exception ex)
         {
-            return Result<bool>.Failure($"Failed to initialize database: {ex.Message}", ex);
+            return Result<bool>.Failure($"Failed to initialize database: {ex.Message}");
         }
     }
 
@@ -76,7 +78,7 @@ public class SqliteDatabase : IDatabase
         }
         catch (Exception ex)
         {
-            return Result<IEnumerable<T>>.Failure($"Query failed: {ex.Message}", ex);
+            return Result<IEnumerable<T>>.Failure($"Query failed: {ex.Message}");
         }
     }
 
@@ -102,7 +104,7 @@ public class SqliteDatabase : IDatabase
         }
         catch (Exception ex)
         {
-            return Result<int>.Failure($"Execute failed: {ex.Message}", ex);
+            return Result<int>.Failure($"Execute failed: {ex.Message}");
         }
     }
 

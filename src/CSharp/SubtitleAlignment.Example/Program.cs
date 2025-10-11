@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using StoryGenerator.Core.Interfaces;
-using StoryGenerator.Core.Services;
+using PrismQ.Shared.Interfaces;
+using PrismQ.Shared.Core.Services;
+using PrismQ.Shared.Models;
 using StoryGenerator.Research;
 using System.Text.Json;
 
@@ -114,7 +115,7 @@ class Program
                 // Display mapping summary
                 Console.WriteLine("\n--- Mapping Summary ---");
                 var mappingJson = await File.ReadAllTextAsync(savedMappingPath);
-                var mapping = JsonSerializer.Deserialize<StoryGenerator.Core.Models.SubtitleToShotMapping>(
+                var mapping = JsonSerializer.Deserialize<SubtitleToShotMapping>(
                     mappingJson,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );

@@ -1,10 +1,14 @@
 using System.CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using StoryGenerator.Core.Models;
-using StoryGenerator.Core.Services;
-using StoryGenerator.Core.Utils;
-using StoryGenerator.Generators;
+using PrismQ.Shared.Models;
+using PrismQ.Shared.Core;
+using PrismQ.Shared.Core.Services;
+using PrismQ.Shared.Core.Utils;
+using PrismQ.IdeaScraper;
+using PrismQ.StoryGenerator;
+using PrismQ.SubtitleGenerator;
+using PrismQ.VoiceOverGenerator;
 using StoryGenerator.Providers.ElevenLabs;
 using StoryGenerator.Providers.OpenAI;
 

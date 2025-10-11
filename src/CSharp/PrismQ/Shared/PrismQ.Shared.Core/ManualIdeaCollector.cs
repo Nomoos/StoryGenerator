@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using StoryGenerator.Core.Models;
+using PrismQ.Shared.Models;
 
 namespace PrismQ.Shared.Core.Collectors;
 

@@ -1,3 +1,4 @@
+using PrismQ.Shared.Interfaces;
 namespace PrismQ.SubtitleGenerator;
 
 /// <summary>

@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using StoryGenerator.Core.Models;
+using PrismQ.Shared.Models;
 
 namespace PrismQ.Shared.Core.Services;
 

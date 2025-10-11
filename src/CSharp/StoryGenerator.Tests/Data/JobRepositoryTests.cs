@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Options;
-using StoryGenerator.Core.Configuration;
-using StoryGenerator.Core.Interfaces;
+using PrismQ.Shared.Core.Configuration;
+using PrismQ.Shared.Interfaces;
 using StoryGenerator.Data;
 using StoryGenerator.Data.Models;
 using StoryGenerator.Data.Repositories;

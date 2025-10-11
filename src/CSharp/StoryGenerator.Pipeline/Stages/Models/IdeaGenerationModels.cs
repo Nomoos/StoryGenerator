@@ -1,4 +1,4 @@
-using StoryGenerator.Core.Models;
+using PrismQ.Shared.Models;
 
 namespace StoryGenerator.Pipeline.Stages.Models;
 

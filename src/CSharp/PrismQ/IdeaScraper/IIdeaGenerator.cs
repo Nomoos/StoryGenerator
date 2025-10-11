@@ -1,4 +1,5 @@
-using StoryGenerator.Core.Models;
+using PrismQ.Shared.Models;
+using PrismQ.Shared.Interfaces;
 
 namespace PrismQ.IdeaScraper;
 

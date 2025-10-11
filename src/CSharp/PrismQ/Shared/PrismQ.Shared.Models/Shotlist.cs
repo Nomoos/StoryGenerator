@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace StoryGenerator.Core.Interfaces
+namespace PrismQ.Shared.Models
 {
     /// <summary>
     /// Represents a shotlist with scene descriptions and timing.

@@ -25,6 +25,13 @@
     <ProjectReference Include="..\StoryGenerator.Generators\StoryGenerator.Generators.csproj" />
     <ProjectReference Include="../StoryGenerator.Pipeline/StoryGenerator.Pipeline.csproj" />
     <ProjectReference Include="..\StoryGenerator.Data\StoryGenerator.Data.csproj" />
+    <ProjectReference Include="..\PrismQ\Shared\PrismQ.Shared.Core\PrismQ.Shared.Core.csproj" />
+    <ProjectReference Include="..\PrismQ\Shared\PrismQ.Shared.Interfaces\PrismQ.Shared.Interfaces.csproj" />
+    <ProjectReference Include="..\PrismQ\Shared\PrismQ.Shared.Models\PrismQ.Shared.Models.csproj" />
+    <ProjectReference Include="..\PrismQ\IdeaScraper\PrismQ.IdeaScraper.csproj" />
+    <ProjectReference Include="..\PrismQ\StoryGenerator\PrismQ.StoryGenerator.csproj" />
+    <ProjectReference Include="..\PrismQ\SubtitleGenerator\PrismQ.SubtitleGenerator.csproj" />
+    <ProjectReference Include="..\PrismQ\VoiceOverGenerator\PrismQ.VoiceOverGenerator.csproj" />
   </ItemGroup>
 
 </Project>

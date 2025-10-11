@@ -1,3 +1,4 @@
+using PrismQ.Shared.Models;
 using StoryGenerator.Pipeline.Core;
 using StoryGenerator.Pipeline.Interfaces;
 using StoryGenerator.Pipeline.Stages.Models;
@@ -43,7 +44,7 @@ public class ScriptGenerationStage : BasePipelineStage<ScriptGenerationInput, Sc
         };
     }
 
-    private async Task<GeneratedScript> GenerateScriptAsync(StoryGenerator.Core.Models.StoryIdea idea, CancellationToken cancellationToken)
+    private async Task<GeneratedScript> GenerateScriptAsync(StoryIdea idea, CancellationToken cancellationToken)
     {
         await Task.Delay(100, cancellationToken); // Simulate LLM call
 
@@ -60,7 +61,7 @@ public class ScriptGenerationStage : BasePipelineStage<ScriptGenerationInput, Sc
         };
     }
 
-    private string GenerateScriptContent(StoryGenerator.Core.Models.StoryIdea idea)
+    private string GenerateScriptContent(StoryIdea idea)
     {
         // Simulate script generation with template
         var template = $@"[Scene opens with a {idea.Tone ?? "contemplative"} mood]

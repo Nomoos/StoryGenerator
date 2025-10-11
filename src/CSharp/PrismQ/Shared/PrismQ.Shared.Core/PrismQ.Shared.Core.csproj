@@ -17,4 +17,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\StoryGenerator.Core\StoryGenerator.Core.csproj" />
+    <ProjectReference Include="..\PrismQ.Shared.Interfaces\PrismQ.Shared.Interfaces.csproj" />
+    <ProjectReference Include="..\PrismQ.Shared.Models\PrismQ.Shared.Models.csproj" />
+  </ItemGroup>
+
 </Project>

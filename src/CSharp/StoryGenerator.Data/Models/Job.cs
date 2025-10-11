@@ -1,4 +1,4 @@
-using StoryGenerator.Core.Interfaces;
+using PrismQ.Shared.Interfaces;
 
 namespace StoryGenerator.Data.Models;
 
