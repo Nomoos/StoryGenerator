@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\PrismQ.Shared.Core\PrismQ.Shared.Core.csproj" />
+    <ProjectReference Include="..\Shared\PrismQ.Shared.Models\PrismQ.Shared.Models.csproj" />
+    <ProjectReference Include="..\Shared\PrismQ.Shared.Interfaces\PrismQ.Shared.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

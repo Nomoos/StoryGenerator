@@ -65,10 +65,27 @@ The following directories are placeholders for future C# implementation:
 - [x] Add projects to solution
 - [x] Verify builds successfully
 
-### Phase 2b: Project Organization (Next Steps)
-- Move existing C# projects into appropriate PrismQ subprojects
-- Update namespaces to use PrismQ prefix
-- Update project references
+### Phase 2b: Domain Project Structure ✅ COMPLETE
+- [x] Create PrismQ.IdeaScraper project
+- [x] Create PrismQ.StoryTitleProcessor project
+- [x] Create PrismQ.StoryTitleScoring project
+- [x] Create PrismQ.StoryGenerator project
+- [x] Create PrismQ.VoiceOverGenerator project
+- [x] Create PrismQ.SceneDescriptions project
+- [x] Create PrismQ.SubtitleGenerator project
+- [x] Create PrismQ.VideoGenerator project
+
+### Phase 2c: Code Migration (Next Steps)
+### Phase 2c: Code Migration (Next Steps)
+- [ ] Copy files from StoryGenerator.Generators to PrismQ subprojects:
+  - [ ] IdeaGenerator → PrismQ.IdeaScraper
+  - [ ] ScriptGenerator, RevisionGenerator, EnhancementGenerator → PrismQ.StoryGenerator
+  - [ ] VoiceGenerator → PrismQ.VoiceOverGenerator
+  - [ ] SubtitleGenerator → PrismQ.SubtitleGenerator
+  - [ ] VideoSynthesizers → PrismQ.VideoGenerator
+  - [ ] SceneBeatsGenerator → PrismQ.SceneDescriptions
+- [ ] Update namespaces to use PrismQ prefix
+- [ ] Update project references
 
 ### Phase 3: Refactor Core Projects
 - Split StoryGenerator.Core into Shared components
