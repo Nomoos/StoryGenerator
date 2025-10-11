@@ -1,4 +1,4 @@
-namespace StoryGenerator.Core.Interfaces;
+namespace PrismQ.Shared.Interfaces;
 
 /// <summary>
 /// Represents a job that can be executed in the pipeline.

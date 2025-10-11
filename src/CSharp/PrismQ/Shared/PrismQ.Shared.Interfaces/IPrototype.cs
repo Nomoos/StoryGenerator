@@ -1,4 +1,4 @@
-namespace StoryGenerator.Core.Interfaces;
+namespace PrismQ.Shared.Interfaces;
 
 /// <summary>
 /// Represents an object that can be cloned (deep copy).

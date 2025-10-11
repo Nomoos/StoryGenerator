@@ -1,4 +1,4 @@
-namespace StoryGenerator.Core.Interfaces;
+namespace PrismQ.Shared.Interfaces;
 
 /// <summary>
 /// Represents a step in the processing pipeline.

@@ -1,4 +1,4 @@
-namespace StoryGenerator.Core.Interfaces;
+namespace PrismQ.Shared.Interfaces;
 
 /// <summary>
 /// Service for executing FFmpeg operations.

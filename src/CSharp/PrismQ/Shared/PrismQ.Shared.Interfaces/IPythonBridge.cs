@@ -1,4 +1,4 @@
-namespace StoryGenerator.Core.Interfaces;
+namespace PrismQ.Shared.Interfaces;
 
 /// <summary>
 /// Bridge for communicating with Python scripts via subprocess.

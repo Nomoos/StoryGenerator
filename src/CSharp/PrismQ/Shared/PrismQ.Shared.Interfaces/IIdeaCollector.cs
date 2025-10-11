@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using StoryGenerator.Core.Models;
 
-namespace StoryGenerator.Core.Interfaces;
+namespace PrismQ.Shared.Interfaces;
 
 /// <summary>
 /// Interface for collecting ideas from various sources (Reddit, Instagram, TikTok, etc.).

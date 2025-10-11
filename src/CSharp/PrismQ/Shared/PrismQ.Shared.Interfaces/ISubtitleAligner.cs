@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace StoryGenerator.Core.Interfaces
+namespace PrismQ.Shared.Interfaces
 {
     /// <summary>
     /// Interface for aligning subtitles to audio and mapping them to shots/scenes.
