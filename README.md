@@ -4,50 +4,49 @@ A comprehensive, modular framework for automated story generation, media process
 
 ## 🏗️ Project Structure
 
-This project follows a clean, namespace-based architecture with all source code organized under `src/`:
+This project follows a clean, namespace-based architecture with all components organized at the top level:
 
 ```
 StoryGenerator/
-├── src/
-│   ├── PrismQ/                    # Main Python application namespace
-│   │   ├── Core/                  # Core utilities and shared components
-│   │   │   └── Shared/           # Configuration, logging, database, models
-│   │   ├── Content/               # Content generation modules
-│   │   │   ├── IdeaScraper/      # Idea generation and scraping
-│   │   │   ├── StoryGenerator/   # Story and script development
-│   │   │   ├── StoryTitleProcessor/ # Title generation
-│   │   │   ├── StoryTitleScoring/   # Title quality scoring
-│   │   │   ├── SceneDescriptions/   # Scene planning
-│   │   │   ├── DescriptionGenerator/ # Metadata descriptions
-│   │   │   └── TagsGenerator/       # Tag generation
-│   │   ├── Media/                 # Media processing modules
-│   │   │   ├── VoiceOverGenerator/  # Voice synthesis
-│   │   │   ├── SubtitleGenerator/   # Subtitle generation
-│   │   │   ├── VideoGenerator/      # Video assembly
-│   │   │   └── FrameInterpolation/  # Frame processing
-│   │   ├── Platform/              # Platform integrations
-│   │   │   ├── Providers/        # Service providers (OpenAI, etc.)
-│   │   │   └── Pipeline/         # Pipeline orchestration
-│   │   ├── Utilities/             # Tools and utilities
-│   │   │   ├── Tools/            # Publishing tools
-│   │   │   └── Scripts/          # Automation scripts
-│   │   └── Documentation/         # Examples and guides
-│   │       └── Examples/         # Usage examples
-│   ├── CSharp/                    # C# implementation
-│   │   ├── PrismQ/               # C# PrismQ modules
-│   │   └── MLScripts/            # ML subprocess scripts
-│   ├── Tests/                     # Test suite
-│   ├── Documentation/             # Project documentation
-│   ├── Configuration/             # Configuration files
-│   ├── Assets/                    # Static assets
-│   ├── Data/                      # Runtime data
-│   ├── Research/                  # Research documents
-│   ├── Issues/                    # Issue tracking
-│   └── Podcasts/                  # Podcast content
-├── .github/                       # GitHub workflows and config
-├── pyproject.toml                 # Python project configuration
-├── requirements.txt               # Python dependencies
-└── README.md                      # This file
+├── PrismQ/                    # Main Python application namespace
+│   ├── Core/                  # Core utilities and shared components
+│   │   └── Shared/           # Configuration, logging, database, models
+│   ├── Content/               # Content generation modules
+│   │   ├── IdeaScraper/      # Idea generation and scraping
+│   │   ├── StoryGenerator/   # Story and script development
+│   │   ├── StoryTitleProcessor/ # Title generation
+│   │   ├── StoryTitleScoring/   # Title quality scoring
+│   │   ├── SceneDescriptions/   # Scene planning
+│   │   ├── DescriptionGenerator/ # Metadata descriptions
+│   │   └── TagsGenerator/       # Tag generation
+│   ├── Media/                 # Media processing modules
+│   │   ├── VoiceOverGenerator/  # Voice synthesis
+│   │   ├── SubtitleGenerator/   # Subtitle generation
+│   │   ├── VideoGenerator/      # Video assembly
+│   │   └── FrameInterpolation/  # Frame processing
+│   ├── Platform/              # Platform integrations
+│   │   ├── Providers/        # Service providers (OpenAI, etc.)
+│   │   └── Pipeline/         # Pipeline orchestration
+│   ├── Utilities/             # Tools and utilities
+│   │   ├── Tools/            # Publishing tools
+│   │   └── Scripts/          # Automation scripts
+│   └── Documentation/         # Examples and guides
+│       └── Examples/         # Usage examples
+├── CSharp/                    # C# implementation
+│   ├── PrismQ/               # C# PrismQ modules
+│   └── MLScripts/            # ML subprocess scripts
+├── Tests/                     # Test suite
+├── Documentation/             # Project documentation
+├── Configuration/             # Configuration files
+├── Assets/                    # Static assets
+├── Data/                      # Runtime data
+├── Research/                  # Research documents
+├── Issues/                    # Issue tracking
+├── Podcasts/                  # Podcast content
+├── .github/                   # GitHub workflows and config
+├── pyproject.toml            # Python project configuration
+├── requirements.txt           # Python dependencies
+└── README.md                  # This file
 ```
 
 ## 🚀 Quick Start
@@ -65,9 +64,9 @@ pip install -r requirements-dev.txt
 ### Basic Usage
 
 ```python
-from src.PrismQ.Core.Shared.config import settings
-from src.PrismQ.Content.IdeaScraper.idea_generation import IdeaGenerator
-from src.PrismQ.Platform.Providers import OpenAIProvider
+from PrismQ.Core.Shared.config import settings
+from PrismQ.Content.IdeaScraper.idea_generation import IdeaGenerator
+from PrismQ.Platform.Providers import OpenAIProvider
 
 # Configure
 api_key = settings.openai_api_key
@@ -79,22 +78,22 @@ ideas = generator.generate()
 
 ## 📦 Namespace Organization
 
-### Core (`src/PrismQ/Core/`)
+### Core (`PrismQ/Core/`)
 Foundation components including configuration, logging, database utilities, error handling, caching, and data models.
 
-### Content (`src/PrismQ/Content/`)
+### Content (`PrismQ/Content/`)
 All content generation and processing modules for ideas, stories, titles, scenes, and metadata.
 
-### Media (`src/PrismQ/Media/`)
+### Media (`PrismQ/Media/`)
 Media processing pipeline for audio, video, subtitles, and frame processing.
 
-### Platform (`src/PrismQ/Platform/`)
+### Platform (`PrismQ/Platform/`)
 External service integrations including LLM providers, platform providers (YouTube, TikTok, etc.), and pipeline orchestration.
 
-### Utilities (`src/PrismQ/Utilities/`)
+### Utilities (`PrismQ/Utilities/`)
 Tools for publishing, quality checking, and automation scripts.
 
-### Documentation (`src/PrismQ/Documentation/`)
+### Documentation (`PrismQ/Documentation/`)
 Usage examples, guides, and demonstrations.
 
 ## 🎯 Key Features
@@ -108,24 +107,24 @@ Usage examples, guides, and demonstrations.
 
 ## 📚 Documentation
 
-- **Getting Started**: See `src/Documentation/guides/`
-- **API Reference**: See `src/PrismQ/README.md`
-- **Examples**: See `src/PrismQ/Documentation/Examples/`
-- **Migration Guide**: See `src/Documentation/migration/`
+- **Getting Started**: See `Documentation/guides/`
+- **API Reference**: See `PrismQ/README.md`
+- **Examples**: See `PrismQ/Documentation/Examples/`
+- **Migration Guide**: See `Documentation/migration/`
 
 ## 🧪 Testing
 
 ```bash
 # Run all tests
-pytest src/Tests/
+pytest Tests/
 
 # Run specific test suite
-pytest src/Tests/test_core_config.py
+pytest Tests/test_core_config.py
 ```
 
 ## 🤝 Contributing
 
-See `src/Documentation/CONTRIBUTING.md` for contribution guidelines.
+See `Documentation/CONTRIBUTING.md` for contribution guidelines.
 
 ## 📄 License
 
@@ -133,6 +132,6 @@ See LICENSE file for details.
 
 ## 🔗 Links
 
-- [Project Documentation](src/Documentation/)
-- [API Documentation](src/PrismQ/README.md)
-- [Issue Tracker](src/Issues/)
+- [Project Documentation](Documentation/)
+- [API Documentation](PrismQ/README.md)
+- [Issue Tracker](Issues/)

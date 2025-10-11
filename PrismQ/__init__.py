@@ -10,6 +10,11 @@ This package is organized into the following namespaces:
 - Platform: Platform integrations and providers
 - Utilities: Tools and utility scripts
 - Documentation: Examples and guides
+
+Example usage:
+    from PrismQ.Core.Shared.config import settings
+    from PrismQ.Content.IdeaScraper.idea_generation import IdeaGenerator
+    from PrismQ.Platform.Providers import OpenAIProvider
 """
 
 __version__ = "1.0.0"

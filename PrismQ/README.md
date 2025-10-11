@@ -72,18 +72,18 @@ src/PrismQ/
 
 ### For New Code
 
-Always import using the full namespace path from src:
+Always import using the full namespace path:
 
 ```python
-from src.PrismQ.Core.Shared.errors import APIError
-from src.PrismQ.Core.Shared.config import settings
-from src.PrismQ.Content.IdeaScraper.idea_generation import IdeaAdapter, IdeaGenerator
-from src.PrismQ.Content.StoryTitleScoring.title_scoring import TitleScorer
-from src.PrismQ.Media.VoiceOverGenerator.voice_recommendation import VoiceRecommender
-from src.PrismQ.Platform.Providers import OpenAIProvider, MockLLMProvider
-from src.PrismQ.Platform.Pipeline.orchestration.run_step import StepOrchestrator
-from src.PrismQ.Utilities.Tools import MultiPlatformPublisher, VideoQualityChecker
-from src.PrismQ.Utilities.Scripts import reddit_scraper
+from PrismQ.Core.Shared.errors import APIError
+from PrismQ.Core.Shared.config import settings
+from PrismQ.Content.IdeaScraper.idea_generation import IdeaAdapter, IdeaGenerator
+from PrismQ.Content.StoryTitleScoring.title_scoring import TitleScorer
+from PrismQ.Media.VoiceOverGenerator.voice_recommendation import VoiceRecommender
+from PrismQ.Platform.Providers import OpenAIProvider, MockLLMProvider
+from PrismQ.Platform.Pipeline.orchestration.run_step import StepOrchestrator
+from PrismQ.Utilities.Tools import MultiPlatformPublisher, VideoQualityChecker
+from PrismQ.Utilities.Scripts import reddit_scraper
 ```
 
 ### Backward Compatibility
