@@ -14,7 +14,7 @@ from pathlib import Path
 # Note: This is done before imports to avoid E402 flake8 error
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from providers import OpenAIProvider, MockLLMProvider  # noqa: E402
+from PrismQ.Providers import OpenAIProvider, MockLLMProvider  # noqa: E402
 from PrismQ.Shared.interfaces.llm_provider import ILLMProvider  # noqa: E402
 
 

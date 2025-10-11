@@ -9,7 +9,7 @@
 
 ## Description
 
-Enhance the existing content deduplication system (`scripts/deduplicate_content.py`) with advanced fuzzy matching and semantic similarity detection. This builds upon the completed deduplication work in `issues/resolved/p0-content-pipeline/02-content-04-deduplication/`.
+Enhance the existing content deduplication system (`scripts/deduplicate_content.py`) with advanced fuzzy matching and semantic similarity detection. This builds upon the completed deduplication work in `issues/resolved/p0-content-PrismQ/Pipeline/02-content-04-deduplication/`.
 
 **Current Implementation:**
 - ✅ Exact ID matching
@@ -31,7 +31,7 @@ The existing deduplication script (`scripts/deduplicate_content.py`) provides:
 - Keeps highest scoring duplicate
 - JSON output with deduplication reports
 
-**See:** `issues/resolved/p0-content-pipeline/02-content-04-deduplication/issue.md` for current implementation details.
+**See:** `issues/resolved/p0-content-PrismQ/Pipeline/02-content-04-deduplication/issue.md` for current implementation details.
 
 ## Acceptance Criteria
 
@@ -460,7 +460,7 @@ python scripts/deduplicate_content.py --all --verbose
 ## Links
 
 - **Related:** [HYBRID_ROADMAP.md](../../../docs/roadmaps/HYBRID_ROADMAP.md)
-- **Builds on:** [02-content-04-deduplication](../../resolved/p0-content-pipeline/02-content-04-deduplication/issue.md)
+- **Builds on:** [02-content-04-deduplication](../../resolved/p0-content-PrismQ/Pipeline/02-content-04-deduplication/issue.md)
 - **Current implementation:** `scripts/deduplicate_content.py`
 
 ## Notes

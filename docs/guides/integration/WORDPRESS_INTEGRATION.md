@@ -52,7 +52,7 @@ WORDPRESS_APP_PASSWORD=xxxx xxxx xxxx xxxx
 ### 3. Basic Usage
 
 ```python
-from providers.wordpress_provider import WordPressProvider
+from PrismQ.Providers.wordpress_provider import WordPressProvider
 
 # Initialize provider (uses environment variables)
 provider = WordPressProvider()
@@ -78,7 +78,7 @@ After generating scripts, manually create WordPress drafts:
 
 ```python
 from core.script_development import develop_script
-from providers import WordPressProvider
+from PrismQ.Providers import WordPressProvider
 
 # Generate script
 script_result = develop_script(
@@ -207,7 +207,7 @@ Retrieve a post by ID.
 ### Example 1: Create Simple Draft
 
 ```python
-from providers import WordPressProvider
+from PrismQ.Providers import WordPressProvider
 
 wp = WordPressProvider(
     site_url="https://mysite.wordpress.com",

@@ -130,7 +130,7 @@ Due to dependencies, tasks must be completed sequentially:
 
 ### Technical Documentation
 - [VIDEO_QUALITY_CONTROL.md](docs/content/video/VIDEO_QUALITY_CONTROL.md) - QC system documentation
-- [PIPELINE_ORCHESTRATION.md](docs/pipeline/orchestration/PIPELINE_ORCHESTRATION.md) - Pipeline architecture
+- [PIPELINE_ORCHESTRATION.md](docs/PrismQ/Pipeline/orchestration/PIPELINE_ORCHESTRATION.md) - Pipeline architecture
 
 ---
 

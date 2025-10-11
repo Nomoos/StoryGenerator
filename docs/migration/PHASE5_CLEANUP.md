@@ -100,7 +100,7 @@ Build succeeded.
 
 **Python Tests**:
 ```bash
-$ python3 -m pytest tests/pipeline/ -q
+$ python3 -m pytest tests/PrismQ/Pipeline/ -q
 ============================== 48 passed in 0.28s ==============================
 ```
 

@@ -54,7 +54,7 @@ StoryGenerator/
 │       ├── script.py
 │       └── voice_config.py
 │
-├── providers/                      # Concrete implementations
+├── PrismQ/Providers/                      # Concrete implementations
 │   ├── openai_provider.py         # OpenAI LLM implementation
 │   ├── mock_provider.py           # Mock for testing
 │   ├── elevenlabs_provider.py     # [Future] Voice synthesis
@@ -104,7 +104,7 @@ Production-ready OpenAI implementation with:
 - ✅ Type hints throughout
 
 ```python
-from providers import OpenAIProvider
+from PrismQ.Providers import OpenAIProvider
 
 provider = OpenAIProvider(model="gpt-4o-mini")
 result = provider.generate_completion("Your prompt")
@@ -118,7 +118,7 @@ Testing-focused implementation with:
 - ✅ Fast test execution
 
 ```python
-from providers import MockLLMProvider
+from PrismQ.Providers import MockLLMProvider
 
 provider = MockLLMProvider(response="Test response")
 result = provider.generate_completion("Any prompt")

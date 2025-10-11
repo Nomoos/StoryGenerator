@@ -126,7 +126,7 @@ cache.clear_stats()
 
 ```python
 from core.cache import get_cache
-from providers import OptimizedOpenAIProvider
+from PrismQ.Providers import OptimizedOpenAIProvider
 
 cache = get_cache(backend="file", cache_dir="./cache/llm")
 provider = OptimizedOpenAIProvider()

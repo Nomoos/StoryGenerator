@@ -131,7 +131,7 @@ scripts/
 ├── generate_attribution.py     # Attribution generation
 ├── run_pipeline.sh             # Pipeline runner (Linux/Mac)
 ├── run_pipeline.bat            # Pipeline runner (Windows)
-├── pipeline/                   # Pipeline-related scripts
+├── PrismQ/Pipeline/                   # Pipeline-related scripts
 └── scrapers/                   # Web scraping utilities
 ```
 

@@ -46,7 +46,7 @@ The VideoQualityChecker has been successfully implemented with:
 
 ## Implementation Notes
 
-Create `core/pipeline/quality_control.py`:
+Create `core/PrismQ/Pipeline/quality_control.py`:
 
 ```python
 import ffmpeg

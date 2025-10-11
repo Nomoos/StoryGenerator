@@ -19,6 +19,6 @@ This directory contains architectural documentation for the StoryGenerator proje
 - **[GENERATOR_STRUCTURE.md](structure/GENERATOR_STRUCTURE.md)** - Generator folder structure
 
 ## See Also
-- [Pipeline Documentation](../pipeline/)
+- [Pipeline Documentation](../PrismQ/Pipeline/)
 - [Roadmaps](../roadmaps/)
 - [Implementation Documentation](../implementation/)

@@ -15,7 +15,7 @@ This report verifies that each pipeline step folder (step-00 through step-14) ha
 - ⚠️ C# build has nullable reference errors in Research project
 - ✅ Step documentation exists in `obsolete/issues/step-XX-*/` (15 steps, 00-14)
 - ✅ C# implementation has pipeline stages in `src/CSharp/StoryGenerator.Pipeline/Stages/`
-- ✅ Python implementations in `core/pipeline/`, `src/scripts/`, `research/`
+- ✅ Python implementations in `core/PrismQ/Pipeline/`, `src/scripts/`, `research/`
 - ⚠️ Post-roadmap tracker operations need explicit documentation
 
 ---
@@ -99,7 +99,7 @@ This report verifies that each pipeline step folder (step-00 through step-14) ha
 **Location:** `obsolete/issues/step-01-ideas/`
 
 #### Code Present
-- [x] **Python:** `core/pipeline/idea_generation.py` exists (11,413 bytes)
+- [x] **Python:** `core/PrismQ/Pipeline/idea_generation.py` exists (11,413 bytes)
 - [x] **C# Stages:**
   - ✅ `StoryGenerator.Pipeline/Stages/LLMIdeaGenerationStage.cs`
   - ✅ `StoryGenerator.Pipeline/Stages/IdeaProcessingStages.cs`
@@ -137,8 +137,8 @@ This report verifies that each pipeline step folder (step-00 through step-14) ha
 **Location:** `obsolete/issues/step-02-viral-score/`
 
 #### Code Present
-- [x] **Python:** `core/pipeline/title_scoring.py` exists (12,889 bytes)
-- [x] **Python:** `core/pipeline/voice_recommendation.py` (8,525 bytes)
+- [x] **Python:** `core/PrismQ/Pipeline/title_scoring.py` exists (12,889 bytes)
+- [x] **Python:** `core/PrismQ/Pipeline/voice_recommendation.py` (8,525 bytes)
 - [x] **C# Models:** `StoryGenerator.Core/Models/ScoredString.cs`
 
 #### Inputs/Outputs
@@ -244,7 +244,7 @@ This report verifies that each pipeline step folder (step-00 through step-14) ha
 **Location:** `obsolete/issues/step-05-improve-title/`
 
 #### Code Present
-- [x] **Python:** `core/pipeline/title_generation.py` (6,447 bytes)
+- [x] **Python:** `core/PrismQ/Pipeline/title_generation.py` (6,447 bytes)
 - [x] **C# Stages:** Title generation in IdeaProcessingStages.cs
 
 #### Inputs/Outputs
@@ -890,7 +890,7 @@ From the problem statement:
 
 **Step Documentation:** `obsolete/issues/step-XX-*/issue.md`
 **C# Implementation:** `src/CSharp/StoryGenerator.*/`
-**Python Implementation:** `core/pipeline/`, `src/scripts/`
+**Python Implementation:** `core/PrismQ/Pipeline/`, `src/scripts/`
 **Research Prototypes:** `research/`, `src/CSharp/StoryGenerator.Research/`
 **Examples:** `src/CSharp/Examples/`
 **Resolved Issues:** `issues/resolved/`

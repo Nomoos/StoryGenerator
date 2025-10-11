@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch, MagicMock
 
 import pytest
 
-from providers.openai_optimized import OptimizedOpenAIProvider, PRICING
+from PrismQ.Providers.openai_optimized import OptimizedOpenAIProvider, PRICING
 
 
 @pytest.fixture

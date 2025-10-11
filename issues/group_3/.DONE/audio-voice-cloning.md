@@ -29,7 +29,7 @@ Implement voice cloning system to create custom voices for different audience se
 
 ## Implementation Notes
 
-Create `core/pipeline/voice_cloning.py`:
+Create `core/PrismQ/Pipeline/voice_cloning.py`:
 
 ```python
 from TTS.api import TTS
@@ -106,7 +106,7 @@ class VoiceCloner:
 
 ### Files Created/Modified
 
-1. **`core/pipeline/voice_cloning.py`** (378 lines)
+1. **`core/PrismQ/Pipeline/voice_cloning.py`** (378 lines)
    - `VoiceCloner` class with TTS integration
    - `VoiceProfile` dataclass for profile management
    - `VoiceQualityMetrics` for quality assessment
@@ -157,7 +157,7 @@ Module imports successfully verified.
 
 ## Links
 
-- Implementation: [core/pipeline/voice_cloning.py](../../../core/pipeline/voice_cloning.py)
+- Implementation: [core/PrismQ/Pipeline/voice_cloning.py](../../../core/PrismQ/Pipeline/voice_cloning.py)
 - Tests: [tests/test_voice_cloning.py](../../../tests/test_voice_cloning.py)
 - Documentation: [docs/VOICE_CLONING_GUIDE.md](../../../docs/VOICE_CLONING_GUIDE.md)
 - Related: [HYBRID_ROADMAP.md](../../../docs/roadmaps/HYBRID_ROADMAP.md)

@@ -6,7 +6,7 @@ Successfully implemented WordPress integration for creating draft posts with sto
 
 ## What Was Implemented
 
-### 1. WordPress Provider (`providers/wordpress_provider.py`)
+### 1. WordPress Provider (`PrismQ/Providers/wordpress_provider.py`)
 - Full WordPress REST API v2 integration
 - Support for both WordPress.com and self-hosted sites
 - Authentication via Application Passwords or OAuth tokens
@@ -44,14 +44,14 @@ Successfully implemented WordPress integration for creating draft posts with sto
 - `examples/script_to_wordpress_example.py` - MVP integration (script → WordPress draft)
 
 ### 5. Integration
-- Updated `providers/__init__.py` to export WordPressProvider
-- Updated `providers/README.md` with WordPress section
+- Updated `PrismQ/Providers/__init__.py` to export WordPressProvider
+- Updated `PrismQ/Providers/README.md` with WordPress section
 - Code formatted with black and isort
 
 ## MVP Usage (as requested)
 
 ```python
-from providers import WordPressProvider
+from PrismQ.Providers import WordPressProvider
 
 # Initialize provider
 provider = WordPressProvider(
@@ -107,7 +107,7 @@ if result['success']:
 
 ## Files Added
 
-1. `providers/wordpress_provider.py` (425 lines)
+1. `PrismQ/Providers/wordpress_provider.py` (425 lines)
 2. `tests/test_wordpress_provider.py` (400+ lines, 18 tests)
 3. `examples/wordpress_integration_example.py` (290+ lines)
 4. `examples/script_to_wordpress_example.py` (115+ lines)
@@ -115,8 +115,8 @@ if result['success']:
 
 ## Files Modified
 
-1. `providers/__init__.py` - Export WordPressProvider
-2. `providers/README.md` - Add WordPress section
+1. `PrismQ/Providers/__init__.py` - Export WordPressProvider
+2. `PrismQ/Providers/README.md` - Add WordPress section
 
 ## Key Features
 
@@ -138,7 +138,7 @@ The WordPress provider can be integrated into the StoryGenerator pipeline in mul
 ### Option 1: Manual Publishing (Current)
 ```python
 from core.script_development import develop_script
-from providers import WordPressProvider
+from PrismQ.Providers import WordPressProvider
 
 # Generate script
 script = develop_script(idea, llm_provider)

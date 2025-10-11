@@ -26,7 +26,7 @@ System architecture, hybrid design, and structural documentation.
 - Repository and folder structure conventions
 - Technology stack decisions
 
-### 🔄 [Pipeline](pipeline/)
+### 🔄 [Pipeline](PrismQ/Pipeline/)
 Pipeline stages, orchestration, and output specifications.
 - Complete pipeline breakdown
 - Orchestration patterns and implementation
@@ -115,7 +115,7 @@ Technical reports and analysis.
 → [quickstarts/general/GETTING_STARTED.md](quickstarts/general/GETTING_STARTED.md)
 
 #### ...understand the pipeline
-→ [pipeline/PIPELINE.md](pipeline/PIPELINE.md) → [features/MODELS.md](features/MODELS.md)
+→ [PrismQ/Pipeline/PIPELINE.md](PrismQ/Pipeline/PIPELINE.md) → [features/MODELS.md](features/MODELS.md)
 
 #### ...see input/output examples
 → [EXAMPLES.md](EXAMPLES.md)
@@ -147,7 +147,7 @@ Technical reports and analysis.
 
 ### 👨‍💻 Developer/Contributor
 1. Read [quickstarts/general/QUICK_START_GUIDE.md](quickstarts/general/QUICK_START_GUIDE.md)
-2. Study [pipeline/PIPELINE.md](pipeline/PIPELINE.md) for technical details
+2. Study [PrismQ/Pipeline/PIPELINE.md](PrismQ/Pipeline/PIPELINE.md) for technical details
 3. Review [features/MODELS.md](features/MODELS.md) for AI model specs
 4. Check [roadmaps/HYBRID_ROADMAP.md](roadmaps/HYBRID_ROADMAP.md) for current status
 5. Reference [testing/TDD_GUIDE.md](testing/TDD_GUIDE.md) for development practices

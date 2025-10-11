@@ -185,7 +185,7 @@ Implement multi-platform video publishing system that automates upload to YouTub
 - [HYBRID_ROADMAP.md](../../docs/roadmaps/HYBRID_ROADMAP.md) - Project roadmap
 - [MainProgressHub.md](../../MainProgressHub.md) - Progress tracking structure
 - [VIDEO_QUALITY_CONTROL.md](../../docs/content/video/VIDEO_QUALITY_CONTROL.md) - QC documentation
-- [PIPELINE_ORCHESTRATION.md](../../docs/pipeline/orchestration/PIPELINE_ORCHESTRATION.md) - Pipeline docs
+- [PIPELINE_ORCHESTRATION.md](../../docs/PrismQ/Pipeline/orchestration/PIPELINE_ORCHESTRATION.md) - Pipeline docs
 
 ---
 

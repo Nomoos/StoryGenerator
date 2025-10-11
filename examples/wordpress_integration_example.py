@@ -24,7 +24,7 @@ from pathlib import Path
 # Add providers to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from providers.wordpress_provider import WordPressProvider
+from PrismQ.Providers.wordpress_provider import WordPressProvider
 
 
 def example_basic_usage():

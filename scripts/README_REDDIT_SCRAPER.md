@@ -355,7 +355,7 @@ After running the scraper:
 - `scripts/deduplicate_content.py` - Duplicate detection
 - `scripts/content_ranking.py` - Content ranking
 - `config/pipeline.yaml` - Reddit API configuration
-- `issues/p0-critical/content-pipeline/02-content-01-reddit-scraper/issue.md` - Issue specification
+- `issues/p0-critical/content-PrismQ/Pipeline/02-content-01-reddit-scraper/issue.md` - Issue specification
 
 ## License
 
@@ -365,6 +365,6 @@ Part of the StoryGenerator project. See main repository LICENSE file.
 
 For issues or questions:
 1. Check this README
-2. Review the issue spec: `issues/p0-critical/content-pipeline/02-content-01-reddit-scraper/issue.md`
+2. Review the issue spec: `issues/p0-critical/content-PrismQ/Pipeline/02-content-01-reddit-scraper/issue.md`
 3. Run the test suite: `python3 tests/test_reddit_scraper.py`
 4. Check Reddit API documentation: https://www.reddit.com/dev/api

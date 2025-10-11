@@ -18,7 +18,7 @@ The provider architecture pattern decouples the application from specific servic
 Synchronous OpenAI API implementation using the new SDK (v1.0+).
 
 ```python
-from providers import OpenAIProvider
+from PrismQ.Providers import OpenAIProvider
 
 provider = OpenAIProvider(model="gpt-4o-mini")
 result = provider.generate_completion("Your prompt here")
@@ -34,7 +34,7 @@ Features:
 Asynchronous OpenAI API implementation for high-throughput applications.
 
 ```python
-from providers import AsyncOpenAIProvider
+from PrismQ.Providers import AsyncOpenAIProvider
 
 provider = AsyncOpenAIProvider(model="gpt-4o-mini")
 result = await provider.generate_completion("Your prompt here")
@@ -44,7 +44,7 @@ result = await provider.generate_completion("Your prompt here")
 Mock provider for testing without making actual API calls.
 
 ```python
-from providers import MockLLMProvider
+from PrismQ.Providers import MockLLMProvider
 
 provider = MockLLMProvider(response="Test response")
 result = provider.generate_completion("Any prompt")
@@ -62,7 +62,7 @@ Features:
 Upload videos to YouTube and retrieve analytics via YouTube Data API v3.
 
 ```python
-from providers import YouTubeUploader, YouTubeAnalytics
+from PrismQ.Providers import YouTubeUploader, YouTubeAnalytics
 from core.interfaces.platform_provider import VideoMetadata, PrivacyStatus
 
 # Upload a video
@@ -87,7 +87,7 @@ print(f"Views: {data.views}, Likes: {data.likes}")
 Upload videos to TikTok and retrieve analytics via TikTok Content Posting API.
 
 ```python
-from providers import TikTokUploader, TikTokAnalytics
+from PrismQ.Providers import TikTokUploader, TikTokAnalytics
 
 # Upload a video
 uploader = TikTokUploader(access_token="YOUR_TOKEN")
@@ -107,7 +107,7 @@ data = analytics.get_video_analytics(result.video_id)
 Upload Reels to Instagram and retrieve analytics via Instagram Graph API.
 
 ```python
-from providers import InstagramUploader, InstagramAnalytics
+from PrismQ.Providers import InstagramUploader, InstagramAnalytics
 
 # Upload a Reel (requires public video URL)
 uploader = InstagramUploader(
@@ -129,7 +129,7 @@ data = analytics.get_video_analytics(result.video_id)
 Create draft posts in WordPress with story titles and content.
 
 ```python
-from providers import WordPressProvider
+from PrismQ.Providers import WordPressProvider
 
 # Initialize provider
 provider = WordPressProvider(
@@ -158,7 +158,7 @@ if result['success']:
 ### Basic Usage
 
 ```python
-from providers import OpenAIProvider
+from PrismQ.Providers import OpenAIProvider
 
 # Initialize with environment variable OPENAI_API_KEY
 provider = OpenAIProvider(model="gpt-4o-mini")
@@ -178,7 +178,7 @@ response = provider.generate_chat(messages, temperature=0.8)
 
 ```python
 from core.interfaces.llm_provider import ILLMProvider
-from providers import OpenAIProvider, MockLLMProvider
+from PrismQ.Providers import OpenAIProvider, MockLLMProvider
 
 def generate_content(provider: ILLMProvider, topic: str) -> str:
     """Works with any LLM provider."""
@@ -197,7 +197,7 @@ result = generate_content(test_provider, "AI")
 
 ```python
 from openai import RateLimitError, APIError
-from providers import OpenAIProvider
+from PrismQ.Providers import OpenAIProvider
 
 provider = OpenAIProvider()
 
@@ -240,7 +240,7 @@ logging.basicConfig(level=logging.DEBUG)
 Use `MockLLMProvider` for fast, reliable unit tests:
 
 ```python
-from providers import MockLLMProvider
+from PrismQ.Providers import MockLLMProvider
 
 def test_story_generation():
     provider = MockLLMProvider(response="A test story")
@@ -257,7 +257,7 @@ Mark integration tests that require API keys:
 
 ```python
 import pytest
-from providers import OpenAIProvider
+from PrismQ.Providers import OpenAIProvider
 
 @pytest.mark.slow
 @pytest.mark.skipif(
@@ -273,7 +273,7 @@ def test_real_api():
 ## Architecture
 
 ```
-providers/
+PrismQ/Providers/
 ├── __init__.py              # Package exports
 ├── openai_provider.py       # OpenAI implementation
 ├── mock_provider.py         # Mock for testing
@@ -287,7 +287,7 @@ core/interfaces/
 
 To add a new provider:
 
-1. Create a new file in `providers/`
+1. Create a new file in `PrismQ/Providers/`
 2. Implement the `ILLMProvider` or `IAsyncLLMProvider` interface
 3. Add error handling and retry logic as needed
 4. Export from `__init__.py`

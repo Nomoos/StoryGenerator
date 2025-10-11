@@ -168,7 +168,7 @@ ls -la data/Generator/titles/women/18-23/
 ls -la data/Generator/scores/women/18-23/
 
 # Run tests
-pytest tests/pipeline/test_idea_generation.py
+pytest tests/PrismQ/Pipeline/test_idea_generation.py
 ```
 
 ---
@@ -243,9 +243,9 @@ ls -la data/Generator/scenes/json/women/18-23/
 ls -la data/Generator/audio/*/women/18-23/
 
 # Run tests
-pytest tests/pipeline/test_script_development.py
-pytest tests/pipeline/test_scene_planning.py
-pytest tests/pipeline/test_audio_production.py
+pytest tests/PrismQ/Pipeline/test_script_development.py
+pytest tests/PrismQ/Pipeline/test_scene_planning.py
+pytest tests/PrismQ/Pipeline/test_audio_production.py
 ```
 
 ---
@@ -350,11 +350,11 @@ ls -la data/Generator/videos/*/women/18-23/
 ls -la data/Generator/final/women/18-23/
 
 # Run comprehensive tests
-pytest tests/pipeline/test_subtitle_creation.py
-pytest tests/pipeline/test_image_generation.py
-pytest tests/pipeline/test_video_production.py
-pytest tests/pipeline/test_post_production.py
-pytest tests/pipeline/test_quality_control.py
+pytest tests/PrismQ/Pipeline/test_subtitle_creation.py
+pytest tests/PrismQ/Pipeline/test_image_generation.py
+pytest tests/PrismQ/Pipeline/test_video_production.py
+pytest tests/PrismQ/Pipeline/test_post_production.py
+pytest tests/PrismQ/Pipeline/test_quality_control.py
 ```
 
 ---
@@ -436,24 +436,24 @@ black --check src/
 flake8 src/
 
 # After Group 3 (Content Generation)
-pytest tests/pipeline/test_idea_generation.py
-pytest tests/pipeline/test_topic_clustering.py
-pytest tests/pipeline/test_title_generation.py
+pytest tests/PrismQ/Pipeline/test_idea_generation.py
+pytest tests/PrismQ/Pipeline/test_topic_clustering.py
+pytest tests/PrismQ/Pipeline/test_title_generation.py
 
 # After Group 4 (Script & Scene)
-pytest tests/pipeline/test_script_development.py
-pytest tests/pipeline/test_scene_planning.py
-pytest tests/pipeline/test_audio_production.py
+pytest tests/PrismQ/Pipeline/test_script_development.py
+pytest tests/PrismQ/Pipeline/test_scene_planning.py
+pytest tests/PrismQ/Pipeline/test_audio_production.py
 
 # After Group 5 (Visual & Final)
-pytest tests/pipeline/test_subtitle_creation.py
-pytest tests/pipeline/test_image_generation.py
-pytest tests/pipeline/test_video_production.py
-pytest tests/pipeline/test_post_production.py
-pytest tests/pipeline/test_quality_control.py
+pytest tests/PrismQ/Pipeline/test_subtitle_creation.py
+pytest tests/PrismQ/Pipeline/test_image_generation.py
+pytest tests/PrismQ/Pipeline/test_video_production.py
+pytest tests/PrismQ/Pipeline/test_post_production.py
+pytest tests/PrismQ/Pipeline/test_quality_control.py
 
 # Full pipeline test (after all groups)
-pytest tests/pipeline/test_full_pipeline.py
+pytest tests/PrismQ/Pipeline/test_full_pipeline.py
 ```
 
 ---

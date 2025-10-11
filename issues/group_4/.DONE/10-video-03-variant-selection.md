@@ -45,7 +45,7 @@ The VideoVariantSelector has been successfully implemented with:
 
 ## Implementation Notes
 
-Create `core/pipeline/video_selection.py`:
+Create `core/PrismQ/Pipeline/video_selection.py`:
 
 ```python
 import cv2

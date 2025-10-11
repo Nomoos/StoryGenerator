@@ -22,7 +22,7 @@ from typing import Dict, List, Optional
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from providers import (
+from PrismQ.Providers import (
     YouTubeAnalytics,
     TikTokAnalytics,
     InstagramAnalytics,

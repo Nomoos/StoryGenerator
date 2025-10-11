@@ -17,7 +17,7 @@ import sys
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from providers.openai_optimized import PRICING
+from PrismQ.Providers.openai_optimized import PRICING
 
 
 def calculate_cost(input_tokens, output_tokens, model, pricing_tier):

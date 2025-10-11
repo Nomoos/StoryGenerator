@@ -159,7 +159,7 @@ All guide files now use the `*_GUIDE.md` pattern for consistency.
 
 ### Test Results ✅
 ```bash
-$ python3 -m pytest tests/pipeline/ -v
+$ python3 -m pytest tests/PrismQ/Pipeline/ -v
 ============================== 48 passed in 0.40s ==============================
 ```
 

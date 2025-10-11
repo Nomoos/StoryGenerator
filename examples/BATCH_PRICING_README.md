@@ -53,7 +53,7 @@ The Batch API is ideal for:
 To use batch pricing in your code:
 
 ```python
-from providers import OptimizedOpenAIProvider
+from PrismQ.Providers import OptimizedOpenAIProvider
 
 # Initialize with batch pricing
 provider = OptimizedOpenAIProvider(
@@ -68,6 +68,6 @@ print(f"Total cost: ${stats['total_cost']:.4f}")
 
 ## See Also
 
-- [OPTIMIZED_OPENAI_GUIDE.md](../providers/OPTIMIZED_OPENAI_GUIDE.md) - Full documentation
+- [OPTIMIZED_OPENAI_GUIDE.md](../PrismQ/Providers/OPTIMIZED_OPENAI_GUIDE.md) - Full documentation
 - [OpenAI Batch API Documentation](https://platform.openai.com/docs/guides/batch)
 - [OpenAI Pricing](https://openai.com/api/pricing/)

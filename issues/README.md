@@ -104,7 +104,7 @@ issues/
 │   ├── phase-2-prototype/ (Prototypes complete)
 │   ├── p0-security/ (Security fixes complete)
 │   ├── p0-csharp-phase3/ (Generator implementation complete)
-│   ├── p0-content-pipeline/ (6/6 content tasks complete)
+│   ├── p0-content-PrismQ/Pipeline/ (6/6 content tasks complete)
 │   ├── phase-3-implementation/ (30+ tasks complete)
 │   │   ├── group-2-idea-generation/ (7 tasks)
 │   │   ├── group-4-scene-planning/ (3 tasks)
@@ -226,5 +226,5 @@ cd issues/resolved/
 
 - `/docs/testing/validation/MICROSTEP_VALIDATION.md` - Microstep validation system
 - `/docs/architecture/structure/GENERATOR_STRUCTURE.md` - Generator folder structure
-- `/docs/pipeline/PIPELINE.md` - Complete pipeline documentation
+- `/docs/PrismQ/Pipeline/PIPELINE.md` - Complete pipeline documentation
 - `atomic/README.md` - Parallel workflow guide

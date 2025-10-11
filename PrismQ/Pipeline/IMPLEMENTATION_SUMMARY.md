@@ -12,7 +12,7 @@ This implementation provides a complete Windows-based pipeline system with discr
 
 ### 1. Directory Structure ✅
 ```
-/pipeline/
+/PrismQ/Pipeline/
   /scripts/
     01_ingest.bat          # Step 1: Data ingestion
     02_preprocess.bat      # Step 2: Data preprocessing
@@ -124,7 +124,7 @@ Added Windows Pipeline Quickstart section with:
 - Individual step usage
 - Feature highlights
 
-#### Pipeline README (`pipeline/scripts/README.md`)
+#### Pipeline README (`PrismQ/Pipeline/scripts/README.md`)
 Comprehensive documentation including:
 - Prerequisites (Python venv, .env)
 - Quick start examples
@@ -135,7 +135,7 @@ Comprehensive documentation including:
 - Troubleshooting guide
 - Advanced usage
 
-#### Usage Examples (`pipeline/scripts/EXAMPLES.md`)
+#### Usage Examples (`PrismQ/Pipeline/scripts/EXAMPLES.md`)
 10 detailed examples covering:
 1. Running complete pipeline
 2. Processing specific story
@@ -218,19 +218,19 @@ Results: 10 passed, 0 failed
 ### CLI Validation
 ```bash
 # pick-one action
-$ python3 pipeline/orchestration/run_step.py --step 01_ingest --action pick-one
+$ python3 PrismQ/Pipeline/orchestration/run_step.py --step 01_ingest --action pick-one
 STORY-20251010223216
 (exit code: 0)
 
 # run action
-$ python3 pipeline/orchestration/run_step.py --step 01_ingest --run-id test-001 --story-id DEMO-001 --action run
+$ python3 PrismQ/Pipeline/orchestration/run_step.py --step 01_ingest --run-id test-001 --story-id DEMO-001 --action run
 [01_ingest] Running step for story: DEMO-001
 [01_ingest] Ingesting data for DEMO-001
 [01_ingest] Step completed successfully for DEMO-001
 (exit code: 0)
 
 # check-acceptance action
-$ python3 pipeline/orchestration/run_step.py --step 01_ingest --run-id test-001 --story-id DEMO-001 --action check-acceptance
+$ python3 PrismQ/Pipeline/orchestration/run_step.py --step 01_ingest --run-id test-001 --story-id DEMO-001 --action check-acceptance
 [01_ingest] Checking acceptance for DEMO-001
 [01_ingest] Acceptance check passed for DEMO-001
 (exit code: 0)
@@ -282,17 +282,17 @@ STEP_04_POSTPROCESS_MIN_QUALITY=0.85
 ## Files Changed/Added
 
 ### New Files (15)
-- `pipeline/__init__.py`
-- `pipeline/orchestration/__init__.py`
-- `pipeline/orchestration/run_step.py`
-- `pipeline/scripts/01_ingest.bat`
-- `pipeline/scripts/02_preprocess.bat`
-- `pipeline/scripts/03_generate.bat`
-- `pipeline/scripts/04_postprocess.bat`
-- `pipeline/scripts/05_package.bat`
-- `pipeline/scripts/all.bat`
-- `pipeline/scripts/README.md`
-- `pipeline/scripts/EXAMPLES.md`
+- `PrismQ/Pipeline/__init__.py`
+- `PrismQ/Pipeline/orchestration/__init__.py`
+- `PrismQ/Pipeline/orchestration/run_step.py`
+- `PrismQ/Pipeline/scripts/01_ingest.bat`
+- `PrismQ/Pipeline/scripts/02_preprocess.bat`
+- `PrismQ/Pipeline/scripts/03_generate.bat`
+- `PrismQ/Pipeline/scripts/04_postprocess.bat`
+- `PrismQ/Pipeline/scripts/05_package.bat`
+- `PrismQ/Pipeline/scripts/all.bat`
+- `PrismQ/Pipeline/scripts/README.md`
+- `PrismQ/Pipeline/scripts/EXAMPLES.md`
 - `tests/test_pipeline_orchestration.py`
 
 ### Modified Files (3)

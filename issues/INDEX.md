@@ -30,12 +30,12 @@ All P0 critical issues have been completed and moved to resolved/:
 - ✅ security-api-keys - API keys removed, environment variables implemented
 - ✅ security-file-paths - Verified platform-independent path handling
 - ✅ csharp-phase3-complete-generators - Complete remaining generators
-- ✅ content-pipeline/02-content-01-reddit-scraper - Reddit story scraping
-- ✅ content-pipeline/02-content-02-alt-sources - Alternative content sources
-- ✅ content-pipeline/02-content-03-quality-scorer - Content quality assessment
-- ✅ content-pipeline/02-content-04-deduplication - Duplicate detection
-- ✅ content-pipeline/02-content-05-ranking - Content ranking
-- ✅ content-pipeline/02-content-06-attribution - Source attribution
+- ✅ content-PrismQ/Pipeline/02-content-01-reddit-scraper - Reddit story scraping
+- ✅ content-PrismQ/Pipeline/02-content-02-alt-sources - Alternative content sources
+- ✅ content-PrismQ/Pipeline/02-content-03-quality-scorer - Content quality assessment
+- ✅ content-PrismQ/Pipeline/02-content-04-deduplication - Duplicate detection
+- ✅ content-PrismQ/Pipeline/02-content-05-ranking - Content ranking
+- ✅ content-PrismQ/Pipeline/02-content-06-attribution - Source attribution
 
 **Next Priority:** Begin P1-High issues for core pipeline implementation
 
@@ -109,12 +109,12 @@ All P0 critical issues have been completed and moved to resolved/:
 1. ✅ **security-api-keys** - Remove exposed API keys (COMPLETE - Moved to resolved/)
 2. ✅ **security-file-paths** - Fix hardcoded file paths (COMPLETE - Moved to resolved/)
 3. ✅ **csharp-phase3-complete-generators** - Complete remaining C# generators (COMPLETE - Moved to resolved/)
-4. ✅ **content-pipeline/02-content-01-reddit-scraper** - Reddit content scraping (COMPLETE - Moved to resolved/)
-5. ✅ **content-pipeline/02-content-02-alt-sources** - Alternative content sources (COMPLETE - Moved to resolved/)
-6. ✅ **content-pipeline/02-content-03-quality-scorer** - Content quality assessment (COMPLETE - Moved to resolved/)
-7. ✅ **content-pipeline/02-content-04-deduplication** - Duplicate detection (COMPLETE - Moved to resolved/)
-8. ✅ **content-pipeline/02-content-05-ranking** - Content ranking (COMPLETE - Moved to resolved/)
-9. ✅ **content-pipeline/02-content-06-attribution** - Source attribution (COMPLETE - Moved to resolved/)
+4. ✅ **content-PrismQ/Pipeline/02-content-01-reddit-scraper** - Reddit content scraping (COMPLETE - Moved to resolved/)
+5. ✅ **content-PrismQ/Pipeline/02-content-02-alt-sources** - Alternative content sources (COMPLETE - Moved to resolved/)
+6. ✅ **content-PrismQ/Pipeline/02-content-03-quality-scorer** - Content quality assessment (COMPLETE - Moved to resolved/)
+7. ✅ **content-PrismQ/Pipeline/02-content-04-deduplication** - Duplicate detection (COMPLETE - Moved to resolved/)
+8. ✅ **content-PrismQ/Pipeline/02-content-05-ranking** - Content ranking (COMPLETE - Moved to resolved/)
+9. ✅ **content-PrismQ/Pipeline/02-content-06-attribution** - Source attribution (COMPLETE - Moved to resolved/)
 
 ### P1 - High (Core Pipeline)
 1. **New Architecture & Code Quality** (8 tasks):

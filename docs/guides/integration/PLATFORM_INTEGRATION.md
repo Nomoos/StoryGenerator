@@ -17,7 +17,7 @@ The platform integration module provides:
 ### Components
 
 ```
-providers/
+PrismQ/Providers/
 ├── youtube_provider.py     # YouTube Data API v3 & Analytics
 ├── tiktok_provider.py      # TikTok Content Posting API
 ├── instagram_provider.py   # Instagram Graph API
@@ -89,7 +89,7 @@ All platform providers implement standard interfaces:
 **Upload a Video:**
 
 ```python
-from providers import YouTubeUploader
+from PrismQ.Providers import YouTubeUploader
 from core.interfaces.platform_provider import VideoMetadata, PrivacyStatus
 
 # Initialize uploader
@@ -125,7 +125,7 @@ else:
 **Retrieve Analytics:**
 
 ```python
-from providers import YouTubeAnalytics
+from PrismQ.Providers import YouTubeAnalytics
 from datetime import datetime, timedelta
 
 # Initialize analytics
@@ -197,7 +197,7 @@ print(f"Subscribers gained: {channel_stats['subscribers_gained']}")
 **Upload a Video:**
 
 ```python
-from providers import TikTokUploader
+from PrismQ.Providers import TikTokUploader
 from core.interfaces.platform_provider import VideoMetadata, PrivacyStatus
 
 # Initialize uploader
@@ -224,7 +224,7 @@ else:
 **Retrieve Analytics:**
 
 ```python
-from providers import TikTokAnalytics
+from PrismQ.Providers import TikTokAnalytics
 
 # Initialize analytics
 analytics = TikTokAnalytics(access_token="YOUR_ACCESS_TOKEN")
@@ -290,7 +290,7 @@ print(f"Total videos: {profile_stats['video_count']}")
 **Upload a Reel:**
 
 ```python
-from providers import InstagramUploader
+from PrismQ.Providers import InstagramUploader
 from core.interfaces.platform_provider import VideoMetadata
 
 # Initialize uploader
@@ -319,7 +319,7 @@ else:
 **Retrieve Analytics:**
 
 ```python
-from providers import InstagramAnalytics
+from PrismQ.Providers import InstagramAnalytics
 
 # Initialize analytics
 analytics = InstagramAnalytics(
@@ -391,7 +391,7 @@ print(f"Reach: {account_stats['reach']}")
 **Upload a Video:**
 
 ```python
-from providers import FacebookUploader
+from PrismQ.Providers import FacebookUploader
 from core.interfaces.platform_provider import VideoMetadata
 
 # Initialize uploader
@@ -421,7 +421,7 @@ else:
 **Retrieve Analytics:**
 
 ```python
-from providers import FacebookAnalytics
+from PrismQ.Providers import FacebookAnalytics
 
 # Initialize analytics
 analytics = FacebookAnalytics(

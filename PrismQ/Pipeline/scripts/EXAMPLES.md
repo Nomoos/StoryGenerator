@@ -280,7 +280,7 @@ C:\StoryGenerator> type outputs\03_generate\STORY-TEST.json
 }
 ```
 
-Then check the acceptance criteria in `pipeline/orchestration/run_step.py` for that step.
+Then check the acceptance criteria in `PrismQ/Pipeline/orchestration/run_step.py` for that step.
 
 ### Adjust configuration
 

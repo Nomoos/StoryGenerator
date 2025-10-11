@@ -62,7 +62,7 @@
 ### Phase 3 Implementation Progress
 - **Total Groups:** 13
 - **Completed:** 7 groups (54%)
-  - Group 1: Content Pipeline ✅ (in resolved/p0-content-pipeline/)
+  - Group 1: Content Pipeline ✅ (in resolved/p0-content-PrismQ/Pipeline/)
   - Group 2: Idea Generation ✅
   - Group 4: Scene Planning ✅
   - Group 6: Subtitle Creation ✅

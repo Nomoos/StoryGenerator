@@ -48,7 +48,7 @@ We've introduced a provider architecture pattern that decouples the application 
 
 **Using the Provider (Recommended):**
 ```python
-from providers import OpenAIProvider
+from PrismQ.Providers import OpenAIProvider
 
 # Initialize provider (reads from OPENAI_API_KEY env var)
 provider = OpenAIProvider(model="gpt-4o-mini")
@@ -73,7 +73,7 @@ result = provider.generate_chat(
 
 **Async Usage:**
 ```python
-from providers import AsyncOpenAIProvider
+from PrismQ.Providers import AsyncOpenAIProvider
 
 provider = AsyncOpenAIProvider(model="gpt-4o-mini")
 
@@ -90,7 +90,7 @@ All providers implement the `ILLMProvider` interface, which defines a standard c
 
 ```python
 from core.interfaces.llm_provider import ILLMProvider
-from providers import OpenAIProvider, MockLLMProvider
+from PrismQ.Providers import OpenAIProvider, MockLLMProvider
 
 def generate_story(provider: ILLMProvider, topic: str) -> str:
     """Generate a story using any LLM provider."""
@@ -119,7 +119,7 @@ The OpenAI provider includes automatic retry logic for rate limits and connectio
 
 ```python
 from openai import RateLimitError, APIError
-from providers import OpenAIProvider
+from PrismQ.Providers import OpenAIProvider
 
 provider = OpenAIProvider()
 
@@ -153,7 +153,7 @@ logging.basicConfig(level=logging.DEBUG)
 ### Unit Tests with Mock Provider
 
 ```python
-from providers import MockLLMProvider
+from PrismQ.Providers import MockLLMProvider
 
 def test_story_generation():
     # Use mock provider for testing
@@ -170,7 +170,7 @@ def test_story_generation():
 
 ```python
 import pytest
-from providers import OpenAIProvider
+from PrismQ.Providers import OpenAIProvider
 
 @pytest.mark.slow
 @pytest.mark.skipif(
@@ -190,7 +190,7 @@ For migrating existing code to use the new provider pattern:
 
 - [ ] Install OpenAI SDK v1.0+ (`pip install --upgrade openai>=1.0.0`)
 - [ ] Install retry library (`pip install tenacity`)
-- [ ] Update imports from `import openai` to `from providers import OpenAIProvider`
+- [ ] Update imports from `import openai` to `from PrismQ.Providers import OpenAIProvider`
 - [ ] Replace `openai.ChatCompletion.create()` with `provider.generate_chat()`
 - [ ] Replace `openai.Completion.create()` with `provider.generate_completion()`
 - [ ] Update error handling for new exception types
@@ -242,7 +242,7 @@ def generate_story_idea(topic: str) -> str:
 **After:**
 ```python
 # new_code.py
-from providers import OpenAIProvider
+from PrismQ.Providers import OpenAIProvider
 from core.interfaces.llm_provider import ILLMProvider
 
 class StoryGenerator:
@@ -258,7 +258,7 @@ generator = StoryGenerator(OpenAIProvider(model="gpt-4o-mini"))
 idea = generator.generate_story_idea("robots")
 
 # Testing
-from providers import MockLLMProvider
+from PrismQ.Providers import MockLLMProvider
 
 mock_provider = MockLLMProvider(response="Test story idea")
 test_generator = StoryGenerator(mock_provider)
@@ -270,7 +270,7 @@ assert test_idea == "Test story idea"
 
 For issues or questions:
 1. Check the [OpenAI Python SDK documentation](https://github.com/openai/openai-python)
-2. Review the provider source code in `providers/openai_provider.py`
+2. Review the provider source code in `PrismQ/Providers/openai_provider.py`
 3. Check the tests in `tests/test_openai_provider.py` for examples
 4. Consult the interface definitions in `core/interfaces/llm_provider.py`
 
