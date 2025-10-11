@@ -112,6 +112,27 @@ StoryGenerator uses a **hybrid C# + Python architecture**:
 
 ➡️ **[Learn more about the architecture](docs/architecture/ARCHITECTURE.md)**
 
+### PrismQ Modular Structure
+
+The repository is organized into independent subprojects under the `PrismQ/` namespace:
+
+- **IdeaScraper** - Idea generation and topic clustering
+- **StoryTitleProcessor** - Title generation
+- **StoryTitleScoring** - Title evaluation and selection
+- **StoryGenerator** - Script development
+- **VoiceOverGenerator** - Audio production and voice synthesis
+- **SceneDescriptions** - Scene planning
+- **Shared** - Common utilities and interfaces
+- _...and more components for the complete pipeline_
+
+This modular design enables:
+- ✅ Independent development and testing of components
+- ✅ Clear separation of concerns
+- ✅ Easy maintenance and extension
+- ✅ Foundation for future packaging
+
+➡️ **[Learn more about PrismQ structure](PrismQ/README.md)**
+
 ---
 
 ## ⚡ Quick Start
