@@ -131,7 +131,8 @@ This modular design enables:
 - ✅ Easy maintenance and extension
 - ✅ Foundation for future packaging
 
-➡️ **[Learn more about PrismQ structure](PrismQ/README.md)**
+➡️ **[Learn more about PrismQ structure](PrismQ/README.md)**  
+➡️ **[PrismQ Migration Guide](docs/migration/PRISMQ_MIGRATION.md)** - Migration from old structure
 
 ---
 
