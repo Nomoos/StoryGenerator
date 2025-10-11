@@ -1,7 +1,7 @@
 using StoryGenerator.Pipeline.Core;
 using StoryGenerator.Pipeline.Interfaces;
 using StoryGenerator.Pipeline.Stages.Models;
-using StoryGenerator.Core.Models;
+using PrismQ.Shared.Models;
 
 namespace StoryGenerator.Pipeline.Stages;
 

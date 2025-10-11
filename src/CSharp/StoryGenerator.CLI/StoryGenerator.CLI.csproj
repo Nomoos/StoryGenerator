@@ -19,6 +19,9 @@
     <ProjectReference Include="..\StoryGenerator.Providers\StoryGenerator.Providers.csproj" />
     <ProjectReference Include="..\StoryGenerator.Generators\StoryGenerator.Generators.csproj" />
     <ProjectReference Include="..\StoryGenerator.Pipeline\StoryGenerator.Pipeline.csproj" />
+    <ProjectReference Include="..\PrismQ\Shared\PrismQ.Shared.Core\PrismQ.Shared.Core.csproj" />
+    <ProjectReference Include="..\PrismQ\Shared\PrismQ.Shared.Interfaces\PrismQ.Shared.Interfaces.csproj" />
+    <ProjectReference Include="..\PrismQ\Shared\PrismQ.Shared.Models\PrismQ.Shared.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

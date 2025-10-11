@@ -4,7 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using StoryGenerator.Core.Interfaces;
+using PrismQ.Shared.Interfaces;
+using PrismQ.Shared.Models;
 using StoryGenerator.Pipeline.Config;
 
 namespace StoryGenerator.Pipeline.Services;

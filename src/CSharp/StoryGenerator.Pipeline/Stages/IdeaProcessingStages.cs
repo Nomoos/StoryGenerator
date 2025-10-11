@@ -35,7 +35,7 @@ public class IdeaClusteringStage : BasePipelineStage<IdeaClusteringInput, IdeaCl
                 clusters[themeKey] = new IdeaCluster
                 {
                     Name = themeKey,
-                    Ideas = new List<StoryGenerator.Core.Models.StoryIdea>()
+                    Ideas = new List<StoryIdea>()
                 };
             }
 

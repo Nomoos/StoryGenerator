@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using StoryGenerator.Core.Interfaces;
+using PrismQ.Shared.Interfaces;
 using StoryGenerator.Models;
 
 namespace PrismQ.VideoGenerator

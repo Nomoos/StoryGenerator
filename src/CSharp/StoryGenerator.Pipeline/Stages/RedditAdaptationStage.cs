@@ -43,7 +43,7 @@ public class RedditAdaptationStage : BasePipelineStage<RedditAdaptationInput, Re
         };
     }
 
-    private async Task<AdaptedIdea> AdaptIdeaAsync(StoryGenerator.Core.Models.CollectedIdea collectedIdea, CancellationToken cancellationToken)
+    private async Task<AdaptedIdea> AdaptIdeaAsync(CollectedIdea collectedIdea, CancellationToken cancellationToken)
     {
         await Task.Delay(10, cancellationToken); // Simulate processing
 
