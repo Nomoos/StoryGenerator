@@ -76,9 +76,13 @@ PrismQ/
 │   ├── mock_provider.py     # Mock provider for testing
 │   ├── youtube_provider.py  # YouTube platform provider
 │   └── ...                  # Other platform providers
-└── Pipeline/                 # Pipeline orchestration
-    ├── orchestration/       # Step orchestration logic
-    └── scripts/             # Batch execution scripts
+├── Pipeline/                 # Pipeline orchestration
+│   ├── orchestration/       # Step orchestration logic
+│   └── scripts/             # Batch execution scripts
+└── Tools/                    # Video publishing and quality tools
+    ├── MultiPlatformPublisher.py  # Multi-platform distribution
+    ├── VideoQualityChecker.py     # Video quality validation
+    └── VideoVariantSelector.py    # Video variant selection
 ```
 
 ## 📚 Related Documentation
