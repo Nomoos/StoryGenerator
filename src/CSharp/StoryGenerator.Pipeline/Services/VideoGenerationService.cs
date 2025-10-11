@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using PrismQ.Shared.Interfaces;
 using PrismQ.Shared.Models;
+using PrismQ.VideoGenerator;
 using StoryGenerator.Generators;
 using StoryGenerator.Pipeline.Config;
 

@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using PrismQ.Shared.Interfaces;
-using StoryGenerator.Models;
+using PrismQ.Shared.Models;
 
 namespace PrismQ.VideoGenerator
 {
@@ -182,10 +182,14 @@ namespace PrismQ.VideoGenerator
                             config.GuidanceScale,
                             seed: null,
                             cancellationToken);
+                        
+                        // Save the image
+                        outputPath = await _imageClient.SaveImageAsync(result.ImageData, outputPath, cancellationToken);
                     }
                     else
                     {
-                        result = await _imageClient.GenerateImageAsync(
+                        // GenerateImageAsync returns path directly
+                        outputPath = await _imageClient.GenerateImageAsync(
                             prompt.CombinedPrompt,
                             prompt.NegativePrompt,
                             config.Width,
@@ -194,10 +198,14 @@ namespace PrismQ.VideoGenerator
                             config.GuidanceScale,
                             seed: null,
                             cancellationToken);
+                        
+                        // Create result for tracking
+                        result = new ImageGenerationResult
+                        {
+                            Width = config.Width,
+                            Height = config.Height
+                        };
                     }
-
-                    // Save the image
-                    await _imageClient.SaveImageAsync(result, outputPath);
 
                     var generationTime = (DateTime.UtcNow - startTime).TotalMilliseconds;
 

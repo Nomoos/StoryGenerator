@@ -18,6 +18,7 @@
     <ProjectReference Include="..\PrismQ\Shared\PrismQ.Shared.Core\PrismQ.Shared.Core.csproj" />
     <ProjectReference Include="..\PrismQ\Shared\PrismQ.Shared.Interfaces\PrismQ.Shared.Interfaces.csproj" />
     <ProjectReference Include="..\PrismQ\Shared\PrismQ.Shared.Models\PrismQ.Shared.Models.csproj" />
+    <ProjectReference Include="..\PrismQ\VideoGenerator\PrismQ.VideoGenerator.csproj" />
   </ItemGroup>
 
 </Project>
