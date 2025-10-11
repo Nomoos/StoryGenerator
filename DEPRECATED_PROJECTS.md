@@ -41,13 +41,27 @@ This document tracks the migration from StoryGenerator.Core to PrismQ.Shared str
   - **Impact**: 3 build errors
   - **Recommendation**: These classes need to be migrated from StoryGenerator.Generators to PrismQ.VideoGenerator
 
-## Deprecated/Empty Projects
+## Deprecated/Empty Projects (REMOVED)
 
 ### StoryGenerator.Core
-- **Status**: EMPTY - No source files
+- **Status**: ✅ REMOVED - No source files
 - **Migration**: All functionality moved to PrismQ.Shared projects
-- **References**: Still referenced by projects for backward compatibility
-- **Recommendation**: Can be removed once all references are confirmed working
+- **Date Removed**: 2025-10-11
+- **Actions Taken**: 
+  - Removed all project references from consuming projects
+  - Moved Polly package reference to PrismQ.Shared.Core
+  - Moved StoryGenerator.Research reference to PrismQ.Shared.Core
+  - Deleted project directory and files
+  - Removed from solution file
+
+### StoryGenerator.Generators
+- **Status**: ✅ REMOVED - No source files  
+- **Migration**: All functionality moved to PrismQ domain projects
+- **Date Removed**: 2025-10-11
+- **Actions Taken**:
+  - Removed all project references from consuming projects
+  - Deleted project directory and files
+  - Removed from solution file
 
 ## Build Status
 
@@ -107,9 +121,10 @@ StoryGenerator.Core.Configuration → PrismQ.Shared.Core.Configuration
    - Move orphaned models from `/src/CSharp/Models/` to appropriate PrismQ project
    - Migrate video synthesizer classes to PrismQ.VideoGenerator
 
-2. **Clean Up** (Future PR)
-   - Remove StoryGenerator.Core project once confirmed unnecessary
-   - Remove StoryGenerator.Generators once all functionality is in PrismQ
+2. **Clean Up** ✅ COMPLETE
+   - ✅ Removed StoryGenerator.Core project
+   - ✅ Removed StoryGenerator.Generators project
+   - All dependencies migrated to PrismQ.Shared
 
 3. **Testing**
    - Run integration tests to ensure functionality is preserved

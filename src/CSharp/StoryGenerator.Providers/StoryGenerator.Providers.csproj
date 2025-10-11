@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StoryGenerator.Core\StoryGenerator.Core.csproj" />
     <ProjectReference Include="..\PrismQ\Shared\PrismQ.Shared.Core\PrismQ.Shared.Core.csproj" />
   </ItemGroup>
 
