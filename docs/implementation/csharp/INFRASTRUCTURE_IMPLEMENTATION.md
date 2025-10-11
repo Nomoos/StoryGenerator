@@ -132,7 +132,7 @@ Status: All passing ✅
 ### Configuration
 
 ```python
-from src.Python.config import get_settings
+from PrismQ.Shared.config import settings
 
 # Get singleton settings instance
 settings = get_settings()
@@ -148,7 +148,7 @@ log_level = settings.log_level
 ### Logging
 
 ```python
-from src.Python.logging import setup_logging, get_logger
+from PrismQ.Shared.logging import setup_logging, get_logger
 
 # Setup logging (in main)
 setup_logging(level="INFO", json_format=True)
@@ -256,7 +256,7 @@ pytest tests/infrastructure/ --cov=src/Python/config --cov=src/Python/logging
 python examples/infrastructure_demo.py
 
 # Check imports work
-python -c "from src.Python.config import get_settings; from src.Python.logging import get_logger; print('OK')"
+python -c "from PrismQ.Shared.config import settings; from PrismQ.Shared.logging import get_logger; print('OK')"
 ```
 
 ## Conclusion

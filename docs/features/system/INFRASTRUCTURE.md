@@ -20,12 +20,9 @@ This document covers the infrastructure components of the StoryGenerator project
 ### Usage
 
 ```python
-from src.Python.config import get_settings
+from PrismQ.Shared.config import settings
 
-# Get settings (singleton)
-settings = get_settings()
-
-# Access configuration
+# Access configuration (settings is already a singleton)
 api_key = settings.openai_api_key
 model = settings.default_model
 story_path = settings.story_root
@@ -109,7 +106,7 @@ def test_with_config(isolated_config):
 #### Basic Logging
 
 ```python
-from src.Python.logging import setup_logging, get_logger
+from PrismQ.Shared.logging import setup_logging, get_logger
 
 # Setup logging (typically in main)
 setup_logging(level="INFO")
@@ -128,7 +125,7 @@ logger.critical("Critical issue")
 #### JSON Logging (Production)
 
 ```python
-from src.Python.logging import setup_logging
+from PrismQ.Shared.logging import setup_logging
 
 # Setup with JSON format for production
 setup_logging(
@@ -142,7 +139,7 @@ setup_logging(
 #### Contextual Logging
 
 ```python
-from src.Python.logging import get_logger, LoggerContext
+from PrismQ.Shared.logging import get_logger, LoggerContext
 
 logger = get_logger(__name__)
 
@@ -339,7 +336,7 @@ ls -la .env
 echo $OPENAI_API_KEY
 
 # Test configuration
-python -c "from src.Python.config import get_settings; print(get_settings().openai_api_key)"
+python -c "from PrismQ.Shared.config import settings; print(settings.openai_api_key)"
 ```
 
 ### Logging Issues
@@ -354,7 +351,7 @@ ls -la logs/
 echo $LOG_LEVEL
 
 # Test logging
-python -c "from src.Python.logging import setup_logging, get_logger; setup_logging(); get_logger('test').info('Test')"
+python -c "from PrismQ.Shared.logging import setup_logging, get_logger; setup_logging(); get_logger('test').info('Test')"
 ```
 
 ### Testing Issues
