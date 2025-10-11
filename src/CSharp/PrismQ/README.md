@@ -103,4 +103,4 @@ During migration, we maintain backward compatibility by:
 
 - See `/PrismQ/README.md` for Python structure
 - See `/docs/migration/PRISMQ_MIGRATION.md` for migration guide
-- See `/PRISMQ_IMPLEMENTATION_SUMMARY.md` for Python implementation details
+- See `/docs/migration/PRISMQ_IMPLEMENTATION_SUMMARY.md` for Python implementation details

@@ -70,6 +70,13 @@ Implementation notes and technical details (C#, video).
 - C# implementation status and research
 - Video pipeline implementation
 - Integration notes
+- Group implementation summaries
+
+### 🔄 [Migration](migration/)
+PrismQ migration documentation and phase implementation.
+- PrismQ migration guide and status
+- Phase implementation documentation
+- Migration implementation summaries
 
 ### 🧪 [Testing](testing/)
 Testing guides and best practices.

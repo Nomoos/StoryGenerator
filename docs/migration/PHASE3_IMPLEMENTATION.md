@@ -261,9 +261,9 @@ Phase 4 (Remove Backward Compatibility Layer) can now proceed safely:
 - All wrapper files
 
 **Documentation to Preserve**:
-- `core/CACHING_GUIDE.md`
-- `core/CONFIG_README.md`
-- `core/LOGGING_README.md`
+- `PrismQ/Shared/docs/CACHING_GUIDE.md`
+- `PrismQ/Shared/docs/CONFIG_GUIDE.md`
+- `PrismQ/Shared/docs/LOGGING_GUIDE.md`
 
 ---
 
@@ -298,6 +298,6 @@ The repository is now ready for Phase 4, which will remove the backward compatib
 ## References
 
 - See `PRISMQ_MIGRATION_STATUS.md` for overall status
-- See `PRISMQ_IMPLEMENTATION_SUMMARY.md` for Python migration details
+- See `docs/migration/PRISMQ_IMPLEMENTATION_SUMMARY.md` for Python migration details
 - See `PHASE2_IMPLEMENTATION.md` for C# migration progress
 - See `docs/migration/PRISMQ_MIGRATION.md` for migration guide

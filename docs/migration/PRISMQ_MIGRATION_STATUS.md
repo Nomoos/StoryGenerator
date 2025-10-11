@@ -96,9 +96,9 @@ from PrismQ.Shared.interfaces.platform_provider import IPlatformProvider
 - `PrismQ/Shared/interfaces/__init__.py` - Updated imports from `core.interfaces.*` to `PrismQ.Shared.interfaces.*`
 
 **Files Preserved**: 3 documentation files
-- `core/CACHING_GUIDE.md`
-- `core/CONFIG_README.md`
-- `core/LOGGING_README.md`
+- `PrismQ/Shared/docs/CACHING_GUIDE.md`
+- `PrismQ/Shared/docs/CONFIG_GUIDE.md`
+- `PrismQ/Shared/docs/LOGGING_GUIDE.md`
 
 **Test Status**: ✅ All 48 pipeline tests passing
 
@@ -140,6 +140,6 @@ The PrismQ migration is complete! All phases executed successfully with zero bre
 ---
 
 ## References
-- `PRISMQ_IMPLEMENTATION_SUMMARY.md` for detailed implementation notes
+- `docs/migration/PRISMQ_IMPLEMENTATION_SUMMARY.md` for detailed implementation notes
 - `docs/migration/PRISMQ_MIGRATION.md` for migration guide
 - `src/CSharp/PrismQ/CSHARP_MIGRATION.md` for C# migration strategy

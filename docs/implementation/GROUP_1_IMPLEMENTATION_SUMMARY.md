@@ -144,7 +144,7 @@ All new functionality is thoroughly tested:
 ## Documentation
 
 ### User Guides
-1. **`core/CACHING_GUIDE.md`** (8KB)
+1. **`PrismQ/Shared/docs/CACHING_GUIDE.md`** (8KB)
    - Overview and features
    - Installation instructions
    - Basic and advanced usage
@@ -317,7 +317,7 @@ Potential improvements for future iterations:
 4. `providers/openai_optimized.py` - Optimized provider
 5. `tests/test_cache.py` - Cache tests
 6. `tests/test_openai_optimized.py` - Provider tests
-7. `core/CACHING_GUIDE.md` - Caching documentation
+7. `PrismQ/Shared/docs/CACHING_GUIDE.md` - Caching documentation
 8. `providers/OPTIMIZED_OPENAI_GUIDE.md` - Provider documentation
 9. `examples/caching_example.py` - Caching examples
 10. `examples/optimized_provider_example.py` - Provider examples
