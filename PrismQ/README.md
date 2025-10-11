@@ -74,12 +74,17 @@ PrismQ/
 │  ├─ facebook_provider.py     # Facebook platform provider
 │  └─ wordpress_provider.py    # WordPress publishing provider
 │
-└─ Pipeline/                   # Pipeline orchestration and execution
-   ├─ orchestration/           # Pipeline step orchestration
-   │  ├─ run_step.py           # Step execution logic
-   │  └─ story_db.py           # Story database management
-   └─ scripts/                 # Pipeline batch scripts
-      └─ *.bat                 # Windows batch files for pipeline steps
+├─ Pipeline/                   # Pipeline orchestration and execution
+│  ├─ orchestration/           # Pipeline step orchestration
+│  │  ├─ run_step.py           # Step execution logic
+│  │  └─ story_db.py           # Story database management
+│  └─ scripts/                 # Pipeline batch scripts
+│     └─ *.bat                 # Windows batch files for pipeline steps
+│
+└─ Tools/                      # Video publishing and quality tools
+   ├─ MultiPlatformPublisher.py  # Multi-platform video distribution
+   ├─ VideoQualityChecker.py     # Video quality validation
+   └─ VideoVariantSelector.py    # Video variant selection
 ```
 
 ## Import Convention
@@ -95,6 +100,7 @@ from PrismQ.StoryTitleScoring.title_scoring import TitleScorer
 from PrismQ.VoiceOverGenerator.voice_recommendation import VoiceRecommender
 from PrismQ.Providers import OpenAIProvider, MockLLMProvider
 from PrismQ.Pipeline.orchestration.run_step import StepOrchestrator
+from PrismQ.Tools import MultiPlatformPublisher, VideoQualityChecker
 ```
 
 ### Backward Compatibility

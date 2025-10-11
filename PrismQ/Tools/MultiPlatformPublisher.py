@@ -153,7 +153,7 @@ class MultiPlatformPublisher:
         
         # Check YouTube
         try:
-            from providers import YouTubeUploader
+            from PrismQ.Providers import YouTubeUploader
             self.available_platforms[Platform.YOUTUBE] = True
         except ImportError:
             logger.warning("YouTube provider not available (missing dependencies)")
@@ -161,7 +161,7 @@ class MultiPlatformPublisher:
         
         # Check TikTok
         try:
-            from providers import TikTokUploader
+            from PrismQ.Providers import TikTokUploader
             self.available_platforms[Platform.TIKTOK] = True
         except ImportError:
             logger.warning("TikTok provider not available (missing dependencies)")
@@ -169,7 +169,7 @@ class MultiPlatformPublisher:
         
         # Check Instagram
         try:
-            from providers import InstagramUploader
+            from PrismQ.Providers import InstagramUploader
             self.available_platforms[Platform.INSTAGRAM] = True
         except ImportError:
             logger.warning("Instagram provider not available (missing dependencies)")
@@ -177,7 +177,7 @@ class MultiPlatformPublisher:
         
         # Check Facebook
         try:
-            from providers import FacebookUploader
+            from PrismQ.Providers import FacebookUploader
             self.available_platforms[Platform.FACEBOOK] = True
         except ImportError:
             logger.warning("Facebook provider not available (missing dependencies)")
@@ -187,7 +187,7 @@ class MultiPlatformPublisher:
         """Get or initialize YouTube client."""
         if self._youtube is None and self.available_platforms.get(Platform.YOUTUBE):
             try:
-                from providers import YouTubeUploader
+                from PrismQ.Providers import YouTubeUploader
                 credentials_path = self.credentials_dir / "youtube_client_secret.json"
                 token_path = self.credentials_dir / "youtube_token.json"
                 
@@ -206,7 +206,7 @@ class MultiPlatformPublisher:
         """Get or initialize TikTok client."""
         if self._tiktok is None and self.available_platforms.get(Platform.TIKTOK):
             try:
-                from providers import TikTokUploader
+                from PrismQ.Providers import TikTokUploader
                 credentials_path = self.credentials_dir / "tiktok_credentials.json"
                 
                 self._tiktok = TikTokUploader(
@@ -223,7 +223,7 @@ class MultiPlatformPublisher:
         """Get or initialize Instagram client."""
         if self._instagram is None and self.available_platforms.get(Platform.INSTAGRAM):
             try:
-                from providers import InstagramUploader
+                from PrismQ.Providers import InstagramUploader
                 credentials_path = self.credentials_dir / "instagram_credentials.json"
                 
                 self._instagram = InstagramUploader(
@@ -240,7 +240,7 @@ class MultiPlatformPublisher:
         """Get or initialize Facebook client."""
         if self._facebook is None and self.available_platforms.get(Platform.FACEBOOK):
             try:
-                from providers import FacebookUploader
+                from PrismQ.Providers import FacebookUploader
                 credentials_path = self.credentials_dir / "facebook_credentials.json"
                 
                 self._facebook = FacebookUploader(
