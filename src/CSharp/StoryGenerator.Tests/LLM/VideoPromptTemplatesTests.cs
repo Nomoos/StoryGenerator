@@ -1,5 +1,5 @@
 using System;
-using StoryGenerator.Core.LLM;
+using PrismQ.Shared.Core;
 using Xunit;
 
 namespace StoryGenerator.Tests.LLM

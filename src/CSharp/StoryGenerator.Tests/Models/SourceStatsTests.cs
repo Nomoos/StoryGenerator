@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using StoryGenerator.Core.Models;
+using PrismQ.Shared.Models;
 using Xunit;
 
 namespace StoryGenerator.Tests.Models;

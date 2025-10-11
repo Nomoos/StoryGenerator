@@ -1,6 +1,6 @@
 using StoryGenerator.Pipeline.Stages;
 using StoryGenerator.Pipeline.Stages.Models;
-using StoryGenerator.Core.Models;
+using PrismQ.Shared.Models;
 using Xunit;
 
 namespace StoryGenerator.Tests.Pipeline;

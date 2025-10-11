@@ -1,5 +1,9 @@
 using Xunit;
 using StoryGenerator.Generators;
+using PrismQ.IdeaScraper;
+using PrismQ.StoryGenerator;
+using PrismQ.SubtitleGenerator;
+using PrismQ.VoiceOverGenerator;
 
 namespace StoryGenerator.Tests.Generators;
 

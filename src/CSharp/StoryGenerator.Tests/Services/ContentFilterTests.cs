@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Moq;
-using StoryGenerator.Core.Services;
+using PrismQ.Shared.Core.Services;
 using Xunit;
 
 namespace StoryGenerator.Tests.Services
