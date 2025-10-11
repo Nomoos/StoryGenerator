@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PrismQ.Shared.Core;
+using PrismQ.Shared.Core.Collectors;
 using PrismQ.Shared.Models;
 using PrismQ.Shared.Core.Services;
 using Xunit;

@@ -9,7 +9,6 @@ using PrismQ.IdeaScraper;
 using PrismQ.StoryGenerator;
 using PrismQ.SubtitleGenerator;
 using PrismQ.VoiceOverGenerator;
-using StoryGenerator.Generators;
 using StoryGenerator.Providers.ElevenLabs;
 using StoryGenerator.Providers.OpenAI;
 
