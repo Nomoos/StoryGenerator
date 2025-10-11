@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace StoryGenerator.Core.Models;
+namespace PrismQ.Shared.Models;
 
 /// <summary>
 /// Represents a story idea with metadata and viral potential scoring.

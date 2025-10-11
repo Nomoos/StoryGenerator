@@ -1,6 +1,6 @@
 using System;
 
-namespace StoryGenerator.Core.Models;
+namespace PrismQ.Shared.Models;
 
 /// <summary>
 /// Utility class for normalizing engagement statistics across different platforms.

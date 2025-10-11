@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace StoryGenerator.Core.Models;
+namespace PrismQ.Shared.Models;
 
 /// <summary>
 /// Represents a collected idea with source information and viral potential scoring.

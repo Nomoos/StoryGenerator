@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace StoryGenerator.Core.Models
+namespace PrismQ.Shared.Models
 {
     /// <summary>
     /// Represents the mapping of subtitles to shots in a video.

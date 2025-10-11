@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace StoryGenerator.Core.Models;
+namespace PrismQ.Shared.Models;
 
 /// <summary>
 /// Represents a source of inspiration for story ideas.

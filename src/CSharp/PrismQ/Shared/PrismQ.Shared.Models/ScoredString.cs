@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace StoryGenerator.Core.Models;
+namespace PrismQ.Shared.Models;
 
 /// <summary>
 /// A string value with an associated score and optional metadata.
