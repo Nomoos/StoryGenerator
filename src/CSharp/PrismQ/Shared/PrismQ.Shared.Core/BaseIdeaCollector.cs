@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using StoryGenerator.Core.Interfaces;
 using StoryGenerator.Core.Models;
 
-namespace StoryGenerator.Core.Collectors;
+namespace PrismQ.Shared.Core.Collectors;
 
 /// <summary>
 /// Base abstract class for IdeaCollectors that provides common functionality.

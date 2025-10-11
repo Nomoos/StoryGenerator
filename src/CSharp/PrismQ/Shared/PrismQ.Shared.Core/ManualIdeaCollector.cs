@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using StoryGenerator.Core.Models;
 
-namespace StoryGenerator.Core.Collectors;
+namespace PrismQ.Shared.Core.Collectors;
 
 /// <summary>
 /// A simple manual idea collector for testing and demonstration purposes.

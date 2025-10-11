@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace StoryGenerator.Core.LLM
+namespace PrismQ.Shared.Core.LLM
 {
     /// <summary>
     /// Specialized prompt templates for video generation.

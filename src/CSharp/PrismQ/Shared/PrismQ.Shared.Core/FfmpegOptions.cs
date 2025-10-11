@@ -1,4 +1,4 @@
-namespace StoryGenerator.Core.Configuration;
+namespace PrismQ.Shared.Core.Configuration;
 
 /// <summary>
 /// Configuration options for FFmpeg operations.

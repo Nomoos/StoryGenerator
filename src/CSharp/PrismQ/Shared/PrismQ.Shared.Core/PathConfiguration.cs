@@ -1,4 +1,4 @@
-namespace StoryGenerator.Core.Utils;
+namespace PrismQ.Shared.Core.Utils;
 
 /// <summary>
 /// Configuration for story generation paths.

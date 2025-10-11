@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace StoryGenerator.Core.Utils;
+namespace PrismQ.Shared.Core.Utils;
 
 /// <summary>
 /// Utility class for file operations and path management.
