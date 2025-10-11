@@ -29,16 +29,24 @@ Provides shared functionality that multiple subprojects depend on:
 
 ## Usage
 
-```python
-# Import shared utilities
-from PrismQ.Shared.errors import APIError, ValidationError
-from PrismQ.Shared.logging import get_logger, setup_logging
-from PrismQ.Shared.config import settings
-from PrismQ.Shared.interfaces.llm_provider import ILLMProvider
+### Common Imports
 
-# Use in your code
+```python
+# Errors and exceptions
+from PrismQ.Shared.errors import APIError, ValidationError, RateLimitError
+
+# Logging
+from PrismQ.Shared.logging import get_logger, setup_logging
 logger = get_logger(__name__)
-logger.info("Processing started")
+
+# Configuration
+from PrismQ.Shared.config import settings
+
+# Provider interfaces
+from PrismQ.Shared.interfaces.llm_provider import ILLMProvider
+from PrismQ.Shared.interfaces.platform_provider import IPlatformProvider
+from PrismQ.Shared.interfaces.storage_provider import IStorageProvider
+from PrismQ.Shared.interfaces.voice_provider import IVoiceProvider
 ```
 
 ## Design Principle

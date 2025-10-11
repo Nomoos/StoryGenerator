@@ -28,11 +28,19 @@ Handles all voice and audio-related functionality:
 from PrismQ.VoiceOverGenerator.voice_recommendation import VoiceRecommender
 from PrismQ.VoiceOverGenerator.audio_production import AudioProducer
 
-# Recommend voice
+# Recommend voice for a title
 recommender = VoiceRecommender()
-voice = recommender.recommend_voice(content, target_gender="female")
+title = {
+    'text': 'Amazing Story Title',
+    'content': 'Story content...',
+    'target_gender': 'female',
+    'target_age': '18-23'
+}
+voice_rec = recommender.recommend_voice(title)
+# Returns: {'gender': 'female', 'style': 'engaging', 'pitch': 'medium', ...}
 
-# Generate audio
+# Generate audio (placeholder example)
 producer = AudioProducer()
-audio_path = producer.generate_audio(script, voice_id=voice['voice_id'])
+# Note: Actual voice provider integration required
+audio_path = producer.generate_audio(script_text, voice_config=voice_rec)
 ```
