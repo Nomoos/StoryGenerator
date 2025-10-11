@@ -1,517 +1,69 @@
-# StoryGenerator - C# Implementation
-
-[![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/download)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
-## 🎯 Overview
-
-The C# implementation of StoryGenerator provides a high-performance, type-safe alternative to the Python version. Built with modern .NET features, it offers improved performance, better tooling support, and production-ready reliability.
-
-## ✨ Key Features
-
-- **🚀 High Performance**: Async/await throughout, optimized for throughput
-- **🔒 Type Safety**: Strong typing with nullable reference types
-- **🔄 Resilience**: Polly-based retry and circuit breaker patterns
-- **📊 Monitoring**: Built-in performance tracking and metrics
-- **🔧 Extensible**: Clean architecture with dependency injection
-- **📝 Well-Documented**: Comprehensive XML docs and migration guides
-
-## 📦 Requirements
-
-- .NET 9.0 or later
-- OpenAI API key
-- ElevenLabs API key (for voice generation)
-
-## 🏗️ Architecture
-
-```
-CSharp/
-├── StoryGenerator.Core/        # Core models, utilities, and services
-│   ├── Models/                 # StoryIdea, ViralPotential
-│   ├── Utils/                  # FileHelper, PathConfiguration
-│   └── Services/               # PerformanceMonitor, RetryService
-├── StoryGenerator.Providers/   # External API integrations
-│   ├── OpenAI/                 # OpenAI API client
-│   └── ElevenLabs/             # ElevenLabs TTS client
-├── StoryGenerator.Generators/  # Content generation implementations
-│   └── IdeaGenerator.cs        # ✅ Implemented
-├── StoryGenerator.CLI/         # Command-line interface
-└── StoryGenerator.Tests/       # Unit and integration tests
-```
-
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/Nomoos/StoryGenerator.git
-cd StoryGenerator/CSharp
-
-# Build the solution
-dotnet build
-
-# Run tests
-dotnet test
-```
-
-### Configuration
-
-Create an `appsettings.json` file:
-
-```json
-{
-  "OpenAI": {
-    "ApiKey": "your-openai-api-key",
-    "Model": "gpt-4o-mini",
-    "Temperature": 0.9
-  },
-  "ElevenLabs": {
-    "ApiKey": "your-elevenlabs-api-key",
-    "VoiceId": "BZgkqPqms7Kj9ulSkVzn",
-    "Model": "eleven_v3",
-    "OutputFormat": "mp3_44100_192"
-  },
-  "PathConfiguration": {
-    "StoryRoot": "./Stories"
-  }
-}
-```
-
-Or use environment variables:
-
-```bash
-export OpenAI__ApiKey="your-key"
-export ElevenLabs__ApiKey="your-key"
-```
-
-### Usage Example
-
-```csharp
-using Microsoft.Extensions.DependencyInjection;
-using StoryGenerator.Generators;
-
-// Set up dependency injection
-var services = new ServiceCollection();
-ConfigureServices(services);
-var serviceProvider = services.BuildServiceProvider();
-
-// Generate story ideas
-var ideaGenerator = serviceProvider.GetRequiredService<IIdeaGenerator>();
-var ideas = await ideaGenerator.GenerateIdeasAsync(
-    topic: "A person who discovers something unexpected",
-    count: 5,
-    tone: "emotional"
-);
-
-foreach (var idea in ideas)
-{
-    Console.WriteLine($"Title: {idea.StoryTitle}");
-    Console.WriteLine($"Potential: {idea.Potential.Overall}/100");
-}
-```
-
-## 📋 Implementation Status
-
-### ✅ Phase 1: Core Infrastructure (Completed)
-
-- [x] StoryIdea model with JSON serialization
-- [x] ViralPotential scoring model
-- [x] FileHelper utilities
-- [x] PathConfiguration
-- [x] PerformanceMonitor with metrics tracking
-- [x] RetryService with Polly integration
-
-### ✅ Phase 2: API Providers (Completed)
-
-- [x] OpenAI client with chat completions
-- [x] ElevenLabs client for TTS
-- [x] Retry and circuit breaker integration
-- [x] Strongly-typed request/response models
-
-### ✅ Phase 3: Generators (Partial)
-
-- [x] **IdeaGenerator** - Story idea generation with viral potential
-- [ ] **ScriptGenerator** - ~360 word script generation
-- [ ] **RevisionGenerator** - Script revision for voice clarity
-- [ ] **EnhancementGenerator** - ElevenLabs tag enhancement
-- [ ] **VoiceGenerator** - TTS with audio normalization
-
-### 🔄 Phase 4: Advanced Features (Planned)
-
-- [ ] SubtitleGenerator (WhisperX integration)
-- [ ] VideoGenerator (FFmpeg wrapper)
-- [ ] VideoPipelineGenerator
-- [ ] VideoCompositor
-- [ ] VideoInterpolator
-
-### 🔄 Phase 5: Vision & AI (Planned)
-
-- [ ] VisionGenerator
-- [ ] SceneAnalyzer
-- [ ] SceneDescriber
-- [ ] KeyframeGenerator (SDXL)
-- [ ] IncrementalImprover
-
-## 🎨 C# Improvements Over Python
-
-### Performance
-- **Async I/O**: True non-blocking operations
-- **Connection pooling**: Reused HTTP clients
-- **Compiled code**: Native execution speed
-
-### Reliability
-- **Polly integration**: Exponential backoff and circuit breakers
-- **Strong typing**: Compile-time error detection
-- **Null safety**: Nullable reference types
-
-### Developer Experience
-- **IntelliSense**: Full IDE support
-- **Refactoring**: Safe automated refactoring
-- **Debugging**: Excellent debugging tools
-
-### Maintainability
-- **Dependency injection**: Testable, decoupled code
-- **LINQ**: Expressive data transformations
-- **XML docs**: Built-in documentation
-
-## 📚 Documentation
-
-- **[MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)** - Complete migration guide from Python
-- **[Interfaces/IGenerators.cs](Interfaces/IGenerators.cs)** - Generator interfaces
-- **XML Documentation** - Inline with code
-
-## 🔧 Development
-
-### Building
-
-```bash
-dotnet build
-```
-
-### Running Tests
-
-```bash
-dotnet test
-```
-
-### Publishing
-
-```bash
-# Single-file executable
-dotnet publish StoryGenerator.CLI -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
-
-# Cross-platform
-dotnet publish StoryGenerator.CLI -c Release -r linux-x64 --self-contained
-dotnet publish StoryGenerator.CLI -c Release -r osx-x64 --self-contained
-```
-
-## 🤝 Contributing
-
-When implementing new generators:
-
-1. Follow the IdeaGenerator pattern
-2. Use async/await for all I/O operations
-3. Integrate PerformanceMonitor for metrics
-4. Use RetryService for external API calls
-5. Add comprehensive logging
-6. Write unit tests
-7. Update documentation
-
-See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed implementation patterns.
-
-## 📊 Performance Metrics
-
-Performance monitoring is built-in. View metrics:
-
-```csharp
-var monitor = serviceProvider.GetRequiredService<PerformanceMonitor>();
-var summary = await monitor.GetPerformanceSummaryAsync();
-
-Console.WriteLine($"Total Operations: {summary.TotalOperations}");
-Console.WriteLine($"Success Rate: {summary.SuccessRate}%");
-```
-
-Metrics are automatically saved to `logs/metrics.json`.
-
-## 🐛 Troubleshooting
-
-### API Key Issues
-Ensure your API keys are properly configured in `appsettings.json` or environment variables.
-
-### Build Errors
-```bash
-dotnet clean
-dotnet restore
-dotnet build
-```
-
-### Missing Dependencies
-```bash
-dotnet restore
-```
-
-## 📄 License
-
-MIT License - see LICENSE file for details
-
-## 🔗 Related Projects
-
-- **Python Implementation**: [/Python](../Python/)
-- **Documentation**: [/docs](../docs/)
-
-## 👥 Contributors
-
-- Initial C# port and architecture design
-- OpenAI and ElevenLabs provider implementations
-- Core infrastructure and utilities
-
-## 📮 Support
-
-For issues and questions:
-- GitHub Issues: https://github.com/Nomoos/StoryGenerator/issues
-- Documentation: See MIGRATION_GUIDE.md
-
-## 🗺️ Roadmap
-
-- [ ] Complete all generator implementations
-- [ ] Add CLI with rich commands
-- [ ] Implement configuration validation
-- [ ] Add performance benchmarks vs Python
-- [ ] Create Docker images
-- [ ] Add API server (optional)
-- [ ] Implement streaming responses
-- [ ] Add batch processing support
-
-## ⚙️ Configuration Options
-
-Full configuration reference available in [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md#configuration).
-## ✨ Features (Implemented)
-
-### Video Post-Production 🎬
-
-**Status**: ✅ **Implemented and Ready**
-
-Complete video post-production pipeline for processing raw video segments into polished, social-media-ready content.
-
-**Features:**
-- ✅ Crop videos to 9:16 aspect ratio (1080×1920) at 30fps
-- ✅ Burn-in or soft subtitles from SRT files with safe text margins
-- ✅ Background music mixing with audio ducking during voiceover
-- ✅ Video concatenation with smooth transitions
-- ✅ Final encoding with H.264, 8Mbps bitrate, AAC audio
-- ✅ Automatic output path formatting: `/final/{segment}/{age}/{title_id}_draft.mp4`
-
-**Quick Start:**
-```csharp
-using StoryGenerator.Models;
-using StoryGenerator.Tools;
-
-var producer = new VideoPostProducer();
-var config = new VideoPostProductionConfig
-{
-    SegmentPaths = new List<string> { "video1.mp4", "video2.mp4" },
-    OutputPath = "final/tech/18-23/my_video_draft.mp4",
-    SrtPath = "subtitles.srt",
-    BackgroundMusicPath = "music.mp3",
-    Fps = 30,
-    MusicVolume = 0.2,
-    EnableDucking = true
-};
-
-string output = await producer.ProduceVideoAsync(config);
-```
-
-**Documentation:**
-- [Quick Start Guide](POST_PRODUCTION_QUICKSTART.md) - Get started in 5 minutes
-- [Complete Documentation](POST_PRODUCTION_CSHARP.md) - Full API reference and examples
-- [Example Code](Examples/VideoPostProductionExample.cs) - Working examples
-
-**Requirements:**
-- FFmpeg must be installed and available in PATH
-- .NET 9.0 or later
-
-### Video Production from Keyframes 🎥
-
-**Status**: ✅ **Implemented and Ready**
-
-Complete video production pipeline that generates videos from keyframes, subtitles, script text, and audio sources. Combines keyframe video synthesis with post-production processing.
-
-**Features:**
-- ✅ Generate smooth videos from keyframe images using frame interpolation
-- ✅ Auto-generate subtitles from script text or use existing SRT files
-- ✅ Integrate voiceover narration and background music
-- ✅ Apply post-production (cropping, subtitle burn-in, audio mixing)
-- ✅ Support for RIFE, FILM, and DAIN interpolation methods
-- ✅ Flexible configuration for all video production aspects
-
-**Quick Start:**
-```csharp
-using StoryGenerator.Models;
-using StoryGenerator.Tools;
-
-var producer = new VideoProducer();
-var config = new VideoProductionConfig
-{
-    // Input keyframes (minimum 2 required)
-    KeyframePaths = new List<string>
-    {
-        "keyframes/frame_001.png",
-        "keyframes/frame_002.png",
-        "keyframes/frame_003.png"
-    },
-    
-    // Duration
-    DurationSeconds = 30.0,
-    
-    // Auto-generate subtitles from script
-    ScriptText = "Welcome to our tutorial. Today we'll learn about video production.",
-    GenerateSubtitlesFromScript = true,
-    
-    // Audio
-    AudioPath = "audio/narration.mp3",
-    BackgroundMusicPath = "audio/bgm.mp3",
-    MusicVolume = 0.2,
-    EnableDucking = true,
-    
-    // Output
-    OutputPath = "output/my_video.mp4"
-};
-
-var result = await producer.ProduceVideoAsync(config);
-
-if (result.Success)
-{
-    Console.WriteLine($"Video produced: {result.OutputPath}");
-    Console.WriteLine($"Duration: {result.VideoDurationSeconds}s");
-    Console.WriteLine($"Size: {result.FileSizeMB:F2} MB");
-}
-```
-
-**Use Cases:**
-- Story-driven content with narration
-- Educational tutorials with subtitles
-- Social media short-form videos
-- Product demos and explainers
-
-**Documentation:**
-- [Complete Guide](VIDEO_PRODUCTION_README.md) - Full API reference and examples
-- [Example Code](Examples/VideoProductionExample.cs) - Working examples
-
-**Requirements:**
-- FFmpeg and FFprobe must be installed and available in PATH
-- .NET 9.0 or later
-- Optional: KeyframeVideoSynthesizer for advanced interpolation
-- Optional: Python with CUDA for GPU-accelerated processing
-
-## 💻 Development Prerequisites
-
-- [.NET 9.0 SDK](https://dotnet.microsoft.com/download)
-- Visual Studio 2022, Rider, or VS Code
-- Git
-
-### Building
-
-```bash
-dotnet restore
-dotnet build
-```
-
-### Testing
-
-```bash
-dotnet test
-```
-
-### Code Style
-
-This project follows C# coding conventions:
-- PascalCase for public members
-- camelCase for private fields with _ prefix
-- 4 spaces for indentation
-- Use of `var` when type is obvious
-- Async methods end with `Async`
-
-## 🔄 Migration from Python
-
-When the C# implementation is complete, migration guides will be provided to help transition from the Python version.
-
-Key differences to be aware of:
-- **API**: Different method signatures and patterns
-- **Configuration**: JSON-based instead of .env files
-- **Async**: All generator methods will be async
-- **Types**: Strong typing vs Python's dynamic typing
-
-## 📈 Roadmap
-
-### Phase 1: Core Infrastructure
-- [ ] Set up solution structure
-- [x] Implement core models (VideoPostProductionConfig, VideoClip, etc.)
-- [x] Create service interfaces (IVideoPostProducer)
-- [ ] Set up dependency injection
-- [ ] Implement configuration system
-
-### Phase 2: Generator Implementation
-- [ ] Port IdeaGenerator
-- [ ] Port ScriptGenerator
-- [ ] Port RevisionGenerator
-- [ ] Port EnhancementGenerator
-- [ ] Port VoiceGenerator
-- [x] **Implement VideoPostProducer** ✅
-
-### Phase 2.5: Video Post-Production ✅ **COMPLETED**
-- [x] Crop videos to 9:16 (1080×1920) at 30fps
-- [x] Add subtitle support (burn-in and soft subtitles)
-- [x] Background music mixing with ducking
-- [x] Video concatenation with transitions
-- [x] Safe text margins for subtitles
-- [x] Final encoding with target specifications
-- [x] Output path formatting (/final/{segment}/{age}/{title_id}_draft.mp4)
-- [x] Complete documentation and examples
-
-### Phase 3: Testing & Quality
-- [ ] Unit tests for all components
-- [ ] Integration tests
-- [ ] Code coverage > 80%
-- [ ] Performance benchmarks
-
-### Phase 4: CLI & Deployment
-- [ ] Command-line interface
-- [ ] NuGet package publishing
-- [ ] Docker support
-- [ ] CI/CD pipeline
-
-### Phase 5: Advanced Features
-- [ ] Web API
-- [ ] Web UI
-- [ ] Batch processing
-- [ ] Cloud deployment guides
-
-## 🤝 Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Follow C# coding conventions
-4. Add unit tests
-5. Submit a pull request
-
-## 📞 Support
-
-For questions or issues:
-- Check the [main README](../README.md)
-- Open a GitHub issue
-- Review [ARCHITECTURE.md](../ARCHITECTURE.md)
-
-## 📄 License
-
-[Same as main project]
-
----
-
-**Status**: 🚧 Under Development  
-**Target Release**: TBD  
-**Current Progress**: Planning & Design Phase
-
-Check back soon for updates!
+# C# Documentation
+
+This directory contains all documentation for the C# implementation of StoryGenerator, organized into a clear structure for easy navigation.
+
+## 📚 Documentation Structure
+
+### [Architecture](architecture/) 🏛️
+Best practices, design patterns, and architectural guides:
+- [Architecture Best Practices Index](architecture/ARCHITECTURE_BEST_PRACTICES_INDEX.md) - Complete index of best practices
+- [SOLID OOP Clean Code Guide](architecture/SOLID_OOP_CLEAN_CODE_GUIDE.md) - Comprehensive guide to SOLID principles
+- [SOLID OOP Clean Code README](architecture/SOLID_OOP_CLEAN_CODE_README.md) - Quick introduction
+- [Quick Reference](architecture/QUICK_REFERENCE_SOLID_OOP_CLEAN_CODE.md) - Cheat sheet for SOLID/OOP/Clean Code
+- [Practical Implementation Guide](architecture/PRACTICAL_IMPLEMENTATION_GUIDE.md) - Real-world examples
+- [Implementation Guide](architecture/IMPLEMENTATION_GUIDE.md) - AI Model C# interfaces guide
+
+### [Guides](guides/) 📖
+Usage guides and how-tos:
+- [CLI Usage Guide](guides/CLI_USAGE.md) - Command-line interface documentation
+- [Pipeline Guide](guides/PIPELINE_GUIDE.md) - Pipeline architecture and usage
+- [Interfaces Guide](guides/INTERFACES_GUIDE.md) - C# interfaces for video synthesis
+- [Post Production Quickstart](guides/POST_PRODUCTION_QUICKSTART.md) - Quick start for video post-production
+
+### [Features](features/) ✨
+Feature-specific documentation:
+- [Keyframe Generation](features/KEYFRAME_GENERATION_README.md) - Per-scene keyframe generation (SDXL)
+- [Simple Keyframe Generation](features/SIMPLE_KEYFRAME_GENERATION_README.md) - Simplified keyframe workflow
+- [Subtitle Alignment README](features/README_SUBTITLE_ALIGNMENT.md) - Subtitle alignment feature
+- [Subtitle Alignment Guide](features/SUBTITLE_ALIGNMENT.md) - Detailed subtitle alignment guide
+- [Video Synthesis](features/README_VIDEO_SYNTHESIS.md) - Video synthesis overview
+- [Video Production](features/VIDEO_PRODUCTION_README.md) - Complete video production pipeline
+- [Voiceover](features/VOICEOVER_README.md) - Voiceover generation
+- [Post Production](features/POST_PRODUCTION_CSHARP.md) - Video post-production C# implementation
+
+## 🔗 Related Documentation
+
+- [Migration Documentation](../migration/) - PrismQ migration guides and status
+- [Implementation Documentation](../implementation/) - Implementation summaries and reports
+- [Testing Documentation](../testing/) - Test results and verification reports
+- [Main README](../../README.md) - Project overview
+- [PrismQ README](../../src/CSharp/PrismQ/README.md) - PrismQ structure documentation
+
+## 🚀 Quick Links
+
+### Source Code
+- [C# Source Code](../../src/CSharp/)
+- [PrismQ Structure](../../src/CSharp/PrismQ/)
+- [Shared Components](../../src/CSharp/PrismQ/Shared/)
+- [Tests](../../src/CSharp/StoryGenerator.Tests/)
+
+### Key Projects
+- [PrismQ.Shared.Core](../../src/CSharp/PrismQ/Shared/PrismQ.Shared.Core/) - Core utilities and services
+- [PrismQ.Shared.Models](../../src/CSharp/PrismQ/Shared/PrismQ.Shared.Models/) - Shared models
+- [PrismQ.Shared.Interfaces](../../src/CSharp/PrismQ/Shared/PrismQ.Shared.Interfaces/) - Shared interfaces
+- [StoryGenerator.Pipeline](../../src/CSharp/StoryGenerator.Pipeline/) - Pipeline orchestration
+- [StoryGenerator.CLI](../../src/CSharp/StoryGenerator.CLI/) - Command-line interface
+
+## 📋 Getting Started
+
+1. **Architecture** - Start with [Architecture Best Practices](architecture/ARCHITECTURE_BEST_PRACTICES_INDEX.md)
+2. **Usage** - Check the [CLI Usage Guide](guides/CLI_USAGE.md)
+3. **Features** - Explore specific features in the [Features](features/) directory
+4. **Migration** - See [Migration Documentation](../migration/) for PrismQ migration status
+
+## 💡 Tips
+
+- All C# code follows SOLID principles - see [SOLID Guide](architecture/SOLID_OOP_CLEAN_CODE_GUIDE.md)
+- For quick reference, use the [Quick Reference](architecture/QUICK_REFERENCE_SOLID_OOP_CLEAN_CODE.md)
+- Implementation examples are in [Practical Implementation Guide](architecture/PRACTICAL_IMPLEMENTATION_GUIDE.md)
+- Video features are well-documented in the [Features](features/) directory
