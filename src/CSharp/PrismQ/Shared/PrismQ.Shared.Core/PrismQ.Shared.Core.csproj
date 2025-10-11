@@ -15,12 +15,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
+    <PackageReference Include="Polly" Version="8.6.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\StoryGenerator.Core\StoryGenerator.Core.csproj" />
     <ProjectReference Include="..\PrismQ.Shared.Interfaces\PrismQ.Shared.Interfaces.csproj" />
     <ProjectReference Include="..\PrismQ.Shared.Models\PrismQ.Shared.Models.csproj" />
+    <ProjectReference Include="..\..\..\StoryGenerator.Research\StoryGenerator.Research.csproj" />
   </ItemGroup>
 
 </Project>

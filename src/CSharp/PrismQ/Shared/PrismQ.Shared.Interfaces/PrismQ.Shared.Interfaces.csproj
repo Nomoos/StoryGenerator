@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PrismQ.Shared.Models\PrismQ.Shared.Models.csproj" />
-    <ProjectReference Include="..\..\..\StoryGenerator.Core\StoryGenerator.Core.csproj" />
   </ItemGroup>
 
 </Project>
