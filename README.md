@@ -4,48 +4,58 @@ A comprehensive, modular framework for automated story generation, media process
 
 ## 🏗️ Project Structure
 
-This project follows a clean, namespace-based architecture with **everything organized under PrismQ**:
+This project follows a **pipeline-based architecture** organized by content creation stages:
 
 ```
 StoryGenerator/
-├── PrismQ/                    # Main project namespace (ALL CONTENT)
-│   ├── Core/                  # Core utilities and shared components
-│   │   └── Shared/           # Configuration, logging, database, models
-│   ├── Content/               # Content generation modules
-│   │   ├── IdeaScraper/      # Idea generation and scraping
-│   │   ├── StoryGenerator/   # Story and script development
-│   │   ├── StoryTitleProcessor/ # Title generation
-│   │   ├── StoryTitleScoring/   # Title quality scoring
-│   │   ├── SceneDescriptions/   # Scene planning
-│   │   ├── DescriptionGenerator/ # Metadata descriptions
-│   │   └── TagsGenerator/       # Tag generation
-│   ├── Media/                 # Media processing modules
-│   │   ├── VoiceOverGenerator/  # Voice synthesis
-│   │   ├── SubtitleGenerator/   # Subtitle generation
-│   │   ├── VideoGenerator/      # Video assembly
-│   │   └── FrameInterpolation/  # Frame processing
-│   ├── Platform/              # Platform integrations
-│   │   ├── Providers/        # Service providers (OpenAI, etc.)
-│   │   └── Pipeline/         # Pipeline orchestration
-│   ├── Utilities/             # Tools and utilities
-│   │   ├── Tools/            # Publishing tools
-│   │   └── Scripts/          # Automation scripts
-│   ├── Examples/              # Usage examples
-│   ├── CSharp/                # C# implementation
-│   │   ├── PrismQ/           # C# PrismQ modules
-│   │   └── MLScripts/        # ML subprocess scripts
-│   ├── Tests/                 # Test suite
-│   ├── Documentation/         # Project documentation
-│   ├── Configuration/         # Configuration files
-│   ├── Assets/                # Static assets
-│   ├── Data/                  # Runtime data
-│   ├── Research/              # Research documents
-│   ├── Issues/                # Issue tracking
-│   └── Podcasts/              # Podcast content
-├── .github/                   # GitHub workflows and config
-├── pyproject.toml            # Python project configuration
-├── requirements.txt           # Python dependencies
-└── README.md                  # This file
+├── PrismQ/                    # Main project namespace
+│   ├── Pipeline/              # Content Creation Pipeline (Sequential Stages)
+│   │   ├── 01_IdeaGeneration/       # Stage 1: Idea Generation
+│   │   │   └── IdeaScraper/         # Idea scraping and generation
+│   │   ├── 02_TextGeneration/       # Stage 2: Text Content
+│   │   │   ├── StoryGenerator/      # Story and script development
+│   │   │   ├── StoryTitleProcessor/ # Title generation
+│   │   │   ├── StoryTitleScoring/   # Title quality scoring
+│   │   │   ├── SceneDescriptions/   # Scene planning
+│   │   │   ├── DescriptionGenerator/# Metadata descriptions
+│   │   │   ├── TagsGenerator/       # Tag generation
+│   │   │   └── FinalizeText/        # Text finalization
+│   │   ├── 03_AudioGeneration/      # Stage 3: Audio Content
+│   │   │   ├── VoiceOverGenerator/  # Voice synthesis
+│   │   │   ├── SubtitleGenerator/   # Subtitle generation
+│   │   │   └── FinalizeAudio/       # Audio finalization
+│   │   ├── 04_ImageGeneration/      # Stage 4: Image Content
+│   │   │   └── SparseKeyFramesGenerator/ # Keyframe generation
+│   │   └── 05_VideoGeneration/      # Stage 5: Video Assembly
+│   │       ├── VideoGenerator/      # Video assembly
+│   │       ├── FrameInterpolation/  # Frame processing
+│   │       └── FinalizeVideo/       # Video finalization
+│   │
+│   ├── Infrastructure/        # Core Infrastructure
+│   │   ├── Core/             # Shared utilities and configuration
+│   │   ├── Platform/         # External service integrations
+│   │   └── Utilities/        # Tools, scripts, and automation
+│   │
+│   ├── Resources/            # Project Resources
+│   │   ├── Assets/          # Static media assets
+│   │   ├── Data/            # Runtime data
+│   │   └── Configuration/   # Configuration files
+│   │
+│   ├── Development/          # Development Resources
+│   │   ├── Tests/           # Test suite
+│   │   ├── Examples/        # Usage examples
+│   │   └── Documentation/   # Project documentation
+│   │
+│   └── Projects/             # Related Projects
+│       ├── CSharp/          # C# implementation
+│       ├── Research/        # Research documents
+│       ├── Issues/          # Issue tracking
+│       └── Podcasts/        # Podcast content
+│
+├── .github/                  # GitHub workflows and config
+├── pyproject.toml           # Python project configuration
+├── requirements.txt          # Python dependencies
+└── README.md                 # This file
 ```
 
 ## 🚀 Quick Start
@@ -63,9 +73,9 @@ pip install -r requirements-dev.txt
 ### Basic Usage
 
 ```python
-from PrismQ.Core.Shared.config import settings
-from PrismQ.Content.IdeaScraper.idea_generation import IdeaGenerator
-from PrismQ.Platform.Providers import OpenAIProvider
+from PrismQ.Pipeline.01_IdeaGeneration.IdeaScraper.idea_generation import IdeaGenerator
+from PrismQ.Infrastructure.Core.Shared.config import settings
+from PrismQ.Infrastructure.Platform.Providers import OpenAIProvider
 
 # Configure
 api_key = settings.openai_api_key
@@ -75,55 +85,52 @@ generator = IdeaGenerator()
 ideas = generator.generate()
 ```
 
-## 📦 Namespace Organization
+## 📦 Pipeline Stages
 
-### Core (`PrismQ/Core/`)
-Foundation components including configuration, logging, database utilities, error handling, caching, and data models.
+### Stage 1: Idea Generation (`Pipeline/01_IdeaGeneration/`)
+Generate and scrape content ideas from various sources.
 
-### Content (`PrismQ/Content/`)
-All content generation and processing modules for ideas, stories, titles, scenes, and metadata.
+### Stage 2: Text Generation (`Pipeline/02_TextGeneration/`)
+Create story scripts, titles, descriptions, and scene plans.
 
-### Media (`PrismQ/Media/`)
-Media processing pipeline for audio, video, subtitles, and frame processing.
+### Stage 3: Audio Generation (`Pipeline/03_AudioGeneration/`)
+Generate voice-overs and subtitles for the content.
 
-### Platform (`PrismQ/Platform/`)
-External service integrations including LLM providers, platform providers (YouTube, TikTok, etc.), and pipeline orchestration.
+### Stage 4: Image Generation (`Pipeline/04_ImageGeneration/`)
+Create keyframes and visual elements.
 
-### Utilities (`PrismQ/Utilities/`)
-Tools for publishing, quality checking, and automation scripts.
-
-### Examples (`PrismQ/Examples/`)
-Usage examples and demonstrations.
+### Stage 5: Video Generation (`Pipeline/05_VideoGeneration/`)
+Assemble and finalize the complete video.
 
 ## 🎯 Key Features
 
-- **Modular Architecture**: Clean namespace-based organization
+- **Pipeline-Based Architecture**: Sequential stages from idea to video
 - **Multi-Platform Support**: YouTube, TikTok, Instagram, Facebook, WordPress
 - **AI-Powered Content**: Automated story generation and optimization
-- **Media Pipeline**: Complete audio/video processing workflow
+- **Complete Workflow**: Idea → Text → Audio → Images → Video
 - **Quality Tools**: Automated quality checking and scoring
-- **Extensible Design**: Easy to add new providers and modules
+- **Extensible Design**: Easy to add new pipeline stages
 
 ## 📚 Documentation
 
-- **Getting Started**: See `PrismQ/Documentation/guides/`
+- **Getting Started**: See `PrismQ/Development/Documentation/guides/`
 - **API Reference**: See `PrismQ/README.md`
-- **Examples**: See `PrismQ/Examples/`
-- **Migration Guide**: See `PrismQ/Documentation/migration/`
+- **Examples**: See `PrismQ/Development/Examples/`
+- **Migration Guide**: See `PrismQ/Development/Documentation/migration/`
 
 ## 🧪 Testing
 
 ```bash
 # Run all tests
-pytest PrismQ/Tests/
+pytest PrismQ/Development/Tests/
 
 # Run specific test suite
-pytest PrismQ/Tests/test_core_config.py
+pytest PrismQ/Development/Tests/test_core_config.py
 ```
 
 ## 🤝 Contributing
 
-See `PrismQ/Documentation/CONTRIBUTING.md` for contribution guidelines.
+See `PrismQ/Development/Documentation/CONTRIBUTING.md` for contribution guidelines.
 
 ## 📄 License
 
@@ -131,6 +138,6 @@ See LICENSE file for details.
 
 ## 🔗 Links
 
-- [Project Documentation](PrismQ/Documentation/)
+- [Project Documentation](PrismQ/Development/Documentation/)
 - [API Documentation](PrismQ/README.md)
-- [Issue Tracker](PrismQ/Issues/)
+- [Issue Tracker](PrismQ/Projects/Issues/)

@@ -2,103 +2,117 @@
 
 PrismQ is a well-organized, namespace-based architecture for the StoryGenerator project, providing clean separation of concerns and modular functionality.
 
-## Namespace Structure
+# PrismQ - Modular Story Generation Framework
+
+PrismQ is a pipeline-based architecture for the StoryGenerator project, organizing functionality by content creation stages from idea to final video.
+
+## Pipeline Structure
 
 ```
 PrismQ/
-├── Core/                      # Core utilities and shared components
-│   └── Shared/               # Configuration, logging, database, models
-│       ├── interfaces/       # Provider interfaces
-│       ├── cache.py         # Caching utilities
-│       ├── config.py        # Configuration management
-│       ├── database.py      # Database utilities
-│       ├── errors.py        # Custom exceptions
-│       ├── logging.py       # Logging utilities
-│       ├── models.py        # Shared data models
-│       ├── retry.py         # Retry logic
-│       └── validation.py    # Validation utilities
+├── Pipeline/                  # Sequential Content Creation Pipeline
+│   ├── 01_IdeaGeneration/    # Stage 1: Idea Generation
+│   │   └── IdeaScraper/      # Idea scraping and generation
+│   │       ├── idea_generation.py
+│   │       ├── topic_clustering.py
+│   │       └── scripts/
+│   │
+│   ├── 02_TextGeneration/    # Stage 2: Text Content Creation
+│   │   ├── StoryGenerator/   # Story and script development
+│   │   ├── StoryTitleProcessor/  # Title generation
+│   │   ├── StoryTitleScoring/    # Title quality scoring
+│   │   ├── StoryTitleFineTune/   # Title fine-tuning
+│   │   ├── SceneDescriptions/    # Scene planning
+│   │   ├── DescriptionGenerator/ # Metadata descriptions
+│   │   ├── TagsGenerator/        # Tag generation
+│   │   ├── StoryDescriptionScoring/
+│   │   ├── StoryDescriptionFineTune/
+│   │   └── FinalizeText/         # Text finalization
+│   │
+│   ├── 03_AudioGeneration/   # Stage 3: Audio Content Creation
+│   │   ├── VoiceOverGenerator/   # Voice synthesis and audio
+│   │   ├── SubtitleGenerator/    # Subtitle generation
+│   │   └── FinalizeAudio/        # Audio finalization
+│   │
+│   ├── 04_ImageGeneration/   # Stage 4: Image Content Creation
+│   │   └── SparseKeyFramesGenerator/  # Keyframe generation
+│   │
+│   └── 05_VideoGeneration/   # Stage 5: Video Assembly & Finalization
+│       ├── VideoGenerator/   # Video assembly
+│       ├── FrameInterpolation/  # Frame processing
+│       └── FinalizeVideo/    # Video finalization
 │
-├── Content/                   # Content generation modules
-│   ├── IdeaScraper/          # Idea scraping and generation
-│   ├── StoryGenerator/       # Story and script development
-│   ├── StoryTitleProcessor/  # Title generation
-│   ├── StoryTitleScoring/    # Title quality scoring
-│   ├── SceneDescriptions/    # Scene planning
-│   ├── DescriptionGenerator/ # Metadata descriptions
-│   ├── TagsGenerator/        # Tag generation
-│   ├── StoryTitleFineTune/   # Title fine-tuning
-│   ├── StoryDescriptionFineTune/  # Description fine-tuning
-│   └── StoryDescriptionScoring/   # Description scoring
+├── Infrastructure/           # Core Infrastructure
+│   ├── Core/                # Shared utilities and configuration
+│   │   └── Shared/         # Configuration, logging, database, models
+│   │       ├── interfaces/  # Provider interfaces
+│   │       ├── cache.py
+│   │       ├── config.py
+│   │       ├── database.py
+│   │       ├── errors.py
+│   │       ├── logging.py
+│   │       ├── models.py
+│   │       ├── retry.py
+│   │       └── validation.py
+│   │
+│   ├── Platform/            # External service integrations
+│   │   ├── Providers/      # Service providers
+│   │   │   ├── openai_provider.py
+│   │   │   ├── youtube_provider.py
+│   │   │   ├── tiktok_provider.py
+│   │   │   └── ...
+│   │   └── Pipeline/       # Pipeline orchestration
+│   │       ├── orchestration/
+│   │       └── scripts/
+│   │
+│   └── Utilities/          # Tools, scripts, and automation
+│       ├── Tools/          # Publishing and quality tools
+│       └── Scripts/        # Automation scripts
 │
-├── Media/                     # Media processing modules
-│   ├── VoiceOverGenerator/   # Voice synthesis and audio
-│   ├── SubtitleGenerator/    # Subtitle generation
-│   ├── VideoGenerator/       # Video assembly
-│   ├── FrameInterpolation/   # Frame processing
-│   ├── SparseKeyFramesGenerator/  # Keyframe generation
-│   ├── FinalizeAudio/        # Audio finalization
-│   ├── FinalizeVideo/        # Video finalization
-│   └── FinalizeText/         # Text finalization
+├── Resources/              # Project Resources
+│   ├── Assets/            # Static media assets
+│   ├── Data/              # Runtime data and generated content
+│   └── Configuration/     # YAML configuration files
 │
-├── Platform/                  # Platform integrations
-│   ├── Providers/            # External service providers
-│   │   ├── openai_provider.py      # OpenAI LLM
-│   │   ├── openai_optimized.py     # Optimized OpenAI
-│   │   ├── mock_provider.py        # Mock provider
-│   │   ├── youtube_provider.py     # YouTube
-│   │   ├── tiktok_provider.py      # TikTok
-│   │   ├── instagram_provider.py   # Instagram
-│   │   ├── facebook_provider.py    # Facebook
-│   │   └── wordpress_provider.py   # WordPress
-│   └── Pipeline/             # Pipeline orchestration
-│       ├── orchestration/    # Step execution
-│       └── scripts/          # Batch scripts
+├── Development/           # Development Resources
+│   ├── Tests/            # Test suite
+│   ├── Examples/         # Usage examples and demonstrations
+│   └── Documentation/    # Project documentation
 │
-├── Utilities/                 # Tools and utilities
-│   ├── Tools/                # Publishing and quality tools
-│   │   ├── MultiPlatformPublisher.py  # Multi-platform distribution
-│   │   ├── VideoQualityChecker.py     # Quality validation
-│   │   └── VideoVariantSelector.py    # Variant selection
-│   └── Scripts/              # Automation scripts
-│       ├── pipeline/         # Pipeline scripts
-│       ├── scrapers/         # Content scrapers
-│       └── ...              # Various utilities
-│
-├── Examples/                  # Usage examples
-│   ├── basic_pipeline.py     # Basic pipeline usage
-│   ├── platform_*_example.py # Platform integration examples
-│   └── ...                   # Various demonstrations
-│
-├── CSharp/                    # C# implementation
-│   ├── PrismQ/               # C# PrismQ modules
-│   └── MLScripts/            # ML subprocess scripts
-│
-├── Tests/                     # Test suite
-├── Documentation/             # Project documentation
-├── Configuration/             # Configuration files
-├── Assets/                    # Static assets
-├── Data/                      # Runtime data
-├── Research/                  # Research documents
-├── Issues/                    # Issue tracking
-└── Podcasts/                  # Podcast content
+└── Projects/             # Related Projects
+    ├── CSharp/          # C# implementation
+    ├── Research/        # Research documents
+    ├── Issues/          # Issue tracking
+    └── Podcasts/        # Podcast content
 ```
 
 ## Import Convention
 
-### For New Code
+### Pipeline-Based Imports
 
-Always import using the full namespace path:
+Always import using the pipeline stage path:
 
 ```python
-from PrismQ.Core.Shared.errors import APIError
-from PrismQ.Core.Shared.config import settings
-from PrismQ.Content.IdeaScraper.idea_generation import IdeaAdapter, IdeaGenerator
-from PrismQ.Content.StoryTitleScoring.title_scoring import TitleScorer
-from PrismQ.Media.VoiceOverGenerator.voice_recommendation import VoiceRecommender
-from PrismQ.Platform.Providers import OpenAIProvider, MockLLMProvider
-from PrismQ.Platform.Pipeline.orchestration.run_step import StepOrchestrator
-from PrismQ.Utilities.Tools import MultiPlatformPublisher, VideoQualityChecker
-from PrismQ.Utilities.Scripts import reddit_scraper
+# Stage 1: Idea Generation
+from PrismQ.Pipeline.01_IdeaGeneration.IdeaScraper.idea_generation import IdeaGenerator
+
+# Stage 2: Text Generation
+from PrismQ.Pipeline.02_TextGeneration.StoryGenerator.script_development import ScriptGenerator
+from PrismQ.Pipeline.02_TextGeneration.StoryTitleScoring.title_scoring import TitleScorer
+
+# Stage 3: Audio Generation
+from PrismQ.Pipeline.03_AudioGeneration.VoiceOverGenerator.voice_recommendation import VoiceRecommender
+
+# Stage 4: Image Generation
+from PrismQ.Pipeline.04_ImageGeneration.SparseKeyFramesGenerator import KeyFrameGenerator
+
+# Stage 5: Video Generation
+from PrismQ.Pipeline.05_VideoGeneration.VideoGenerator import VideoAssembler
+
+# Infrastructure
+from PrismQ.Infrastructure.Core.Shared.config import settings
+from PrismQ.Infrastructure.Platform.Providers import OpenAIProvider
+from PrismQ.Infrastructure.Utilities.Tools import MultiPlatformPublisher
 ```
 
 ### Backward Compatibility
