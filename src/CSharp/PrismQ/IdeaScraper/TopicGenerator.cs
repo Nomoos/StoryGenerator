@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using StoryGenerator.Core.Interfaces;
 using StoryGenerator.Models;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.IdeaScraper
 {
     /// <summary>
     /// Concrete implementation of ITopicGenerator for clustering ideas into topics.

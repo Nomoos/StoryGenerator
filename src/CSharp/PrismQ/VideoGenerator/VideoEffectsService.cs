@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.VideoGenerator
 {
     /// <summary>
     /// Video enhancement tools for adding effects like Ken Burns, transitions, and filters.

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using StoryGenerator.Core.Interfaces;
 using StoryGenerator.Models;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.StoryTitleProcessor
 {
     /// <summary>
     /// Concrete implementation of ITitleGenerator for generating clickable titles.

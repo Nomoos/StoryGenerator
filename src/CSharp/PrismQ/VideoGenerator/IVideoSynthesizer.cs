@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.VideoGenerator
 {
     /// <summary>
     /// Core interface for video synthesis implementations

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.VideoGenerator
 {
     /// <summary>
     /// Configuration for keyframe-based video synthesis using SDXL + frame interpolation

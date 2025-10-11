@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using StoryGenerator.Models;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.SubtitleGenerator
 {
     /// <summary>
     /// Generates draft SRT subtitles from scripts.

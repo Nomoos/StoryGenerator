@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using StoryGenerator.Core.Interfaces;
 using StoryGenerator.Models;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.IdeaScraper
 {
     /// <summary>
     /// Concrete implementation of IIdeaGenerator for generating raw story ideas.

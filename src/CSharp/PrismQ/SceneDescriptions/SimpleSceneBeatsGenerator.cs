@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using StoryGenerator.Models;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.SceneDescriptions
 {
     /// <summary>
     /// Generates simple beat-sheets and shotlists from scripts without requiring LLM.

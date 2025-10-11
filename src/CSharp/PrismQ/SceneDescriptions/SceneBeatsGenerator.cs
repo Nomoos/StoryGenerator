@@ -6,7 +6,7 @@ using StoryGenerator.Core.Interfaces;
 using StoryGenerator.Core.LLM;
 using StoryGenerator.Models;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.SceneDescriptions
 {
     /// <summary>
     /// Generates scene beat-sheets and shotlists from final scripts.

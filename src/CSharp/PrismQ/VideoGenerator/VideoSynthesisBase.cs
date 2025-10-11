@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.VideoGenerator
 {
     /// <summary>
     /// Base class for video synthesis implementations providing common functionality

@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using StoryGenerator.Core.Models;
 using StoryGenerator.Providers.OpenAI;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.StoryGenerator
 {
     /// <summary>
     /// Implements iterative improvement system for video generation.

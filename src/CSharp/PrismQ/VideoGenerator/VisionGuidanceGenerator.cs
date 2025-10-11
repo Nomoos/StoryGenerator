@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.VideoGenerator
 {
     /// <summary>
     /// Vision guidance generator for image analysis and quality assessment.

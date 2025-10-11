@@ -1,6 +1,6 @@
 using System;
 
-namespace StoryGenerator.Generators
+namespace PrismQ.VideoGenerator
 {
     /// <summary>
     /// Video synthesis method types
