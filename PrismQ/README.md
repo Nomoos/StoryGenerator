@@ -5,7 +5,7 @@ PrismQ is a well-organized, namespace-based architecture for the StoryGenerator 
 ## Namespace Structure
 
 ```
-src/PrismQ/
+PrismQ/
 ├── Core/                      # Core utilities and shared components
 │   └── Shared/               # Configuration, logging, database, models
 │       ├── interfaces/       # Provider interfaces
@@ -64,8 +64,23 @@ src/PrismQ/
 │       ├── scrapers/         # Content scrapers
 │       └── ...              # Various utilities
 │
-└── Documentation/             # Examples and guides
-    └── Examples/             # Usage demonstrations
+├── Examples/                  # Usage examples
+│   ├── basic_pipeline.py     # Basic pipeline usage
+│   ├── platform_*_example.py # Platform integration examples
+│   └── ...                   # Various demonstrations
+│
+├── CSharp/                    # C# implementation
+│   ├── PrismQ/               # C# PrismQ modules
+│   └── MLScripts/            # ML subprocess scripts
+│
+├── Tests/                     # Test suite
+├── Documentation/             # Project documentation
+├── Configuration/             # Configuration files
+├── Assets/                    # Static assets
+├── Data/                      # Runtime data
+├── Research/                  # Research documents
+├── Issues/                    # Issue tracking
+└── Podcasts/                  # Podcast content
 ```
 
 ## Import Convention

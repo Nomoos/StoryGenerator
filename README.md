@@ -4,11 +4,11 @@ A comprehensive, modular framework for automated story generation, media process
 
 ## 🏗️ Project Structure
 
-This project follows a clean, namespace-based architecture with all components organized at the top level:
+This project follows a clean, namespace-based architecture with **everything organized under PrismQ**:
 
 ```
 StoryGenerator/
-├── PrismQ/                    # Main Python application namespace
+├── PrismQ/                    # Main project namespace (ALL CONTENT)
 │   ├── Core/                  # Core utilities and shared components
 │   │   └── Shared/           # Configuration, logging, database, models
 │   ├── Content/               # Content generation modules
@@ -30,19 +30,18 @@ StoryGenerator/
 │   ├── Utilities/             # Tools and utilities
 │   │   ├── Tools/            # Publishing tools
 │   │   └── Scripts/          # Automation scripts
-│   └── Documentation/         # Examples and guides
-│       └── Examples/         # Usage examples
-├── CSharp/                    # C# implementation
-│   ├── PrismQ/               # C# PrismQ modules
-│   └── MLScripts/            # ML subprocess scripts
-├── Tests/                     # Test suite
-├── Documentation/             # Project documentation
-├── Configuration/             # Configuration files
-├── Assets/                    # Static assets
-├── Data/                      # Runtime data
-├── Research/                  # Research documents
-├── Issues/                    # Issue tracking
-├── Podcasts/                  # Podcast content
+│   ├── Examples/              # Usage examples
+│   ├── CSharp/                # C# implementation
+│   │   ├── PrismQ/           # C# PrismQ modules
+│   │   └── MLScripts/        # ML subprocess scripts
+│   ├── Tests/                 # Test suite
+│   ├── Documentation/         # Project documentation
+│   ├── Configuration/         # Configuration files
+│   ├── Assets/                # Static assets
+│   ├── Data/                  # Runtime data
+│   ├── Research/              # Research documents
+│   ├── Issues/                # Issue tracking
+│   └── Podcasts/              # Podcast content
 ├── .github/                   # GitHub workflows and config
 ├── pyproject.toml            # Python project configuration
 ├── requirements.txt           # Python dependencies
@@ -93,8 +92,8 @@ External service integrations including LLM providers, platform providers (YouTu
 ### Utilities (`PrismQ/Utilities/`)
 Tools for publishing, quality checking, and automation scripts.
 
-### Documentation (`PrismQ/Documentation/`)
-Usage examples, guides, and demonstrations.
+### Examples (`PrismQ/Examples/`)
+Usage examples and demonstrations.
 
 ## 🎯 Key Features
 
@@ -107,24 +106,24 @@ Usage examples, guides, and demonstrations.
 
 ## 📚 Documentation
 
-- **Getting Started**: See `Documentation/guides/`
+- **Getting Started**: See `PrismQ/Documentation/guides/`
 - **API Reference**: See `PrismQ/README.md`
-- **Examples**: See `PrismQ/Documentation/Examples/`
-- **Migration Guide**: See `Documentation/migration/`
+- **Examples**: See `PrismQ/Examples/`
+- **Migration Guide**: See `PrismQ/Documentation/migration/`
 
 ## 🧪 Testing
 
 ```bash
 # Run all tests
-pytest Tests/
+pytest PrismQ/Tests/
 
 # Run specific test suite
-pytest Tests/test_core_config.py
+pytest PrismQ/Tests/test_core_config.py
 ```
 
 ## 🤝 Contributing
 
-See `Documentation/CONTRIBUTING.md` for contribution guidelines.
+See `PrismQ/Documentation/CONTRIBUTING.md` for contribution guidelines.
 
 ## 📄 License
 
@@ -132,6 +131,6 @@ See LICENSE file for details.
 
 ## 🔗 Links
 
-- [Project Documentation](Documentation/)
+- [Project Documentation](PrismQ/Documentation/)
 - [API Documentation](PrismQ/README.md)
-- [Issue Tracker](Issues/)
+- [Issue Tracker](PrismQ/Issues/)
