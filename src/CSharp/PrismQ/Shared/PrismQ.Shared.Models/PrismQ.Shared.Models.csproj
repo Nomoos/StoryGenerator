@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>PrismQ.Shared.Models</RootNamespace>
+    <AssemblyName>PrismQ.Shared.Models</AssemblyName>
+    <Description>Shared data models and DTOs for PrismQ</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="../../../stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="9.0.9" />
+  </ItemGroup>
+
+</Project>
