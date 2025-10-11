@@ -115,7 +115,7 @@ class Program
                 // Display mapping summary
                 Console.WriteLine("\n--- Mapping Summary ---");
                 var mappingJson = await File.ReadAllTextAsync(savedMappingPath);
-                var mapping = JsonSerializer.Deserialize<StoryGenerator.Core.Models.SubtitleToShotMapping>(
+                var mapping = JsonSerializer.Deserialize<SubtitleToShotMapping>(
                     mappingJson,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
                 );
