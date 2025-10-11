@@ -1,4 +1,6 @@
-namespace StoryGenerator.Core.Services
+using PrismQ.Shared.Models;
+
+namespace PrismQ.Shared.Interfaces
 {
     /// <summary>
     /// Interface for content filtering service.

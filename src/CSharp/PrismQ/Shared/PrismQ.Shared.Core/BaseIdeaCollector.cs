@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using StoryGenerator.Core.Interfaces;
-using StoryGenerator.Core.Models;
+using PrismQ.Shared.Interfaces;
+using PrismQ.Shared.Models;
 
 namespace PrismQ.Shared.Core.Collectors;
 

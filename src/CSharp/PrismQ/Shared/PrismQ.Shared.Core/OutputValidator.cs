@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using PrismQ.Shared.Interfaces;
+using PrismQ.Shared.Models;
 
 namespace PrismQ.Shared.Core.Services
 {

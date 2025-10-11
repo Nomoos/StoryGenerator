@@ -1,8 +1,8 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
-using StoryGenerator.Core;
-using StoryGenerator.Core.Configuration;
-using StoryGenerator.Core.Interfaces;
+using PrismQ.Shared.Core;
+using PrismQ.Shared.Interfaces;
+using PrismQ.Shared.Models;
 
 namespace StoryGenerator.Data;
 

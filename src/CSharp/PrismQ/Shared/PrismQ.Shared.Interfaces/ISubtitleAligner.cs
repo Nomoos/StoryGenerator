@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using PrismQ.Shared.Models;
 
 namespace PrismQ.Shared.Interfaces
 {

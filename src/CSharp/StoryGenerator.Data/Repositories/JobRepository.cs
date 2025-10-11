@@ -1,5 +1,6 @@
-using StoryGenerator.Core;
-using StoryGenerator.Core.Interfaces;
+using PrismQ.Shared.Core;
+using PrismQ.Shared.Interfaces;
+using PrismQ.Shared.Models;
 using StoryGenerator.Data.Models;
 
 namespace StoryGenerator.Data.Repositories;
