@@ -26,6 +26,7 @@ namespace StoryGenerator.Examples
                 await RunCompleteVideoProductionExample();
                 await RunVideoProductionWithScriptExample();
                 await RunVideoProductionWithMinimalConfigExample();
+                await RunCameraMotionExamples();
             }
             catch (Exception ex)
             {
@@ -96,7 +97,12 @@ namespace StoryGenerator.Examples
                 AudioBitrate = "192k",
 
                 // Frame interpolation
-                InterpolationMethod = "RIFE"
+                InterpolationMethod = "RIFE",
+
+                // Cinematic camera motion
+                EnableCameraMotion = true,
+                CameraMotion = CameraMotionType.Dynamic,
+                CameraMotionIntensity = 0.3
             };
 
             Console.WriteLine($"Producing video from {config.KeyframePaths.Count} keyframes...");
@@ -233,6 +239,178 @@ namespace StoryGenerator.Examples
             else
             {
                 Console.WriteLine($"\n❌ Video production failed: {result.ErrorMessage}");
+            }
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Example 4: Cinematic camera motion demonstrations.
+        /// </summary>
+        private static async Task RunCameraMotionExamples()
+        {
+            Console.WriteLine("Example 4: Cinematic Camera Motion");
+            Console.WriteLine("-----------------------------------\n");
+
+            var producer = new VideoProducer();
+
+            // Example 4.1: Ken Burns effect (zoom and pan)
+            Console.WriteLine("4.1. Ken Burns Effect (Zoom and Pan)");
+            try
+            {
+                var config = new VideoProductionConfig
+                {
+                    KeyframePaths = new List<string>
+                    {
+                        "keyframes/landscape_001.png",
+                        "keyframes/landscape_002.png",
+                        "keyframes/landscape_003.png"
+                    },
+                    DurationSeconds = 20.0,
+                    OutputPath = "output/ken_burns_effect.mp4",
+                    
+                    // Ken Burns style motion
+                    EnableCameraMotion = true,
+                    CameraMotion = CameraMotionType.ZoomAndPan,
+                    CameraMotionIntensity = 0.4
+                };
+
+                var result = await producer.ProduceVideoAsync(config);
+                if (result.Success)
+                    Console.WriteLine($"  ✓ Ken Burns video: {result.OutputPath}");
+                else
+                    Console.WriteLine($"  ✗ Failed: {result.ErrorMessage}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"  ✗ Error: {ex.Message}");
+            }
+            Console.WriteLine();
+
+            // Example 4.2: Slow zoom in
+            Console.WriteLine("4.2. Slow Zoom In Effect");
+            try
+            {
+                var config = new VideoProductionConfig
+                {
+                    KeyframePaths = new List<string>
+                    {
+                        "keyframes/portrait_001.png",
+                        "keyframes/portrait_002.png"
+                    },
+                    DurationSeconds = 15.0,
+                    OutputPath = "output/zoom_in_effect.mp4",
+                    
+                    EnableCameraMotion = true,
+                    CameraMotion = CameraMotionType.ZoomIn,
+                    CameraMotionIntensity = 0.3
+                };
+
+                var result = await producer.ProduceVideoAsync(config);
+                if (result.Success)
+                    Console.WriteLine($"  ✓ Zoom in video: {result.OutputPath}");
+                else
+                    Console.WriteLine($"  ✗ Failed: {result.ErrorMessage}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"  ✗ Error: {ex.Message}");
+            }
+            Console.WriteLine();
+
+            // Example 4.3: Dynamic motion (varies per keyframe)
+            Console.WriteLine("4.3. Dynamic Motion (Alternating Effects)");
+            try
+            {
+                var config = new VideoProductionConfig
+                {
+                    KeyframePaths = new List<string>
+                    {
+                        "keyframes/story/intro.png",
+                        "keyframes/story/scene1.png",
+                        "keyframes/story/scene2.png",
+                        "keyframes/story/scene3.png",
+                        "keyframes/story/outro.png"
+                    },
+                    DurationSeconds = 30.0,
+                    OutputPath = "output/dynamic_motion.mp4",
+                    
+                    // Dynamic motion automatically varies effects
+                    EnableCameraMotion = true,
+                    CameraMotion = CameraMotionType.Dynamic,
+                    CameraMotionIntensity = 0.35
+                };
+
+                var result = await producer.ProduceVideoAsync(config);
+                if (result.Success)
+                    Console.WriteLine($"  ✓ Dynamic motion video: {result.OutputPath}");
+                else
+                    Console.WriteLine($"  ✗ Failed: {result.ErrorMessage}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"  ✗ Error: {ex.Message}");
+            }
+            Console.WriteLine();
+
+            // Example 4.4: Pan right with subtle zoom
+            Console.WriteLine("4.4. Pan Right Effect");
+            try
+            {
+                var config = new VideoProductionConfig
+                {
+                    KeyframePaths = new List<string>
+                    {
+                        "keyframes/wide_001.png",
+                        "keyframes/wide_002.png"
+                    },
+                    DurationSeconds = 12.0,
+                    OutputPath = "output/pan_right_effect.mp4",
+                    
+                    EnableCameraMotion = true,
+                    CameraMotion = CameraMotionType.PanRight,
+                    CameraMotionIntensity = 0.25
+                };
+
+                var result = await producer.ProduceVideoAsync(config);
+                if (result.Success)
+                    Console.WriteLine($"  ✓ Pan right video: {result.OutputPath}");
+                else
+                    Console.WriteLine($"  ✗ Failed: {result.ErrorMessage}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"  ✗ Error: {ex.Message}");
+            }
+            Console.WriteLine();
+
+            // Example 4.5: No camera motion (static slideshow)
+            Console.WriteLine("4.5. Static Slideshow (No Motion)");
+            try
+            {
+                var config = new VideoProductionConfig
+                {
+                    KeyframePaths = new List<string>
+                    {
+                        "keyframes/presentation_001.png",
+                        "keyframes/presentation_002.png",
+                        "keyframes/presentation_003.png"
+                    },
+                    DurationSeconds = 18.0,
+                    OutputPath = "output/static_slideshow.mp4",
+                    
+                    // Disable camera motion for static presentation
+                    EnableCameraMotion = false
+                };
+
+                var result = await producer.ProduceVideoAsync(config);
+                if (result.Success)
+                    Console.WriteLine($"  ✓ Static slideshow: {result.OutputPath}");
+                else
+                    Console.WriteLine($"  ✗ Failed: {result.ErrorMessage}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"  ✗ Error: {ex.Message}");
             }
             Console.WriteLine();
         }

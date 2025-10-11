@@ -12,10 +12,11 @@ This is a high-level abstraction that combines `KeyframeVideoSynthesizer` and `V
 
 ## Features
 
-✅ **Video from Keyframes**: Generate smooth videos from static keyframe images using frame interpolation
-✅ **Multiple Subtitle Sources**: Use existing SRT files or auto-generate from script text
-✅ **Audio Integration**: Add voiceover narration and background music with ducking
-✅ **Post-Production**: Automatic cropping, subtitle burn-in, and audio mixing
+✅ **Video from Keyframes**: Generate smooth videos from static keyframe images using frame interpolation  
+✅ **Cinematic Camera Motion**: Add professional pan, zoom, and tilt effects for smooth transitions  
+✅ **Multiple Subtitle Sources**: Use existing SRT files or auto-generate from script text  
+✅ **Audio Integration**: Add voiceover narration and background music with ducking  
+✅ **Post-Production**: Automatic cropping, subtitle burn-in, and audio mixing  
 ✅ **Flexible Configuration**: Extensive configuration options for all aspects of video production
 
 ## Quick Start
@@ -116,6 +117,31 @@ var config = new VideoProductionConfig
 var result = await producer.ProduceVideoAsync(config);
 ```
 
+### With Cinematic Camera Motion
+
+```csharp
+var config = new VideoProductionConfig
+{
+    KeyframePaths = new List<string>
+    {
+        "keyframes/landscape_001.png",
+        "keyframes/landscape_002.png",
+        "keyframes/landscape_003.png"
+    },
+    
+    DurationSeconds = 20.0,
+    
+    // Enable cinematic camera effects
+    EnableCameraMotion = true,
+    CameraMotion = CameraMotionType.ZoomAndPan,  // Ken Burns effect
+    CameraMotionIntensity = 0.4,  // 0.0-1.0, controls effect strength
+    
+    OutputPath = "output/cinematic_video.mp4"
+};
+
+var result = await producer.ProduceVideoAsync(config);
+```
+
 ### Production-Ready Configuration
 
 ```csharp
@@ -197,6 +223,21 @@ var result = await producer.ProduceVideoAsync(config);
 | `InterpolationMethod` | `string` | "RIFE" | Frame interpolation method |
 | `GenerateSubtitlesFromScript` | `bool` | true | Auto-generate SRT from script text |
 | `WordsPerMinute` | `int` | 150 | Words per minute for subtitle timing |
+| `EnableCameraMotion` | `bool` | true | Enable cinematic camera motion effects |
+| `CameraMotion` | `CameraMotionType` | Dynamic | Type of camera motion (see below) |
+| `CameraMotionIntensity` | `double` | 0.3 | Camera motion intensity (0.0-1.0) |
+
+### CameraMotionType Options
+
+| Type | Description | Use Case |
+|------|-------------|----------|
+| `None` | No camera motion, static slideshow | Presentations, technical documentation |
+| `ZoomIn` | Slow zoom in effect on each keyframe | Portraits, focus on details |
+| `ZoomOut` | Slow zoom out effect revealing context | Establishing shots, big reveals |
+| `PanRight` | Pan left to right with subtle zoom | Landscape scenes, horizontal movement |
+| `PanLeft` | Pan right to left with subtle zoom | Landscape scenes, horizontal movement |
+| `ZoomAndPan` | Ken Burns effect combining zoom and pan | Professional documentaries, photo slideshows |
+| `Dynamic` | Varies effects between keyframes (default) | Story-driven content, visual variety |
 
 ### VideoProductionResult
 
@@ -225,7 +266,8 @@ The VideoProducer orchestrates the following pipeline:
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │ 2. Video Generation from Keyframes                          │
-│    • Interpolate frames between keyframes                   │
+│    • Apply cinematic camera motion to each keyframe         │
+│    • Interpolate frames between keyframes (optional)        │
 │    • Assemble video with FFmpeg                             │
 │    • Sync with audio if provided                            │
 └─────────────────────────────────────────────────────────────┘
@@ -239,6 +281,75 @@ The VideoProducer orchestrates the following pipeline:
 └─────────────────────────────────────────────────────────────┘
                             ↓
                       Final Video
+```
+
+## Cinematic Camera Motion
+
+The VideoProducer supports professional camera motion effects to create smooth, engaging videos from static keyframes. This feature transforms simple slideshows into dynamic, cinematic content.
+
+### How It Works
+
+Camera motion is applied using FFmpeg's `zoompan` filter, which creates smooth zoom and pan effects on static images. Each keyframe is processed with motion effects before being concatenated into the final video.
+
+### Camera Motion Types
+
+**1. Dynamic (Default)**
+- Automatically alternates between different effects for visual variety
+- Best for story-driven content with multiple scenes
+- Creates a professional, varied viewing experience
+
+**2. ZoomIn**
+- Gradual zoom in from 100% to max zoom level
+- Creates focus and draws attention to details
+- Perfect for portraits and close-up shots
+
+**3. ZoomOut**
+- Starts zoomed in and gradually reveals the full scene
+- Great for establishing shots and big reveals
+- Creates a sense of discovery
+
+**4. PanRight / PanLeft**
+- Smooth horizontal pan across the image
+- Includes subtle zoom for added depth
+- Ideal for landscape and wide shots
+
+**5. ZoomAndPan (Ken Burns Effect)**
+- Combines diagonal pan with zoom in
+- Classic documentary and photo slideshow style
+- Most cinematic and professional looking
+
+**6. None**
+- Disables camera motion for static presentation
+- Use for technical documentation or when motion is distracting
+
+### Intensity Control
+
+The `CameraMotionIntensity` parameter (0.0-1.0) controls the strength of effects:
+
+- **0.1-0.2**: Subtle motion, barely noticeable
+- **0.3-0.4**: Moderate motion (recommended for most content)
+- **0.5-0.7**: Strong motion, very noticeable
+- **0.8-1.0**: Extreme motion, use sparingly
+
+### Examples
+
+**Cinematic Documentary:**
+```csharp
+EnableCameraMotion = true,
+CameraMotion = CameraMotionType.ZoomAndPan,
+CameraMotionIntensity = 0.4
+```
+
+**Dynamic Storytelling:**
+```csharp
+EnableCameraMotion = true,
+CameraMotion = CameraMotionType.Dynamic,
+CameraMotionIntensity = 0.3
+```
+
+**Static Presentation:**
+```csharp
+EnableCameraMotion = false
 ```
 
 ## Use Cases

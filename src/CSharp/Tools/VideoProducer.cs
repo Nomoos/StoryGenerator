@@ -90,6 +90,9 @@ namespace StoryGenerator.Tools
                     config.AudioPath,
                     config.InterpolationMethod,
                     config.Fps,
+                    config.EnableCameraMotion,
+                    config.CameraMotion,
+                    config.CameraMotionIntensity,
                     cancellationToken);
 
                 if (!videoGenerated)
@@ -236,6 +239,9 @@ namespace StoryGenerator.Tools
             string? audioPath,
             string interpolationMethod,
             int fps,
+            bool enableCameraMotion,
+            CameraMotionType cameraMotion,
+            double cameraMotionIntensity,
             CancellationToken cancellationToken)
         {
             // If we have a keyframe synthesizer, use it
@@ -256,14 +262,120 @@ namespace StoryGenerator.Tools
                 duration,
                 audioPath,
                 fps,
+                enableCameraMotion,
+                cameraMotion,
+                cameraMotionIntensity,
                 cancellationToken);
         }
 
         /// <summary>
         /// Generate video from keyframes using FFmpeg (fallback method).
-        /// Creates a simple slideshow-style video with even frame distribution.
+        /// Creates smooth video with cinematic camera motion effects.
         /// </summary>
         private async Task<bool> GenerateVideoFromKeyframesUsingFFmpegAsync(
+            List<string> keyframePaths,
+            string outputPath,
+            double duration,
+            string? audioPath,
+            int fps,
+            bool enableCameraMotion,
+            CameraMotionType cameraMotion,
+            double cameraMotionIntensity,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                // Calculate duration per keyframe
+                double durationPerFrame = duration / keyframePaths.Count;
+                int framesPerKeyframe = (int)(durationPerFrame * fps);
+
+                if (!enableCameraMotion || cameraMotion == CameraMotionType.None)
+                {
+                    // Simple slideshow without motion
+                    return await GenerateSimpleSlideshowAsync(
+                        keyframePaths, outputPath, duration, audioPath, fps, cancellationToken);
+                }
+
+                // Generate video with camera motion effects
+                Console.WriteLine($"   Applying {cameraMotion} camera motion (intensity: {cameraMotionIntensity})");
+
+                // Create temporary directory for processed frames
+                var tempDir = Path.Combine(Path.GetTempPath(), $"camera_motion_{Guid.NewGuid()}");
+                Directory.CreateDirectory(tempDir);
+
+                try
+                {
+                    // Process each keyframe with camera motion
+                    var processedVideos = new List<string>();
+                    
+                    for (int i = 0; i < keyframePaths.Count; i++)
+                    {
+                        var keyframe = keyframePaths[i];
+                        var segmentOutput = Path.Combine(tempDir, $"segment_{i:D3}.mp4");
+                        
+                        // Determine motion type for this keyframe
+                        var motionType = cameraMotion == CameraMotionType.Dynamic 
+                            ? GetDynamicMotionType(i) 
+                            : cameraMotion;
+
+                        // Apply camera motion to this keyframe
+                        bool success = await ApplyCameraMotionToKeyframeAsync(
+                            keyframe,
+                            segmentOutput,
+                            durationPerFrame,
+                            framesPerKeyframe,
+                            fps,
+                            motionType,
+                            cameraMotionIntensity,
+                            cancellationToken);
+
+                        if (success && File.Exists(segmentOutput))
+                        {
+                            processedVideos.Add(segmentOutput);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"   ⚠️ Failed to process keyframe {i + 1}");
+                        }
+                    }
+
+                    if (processedVideos.Count == 0)
+                    {
+                        Console.WriteLine("   ❌ No keyframes were successfully processed");
+                        return false;
+                    }
+
+                    // Concatenate all segments
+                    bool concatenated = await ConcatenateVideoSegmentsAsync(
+                        processedVideos, outputPath, audioPath, cancellationToken);
+
+                    return concatenated;
+                }
+                finally
+                {
+                    // Cleanup temporary directory
+                    try
+                    {
+                        if (Directory.Exists(tempDir))
+                            Directory.Delete(tempDir, true);
+                    }
+                    catch
+                    {
+                        // Ignore cleanup errors
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"   ❌ FFmpeg video generation error: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Generate simple slideshow without camera motion.
+        /// </summary>
+        private async Task<bool> GenerateSimpleSlideshowAsync(
             List<string> keyframePaths,
             string outputPath,
             double duration,
@@ -328,7 +440,183 @@ namespace StoryGenerator.Tools
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"   ❌ FFmpeg video generation error: {ex.Message}");
+                Console.WriteLine($"   ❌ Slideshow generation error: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Apply camera motion effect to a single keyframe.
+        /// </summary>
+        private async Task<bool> ApplyCameraMotionToKeyframeAsync(
+            string keyframePath,
+            string outputPath,
+            double duration,
+            int totalFrames,
+            int fps,
+            CameraMotionType motionType,
+            double intensity,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                // Build the zoompan filter based on motion type
+                string zoomPanFilter = BuildCameraMotionFilter(motionType, intensity, totalFrames, fps);
+
+                // FFmpeg command with camera motion
+                var arguments = new StringBuilder();
+                arguments.Append($"-loop 1 -i \"{keyframePath}\" ");
+                arguments.Append($"-vf \"{zoomPanFilter},fps={fps},scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2\" ");
+                arguments.Append($"-t {duration:F3} ");
+                arguments.Append($"-c:v libx264 -preset medium -crf 23 -pix_fmt yuv420p ");
+                arguments.Append($"-y \"{outputPath}\"");
+
+                var processInfo = new ProcessStartInfo
+                {
+                    FileName = "ffmpeg",
+                    Arguments = arguments.ToString(),
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using var process = Process.Start(processInfo);
+                if (process == null)
+                    return false;
+
+                await process.WaitForExitAsync(cancellationToken);
+
+                return process.ExitCode == 0 && File.Exists(outputPath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"   ❌ Camera motion error: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Build FFmpeg zoompan filter string for camera motion.
+        /// </summary>
+        private string BuildCameraMotionFilter(
+            CameraMotionType motionType,
+            double intensity,
+            int totalFrames,
+            int fps)
+        {
+            // Base zoom levels (1.0 = no zoom, higher = more zoom)
+            double baseZoom = 1.0;
+            double maxZoom = 1.0 + (0.3 * intensity); // Max 30% zoom at full intensity
+
+            switch (motionType)
+            {
+                case CameraMotionType.ZoomIn:
+                    // Gradual zoom in from 100% to max zoom
+                    return $"zoompan=z='min(zoom+0.001,{maxZoom:F3})':d={totalFrames}:s=1080x1920";
+
+                case CameraMotionType.ZoomOut:
+                    // Start zoomed in and zoom out
+                    return $"zoompan=z='max(zoom-0.001,1.0)':d={totalFrames}:s=1080x1920:zoom={maxZoom:F3}";
+
+                case CameraMotionType.PanRight:
+                    // Pan from left to right with slight zoom
+                    return $"zoompan=z='{1.0 + (0.1 * intensity):F3}':x='iw/2-(iw/zoom/2)+({intensity} * on * 2)':d={totalFrames}:s=1080x1920";
+
+                case CameraMotionType.PanLeft:
+                    // Pan from right to left with slight zoom
+                    return $"zoompan=z='{1.0 + (0.1 * intensity):F3}':x='iw/2-(iw/zoom/2)-({intensity} * on * 2)':d={totalFrames}:s=1080x1920";
+
+                case CameraMotionType.ZoomAndPan:
+                    // Combine zoom in with diagonal pan for Ken Burns effect
+                    return $"zoompan=z='min(zoom+0.0015,{maxZoom:F3})':x='iw/2-(iw/zoom/2)+({intensity} * on)':y='ih/2-(ih/zoom/2)+({intensity} * on * 0.5)':d={totalFrames}:s=1080x1920";
+
+                default:
+                    // Dynamic motion (zoom in as default)
+                    return $"zoompan=z='min(zoom+0.001,{maxZoom:F3})':d={totalFrames}:s=1080x1920";
+            }
+        }
+
+        /// <summary>
+        /// Get dynamic motion type based on keyframe index.
+        /// Alternates between different effects for visual variety.
+        /// </summary>
+        private CameraMotionType GetDynamicMotionType(int keyframeIndex)
+        {
+            var motionTypes = new[]
+            {
+                CameraMotionType.ZoomIn,
+                CameraMotionType.ZoomAndPan,
+                CameraMotionType.PanRight,
+                CameraMotionType.ZoomIn,
+                CameraMotionType.PanLeft
+            };
+
+            return motionTypes[keyframeIndex % motionTypes.Length];
+        }
+
+        /// <summary>
+        /// Concatenate video segments into final output.
+        /// </summary>
+        private async Task<bool> ConcatenateVideoSegmentsAsync(
+            List<string> segmentPaths,
+            string outputPath,
+            string? audioPath,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                // Create concat file
+                var concatFile = Path.Combine(Path.GetTempPath(), $"concat_{Guid.NewGuid()}.txt");
+                var sb = new StringBuilder();
+
+                foreach (var segment in segmentPaths)
+                {
+                    sb.AppendLine($"file '{segment.Replace("\\", "/")}'");
+                }
+
+                await File.WriteAllTextAsync(concatFile, sb.ToString(), cancellationToken);
+
+                // Build FFmpeg command
+                var arguments = new StringBuilder();
+                arguments.Append($"-f concat -safe 0 -i \"{concatFile}\" ");
+                
+                if (!string.IsNullOrWhiteSpace(audioPath) && File.Exists(audioPath))
+                {
+                    arguments.Append($"-i \"{audioPath}\" -c:v copy -c:a aac -b:a 192k -shortest ");
+                }
+                else
+                {
+                    arguments.Append($"-c copy ");
+                }
+                
+                arguments.Append($"-y \"{outputPath}\"");
+
+                var processInfo = new ProcessStartInfo
+                {
+                    FileName = "ffmpeg",
+                    Arguments = arguments.ToString(),
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using var process = Process.Start(processInfo);
+                if (process == null)
+                    return false;
+
+                await process.WaitForExitAsync(cancellationToken);
+
+                // Cleanup concat file
+                if (File.Exists(concatFile))
+                    File.Delete(concatFile);
+
+                return process.ExitCode == 0 && File.Exists(outputPath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"   ❌ Concatenation error: {ex.Message}");
                 return false;
             }
         }

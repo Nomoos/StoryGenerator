@@ -135,12 +135,70 @@ namespace StoryGenerator.Models
         /// </summary>
         public int WordsPerMinute { get; set; } = 150;
 
+        /// <summary>
+        /// Enable cinematic camera motion effects (pan, zoom, tilt) for smoother transitions (default: true).
+        /// </summary>
+        public bool EnableCameraMotion { get; set; } = true;
+
+        /// <summary>
+        /// Camera motion intensity (0.0-1.0, default: 0.3).
+        /// Controls the strength of zoom and pan effects.
+        /// </summary>
+        public double CameraMotionIntensity { get; set; } = 0.3;
+
+        /// <summary>
+        /// Camera motion type for keyframe transitions.
+        /// </summary>
+        public CameraMotionType CameraMotion { get; set; } = CameraMotionType.Dynamic;
+
         public VideoProductionConfig()
         {
             KeyframePaths = new List<string>();
             SoundEffectsPaths = new List<string>();
             SafeMargins = new SafeTextMargins();
         }
+    }
+
+    /// <summary>
+    /// Types of camera motion for video production.
+    /// </summary>
+    public enum CameraMotionType
+    {
+        /// <summary>
+        /// No camera motion, static keyframes only.
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// Slow zoom in effect on each keyframe.
+        /// </summary>
+        ZoomIn,
+
+        /// <summary>
+        /// Slow zoom out effect on each keyframe.
+        /// </summary>
+        ZoomOut,
+
+        /// <summary>
+        /// Pan left to right across keyframes.
+        /// </summary>
+        PanRight,
+
+        /// <summary>
+        /// Pan right to left across keyframes.
+        /// </summary>
+        PanLeft,
+
+        /// <summary>
+        /// Combination of zoom and pan for cinematic effect.
+        /// </summary>
+        ZoomAndPan,
+
+        /// <summary>
+        /// Dynamic motion that varies between keyframes (default).
+        /// Alternates between different effects for visual interest.
+        /// </summary>
+        Dynamic
     }
 
     /// <summary>
