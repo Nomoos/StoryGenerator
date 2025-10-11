@@ -404,8 +404,6 @@ if (result.Success)
 - Optional: KeyframeVideoSynthesizer for advanced interpolation
 - Optional: Python with CUDA for GPU-accelerated processing
 
-## 💻 Development
-
 ## 💻 Development Prerequisites
 
 - [.NET 9.0 SDK](https://dotnet.microsoft.com/download)
