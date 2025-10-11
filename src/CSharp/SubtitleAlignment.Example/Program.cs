@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using StoryGenerator.Core.Interfaces;
-using StoryGenerator.Core.Services;
+using PrismQ.Shared.Interfaces;
+using PrismQ.Shared.Core.Services;
+using PrismQ.Shared.Models;
 using StoryGenerator.Research;
 using System.Text.Json;
 

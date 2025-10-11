@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Logging;
-using StoryGenerator.Core.Models;
-using StoryGenerator.Core.Services;
-using StoryGenerator.Core.Utils;
+using PrismQ.Shared.Models;
+using PrismQ.Shared.Core.Services;
 using StoryGenerator.Providers.OpenAI;
 
 namespace PrismQ.StoryGenerator;
