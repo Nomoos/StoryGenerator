@@ -331,7 +331,78 @@ string output = await producer.ProduceVideoAsync(config);
 - FFmpeg must be installed and available in PATH
 - .NET 9.0 or later
 
-## 💻 Development
+### Video Production from Keyframes 🎥
+
+**Status**: ✅ **Implemented and Ready**
+
+Complete video production pipeline that generates videos from keyframes, subtitles, script text, and audio sources. Combines keyframe video synthesis with post-production processing.
+
+**Features:**
+- ✅ Generate smooth videos from keyframe images using frame interpolation
+- ✅ Auto-generate subtitles from script text or use existing SRT files
+- ✅ Integrate voiceover narration and background music
+- ✅ Apply post-production (cropping, subtitle burn-in, audio mixing)
+- ✅ Support for RIFE, FILM, and DAIN interpolation methods
+- ✅ Flexible configuration for all video production aspects
+
+**Quick Start:**
+```csharp
+using StoryGenerator.Models;
+using StoryGenerator.Tools;
+
+var producer = new VideoProducer();
+var config = new VideoProductionConfig
+{
+    // Input keyframes (minimum 2 required)
+    KeyframePaths = new List<string>
+    {
+        "keyframes/frame_001.png",
+        "keyframes/frame_002.png",
+        "keyframes/frame_003.png"
+    },
+    
+    // Duration
+    DurationSeconds = 30.0,
+    
+    // Auto-generate subtitles from script
+    ScriptText = "Welcome to our tutorial. Today we'll learn about video production.",
+    GenerateSubtitlesFromScript = true,
+    
+    // Audio
+    AudioPath = "audio/narration.mp3",
+    BackgroundMusicPath = "audio/bgm.mp3",
+    MusicVolume = 0.2,
+    EnableDucking = true,
+    
+    // Output
+    OutputPath = "output/my_video.mp4"
+};
+
+var result = await producer.ProduceVideoAsync(config);
+
+if (result.Success)
+{
+    Console.WriteLine($"Video produced: {result.OutputPath}");
+    Console.WriteLine($"Duration: {result.VideoDurationSeconds}s");
+    Console.WriteLine($"Size: {result.FileSizeMB:F2} MB");
+}
+```
+
+**Use Cases:**
+- Story-driven content with narration
+- Educational tutorials with subtitles
+- Social media short-form videos
+- Product demos and explainers
+
+**Documentation:**
+- [Complete Guide](VIDEO_PRODUCTION_README.md) - Full API reference and examples
+- [Example Code](Examples/VideoProductionExample.cs) - Working examples
+
+**Requirements:**
+- FFmpeg and FFprobe must be installed and available in PATH
+- .NET 9.0 or later
+- Optional: KeyframeVideoSynthesizer for advanced interpolation
+- Optional: Python with CUDA for GPU-accelerated processing
 
 ## 💻 Development Prerequisites
 
