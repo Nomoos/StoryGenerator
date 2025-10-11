@@ -18,7 +18,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from providers import WordPressProvider
+from PrismQ.Providers import WordPressProvider
 
 
 def create_wordpress_draft_from_script(script_data: dict) -> dict:

@@ -32,7 +32,7 @@ pip install redis>=5.0.0  # For Redis cache backend
 ### Basic Usage
 
 ```python
-from providers import OptimizedOpenAIProvider
+from PrismQ.Providers import OptimizedOpenAIProvider
 
 # Initialize provider with caching enabled
 provider = OptimizedOpenAIProvider(
@@ -229,7 +229,7 @@ print(f"Total savings with batch API: ${total_standard - total_batch:.2f}")
 ### Example 1: Story Generation Pipeline
 
 ```python
-from providers import OptimizedOpenAIProvider
+from PrismQ.Providers import OptimizedOpenAIProvider
 
 class StoryGenerator:
     def __init__(self):
@@ -272,7 +272,7 @@ print(f"Total daily cost: ${generator.get_daily_cost():.4f}")
 ### Example 2: Batch Processing with Cost Monitoring
 
 ```python
-from providers import OptimizedOpenAIProvider
+from PrismQ.Providers import OptimizedOpenAIProvider
 
 def process_batch_with_monitoring(items: list[str]) -> list[str]:
     """Process items with cost monitoring and alerts."""
@@ -317,7 +317,7 @@ results = process_batch_with_monitoring(items)
 ### Example 3: Cost Comparison Between Models
 
 ```python
-from providers import OptimizedOpenAIProvider
+from PrismQ.Providers import OptimizedOpenAIProvider
 
 def compare_model_costs(prompt: str, models: list[str]) -> dict:
     """Compare costs and performance across different models."""
@@ -383,7 +383,7 @@ The provider includes pricing for common models (per 1M tokens) with support for
 
 **Note:** The Batch API offers 50% cost savings for asynchronous bulk operations. Use `pricing_tier="batch"` when initializing the provider to calculate costs using batch pricing.
 
-Update pricing in `providers/openai_optimized.py` if needed.
+Update pricing in `PrismQ/Providers/openai_optimized.py` if needed.
 
 ### Environment Variables
 
@@ -585,5 +585,5 @@ Get the model name.
 ## See Also
 
 - [Caching Guide](./CACHING_GUIDE.md) - Detailed caching documentation
-- [OpenAI Provider](../providers/openai_provider.py) - Basic provider implementation
+- [OpenAI Provider](../PrismQ/Providers/openai_provider.py) - Basic provider implementation
 - [Core Interfaces](../core/interfaces/llm_provider.py) - Interface definitions

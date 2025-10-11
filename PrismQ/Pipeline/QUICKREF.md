@@ -46,13 +46,13 @@ REM Edit .env with your settings
 ### Direct Python Usage
 ```cmd
 REM Pick a story
-env\Scripts\python.exe pipeline/orchestration/run_step.py --step 01_ingest --action pick-one
+env\Scripts\python.exe PrismQ/Pipeline/orchestration/run_step.py --step 01_ingest --action pick-one
 
 REM Run a step
-env\Scripts\python.exe pipeline/orchestration/run_step.py --step 03_generate --run-id test-001 --story-id DEMO-001 --action run
+env\Scripts\python.exe PrismQ/Pipeline/orchestration/run_step.py --step 03_generate --run-id test-001 --story-id DEMO-001 --action run
 
 REM Check acceptance
-env\Scripts\python.exe pipeline/orchestration/run_step.py --step 03_generate --story-id DEMO-001 --action check-acceptance
+env\Scripts\python.exe PrismQ/Pipeline/orchestration/run_step.py --step 03_generate --story-id DEMO-001 --action check-acceptance
 ```
 
 ## Configuration (.env)
@@ -132,9 +132,9 @@ REM Adjust thresholds in .env
 
 ## Documentation
 
-- **Full README**: `pipeline/scripts/README.md`
-- **Examples**: `pipeline/scripts/EXAMPLES.md`
-- **Implementation**: `pipeline/IMPLEMENTATION_SUMMARY.md`
+- **Full README**: `PrismQ/Pipeline/scripts/README.md`
+- **Examples**: `PrismQ/Pipeline/scripts/EXAMPLES.md`
+- **Implementation**: `PrismQ/Pipeline/IMPLEMENTATION_SUMMARY.md`
 - **Main Project**: `README.md`
 
 ## Pipeline Steps
@@ -149,7 +149,7 @@ REM Adjust thresholds in .env
 
 ```cmd
 REM View Python script help
-env\Scripts\python.exe pipeline/orchestration/run_step.py --help
+env\Scripts\python.exe PrismQ/Pipeline/orchestration/run_step.py --help
 
 REM Check test suite
 python tests/test_pipeline_orchestration.py

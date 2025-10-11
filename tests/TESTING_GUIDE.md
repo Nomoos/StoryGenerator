@@ -44,7 +44,7 @@ tests/
 ├── infrastructure/          # Infrastructure tests
 │   ├── test_config.py
 │   └── test_logging.py
-├── pipeline/                # Pipeline tests
+├── PrismQ/Pipeline/                # Pipeline tests
 └── test_*.py               # Top-level test modules
 ```
 

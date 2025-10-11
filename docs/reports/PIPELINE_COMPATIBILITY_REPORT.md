@@ -13,7 +13,7 @@ Following the implementation of Group 10 (Quality Control), this report validate
 ### ✅ Phase 3 Implementation Groups (8 groups)
 
 1. **Group 1: Content Pipeline** (6 tasks) - ✅ Complete
-   - Location: `/issues/resolved/p0-content-pipeline/`
+   - Location: `/issues/resolved/p0-content-PrismQ/Pipeline/`
    - Status: Fully implemented and tested
 
 2. **Group 2: Idea Generation** (7 tasks) - ✅ Complete

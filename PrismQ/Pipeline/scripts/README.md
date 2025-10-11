@@ -174,7 +174,7 @@ Check the logs:
 
 If acceptance checks fail repeatedly:
 1. Check step output in `outputs\<step_name>\`
-2. Review acceptance criteria in `pipeline/orchestration/run_step.py`
+2. Review acceptance criteria in `PrismQ/Pipeline/orchestration/run_step.py`
 3. Adjust configuration in `.env` if needed
 
 ## Advanced Usage
@@ -233,7 +233,7 @@ python pipeline\orchestration\run_step.py --step 03_generate --story-id STORY-12
 
 ## Development
 
-The orchestration logic is in `pipeline/orchestration/run_step.py`.
+The orchestration logic is in `PrismQ/Pipeline/orchestration/run_step.py`.
 
 To modify step behavior:
 1. Edit the appropriate handler in `run_step.py` (e.g., `_run_generate()`)
@@ -243,5 +243,5 @@ To modify step behavior:
 ## See Also
 
 - [Main README](../../README.md) - Project overview
-- [Pipeline Documentation](../../docs/pipeline/PIPELINE.md) - Pipeline architecture
+- [Pipeline Documentation](../../docs/PrismQ/Pipeline/PIPELINE.md) - Pipeline architecture
 - [Contributing Guide](../../CONTRIBUTING.md) - How to contribute

@@ -20,6 +20,7 @@ The PrismQ migration reorganized both Python and C# code into a modular structur
 - [Phase 2 Implementation](PHASE2_IMPLEMENTATION.md) - Python module migration details
 - [Phase 3 Implementation](PHASE3_IMPLEMENTATION.md) - Python migration completion
 - [Phase 4 Implementation](PHASE4_IMPLEMENTATION.md) - Final Python cleanup
+- [Phase 6 Folder Migration](PHASE6_FOLDER_MIGRATION.md) - Move providers/ and pipeline/ to PrismQ/
 
 #### C# Migration
 - [Phase 2 Testing Summary](PHASE2_TESTING_SUMMARY.md) - Phase 2 & testing implementation summary
@@ -37,10 +38,13 @@ The PrismQ migration reorganized both Python and C# code into a modular structur
 
 ### Completed ✅
 - Python modules migrated to PrismQ structure
+- Python providers migrated to PrismQ.Providers
+- Python pipeline migrated to PrismQ.Pipeline
 - C# Shared projects created (PrismQ.Shared.Core, Models, Interfaces)
 - C# domain projects created and migrated
 - Deprecated projects removed (StoryGenerator.Core, StoryGenerator.Generators)
 - Documentation reorganized
+- All imports updated to use PrismQ namespace
 - All tests passing (341 tests)
 - Build succeeds with 0 errors
 
@@ -49,9 +53,16 @@ The PrismQ migration reorganized both Python and C# code into a modular structur
 ```
 PrismQ/
 ├── Shared/                    # Shared components
-│   ├── PrismQ.Shared.Core/   # Core utilities and services
-│   ├── PrismQ.Shared.Models/ # Shared models
-│   └── PrismQ.Shared.Interfaces/ # Shared interfaces
+│   ├── PrismQ.Shared.Core/   # Core utilities and services (C#)
+│   ├── PrismQ.Shared.Models/ # Shared models (C#)
+│   ├── PrismQ.Shared.Interfaces/ # Shared interfaces (C#)
+│   ├── interfaces/           # Provider interfaces (Python)
+│   ├── cache.py             # Caching utilities
+│   ├── config.py            # Configuration management
+│   ├── database.py          # Database utilities
+│   ├── errors.py            # Custom exceptions
+│   ├── logging.py           # Logging utilities
+│   └── models.py            # Shared data models
 ├── IdeaScraper/              # Idea generation
 ├── StoryGenerator/           # Script development
 ├── StoryTitleProcessor/      # Title generation
@@ -59,7 +70,15 @@ PrismQ/
 ├── VoiceOverGenerator/       # Voice generation
 ├── SubtitleGenerator/        # Subtitle generation
 ├── VideoGenerator/           # Video generation
-└── SceneDescriptions/        # Scene planning
+├── SceneDescriptions/        # Scene planning
+├── Providers/                # External service implementations
+│   ├── openai_provider.py   # OpenAI LLM provider
+│   ├── mock_provider.py     # Mock provider for testing
+│   ├── youtube_provider.py  # YouTube platform provider
+│   └── ...                  # Other platform providers
+└── Pipeline/                 # Pipeline orchestration
+    ├── orchestration/       # Step orchestration logic
+    └── scripts/             # Batch execution scripts
 ```
 
 ## 📚 Related Documentation

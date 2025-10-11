@@ -54,7 +54,7 @@ docs/
 │       ├── FOLDER_STRUCTURE.md
 │       └── GENERATOR_STRUCTURE.md
 │
-├── pipeline/ (4 files)
+├── PrismQ/Pipeline/ (4 files)
 │   ├── README.md
 │   ├── PIPELINE.md
 │   ├── PIPELINE_OUTPUT_FILES.md
@@ -196,7 +196,7 @@ If you have bookmarks or links to old doc locations:
 2. Use the search function in your editor
 3. Common mappings:
    - `docs/HYBRID_ROADMAP.md` → `docs/roadmaps/HYBRID_ROADMAP.md`
-   - `docs/PIPELINE.md` → `docs/pipeline/PIPELINE.md`
+   - `docs/PIPELINE.md` → `docs/PrismQ/Pipeline/PIPELINE.md`
    - `docs/ARCHITECTURE.md` → `docs/architecture/ARCHITECTURE.md`
    - `docs/GETTING_STARTED.md` → `docs/quickstarts/general/GETTING_STARTED.md`
    - `docs/INSTALLATION.md` → `docs/guides/setup/INSTALLATION.md`

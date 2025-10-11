@@ -23,7 +23,7 @@ Transform story ideas into complete videos with AI-powered voiceovers, subtitles
 
 ### 📖 Core Documentation
 - **[Features](docs/features/FEATURES.md)** - Complete feature list
-- **[Pipeline Overview](docs/pipeline/PIPELINE.md)** - How the pipeline works
+- **[Pipeline Overview](docs/PrismQ/Pipeline/PIPELINE.md)** - How the pipeline works
 - **[Architecture](docs/architecture/ARCHITECTURE.md)** - System design
 - **[Examples](docs/EXAMPLES.md)** - Input/output examples
 
@@ -280,8 +280,8 @@ Or with a specific story ID:
 - ✅ **Exit codes**: `0` = success, `1` = config error, `2` = runtime error, `3` = acceptance not met
 - ✅ **Run tracking** - execution metadata saved in `.runs/`
 
-➡️ **[Windows Pipeline Documentation](pipeline/scripts/README.md)**
-➡️ **[Database Tracking Guide](pipeline/DATABASE_TRACKING.md)**
+➡️ **[Windows Pipeline Documentation](PrismQ/Pipeline/scripts/README.md)**
+➡️ **[Database Tracking Guide](PrismQ/Pipeline/DATABASE_TRACKING.md)**
 
 ---
 
@@ -360,7 +360,7 @@ The complete pipeline consists of several major stages:
 | **Video Synthesis** | 🔄 Planned | LTX-Video or Stable Video Diffusion |
 | **Post-Production** | 🔄 Planned | Subtitle overlay and final rendering |
 
-➡️ **[Detailed pipeline documentation](docs/pipeline/PIPELINE.md)** | **[Implementation roadmap](docs/roadmaps/IMPLEMENTATION_ROADMAP.md)**
+➡️ **[Detailed pipeline documentation](docs/PrismQ/Pipeline/PIPELINE.md)** | **[Implementation roadmap](docs/roadmaps/IMPLEMENTATION_ROADMAP.md)**
 
 ---
 

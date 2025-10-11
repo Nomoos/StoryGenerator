@@ -120,7 +120,7 @@ from PrismQ.Shared.interfaces.platform_provider import IPlatformProvider
 
 **Files Removed**: 24 wrapper files
 - 12 files from `core/`
-- 7 files from `core/pipeline/`
+- 7 files from `core/PrismQ/Pipeline/`
 - 5 files from `core/interfaces/`
 
 **Files Fixed**: 1 file

@@ -381,13 +381,13 @@ If all items are removed as duplicates, check:
 
 - **Script:** `scripts/deduplicate_content.py` (363 lines)
 - **Tests:** `tests/test_deduplication.py` (9 comprehensive tests)
-- **Docs:** `issues/p0-critical/content-pipeline/02-content-04-deduplication/issue.md`
+- **Docs:** `issues/p0-critical/content-PrismQ/Pipeline/02-content-04-deduplication/issue.md`
 
 ## Related Documentation
 
 - [Pipeline Output Files](../../docs/PIPELINE_OUTPUT_FILES.md)
-- [Content Pipeline README](../../issues/p0-critical/content-pipeline/README.md)
-- [Issue Details](../../issues/p0-critical/content-pipeline/02-content-04-deduplication/issue.md)
+- [Content Pipeline README](../../issues/p0-critical/content-PrismQ/Pipeline/README.md)
+- [Issue Details](../../issues/p0-critical/content-PrismQ/Pipeline/02-content-04-deduplication/issue.md)
 
 ## Example Output
 

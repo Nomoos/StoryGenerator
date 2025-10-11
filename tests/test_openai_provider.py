@@ -8,8 +8,8 @@ including initialization, API calls, error handling, and retry logic.
 import pytest
 from unittest.mock import Mock, patch, AsyncMock
 from openai import APIError, RateLimitError
-from providers.openai_provider import OpenAIProvider, AsyncOpenAIProvider
-from providers.mock_provider import MockLLMProvider, AsyncMockLLMProvider
+from PrismQ.Providers.openai_provider import OpenAIProvider, AsyncOpenAIProvider
+from PrismQ.Providers.mock_provider import MockLLMProvider, AsyncMockLLMProvider
 from PrismQ.Shared.interfaces.llm_provider import ILLMProvider, IAsyncLLMProvider
 
 

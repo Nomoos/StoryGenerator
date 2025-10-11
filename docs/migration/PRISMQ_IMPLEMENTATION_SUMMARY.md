@@ -18,7 +18,7 @@ Created 18 subprojects with CamelCase naming:
 ### 2. Code Migration ✅
 
 **Python Modules Migrated**:
-- `core/pipeline/` → Split into appropriate subprojects
+- `core/PrismQ/Pipeline/` → Split into appropriate subprojects
   - idea_generation.py → IdeaScraper
   - topic_clustering.py → IdeaScraper
   - title_generation.py → StoryTitleProcessor

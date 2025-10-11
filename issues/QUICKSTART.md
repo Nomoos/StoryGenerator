@@ -418,7 +418,7 @@ python3 src/scripts/ltx_synthesis.py --frames frames.json --output video.mp4
 ls -la src/CSharp/StoryGenerator.Pipeline/Stages/
 
 # Check Python implementations
-ls -la core/pipeline/
+ls -la core/PrismQ/Pipeline/
 ls -la src/scripts/
 
 # View step documentation

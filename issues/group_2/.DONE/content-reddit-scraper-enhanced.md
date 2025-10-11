@@ -9,7 +9,7 @@
 
 ## Description
 
-Enhance the existing Reddit content scraper (`scripts/reddit_scraper.py`) with better filtering, rate limiting, and multi-subreddit support. This builds upon the completed Reddit scraper from `issues/resolved/p0-content-pipeline/02-content-01-reddit-scraper/`.
+Enhance the existing Reddit content scraper (`scripts/reddit_scraper.py`) with better filtering, rate limiting, and multi-subreddit support. This builds upon the completed Reddit scraper from `issues/resolved/p0-content-PrismQ/Pipeline/02-content-01-reddit-scraper/`.
 
 **Key Enhancements:**
 - Incremental updates (fetch only new content since last scrape)
@@ -27,7 +27,7 @@ The existing Reddit scraper (`scripts/reddit_scraper.py`) provides:
 - JSON output with metadata
 - Score-based content filtering
 
-**See:** `issues/resolved/p0-content-pipeline/02-content-01-reddit-scraper/issue.md` for current implementation details.
+**See:** `issues/resolved/p0-content-PrismQ/Pipeline/02-content-01-reddit-scraper/issue.md` for current implementation details.
 
 ## Acceptance Criteria
 
@@ -203,7 +203,7 @@ python scripts/reddit_scraper.py --dry-run --segment men --age 14-17
 ## Links
 
 - **Related:** [HYBRID_ROADMAP.md](../../../docs/roadmaps/HYBRID_ROADMAP.md)
-- **Builds on:** [02-content-01-reddit-scraper](../../resolved/p0-content-pipeline/02-content-01-reddit-scraper/issue.md)
+- **Builds on:** [02-content-01-reddit-scraper](../../resolved/p0-content-PrismQ/Pipeline/02-content-01-reddit-scraper/issue.md)
 - **Current implementation:** `scripts/reddit_scraper.py`
 
 ## Notes

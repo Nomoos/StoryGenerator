@@ -352,4 +352,4 @@ For issues:
 1. Check logs with `--verbose` flag
 2. Review example files in `examples/`
 3. Run test suite: `python3 tests/test_attribution.py`
-4. See documentation: `issues/p0-critical/content-pipeline/02-content-06-attribution/README.md`
+4. See documentation: `issues/p0-critical/content-PrismQ/Pipeline/02-content-06-attribution/README.md`

@@ -91,12 +91,12 @@ else:
 
 **Files Updated:**
 - `core/interfaces/llm_provider.py`
-- `providers/openai_provider.py`
+- `PrismQ/Providers/openai_provider.py`
 - `core/script_development.py`
 - `core/scene_planning.py`
 - `core/audio_production.py`
-- `core/pipeline/idea_generation.py`
-- `core/pipeline/title_scoring.py`
+- `core/PrismQ/Pipeline/idea_generation.py`
+- `core/PrismQ/Pipeline/title_scoring.py`
 - `research/python/story_pattern_analyzer.py`
 
 **Changes:**
@@ -257,7 +257,7 @@ Video ready: /output/video.mp4
 ```bash
 # Type check updated files
 mypy core/interfaces/llm_provider.py
-mypy providers/openai_provider.py
+mypy PrismQ/Providers/openai_provider.py
 mypy examples/pattern_matching_example.py
 
 ✓ No type errors (after NotRequired fix)

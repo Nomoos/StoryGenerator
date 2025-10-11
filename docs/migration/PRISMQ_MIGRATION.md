@@ -25,15 +25,15 @@ The repository has been reorganized into independent subprojects under the `Pris
 | `core/validation.py` | `PrismQ/Shared/validation.py` | Validation utilities |
 | `core/database.py` | `PrismQ/Shared/database.py` | Database utilities |
 | `core/interfaces/` | `PrismQ/Shared/interfaces/` | Provider interfaces |
-| `core/pipeline/idea_generation.py` | `PrismQ/IdeaScraper/idea_generation.py` | Idea generation |
-| `core/pipeline/topic_clustering.py` | `PrismQ/IdeaScraper/topic_clustering.py` | Topic clustering |
-| `core/pipeline/title_generation.py` | `PrismQ/StoryTitleProcessor/title_generation.py` | Title generation |
-| `core/pipeline/title_scoring.py` | `PrismQ/StoryTitleScoring/title_scoring.py` | Title scoring |
-| `core/pipeline/top_selection.py` | `PrismQ/StoryTitleScoring/top_selection.py` | Top title selection |
-| `core/pipeline/voice_recommendation.py` | `PrismQ/VoiceOverGenerator/voice_recommendation.py` | Voice recommendation |
-| `core/pipeline/voice_cloning.py` | `PrismQ/VoiceOverGenerator/voice_cloning.py` | Voice cloning |
+| `core/PrismQ/Pipeline/idea_generation.py` | `PrismQ/IdeaScraper/idea_generation.py` | Idea generation |
+| `core/PrismQ/Pipeline/topic_clustering.py` | `PrismQ/IdeaScraper/topic_clustering.py` | Topic clustering |
+| `core/PrismQ/Pipeline/title_generation.py` | `PrismQ/StoryTitleProcessor/title_generation.py` | Title generation |
+| `core/PrismQ/Pipeline/title_scoring.py` | `PrismQ/StoryTitleScoring/title_scoring.py` | Title scoring |
+| `core/PrismQ/Pipeline/top_selection.py` | `PrismQ/StoryTitleScoring/top_selection.py` | Top title selection |
+| `core/PrismQ/Pipeline/voice_recommendation.py` | `PrismQ/VoiceOverGenerator/voice_recommendation.py` | Voice recommendation |
+| `core/PrismQ/Pipeline/voice_cloning.py` | `PrismQ/VoiceOverGenerator/voice_cloning.py` | Voice cloning |
 | `core/script_development.py` | `PrismQ/StoryGenerator/script_development.py` | Script development |
-| `core/pipeline/style_consistency.py` | `PrismQ/StoryGenerator/style_consistency.py` | Style checking |
+| `core/PrismQ/Pipeline/style_consistency.py` | `PrismQ/StoryGenerator/style_consistency.py` | Style checking |
 | `core/audio_production.py` | `PrismQ/VoiceOverGenerator/audio_production.py` | Audio production |
 | `core/scene_planning.py` | `PrismQ/SceneDescriptions/scene_planning.py` | Scene planning |
 
@@ -137,7 +137,7 @@ After migration, you'll get:
 ## Need Help?
 
 - Check `PrismQ/README.md` for the full structure
-- Look at migrated test files in `tests/pipeline/` for examples
+- Look at migrated test files in `tests/PrismQ/Pipeline/` for examples
 - Create an issue if you encounter problems
 
 ## Timeline

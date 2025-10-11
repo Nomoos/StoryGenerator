@@ -63,7 +63,23 @@ PrismQ/
 │
 ├─ DescriptionGenerator/       # Generate metadata descriptions (placeholder)
 │
-└─ TagsGenerator/              # Generate tags (placeholder)
+├─ TagsGenerator/              # Generate tags (placeholder)
+│
+├─ Providers/                  # External service provider implementations
+│  ├─ openai_provider.py       # OpenAI LLM provider
+│  ├─ mock_provider.py         # Mock provider for testing
+│  ├─ youtube_provider.py      # YouTube platform provider
+│  ├─ tiktok_provider.py       # TikTok platform provider
+│  ├─ instagram_provider.py    # Instagram platform provider
+│  ├─ facebook_provider.py     # Facebook platform provider
+│  └─ wordpress_provider.py    # WordPress publishing provider
+│
+└─ Pipeline/                   # Pipeline orchestration and execution
+   ├─ orchestration/           # Pipeline step orchestration
+   │  ├─ run_step.py           # Step execution logic
+   │  └─ story_db.py           # Story database management
+   └─ scripts/                 # Pipeline batch scripts
+      └─ *.bat                 # Windows batch files for pipeline steps
 ```
 
 ## Import Convention
@@ -77,6 +93,8 @@ from PrismQ.Shared.errors import APIError
 from PrismQ.IdeaScraper.idea_generation import IdeaAdapter, IdeaGenerator
 from PrismQ.StoryTitleScoring.title_scoring import TitleScorer
 from PrismQ.VoiceOverGenerator.voice_recommendation import VoiceRecommender
+from PrismQ.Providers import OpenAIProvider, MockLLMProvider
+from PrismQ.Pipeline.orchestration.run_step import StepOrchestrator
 ```
 
 ### Backward Compatibility

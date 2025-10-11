@@ -38,6 +38,6 @@ This directory contains documentation about content generation, features, and sy
 - **[PYTHON_PEP_GUIDELINES.md](PYTHON_PEP_GUIDELINES.md)** - Python PEP guidelines
 
 ## See Also
-- [Pipeline Documentation](../pipeline/)
+- [Pipeline Documentation](../PrismQ/Pipeline/)
 - [Quickstarts](../quickstarts/)
 - [Implementation Documentation](../implementation/)

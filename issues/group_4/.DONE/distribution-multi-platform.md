@@ -26,7 +26,7 @@ Implement multi-platform video publishing system that automates upload to YouTub
 
 **Location:** `src/Python/Tools/MultiPlatformPublisher.py`  
 **Script:** `scripts/publish_video.py`  
-**Dependencies:** Existing providers in `providers/` directory
+**Dependencies:** Existing providers in `PrismQ/Providers/` directory
 
 The MultiPlatformPublisher has been successfully implemented with:
 - Unified interface for uploading to YouTube, TikTok, Instagram, and Facebook
@@ -38,10 +38,10 @@ The MultiPlatformPublisher has been successfully implemented with:
 - Support for batch uploads and scheduled publishing
 
 **Integration**: Uses existing platform provider implementations:
-- `providers/youtube_provider.py` (YouTubeUploader)
-- `providers/tiktok_provider.py` (TikTokUploader)
-- `providers/instagram_provider.py` (InstagramUploader)
-- `providers/facebook_provider.py` (FacebookUploader)
+- `PrismQ/Providers/youtube_provider.py` (YouTubeUploader)
+- `PrismQ/Providers/tiktok_provider.py` (TikTokUploader)
+- `PrismQ/Providers/instagram_provider.py` (InstagramUploader)
+- `PrismQ/Providers/facebook_provider.py` (FacebookUploader)
 
 ## Dependencies
 

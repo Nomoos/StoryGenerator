@@ -12,7 +12,7 @@ This document summarizes the new features implemented per user feedback:
 ### 1. Facebook Video API Integration
 
 **Files Created:**
-- `providers/facebook_provider.py` (13,009 bytes)
+- `PrismQ/Providers/facebook_provider.py` (13,009 bytes)
 - `examples/platform_facebook_example.py` (5,286 bytes)
 - Tests in `tests/test_facebook_database.py` (partial)
 
@@ -25,7 +25,7 @@ This document summarizes the new features implemented per user feedback:
 
 **Usage Example:**
 ```python
-from providers import FacebookUploader, FacebookAnalytics
+from PrismQ.Providers import FacebookUploader, FacebookAnalytics
 
 uploader = FacebookUploader(access_token="TOKEN", page_id="PAGE_ID")
 result = uploader.upload_video("video.mp4", metadata)
@@ -167,7 +167,7 @@ for rec in insights['recommendations']:
 
 **Modified:**
 - `core/interfaces/platform_provider.py` - Added `FACEBOOK` to `PlatformType` enum
-- `providers/__init__.py` - Added Facebook provider exports
+- `PrismQ/Providers/__init__.py` - Added Facebook provider exports
 
 **Backward Compatible:**
 - All existing code continues to work unchanged
@@ -193,7 +193,7 @@ for rec in insights['recommendations']:
 ## Files Summary
 
 ### New Files Created (9)
-1. `providers/facebook_provider.py` - Facebook API integration
+1. `PrismQ/Providers/facebook_provider.py` - Facebook API integration
 2. `core/database.py` - SQLite database module
 3. `core/platform_comparison.py` - Cross-platform analysis
 4. `examples/platform_facebook_example.py` - Facebook example
@@ -203,7 +203,7 @@ for rec in insights['recommendations']:
 
 ### Modified Files (2)
 1. `core/interfaces/platform_provider.py` - Added Facebook enum
-2. `providers/__init__.py` - Added Facebook exports
+2. `PrismQ/Providers/__init__.py` - Added Facebook exports
 
 ### Documentation Updated (1)
 1. `docs/guides/integration/PLATFORM_INTEGRATION.md` - Complete guide with all new features
@@ -234,7 +234,7 @@ for rec in insights['recommendations']:
 
 ```python
 # 1. Upload to all platforms
-from providers import YouTubeUploader, TikTokUploader, InstagramUploader, FacebookUploader
+from PrismQ.Providers import YouTubeUploader, TikTokUploader, InstagramUploader, FacebookUploader
 from core.database import PlatformDatabase
 
 db = PlatformDatabase()
@@ -253,7 +253,7 @@ for uploader, platform in platforms:
         db.save_upload_result(result, title_id="story_123", title="My Story", ...)
 
 # 2. Collect analytics
-from providers import YouTubeAnalytics, TikTokAnalytics, InstagramAnalytics, FacebookAnalytics
+from PrismQ.Providers import YouTubeAnalytics, TikTokAnalytics, InstagramAnalytics, FacebookAnalytics
 
 for analytics_class, platform, video_id in [...]:
     analytics = analytics_class(...)

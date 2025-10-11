@@ -29,7 +29,7 @@ Implement style consistency system for SDXL keyframe generation to ensure visual
 
 ## Implementation Notes
 
-Create `core/pipeline/style_consistency.py`:
+Create `core/PrismQ/Pipeline/style_consistency.py`:
 
 ```python
 from diffusers import StableDiffusionXLPipeline, IPAdapterPlus
@@ -113,7 +113,7 @@ class StyleConsistencyManager:
 
 ### Files Created/Modified
 
-1. **`core/pipeline/style_consistency.py`** (596 lines)
+1. **`core/PrismQ/Pipeline/style_consistency.py`** (596 lines)
    - `StyleConsistencyManager` class with SDXL + IP-Adapter integration
    - `StyleProfile` dataclass for style profile management
    - `ConsistencyMetrics` for consistency assessment
@@ -171,7 +171,7 @@ Module imports successfully verified.
 
 ## Links
 
-- Implementation: [core/pipeline/style_consistency.py](../../../core/pipeline/style_consistency.py)
+- Implementation: [core/PrismQ/Pipeline/style_consistency.py](../../../core/PrismQ/Pipeline/style_consistency.py)
 - Tests: [tests/test_style_consistency.py](../../../tests/test_style_consistency.py)
 - Documentation: [docs/STYLE_CONSISTENCY_GUIDE.md](../../../docs/STYLE_CONSISTENCY_GUIDE.md)
 - Related: [HYBRID_ROADMAP.md](../../../docs/roadmaps/HYBRID_ROADMAP.md)

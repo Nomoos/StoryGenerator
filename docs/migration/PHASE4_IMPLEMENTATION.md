@@ -60,13 +60,13 @@ Removed **24 wrapper files** from three locations:
 - `core/validation.py`
 
 #### Pipeline Directory (7 files)
-- `core/pipeline/__init__.py`
-- `core/pipeline/idea_generation.py`
-- `core/pipeline/title_generation.py`
-- `core/pipeline/title_scoring.py`
-- `core/pipeline/top_selection.py`
-- `core/pipeline/topic_clustering.py`
-- `core/pipeline/voice_recommendation.py`
+- `core/PrismQ/Pipeline/__init__.py`
+- `core/PrismQ/Pipeline/idea_generation.py`
+- `core/PrismQ/Pipeline/title_generation.py`
+- `core/PrismQ/Pipeline/title_scoring.py`
+- `core/PrismQ/Pipeline/top_selection.py`
+- `core/PrismQ/Pipeline/topic_clustering.py`
+- `core/PrismQ/Pipeline/voice_recommendation.py`
 
 #### Interfaces Directory (5 files)
 - `core/interfaces/__init__.py`
@@ -107,7 +107,7 @@ from PrismQ.Shared.interfaces.voice_provider import IVoiceProvider
 
 Ran all tests to verify nothing broke:
 ```bash
-$ python3 -m pytest tests/pipeline/ -v
+$ python3 -m pytest tests/PrismQ/Pipeline/ -v
 ============================== 48 passed in 0.28s ==============================
 ```
 
@@ -148,7 +148,7 @@ Clean! The core/ directory no longer exists.
 
 **Pipeline Tests**: All passing
 ```bash
-$ python3 -m pytest tests/pipeline/ -v
+$ python3 -m pytest tests/PrismQ/Pipeline/ -v
 ============================== 48 passed in 0.28s ==============================
 ```
 

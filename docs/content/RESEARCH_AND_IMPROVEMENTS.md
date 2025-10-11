@@ -154,7 +154,7 @@ StoryGenerator/
 │   ├── idea_generator.py
 │   ├── script_generator.py
 │   └── voice_generator.py
-├── providers/
+├── PrismQ/Providers/
 │   ├── openai_provider.py
 │   ├── elevenlabs_provider.py
 │   └── file_storage.py

@@ -76,7 +76,7 @@ Processed files by category:
 
 #### Scripts (2 files)
 - `scripts/publish_podbean.py`
-- `scripts/pipeline/generate_ideas.py`
+- `scripts/PrismQ/Pipeline/generate_ideas.py`
 
 #### Tests (17 files)
 - `tests/test_cache.py`
@@ -92,19 +92,19 @@ Processed files by category:
 - `tests/test_publish_podbean.py`
 - `tests/test_style_consistency.py`
 - `tests/test_voice_cloning.py`
-- `tests/pipeline/test_idea_generation.py`
-- `tests/pipeline/test_title_scoring.py`
-- `tests/pipeline/test_top_selection.py`
-- `tests/pipeline/test_voice_recommendation.py`
+- `tests/PrismQ/Pipeline/test_idea_generation.py`
+- `tests/PrismQ/Pipeline/test_title_scoring.py`
+- `tests/PrismQ/Pipeline/test_top_selection.py`
+- `tests/PrismQ/Pipeline/test_voice_recommendation.py`
 
 #### Providers (7 files)
-- `providers/facebook_provider.py`
-- `providers/instagram_provider.py`
-- `providers/mock_provider.py`
-- `providers/openai_optimized.py`
-- `providers/openai_provider.py`
-- `providers/tiktok_provider.py`
-- `providers/youtube_provider.py`
+- `PrismQ/Providers/facebook_provider.py`
+- `PrismQ/Providers/instagram_provider.py`
+- `PrismQ/Providers/mock_provider.py`
+- `PrismQ/Providers/openai_optimized.py`
+- `PrismQ/Providers/openai_provider.py`
+- `PrismQ/Providers/tiktok_provider.py`
+- `PrismQ/Providers/youtube_provider.py`
 
 #### Tools (1 file)
 - `src/Python/Tools/MultiPlatformPublisher.py`
@@ -160,7 +160,7 @@ from PrismQ.VoiceOverGenerator.voice_recommendation import VoiceRecommender
 
 **Pipeline Tests**:
 ```bash
-$ python3 -m pytest tests/pipeline/ -v
+$ python3 -m pytest tests/PrismQ/Pipeline/ -v
 ============================== 48 passed in 0.41s ==============================
 ```
 
@@ -254,7 +254,7 @@ Phase 4 (Remove Backward Compatibility Layer) can now proceed safely:
 - `core/script_development.py`
 - `core/validation.py`
 
-**Pipeline Wrappers** (4 files in `core/pipeline/`):
+**Pipeline Wrappers** (4 files in `core/PrismQ/Pipeline/`):
 - All wrapper files
 
 **Interface Wrappers** (4 files in `core/interfaces/`):

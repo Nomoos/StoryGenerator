@@ -148,7 +148,7 @@ All issue documentation has been updated to reflect completion:
 | security-api-keys | Remove exposed API keys | ✅ COMPLETE | 2 hours |
 | security-file-paths | Platform-independent paths | ✅ COMPLETE | 0 hours (verified) |
 | csharp-phase3-complete-generators | C# generators | ✅ COMPLETE | Previously done |
-| content-pipeline/reddit | Reddit scraper | ✅ COMPLETE | Previously done |
+| content-PrismQ/Pipeline/reddit | Reddit scraper | ✅ COMPLETE | Previously done |
 
 **Total P0 Issues:** 4/4 complete (100%)
 

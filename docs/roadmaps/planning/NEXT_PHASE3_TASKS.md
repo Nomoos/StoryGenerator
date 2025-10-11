@@ -11,7 +11,7 @@
 All completed groups have been moved to `/issues/resolved/phase-3-implementation/` to maintain focus on active work.
 
 ### Group 1: Content Pipeline (6 tasks) - P0/P1 ✅
-**Location:** `/issues/resolved/p0-content-pipeline/`
+**Location:** `/issues/resolved/p0-content-PrismQ/Pipeline/`
 
 Source and process raw content for video ideas.
 - Reddit scraper, alternative sources, quality scoring

@@ -30,9 +30,9 @@ Group 2 focuses on enhancing the content pipeline with three key improvements:
 
 ### Context
 These tasks build upon completed work:
-- ✅ Basic Reddit scraper (`scripts/reddit_scraper.py`) - [Completed](../resolved/p0-content-pipeline/02-content-01-reddit-scraper/)
-- ✅ Alternative sources (Quora, Twitter) (`scripts/scrapers/`) - [Completed](../resolved/p0-content-pipeline/02-content-02-alt-sources/)
-- ✅ Basic deduplication (`scripts/deduplicate_content.py`) - [Completed](../resolved/p0-content-pipeline/02-content-04-deduplication/)
+- ✅ Basic Reddit scraper (`scripts/reddit_scraper.py`) - [Completed](../resolved/p0-content-PrismQ/Pipeline/02-content-01-reddit-scraper/)
+- ✅ Alternative sources (Quora, Twitter) (`scripts/scrapers/`) - [Completed](../resolved/p0-content-PrismQ/Pipeline/02-content-02-alt-sources/)
+- ✅ Basic deduplication (`scripts/deduplicate_content.py`) - [Completed](../resolved/p0-content-PrismQ/Pipeline/02-content-04-deduplication/)
 
 The new tasks enhance these implementations with advanced features.
 
@@ -193,9 +193,9 @@ All tasks follow the principle of **enhancement, not replacement**:
 - **Group 2 README:** [README.md](README.md)
 
 ### Related Completed Work
-- [Reddit Scraper (P0)](../resolved/p0-content-pipeline/02-content-01-reddit-scraper/) - ✅ Complete
-- [Alternative Sources (P0)](../resolved/p0-content-pipeline/02-content-02-alt-sources/) - ✅ Complete
-- [Deduplication (P0)](../resolved/p0-content-pipeline/02-content-04-deduplication/) - ✅ Complete
+- [Reddit Scraper (P0)](../resolved/p0-content-PrismQ/Pipeline/02-content-01-reddit-scraper/) - ✅ Complete
+- [Alternative Sources (P0)](../resolved/p0-content-PrismQ/Pipeline/02-content-02-alt-sources/) - ✅ Complete
+- [Deduplication (P0)](../resolved/p0-content-PrismQ/Pipeline/02-content-04-deduplication/) - ✅ Complete
 - [Group 2 Idea Generation (P1)](../resolved/phase-3-implementation/group-2-idea-generation/) - ✅ Complete
 
 ### Current Task Files
@@ -225,7 +225,7 @@ All tasks follow the principle of **enhancement, not replacement**:
 1. **Review context:**
    - Read [Group 2 README](README.md)
    - Review existing implementations in `scripts/` directory
-   - Check completed issues in `issues/resolved/p0-content-pipeline/`
+   - Check completed issues in `issues/resolved/p0-content-PrismQ/Pipeline/`
 
 2. **Pick a task:**
    - Choose from the 3 tasks in `.ISSUES/`

@@ -112,7 +112,7 @@ from pydantic import BaseModel, Field
 # Local application imports
 from core.config import settings
 from core.logging import get_logger
-from providers.openai_provider import OpenAIProvider
+from PrismQ.Providers.openai_provider import OpenAIProvider
 ```
 
 ### Rules

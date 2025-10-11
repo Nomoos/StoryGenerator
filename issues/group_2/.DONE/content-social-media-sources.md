@@ -9,7 +9,7 @@
 
 ## Description
 
-Expand alternative content sources beyond Quora and Twitter by adding Instagram and TikTok scrapers. This builds upon the completed alternative sources work in `issues/resolved/p0-content-pipeline/02-content-02-alt-sources/`.
+Expand alternative content sources beyond Quora and Twitter by adding Instagram and TikTok scrapers. This builds upon the completed alternative sources work in `issues/resolved/p0-content-PrismQ/Pipeline/02-content-02-alt-sources/`.
 
 **Current Implementation:**
 - ✅ Quora scraper (questions and answers)
@@ -30,7 +30,7 @@ The existing alternative sources system (`scripts/scrapers/`) provides:
 - Unified CLI for batch scraping
 - Mock data implementations for testing
 
-**See:** `issues/resolved/p0-content-pipeline/02-content-02-alt-sources/issue.md` for current implementation details.
+**See:** `issues/resolved/p0-content-PrismQ/Pipeline/02-content-02-alt-sources/issue.md` for current implementation details.
 
 ## Acceptance Criteria
 
@@ -354,7 +354,7 @@ python scripts/scrapers/alt_sources_scraper.py --sources instagram,tiktok --all-
 ## Links
 
 - **Related:** [HYBRID_ROADMAP.md](../../../docs/roadmaps/HYBRID_ROADMAP.md)
-- **Builds on:** [02-content-02-alt-sources](../../resolved/p0-content-pipeline/02-content-02-alt-sources/issue.md)
+- **Builds on:** [02-content-02-alt-sources](../../resolved/p0-content-PrismQ/Pipeline/02-content-02-alt-sources/issue.md)
 - **Current implementation:** `scripts/scrapers/`
 
 ## Notes

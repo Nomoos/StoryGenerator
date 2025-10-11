@@ -9,7 +9,7 @@ This example demonstrates the key features of the OptimizedOpenAIProvider:
 """
 
 import os
-from providers import OptimizedOpenAIProvider
+from PrismQ.Providers import OptimizedOpenAIProvider
 
 
 def example_basic_usage():

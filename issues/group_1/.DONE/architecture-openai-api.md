@@ -26,7 +26,7 @@ Optimize OpenAI API usage with proper error handling, rate limiting, token count
 
 ## Implementation Notes
 
-Create `providers/openai_optimized.py`:
+Create `PrismQ/Providers/openai_optimized.py`:
 
 ```python
 import tiktoken

@@ -31,7 +31,7 @@ from PrismQ.StoryTitleProcessor.title_generation import TitleGenerator
 from PrismQ.StoryTitleScoring.title_scoring import TitleScorer
 from PrismQ.VoiceOverGenerator.voice_recommendation import VoiceRecommender
 from PrismQ.StoryTitleScoring.top_selection import TopSelector
-from providers.mock_provider import MockLLMProvider
+from PrismQ.Providers.mock_provider import MockLLMProvider
 
 # Configure logging
 logging.basicConfig(

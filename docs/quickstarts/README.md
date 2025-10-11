@@ -28,4 +28,4 @@ This directory contains quickstart guides to get you up and running quickly.
 ## See Also
 - [Guides](../guides/)
 - [Getting Started](general/GETTING_STARTED.md)
-- [Pipeline Documentation](../pipeline/)
+- [Pipeline Documentation](../PrismQ/Pipeline/)
