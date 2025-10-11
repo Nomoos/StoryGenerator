@@ -1,30 +1,8 @@
 """
-Core interfaces package.
+Core interfaces module - Backward compatibility layer.
 
-This package contains abstract base classes (interfaces) that define contracts
-for various service providers (LLM, Storage, Voice, etc.).
+This module provides backward compatibility by importing from the new PrismQ.Shared.interfaces structure.
+All new code should import directly from PrismQ.Shared.interfaces.
 """
 
-from core.interfaces.llm_provider import (
-    ILLMProvider,
-    IAsyncLLMProvider,
-    ChatMessage,
-)
-from core.interfaces.storage_provider import (
-    IStorageProvider,
-    IFileSystemProvider,
-)
-from core.interfaces.voice_provider import (
-    IVoiceProvider,
-    IVoiceCloningProvider,
-)
-
-__all__ = [
-    "ILLMProvider",
-    "IAsyncLLMProvider",
-    "ChatMessage",
-    "IStorageProvider",
-    "IFileSystemProvider",
-    "IVoiceProvider",
-    "IVoiceCloningProvider",
-]
+# Re-export all interfaces for backward compatibility

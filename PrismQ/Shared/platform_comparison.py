@@ -5,7 +5,7 @@ This module provides tools for comparing video performance across different plat
 and generating insights for content optimization.
 
 Usage:
-    from core.platform_comparison import PlatformComparator
+    from PrismQ.Shared.platform_comparison import PlatformComparator
     
     comparator = PlatformComparator()
     
@@ -23,8 +23,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
-from core.database import PlatformDatabase
-from core.interfaces.platform_provider import PlatformType
+from PrismQ.Shared.database import PlatformDatabase
+from PrismQ.Shared.interfaces.platform_provider import PlatformType
 
 
 @dataclass
