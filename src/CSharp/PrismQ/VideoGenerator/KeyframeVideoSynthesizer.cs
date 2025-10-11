@@ -101,7 +101,7 @@ namespace PrismQ.VideoGenerator
         /// <param name="config">Configuration options</param>
         /// <param name="pythonPath">Path to Python executable</param>
         public KeyframeVideoSynthesizer(
-            KeyframeVideoConfig config = null,
+            KeyframeVideoConfig? config = null,
             string pythonPath = "python") : base(pythonPath)
         {
             _config = config ?? new KeyframeVideoConfig();
@@ -164,7 +164,7 @@ namespace PrismQ.VideoGenerator
             List<string> keyframePaths,
             string outputPath,
             double totalDuration,
-            string audioPath = null)
+            string? audioPath = null)
         {
             try
             {
@@ -229,8 +229,8 @@ namespace PrismQ.VideoGenerator
             string sceneDescription,
             string outputPath,
             double duration,
-            string audioPath = null,
-            List<string> stylePrompts = null)
+            string? audioPath = null,
+            List<string>? stylePrompts = null)
         {
             try
             {
@@ -261,9 +261,9 @@ namespace PrismQ.VideoGenerator
         /// <summary>
         /// Generate keyframes using SDXL
         /// </summary>
-        private async Task<List<string>> GenerateKeyframesAsync(
+        private async Task<List<string>?> GenerateKeyframesAsync(
             string sceneDescription,
-            List<string> stylePrompts = null)
+            List<string>? stylePrompts = null)
         {
             var keyframes = new List<string>();
             string tempDir = Path.Combine(
@@ -315,7 +315,7 @@ namespace PrismQ.VideoGenerator
         private string BuildKeyframePrompt(
             string description,
             double position,
-            List<string> stylePrompts)
+            List<string>? stylePrompts)
         {
             string prompt = description;
             
@@ -395,7 +395,7 @@ except Exception as e:
         /// <summary>
         /// Interpolate frames between keyframes
         /// </summary>
-        private async Task<List<string>> InterpolateFramesAsync(
+        private async Task<List<string>?> InterpolateFramesAsync(
             List<string> keyframePaths,
             Dictionary<int, int> frameDistribution)
         {
@@ -443,7 +443,7 @@ except Exception as e:
         /// <summary>
         /// Interpolate frames between two keyframes using selected method
         /// </summary>
-        private async Task<List<string>> InterpolatePairAsync(
+        private async Task<List<string>?> InterpolatePairAsync(
             string frame1Path,
             string frame2Path,
             int targetFrames,
@@ -583,7 +583,7 @@ except Exception as e:
         private async Task<bool> AssembleVideoAsync(
             List<string> framePaths,
             string outputPath,
-            string audioPath)
+            string? audioPath)
         {
             try
             {

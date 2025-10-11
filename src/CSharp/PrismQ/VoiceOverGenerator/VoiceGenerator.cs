@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 using StoryGenerator.Core.Services;
 using StoryGenerator.Providers.ElevenLabs;
 
-namespace StoryGenerator.Generators;
+namespace PrismQ.VoiceOverGenerator;
 
 /// <summary>
 /// Generates voiceovers from scripts using ElevenLabs TTS.

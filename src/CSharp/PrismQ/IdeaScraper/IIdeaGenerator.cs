@@ -1,6 +1,6 @@
 using StoryGenerator.Core.Models;
 
-namespace StoryGenerator.Generators;
+namespace PrismQ.IdeaScraper;
 
 /// <summary>
 /// Interface for generating story ideas with viral potential scoring.

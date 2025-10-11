@@ -22,8 +22,8 @@ namespace PrismQ.VideoGenerator
         /// </summary>
         protected async Task<bool> ExecutePythonScriptAsync(
             string script,
-            Action<string> outputHandler = null,
-            Action<string> errorHandler = null)
+            Action<string>? outputHandler = null,
+            Action<string>? errorHandler = null)
         {
             // Save script to temporary file
             string tempScript = Path.Combine(
@@ -123,7 +123,7 @@ namespace PrismQ.VideoGenerator
         {
             try
             {
-                string directory = Path.GetDirectoryName(outputPath);
+                string? directory = Path.GetDirectoryName(outputPath);
                 if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                 {
                     Directory.CreateDirectory(directory);

@@ -1,4 +1,4 @@
-namespace StoryGenerator.Generators;
+namespace PrismQ.StoryGenerator;
 
 /// <summary>
 /// Interface for enhancing scripts with ElevenLabs voice tags.

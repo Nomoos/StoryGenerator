@@ -1,4 +1,4 @@
-namespace StoryGenerator.Generators;
+namespace PrismQ.VoiceOverGenerator;
 
 /// <summary>
 /// Interface for generating voiceovers from scripts using TTS.

@@ -60,8 +60,8 @@ namespace PrismQ.VideoGenerator
             string sceneDescription,
             string motionHint,
             string outputPath,
-            string startKeyframe = null,
-            string endKeyframe = null,
+            string? startKeyframe = null,
+            string? endKeyframe = null,
             double duration = 5.0);
     }
     
@@ -82,7 +82,7 @@ namespace PrismQ.VideoGenerator
             List<string> keyframePaths,
             string outputPath,
             double totalDuration,
-            string audioPath = null);
+            string? audioPath = null);
         
         /// <summary>
         /// Generate complete scene with automatic keyframe generation
@@ -97,8 +97,8 @@ namespace PrismQ.VideoGenerator
             string sceneDescription,
             string outputPath,
             double duration,
-            string audioPath = null,
-            List<string> stylePrompts = null);
+            string? audioPath = null,
+            List<string>? stylePrompts = null);
     }
     
     /// <summary>
@@ -133,18 +133,6 @@ namespace PrismQ.VideoGenerator
     /// </summary>
     public interface IVideoSynthesisComparator
     {
-        /// <summary>
-        /// Compare multiple video synthesis approaches
-        /// </summary>
-        /// <param name="testPrompt">Test scene description</param>
-        /// <param name="testKeyframe">Optional test keyframe image</param>
-        /// <param name="duration">Test video duration in seconds</param>
-        /// <param name="outputDir">Directory for test outputs</param>
-        /// <returns>Comparison results for each approach</returns>
-        Task<Dictionary<string, Models.VideoClip>> CompareApproachesAsync(
-            string testPrompt,
-            string testKeyframe = null,
-            double duration = 10.0,
-            string outputDir = null);
+        // Note: Additional comparison methods can be added here as needed
     }
 }

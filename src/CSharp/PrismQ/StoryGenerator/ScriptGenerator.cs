@@ -4,7 +4,7 @@ using StoryGenerator.Core.Services;
 using StoryGenerator.Core.Utils;
 using StoryGenerator.Providers.OpenAI;
 
-namespace StoryGenerator.Generators;
+namespace PrismQ.StoryGenerator;
 
 /// <summary>
 /// Generates ~360 word scripts from story ideas.

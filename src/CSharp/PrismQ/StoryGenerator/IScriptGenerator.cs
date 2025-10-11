@@ -1,6 +1,6 @@
 using StoryGenerator.Core.Models;
 
-namespace StoryGenerator.Generators;
+namespace PrismQ.StoryGenerator;
 
 /// <summary>
 /// Interface for generating scripts from story ideas.

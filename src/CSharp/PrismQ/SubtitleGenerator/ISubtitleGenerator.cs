@@ -1,4 +1,4 @@
-namespace StoryGenerator.Generators;
+namespace PrismQ.SubtitleGenerator;
 
 /// <summary>
 /// Subtitle generation result containing the SRT file path and metadata.

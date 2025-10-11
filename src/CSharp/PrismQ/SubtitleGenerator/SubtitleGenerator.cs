@@ -1,226 +1,319 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using StoryGenerator.Models;
+using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
+using StoryGenerator.Core.Services;
+using StoryGenerator.Core.Utils;
+using StoryGenerator.Providers.OpenAI;
 
-namespace PrismQ.SubtitleGenerator
+namespace PrismQ.SubtitleGenerator;
+
+/// <summary>
+/// Generates word-level SRT subtitles by aligning scripts with audio.
+/// Ported from Python Generators/GTitles.py with OpenAI Whisper integration.
+/// </summary>
+public class SubtitleGenerator : ISubtitleGenerator
 {
-    /// <summary>
-    /// Generates draft SRT subtitles from scripts.
-    /// Saves as /subtitles/srt/{segment}/{age}/{title_id}_draft.srt
-    /// </summary>
-    public class SubtitleGenerator
+    private readonly OpenAIClient _openAIClient;
+    private readonly ILogger<SubtitleGenerator> _logger;
+    private readonly PerformanceMonitor _performanceMonitor;
+
+    public string Name => "SubtitleGenerator";
+    public string Version => "1.0.0";
+
+    public SubtitleGenerator(
+        OpenAIClient openAIClient,
+        ILogger<SubtitleGenerator> logger,
+        PerformanceMonitor performanceMonitor)
     {
-        private readonly string _subtitlesRootPath;
-        private const int AverageWordsPerMinute = 150; // Average speaking rate
-        private const int MaxCharsPerLine = 42; // SRT recommendation
+        _openAIClient = openAIClient;
+        _logger = logger;
+        _performanceMonitor = performanceMonitor;
+    }
 
-        /// <summary>
-        /// Creates a new subtitle generator.
-        /// </summary>
-        /// <param name="subtitlesRootPath">Root path for subtitles output (defaults to ./subtitles)</param>
-        public SubtitleGenerator(string? subtitlesRootPath = null)
-        {
-            _subtitlesRootPath = subtitlesRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "subtitles");
-        }
-
-        /// <summary>
-        /// Generates draft SRT subtitles from script text and saves to file.
-        /// </summary>
-        /// <param name="scriptText">The script text to convert to subtitles</param>
-        /// <param name="titleId">The title ID for the story</param>
-        /// <param name="segment">Audience segment (gender)</param>
-        /// <param name="age">Age range</param>
-        /// <param name="audioDuration">Optional total audio duration in seconds for better timing accuracy</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Path to the saved SRT file</returns>
-        public async Task<string> GenerateAndSaveSubtitlesAsync(
-            string scriptText,
-            string titleId,
-            string segment,
-            string age,
-            float? audioDuration = null,
-            CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(scriptText))
-                throw new ArgumentException("Script text cannot be empty", nameof(scriptText));
-            if (string.IsNullOrWhiteSpace(titleId))
-                throw new ArgumentException("Title ID cannot be empty", nameof(titleId));
-            if (string.IsNullOrWhiteSpace(segment))
-                throw new ArgumentException("Segment cannot be empty", nameof(segment));
-            if (string.IsNullOrWhiteSpace(age))
-                throw new ArgumentException("Age cannot be empty", nameof(age));
-
-            // Generate SRT content
-            var srtContent = GenerateSrtFromScript(scriptText, audioDuration);
-
-            // Build output path: /subtitles/srt/{segment}/{age}/{title_id}_draft.srt
-            var outputDir = Path.Combine(_subtitlesRootPath, "srt", segment, age);
-            Directory.CreateDirectory(outputDir);
-
-            var outputPath = Path.Combine(outputDir, $"{titleId}_draft.srt");
-
-            // Save to file
-            await File.WriteAllTextAsync(outputPath, srtContent, cancellationToken);
-
-            return outputPath;
-        }
-
-        /// <summary>
-        /// Generates draft SRT subtitles from script version.
-        /// </summary>
-        /// <param name="scriptVersion">The script version containing all metadata</param>
-        /// <param name="audioDuration">Optional total audio duration in seconds</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Path to the saved SRT file</returns>
-        public async Task<string> GenerateFromScriptVersionAsync(
-            ScriptVersion scriptVersion,
-            float? audioDuration = null,
-            CancellationToken cancellationToken = default)
-        {
-            if (scriptVersion == null)
-                throw new ArgumentNullException(nameof(scriptVersion));
-
-            return await GenerateAndSaveSubtitlesAsync(
-                scriptVersion.Content,
-                scriptVersion.TitleId,
-                scriptVersion.TargetAudience.Gender,
-                scriptVersion.TargetAudience.Age,
-                audioDuration,
-                cancellationToken
-            );
-        }
-
-        /// <summary>
-        /// Generates SRT content from script text.
-        /// Creates time-aligned subtitle entries based on estimated word timing.
-        /// </summary>
-        /// <param name="scriptText">The script text</param>
-        /// <param name="totalDuration">Optional total duration to calibrate timing</param>
-        /// <returns>SRT formatted string</returns>
-        private string GenerateSrtFromScript(string scriptText, float? totalDuration = null)
-        {
-            // Split script into sentences
-            var sentences = SplitIntoSentences(scriptText);
-            if (!sentences.Any())
-                return string.Empty;
-
-            // Calculate word count and timing
-            var totalWords = sentences.Sum(s => CountWords(s));
-            var wordsPerSecond = totalDuration.HasValue 
-                ? totalWords / totalDuration.Value 
-                : AverageWordsPerMinute / 60.0f;
-
-            var srtBuilder = new StringBuilder();
-            var currentTime = 0.0f;
-            var subtitleIndex = 1;
-
-            foreach (var sentence in sentences)
+    public async Task<SubtitleGenerationResult> GenerateSubtitlesAsync(
+        string audioPath,
+        string scriptPath,
+        string outputSrtPath,
+        CancellationToken cancellationToken = default)
+    {
+        return await _performanceMonitor.MeasureAsync(
+            "Subtitle_Generation",
+            Path.GetFileNameWithoutExtension(audioPath),
+            async () => await GenerateSubtitlesInternalAsync(audioPath, scriptPath, outputSrtPath, cancellationToken),
+            new Dictionary<string, object>
             {
-                var words = CountWords(sentence);
-                if (words == 0)
-                    continue;
+                { "audio_path", audioPath },
+                { "script_path", scriptPath }
+            });
+    }
 
-                var duration = words / wordsPerSecond;
-                
-                // Split long sentences into multiple subtitle entries
-                var subtitleLines = SplitIntoSubtitleLines(sentence);
-                
-                foreach (var line in subtitleLines)
-                {
-                    var lineWords = CountWords(line);
-                    var lineDuration = lineWords / wordsPerSecond;
-                    
-                    var startTime = FormatSrtTime(currentTime);
-                    var endTime = FormatSrtTime(currentTime + lineDuration);
+    private async Task<SubtitleGenerationResult> GenerateSubtitlesInternalAsync(
+        string audioPath,
+        string scriptPath,
+        string outputSrtPath,
+        CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("🎧 Generating subtitles for audio: {AudioPath}", audioPath);
 
-                    srtBuilder.AppendLine(subtitleIndex.ToString());
-                    srtBuilder.AppendLine($"{startTime} --> {endTime}");
-                    srtBuilder.AppendLine(line.Trim());
-                    srtBuilder.AppendLine();
+        // Read the script
+        var scriptText = await File.ReadAllTextAsync(scriptPath, cancellationToken);
+        var scriptWords = NormalizeText(scriptText);
 
-                    currentTime += lineDuration;
-                    subtitleIndex++;
-                }
-            }
+        _logger.LogInformation("Transcribing audio with OpenAI Whisper...");
+        
+        // Transcribe audio with word-level timestamps
+        var transcription = await _openAIClient.TranscribeAudioAsync(
+            audioPath,
+            language: "en",
+            timestampGranularity: "word",
+            cancellationToken: cancellationToken);
 
-            return srtBuilder.ToString();
+        if (transcription.Words == null || transcription.Words.Count == 0)
+        {
+            throw new InvalidOperationException("No word-level timestamps returned from Whisper API");
         }
 
-        /// <summary>
-        /// Splits text into sentences.
-        /// </summary>
-        private List<string> SplitIntoSentences(string text)
+        _logger.LogInformation("✅ Transcription completed. Duration: {Duration}s, Words: {WordCount}",
+            transcription.Duration, transcription.Words.Count);
+
+        // Normalize transcribed words
+        var spokenWords = transcription.Words
+            .Select(w => new SpokenWord
+            {
+                Original = w.Word.Trim(),
+                Normalized = NormalizeWord(w.Word),
+                Start = w.Start,
+                End = w.End
+            })
+            .ToList();
+
+        var spokenClean = spokenWords.Select(w => w.Normalized).ToList();
+
+        // Align script words with spoken words using sequence matching
+        var alignedSegments = AlignWordsWithTimestamps(scriptWords, spokenWords, spokenClean);
+
+        // Calculate alignment accuracy
+        var estimatedCount = alignedSegments.Count(s => s.Start == s.End);
+        var accuracy = estimatedCount == 0 ? 100.0 : 
+            ((alignedSegments.Count - estimatedCount) / (double)alignedSegments.Count) * 100.0;
+
+        _logger.LogInformation("🧾 Estimated {EstimatedCount} timestamps out of {TotalCount} words. Accuracy: {Accuracy:F1}%",
+            estimatedCount, alignedSegments.Count, accuracy);
+
+        // Export to SRT format
+        await ExportWordLevelSrtAsync(alignedSegments, outputSrtPath, cancellationToken);
+
+        _logger.LogInformation("✅ Subtitles saved to: {OutputPath}", outputSrtPath);
+
+        return new SubtitleGenerationResult
         {
-            if (string.IsNullOrWhiteSpace(text))
-                return new List<string>();
+            SrtFilePath = outputSrtPath,
+            WordCount = alignedSegments.Count,
+            AlignmentAccuracy = accuracy,
+            AudioDuration = transcription.Duration
+        };
+    }
 
-            // Clean and normalize text
-            text = text.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ");
-            text = System.Text.RegularExpressions.Regex.Replace(text, @"\s+", " ").Trim();
+    public async Task<SubtitleGenerationResult> GenerateSubtitlesForStoryAsync(
+        string storyFolderPath,
+        string storyTitle,
+        CancellationToken cancellationToken = default)
+    {
+        var audioPath = Path.Combine(storyFolderPath, "voiceover_normalized.mp3");
+        var scriptPath = Path.Combine(storyFolderPath, "Revised.txt");
+        var outputPath = Path.Combine(storyFolderPath, "subtitles_wbw.srt");
 
-            // Split by sentence-ending punctuation
-            var sentences = System.Text.RegularExpressions.Regex.Split(text, @"(?<=[.!?])\s+");
-            return sentences.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+        if (!File.Exists(audioPath))
+        {
+            throw new FileNotFoundException($"Audio file not found: {audioPath}");
         }
 
-        /// <summary>
-        /// Splits a sentence into subtitle lines respecting character limits.
-        /// </summary>
-        private List<string> SplitIntoSubtitleLines(string sentence)
+        if (!File.Exists(scriptPath))
         {
-            var lines = new List<string>();
+            throw new FileNotFoundException($"Script file not found: {scriptPath}");
+        }
+
+        return await GenerateSubtitlesAsync(audioPath, scriptPath, outputPath, cancellationToken);
+    }
+
+    /// <summary>
+    /// Aligns script words with spoken words using sequence matching algorithm.
+    /// </summary>
+    private List<WordSegment> AlignWordsWithTimestamps(
+        List<string> scriptWords,
+        List<SpokenWord> spokenWords,
+        List<string> spokenClean)
+    {
+        var segments = new List<WordSegment>();
+        
+        // Use a simple greedy matching algorithm
+        // For each script word, find the closest matching spoken word
+        int spokenIndex = 0;
+        
+        for (int scriptIndex = 0; scriptIndex < scriptWords.Count; scriptIndex++)
+        {
+            var scriptWord = scriptWords[scriptIndex];
             
-            if (sentence.Length <= MaxCharsPerLine)
+            // Try to find exact match in remaining spoken words
+            bool foundMatch = false;
+            for (int i = spokenIndex; i < spokenClean.Count && i < spokenIndex + 5; i++)
             {
-                lines.Add(sentence);
-                return lines;
-            }
-
-            var words = sentence.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var currentLine = new StringBuilder();
-
-            foreach (var word in words)
-            {
-                if (currentLine.Length + word.Length + 1 > MaxCharsPerLine && currentLine.Length > 0)
+                if (spokenClean[i] == scriptWord)
                 {
-                    lines.Add(currentLine.ToString().Trim());
-                    currentLine.Clear();
+                    segments.Add(new WordSegment
+                    {
+                        Word = scriptWord,
+                        Start = spokenWords[i].Start,
+                        End = spokenWords[i].End
+                    });
+                    spokenIndex = i + 1;
+                    foundMatch = true;
+                    break;
                 }
-
-                if (currentLine.Length > 0)
-                    currentLine.Append(' ');
-                currentLine.Append(word);
             }
 
-            if (currentLine.Length > 0)
-                lines.Add(currentLine.ToString().Trim());
-
-            return lines;
+            if (!foundMatch)
+            {
+                // Estimate timestamp based on surrounding words
+                var (start, end) = EstimateTimestamp(scriptIndex, segments, spokenWords, spokenIndex);
+                segments.Add(new WordSegment
+                {
+                    Word = scriptWord,
+                    Start = start,
+                    End = end
+                });
+            }
         }
 
-        /// <summary>
-        /// Counts words in a text string.
-        /// </summary>
-        private int CountWords(string text)
+        return segments;
+    }
+
+    /// <summary>
+    /// Estimates timestamp for a word based on surrounding aligned words.
+    /// </summary>
+    private (double start, double end) EstimateTimestamp(
+        int index,
+        List<WordSegment> segments,
+        List<SpokenWord> spokenWords,
+        int currentSpokenIndex)
+    {
+        double? prevTime = null;
+        double? nextTime = null;
+
+        // Look for previous aligned timestamp
+        for (int i = index - 1; i >= 0; i--)
         {
-            if (string.IsNullOrWhiteSpace(text))
-                return 0;
-
-            return text.Split(new[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            if (i < segments.Count && segments[i].Start != segments[i].End)
+            {
+                prevTime = segments[i].End;
+                break;
+            }
         }
 
-        /// <summary>
-        /// Formats time in seconds to SRT timestamp format (HH:MM:SS,mmm).
-        /// </summary>
-        private string FormatSrtTime(float seconds)
+        // Look for next aligned timestamp (estimate from current spoken position)
+        if (currentSpokenIndex < spokenWords.Count)
         {
-            var timeSpan = TimeSpan.FromSeconds(seconds);
-            return $"{(int)timeSpan.TotalHours:D2}:{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2},{timeSpan.Milliseconds:D3}";
+            nextTime = spokenWords[currentSpokenIndex].Start;
         }
+
+        // Calculate estimated time
+        if (prevTime.HasValue && nextTime.HasValue)
+        {
+            var mid = (prevTime.Value + nextTime.Value) / 2.0;
+            return (Math.Max(0, mid - 0.05), mid + 0.05);
+        }
+        else if (prevTime.HasValue)
+        {
+            return (prevTime.Value, prevTime.Value + 0.1);
+        }
+        else if (nextTime.HasValue)
+        {
+            return (Math.Max(0, nextTime.Value - 0.1), nextTime.Value);
+        }
+        else
+        {
+            return (0.0, 0.1);
+        }
+    }
+
+    /// <summary>
+    /// Exports word segments to SRT format.
+    /// </summary>
+    private async Task ExportWordLevelSrtAsync(
+        List<WordSegment> segments,
+        string outputPath,
+        CancellationToken cancellationToken)
+    {
+        var sb = new StringBuilder();
+
+        for (int i = 0; i < segments.Count; i++)
+        {
+            var segment = segments[i];
+            sb.AppendLine($"{i + 1}");
+            sb.AppendLine($"{FormatSrtTime(segment.Start)} --> {FormatSrtTime(segment.End)}");
+            sb.AppendLine(segment.Word);
+            sb.AppendLine();
+        }
+
+        // Ensure output directory exists
+        var directory = Path.GetDirectoryName(outputPath);
+        if (!string.IsNullOrEmpty(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        await File.WriteAllTextAsync(outputPath, sb.ToString(), cancellationToken);
+    }
+
+    /// <summary>
+    /// Formats seconds to SRT time format (HH:MM:SS,mmm).
+    /// </summary>
+    private string FormatSrtTime(double seconds)
+    {
+        var timeSpan = TimeSpan.FromSeconds(seconds);
+        var hours = (int)timeSpan.TotalHours;
+        var minutes = timeSpan.Minutes;
+        var secs = timeSpan.Seconds;
+        var milliseconds = timeSpan.Milliseconds;
+        return $"{hours:D2}:{minutes:D2}:{secs:D2},{milliseconds:D3}";
+    }
+
+    /// <summary>
+    /// Normalizes text to a list of lowercase words.
+    /// </summary>
+    private List<string> NormalizeText(string text)
+    {
+        // Extract words (alphanumeric sequences)
+        var matches = Regex.Matches(text.ToLower(), @"\b\w+\b");
+        return matches.Select(m => m.Value).ToList();
+    }
+
+    /// <summary>
+    /// Normalizes a single word by removing non-word characters.
+    /// </summary>
+    private string NormalizeWord(string word)
+    {
+        return Regex.Replace(word.ToLower(), @"[^\w]", "");
+    }
+
+    /// <summary>
+    /// Represents a word segment with timing information.
+    /// </summary>
+    private class WordSegment
+    {
+        public string Word { get; set; } = string.Empty;
+        public double Start { get; set; }
+        public double End { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a spoken word from transcription.
+    /// </summary>
+    private class SpokenWord
+    {
+        public string Original { get; set; } = string.Empty;
+        public string Normalized { get; set; } = string.Empty;
+        public double Start { get; set; }
+        public double End { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using StoryGenerator.Core.Services;
 using StoryGenerator.Core.Utils;
 using StoryGenerator.Providers.OpenAI;
 
-namespace StoryGenerator.Generators;
+namespace PrismQ.StoryGenerator;
 
 /// <summary>
 /// Enhances scripts with ElevenLabs voice performance tags.

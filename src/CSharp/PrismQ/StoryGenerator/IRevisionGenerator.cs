@@ -1,4 +1,4 @@
-namespace StoryGenerator.Generators;
+namespace PrismQ.StoryGenerator;
 
 /// <summary>
 /// Interface for revising scripts for AI voice clarity.

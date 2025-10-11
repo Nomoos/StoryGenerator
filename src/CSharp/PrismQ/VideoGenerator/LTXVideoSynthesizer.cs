@@ -58,7 +58,7 @@ namespace PrismQ.VideoGenerator
         public async Task<bool> GenerateVideoAsync(
             string prompt,
             string outputPath,
-            string keyframePath,
+            string? keyframePath,
             int duration,
             int? fps = null)
         {
@@ -128,8 +128,8 @@ namespace PrismQ.VideoGenerator
             string sceneDescription,
             string motionHint,
             string outputPath,
-            string startKeyframe = null,
-            string endKeyframe = null,
+            string? startKeyframe = null,
+            string? endKeyframe = null,
             double duration = 5.0)
         {
             // Combine scene description with motion hint
@@ -172,7 +172,7 @@ namespace PrismQ.VideoGenerator
         private string BuildPythonScript(
             string prompt,
             string outputPath,
-            string keyframePath,
+            string? keyframePath,
             int duration,
             int fps)
         {
