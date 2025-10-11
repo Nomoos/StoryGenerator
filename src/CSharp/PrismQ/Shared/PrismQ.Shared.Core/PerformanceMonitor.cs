@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
-namespace StoryGenerator.Core.Services;
+namespace PrismQ.Shared.Core.Services;
 
 /// <summary>
 /// Performance monitoring and metrics tracking service.

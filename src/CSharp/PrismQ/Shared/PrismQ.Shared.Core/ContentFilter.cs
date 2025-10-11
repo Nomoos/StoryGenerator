@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 
-namespace StoryGenerator.Core.Services
+namespace PrismQ.Shared.Core.Services
 {
     /// <summary>
     /// Content filtering service to detect demonetized words and inappropriate content.

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using StoryGenerator.Core.Interfaces;
 using StoryGenerator.Core.Models;
 
-namespace StoryGenerator.Core.Services
+namespace PrismQ.Shared.Core.Services
 {
     /// <summary>
     /// Service for aligning subtitles to audio using faster-whisper and mapping them to shots.

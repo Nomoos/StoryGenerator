@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;
 
-namespace StoryGenerator.Core.Services;
+namespace PrismQ.Shared.Core.Services;
 
 /// <summary>
 /// Retry service with exponential backoff and circuit breaker patterns.

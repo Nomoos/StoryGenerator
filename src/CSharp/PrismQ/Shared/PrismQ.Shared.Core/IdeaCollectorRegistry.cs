@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using StoryGenerator.Core.Models;
 
-namespace StoryGenerator.Core.Services;
+namespace PrismQ.Shared.Core.Services;
 
 /// <summary>
 /// Registry that centralizes idea objects from multiple collectors.

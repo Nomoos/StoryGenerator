@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace StoryGenerator.Core.Services
+namespace PrismQ.Shared.Core.Services
 {
     /// <summary>
     /// Output quality validation and metrics tracking.
