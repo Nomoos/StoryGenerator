@@ -79,10 +79,18 @@ PrismQ/
 ├── Pipeline/                 # Pipeline orchestration
 │   ├── orchestration/       # Step orchestration logic
 │   └── scripts/             # Batch execution scripts
-└── Tools/                    # Video publishing and quality tools
-    ├── MultiPlatformPublisher.py  # Multi-platform distribution
-    ├── VideoQualityChecker.py     # Video quality validation
-    └── VideoVariantSelector.py    # Video variant selection
+├── Tools/                    # Video publishing and quality tools
+│   ├── MultiPlatformPublisher.py  # Multi-platform distribution
+│   ├── VideoQualityChecker.py     # Video quality validation
+│   └── VideoVariantSelector.py    # Video variant selection
+├── Examples/                 # Usage examples and demonstrations
+│   ├── basic_pipeline.py    # Basic pipeline usage
+│   ├── platform_*_example.py # Platform integration examples
+│   └── ...                  # Various feature demonstrations
+└── Scripts/                  # Utility scripts and tools
+    ├── pipeline/            # Pipeline execution scripts
+    ├── scrapers/            # Content scraping scripts
+    └── ...                  # Various utility scripts
 ```
 
 ## 📚 Related Documentation
