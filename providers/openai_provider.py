@@ -17,7 +17,7 @@ from tenacity import (
     retry_if_exception_type,
 )
 
-from core.interfaces.llm_provider import ILLMProvider, IAsyncLLMProvider, ChatMessage
+from PrismQ.Shared.interfaces.llm_provider import ILLMProvider, IAsyncLLMProvider, ChatMessage
 
 logger = logging.getLogger(__name__)
 

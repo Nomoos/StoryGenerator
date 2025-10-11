@@ -27,7 +27,7 @@ from providers import (
     TikTokAnalytics,
     InstagramAnalytics,
 )
-from core.interfaces.platform_provider import VideoAnalytics
+from PrismQ.Shared.interfaces.platform_provider import VideoAnalytics
 
 
 # Configuration

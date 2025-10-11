@@ -18,7 +18,7 @@ from tenacity import (
     retry_if_exception_type,
 )
 
-from core.interfaces.platform_provider import (
+from PrismQ.Shared.interfaces.platform_provider import (
     IPlatformUploader,
     IPlatformAnalytics,
     PlatformType,

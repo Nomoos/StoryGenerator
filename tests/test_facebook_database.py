@@ -14,7 +14,7 @@ from datetime import datetime
 from unittest.mock import Mock, patch
 from pathlib import Path
 
-from core.interfaces.platform_provider import (
+from PrismQ.Shared.interfaces.platform_provider import (
     IPlatformUploader,
     IPlatformAnalytics,
     PlatformType,
@@ -159,7 +159,7 @@ class TestPlatformDatabase:
 
     def test_database_initialization(self):
         """Test database creation and schema initialization."""
-        from core.database import PlatformDatabase
+        from PrismQ.Shared.database import PlatformDatabase
 
         with tempfile.NamedTemporaryFile(suffix=".db", delete=False) as f:
             db_path = f.name
@@ -188,7 +188,7 @@ class TestPlatformDatabase:
 
     def test_save_upload_result(self):
         """Test saving upload result to database."""
-        from core.database import PlatformDatabase
+        from PrismQ.Shared.database import PlatformDatabase
 
         with tempfile.NamedTemporaryFile(suffix=".db", delete=False) as f:
             db_path = f.name
@@ -227,7 +227,7 @@ class TestPlatformDatabase:
 
     def test_save_analytics(self):
         """Test saving analytics data to database."""
-        from core.database import PlatformDatabase
+        from PrismQ.Shared.database import PlatformDatabase
 
         with tempfile.NamedTemporaryFile(suffix=".db", delete=False) as f:
             db_path = f.name
@@ -284,8 +284,8 @@ class TestPlatformComparator:
 
     def test_compare_video(self):
         """Test cross-platform comparison."""
-        from core.database import PlatformDatabase
-        from core.platform_comparison import PlatformComparator
+        from PrismQ.Shared.database import PlatformDatabase
+        from PrismQ.Shared.platform_comparison import PlatformComparator
 
         with tempfile.NamedTemporaryFile(suffix=".db", delete=False) as f:
             db_path = f.name
@@ -346,8 +346,8 @@ class TestPlatformComparator:
 
     def test_generate_insights(self):
         """Test insight generation."""
-        from core.database import PlatformDatabase
-        from core.platform_comparison import PlatformComparator
+        from PrismQ.Shared.database import PlatformDatabase
+        from PrismQ.Shared.platform_comparison import PlatformComparator
 
         with tempfile.NamedTemporaryFile(suffix=".db", delete=False) as f:
             db_path = f.name

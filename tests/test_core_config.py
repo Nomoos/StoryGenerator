@@ -14,7 +14,7 @@ import pytest
 import logging
 from pathlib import Path
 from unittest.mock import patch
-from core.config import Settings, get_settings
+from PrismQ.Shared.config import Settings, get_settings
 
 
 class TestSettingsDefaults:

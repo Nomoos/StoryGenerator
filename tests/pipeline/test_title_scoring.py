@@ -7,7 +7,7 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 import json
 
-from core.pipeline.title_scoring import TitleScorer
+from PrismQ.StoryTitleScoring.title_scoring import TitleScorer
 
 
 class TestTitleScorer:

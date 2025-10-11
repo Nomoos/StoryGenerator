@@ -341,7 +341,7 @@ class MultiPlatformPublisher:
             )
         
         # Prepare metadata for YouTube
-        from core.interfaces.platform_provider import VideoMetadata, PrivacyStatus
+        from PrismQ.Shared.interfaces.platform_provider import VideoMetadata, PrivacyStatus
         
         privacy_map = {
             "public": PrivacyStatus.PUBLIC,
@@ -400,7 +400,7 @@ class MultiPlatformPublisher:
             )
         
         # Prepare metadata for TikTok
-        from core.interfaces.platform_provider import VideoMetadata, PrivacyStatus
+        from PrismQ.Shared.interfaces.platform_provider import VideoMetadata, PrivacyStatus
         
         privacy_map = {
             "public": PrivacyStatus.PUBLIC,
@@ -451,7 +451,7 @@ class MultiPlatformPublisher:
             )
         
         # Prepare metadata for Instagram
-        from core.interfaces.platform_provider import VideoMetadata
+        from PrismQ.Shared.interfaces.platform_provider import VideoMetadata
         
         video_metadata = VideoMetadata(
             title=metadata.caption or metadata.title or "",
@@ -495,7 +495,7 @@ class MultiPlatformPublisher:
             )
         
         # Prepare metadata for Facebook
-        from core.interfaces.platform_provider import VideoMetadata, PrivacyStatus
+        from PrismQ.Shared.interfaces.platform_provider import VideoMetadata, PrivacyStatus
         
         privacy_map = {
             "public": PrivacyStatus.PUBLIC,

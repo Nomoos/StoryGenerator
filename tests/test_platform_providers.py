@@ -10,7 +10,7 @@ from unittest.mock import Mock, patch, MagicMock, mock_open
 import os
 import sys
 
-from core.interfaces.platform_provider import (
+from PrismQ.Shared.interfaces.platform_provider import (
     IPlatformUploader,
     IPlatformAnalytics,
     PlatformType,

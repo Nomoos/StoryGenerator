@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from providers import OpenAIProvider, MockLLMProvider  # noqa: E402
-from core.interfaces.llm_provider import ILLMProvider  # noqa: E402
+from PrismQ.Shared.interfaces.llm_provider import ILLMProvider  # noqa: E402
 
 
 def generate_story_idea(provider: ILLMProvider, topic: str) -> str:

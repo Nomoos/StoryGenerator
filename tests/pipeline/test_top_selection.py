@@ -6,7 +6,7 @@ import pytest
 import json
 from pathlib import Path
 
-from core.pipeline.top_selection import TopSelector
+from PrismQ.StoryTitleScoring.top_selection import TopSelector
 
 
 class TestTopSelector:

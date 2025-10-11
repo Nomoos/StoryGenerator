@@ -17,7 +17,7 @@ from pathlib import Path
 from unittest.mock import patch
 import pytest
 
-from core.logging import (
+from PrismQ.Shared.logging import (
     setup_logging,
     get_logger,
     log_context,

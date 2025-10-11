@@ -6,7 +6,7 @@ import pytest
 import json
 from pathlib import Path
 
-from core.pipeline.voice_recommendation import VoiceRecommender
+from PrismQ.VoiceOverGenerator.voice_recommendation import VoiceRecommender
 
 
 class TestVoiceRecommender:
