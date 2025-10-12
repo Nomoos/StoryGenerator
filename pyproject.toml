@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "AI-powered story generation and video content creation system"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = {text = "Closed Commercial License"}
 authors = [
     {name = "StoryGenerator Team", email = "team@storygenerator.dev"}
 ]
@@ -19,7 +19,7 @@ keywords = ["ai", "video", "generation", "storytelling", "content-creation"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "License :: Other/Proprietary License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
