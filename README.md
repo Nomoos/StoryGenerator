@@ -113,10 +113,20 @@ Assemble and finalize the complete video.
 
 ## 📚 Documentation
 
+### 🎯 New: Comprehensive Repository Documentation
+
+- **[Repository Overview](REPOSITORY_OVERVIEW.md)** - Complete repository structure and architecture
+- **[SOLID Principles Guide](SOLID_PRINCIPLES_IMPLEMENTATION.md)** - Real-world SOLID examples from this codebase
+- **[Project Splitting Guide](PROJECT_SPLITTING_GUIDE.md)** - How to extract components for smaller projects
+- **[Reference Guide](REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md)** - Quick reference for developers building small projects
+
+### Existing Documentation
+
 - **Getting Started**: See `PrismQ/Development/Documentation/guides/`
 - **API Reference**: See `PrismQ/README.md`
 - **Examples**: See `PrismQ/Development/Examples/`
 - **Migration Guide**: See `PrismQ/Development/Documentation/migration/`
+- **Complete Index**: See `PrismQ/Development/Documentation/INDEX.md`
 
 ## 🧪 Testing
 
