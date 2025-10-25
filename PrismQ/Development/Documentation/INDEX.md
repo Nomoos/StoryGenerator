@@ -2,7 +2,13 @@
 
 Welcome to the StoryGenerator documentation! This index will help you find the information you need quickly.
 
-> **📋 NEW Organization**: Documentation has been reorganized into logical folders (≤7 files per folder) for better navigation. See below for the complete structure.
+> **🎯 NEW: Comprehensive Repository Documentation** - Four new comprehensive guides are now available at the repository root:
+> - [REPOSITORY_OVERVIEW.md](../../../REPOSITORY_OVERVIEW.md) - Complete repository structure and architecture
+> - [SOLID_PRINCIPLES_IMPLEMENTATION.md](../../../SOLID_PRINCIPLES_IMPLEMENTATION.md) - Real-world SOLID examples
+> - [PROJECT_SPLITTING_GUIDE.md](../../../PROJECT_SPLITTING_GUIDE.md) - How to extract components for smaller projects
+> - [REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md](../../../REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md) - Quick reference for developers
+
+> **📋 Documentation Organization**: Documentation has been reorganized into logical folders (≤7 files per folder) for better navigation. See below for the complete structure.
 
 > **⚠️ Repository Reorganization**: This repository now has separate C# and Python implementations. See [guides/REORGANIZATION_GUIDE.md](guides/REORGANIZATION_GUIDE.md) for migration instructions.
 
@@ -10,11 +16,20 @@ Welcome to the StoryGenerator documentation! This index will help you find the i
 
 **New to StoryGenerator?** Start here:
 
-1. **[quickstarts/general/GETTING_STARTED.md](quickstarts/general/GETTING_STARTED.md)** - Get up and running quickly
-2. **[quickstarts/general/QUICK_START_GUIDE.md](quickstarts/general/QUICK_START_GUIDE.md)** - Developer quick start
-3. **[guides/setup/INSTALLATION.md](guides/setup/INSTALLATION.md)** - Detailed setup instructions
-4. **[guides/FAQ.md](guides/FAQ.md)** - Frequently asked questions
-5. **[guides/TROUBLESHOOTING.md](guides/TROUBLESHOOTING.md)** - Common issues and solutions
+### For Understanding the Repository
+1. **[REPOSITORY_OVERVIEW.md](../../../REPOSITORY_OVERVIEW.md)** ⭐ **NEW** - Understand the complete repository architecture
+2. **[SOLID_PRINCIPLES_IMPLEMENTATION.md](../../../SOLID_PRINCIPLES_IMPLEMENTATION.md)** ⭐ **NEW** - Learn SOLID principles through real examples
+
+### For Using Components in Small Projects
+3. **[PROJECT_SPLITTING_GUIDE.md](../../../PROJECT_SPLITTING_GUIDE.md)** ⭐ **NEW** - Extract components for your projects
+4. **[REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md](../../../REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md)** ⭐ **NEW** - Quick reference and code templates
+
+### For Getting Started with Development
+5. **[quickstarts/general/GETTING_STARTED.md](quickstarts/general/GETTING_STARTED.md)** - Get up and running quickly
+6. **[quickstarts/general/QUICK_START_GUIDE.md](quickstarts/general/QUICK_START_GUIDE.md)** - Developer quick start
+7. **[guides/setup/INSTALLATION.md](guides/setup/INSTALLATION.md)** - Detailed setup instructions
+8. **[guides/FAQ.md](guides/FAQ.md)** - Frequently asked questions
+9. **[guides/TROUBLESHOOTING.md](guides/TROUBLESHOOTING.md)** - Common issues and solutions
 
 ## 🗂️ Documentation Structure
 
@@ -107,9 +122,73 @@ Technical reports and analysis.
 - **[EXAMPLES.md](EXAMPLES.md)** - Input/output examples for all pipeline stages
 - **[CHANGELOG.md](CHANGELOG.md)** - Project changelog
 
+### 🎯 NEW: Comprehensive Repository Guides (Root Level)
+
+**Essential reading for understanding, learning, and using this repository:**
+
+#### 1. [REPOSITORY_OVERVIEW.md](../../../REPOSITORY_OVERVIEW.md)
+**Purpose**: Understand the whole repository function and architecture
+
+**What's Inside**:
+- Complete repository architecture and design philosophy
+- Core components and their responsibilities
+- Technology stack and key dependencies
+- How SOLID principles are implemented throughout
+- Getting started guides for different use cases
+
+**Read This If**: You want to understand how everything fits together
+
+#### 2. [SOLID_PRINCIPLES_IMPLEMENTATION.md](../../../SOLID_PRINCIPLES_IMPLEMENTATION.md)
+**Purpose**: Learn SOLID principles through real code examples
+
+**What's Inside**:
+- Detailed explanation of each SOLID principle
+- ✅ Good examples from our codebase
+- ❌ Anti-patterns to avoid
+- Real-world applications and use cases
+- Best practices and troubleshooting
+
+**Read This If**: You want to learn or teach SOLID principles with concrete examples
+
+#### 3. [PROJECT_SPLITTING_GUIDE.md](../../../PROJECT_SPLITTING_GUIDE.md)
+**Purpose**: Extract components for smaller, focused projects
+
+**What's Inside**:
+- What components can be extracted and why
+- Step-by-step extraction process
+- Common extraction patterns (Provider, Pipeline, Repository)
+- Real-world extraction examples
+- Best practices and troubleshooting
+
+**Read This If**: You want to use parts of this repository in your own projects
+
+#### 4. [REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md](../../../REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md)
+**Purpose**: Quick reference for building small SOLID-compliant projects
+
+**What's Inside**:
+- SOLID principles cheat sheet
+- Code templates ready to copy-paste
+- Common design patterns
+- Architecture decision guide
+- Quick troubleshooting reference
+
+**Read This If**: You need quick answers or code templates for your project
+
 ## 🎯 Quick Reference by Task
 
 ### I want to...
+
+#### ...understand the whole repository
+→ [REPOSITORY_OVERVIEW.md](../../../REPOSITORY_OVERVIEW.md) ⭐ **NEW**
+
+#### ...learn SOLID principles with real examples
+→ [SOLID_PRINCIPLES_IMPLEMENTATION.md](../../../SOLID_PRINCIPLES_IMPLEMENTATION.md) ⭐ **NEW**
+
+#### ...extract components for my own project
+→ [PROJECT_SPLITTING_GUIDE.md](../../../PROJECT_SPLITTING_GUIDE.md) ⭐ **NEW**
+
+#### ...get code templates and quick reference
+→ [REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md](../../../REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md) ⭐ **NEW**
 
 #### ...get started quickly
 → [quickstarts/general/GETTING_STARTED.md](quickstarts/general/GETTING_STARTED.md)
@@ -141,16 +220,32 @@ Technical reports and analysis.
 ## 📋 Documentation by Role
 
 ### 👤 New User
-1. Read [quickstarts/general/GETTING_STARTED.md](quickstarts/general/GETTING_STARTED.md)
-2. Reference [EXAMPLES.md](EXAMPLES.md) for format details
-3. Check [guides/FAQ.md](guides/FAQ.md) for common questions
+1. Read [REPOSITORY_OVERVIEW.md](../../../REPOSITORY_OVERVIEW.md) ⭐ **Start here**
+2. Read [quickstarts/general/GETTING_STARTED.md](quickstarts/general/GETTING_STARTED.md)
+3. Reference [EXAMPLES.md](EXAMPLES.md) for format details
+4. Check [guides/FAQ.md](guides/FAQ.md) for common questions
 
 ### 👨‍💻 Developer/Contributor
-1. Read [quickstarts/general/QUICK_START_GUIDE.md](quickstarts/general/QUICK_START_GUIDE.md)
-2. Study [PrismQ/Pipeline/PIPELINE.md](PrismQ/Pipeline/PIPELINE.md) for technical details
-3. Review [features/MODELS.md](features/MODELS.md) for AI model specs
-4. Check [roadmaps/HYBRID_ROADMAP.md](roadmaps/HYBRID_ROADMAP.md) for current status
-5. Reference [testing/TDD_GUIDE.md](testing/TDD_GUIDE.md) for development practices
+1. Read [REPOSITORY_OVERVIEW.md](../../../REPOSITORY_OVERVIEW.md) for architecture overview
+2. Study [SOLID_PRINCIPLES_IMPLEMENTATION.md](../../../SOLID_PRINCIPLES_IMPLEMENTATION.md) for design patterns
+3. Use [REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md](../../../REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md) for code templates
+4. Read [quickstarts/general/QUICK_START_GUIDE.md](quickstarts/general/QUICK_START_GUIDE.md)
+5. Study [PrismQ/Pipeline/PIPELINE.md](PrismQ/Pipeline/PIPELINE.md) for technical details
+6. Review [features/MODELS.md](features/MODELS.md) for AI model specs
+7. Check [roadmaps/HYBRID_ROADMAP.md](roadmaps/HYBRID_ROADMAP.md) for current status
+8. Reference [testing/TDD_GUIDE.md](testing/TDD_GUIDE.md) for development practices
+
+### 🎓 Learning SOLID Principles
+1. Read [SOLID_PRINCIPLES_IMPLEMENTATION.md](../../../SOLID_PRINCIPLES_IMPLEMENTATION.md) - Complete SOLID guide
+2. Use [REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md](../../../REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md) - Quick reference
+3. Study actual code in `PrismQ/Infrastructure/Core/Shared/interfaces/`
+4. Review [csharp/architecture/SOLID_OOP_CLEAN_CODE_GUIDE.md](csharp/architecture/SOLID_OOP_CLEAN_CODE_GUIDE.md) for C# examples
+
+### 🔨 Building Small Projects
+1. Read [PROJECT_SPLITTING_GUIDE.md](../../../PROJECT_SPLITTING_GUIDE.md) - How to extract components
+2. Use [REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md](../../../REFERENCE_GUIDE_FOR_SMALL_PROJECTS.md) - Code templates
+3. Study [SOLID_PRINCIPLES_IMPLEMENTATION.md](../../../SOLID_PRINCIPLES_IMPLEMENTATION.md) - Apply SOLID principles
+4. Reference actual implementations in `PrismQ/` as examples
 
 ### 👨‍💼 Repository Owner/Maintainer
 1. Review [roadmaps/HYBRID_ROADMAP.md](roadmaps/HYBRID_ROADMAP.md) for complete status
