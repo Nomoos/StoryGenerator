@@ -87,7 +87,8 @@ class VideoGenerator:
                                cv2.cvtColor(gradient, cv2.COLOR_GRAY2BGR), 0.3, 0)
         
         # Add some noise for texture
-        noise = np.random.randint(0, 30, (h, w, 3), dtype=np.uint8)
+        noise = np.random.randint(0, self.config.noise_intensity, 
+                                 (h, w, 3), dtype=np.uint8)
         frame = cv2.add(frame, noise)
         
         return frame

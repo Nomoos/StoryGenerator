@@ -73,6 +73,13 @@ class GenerationConfig:
     progress_bar_shadow_offset: int = 1  # Shadow offset in pixels
     progress_bar_shadow_opacity: float = 0.6
     
+    # Advanced visual processing parameters
+    gamma_correction: float = 1.3  # Gamma correction for dark base
+    edge_detection_low: int = 50  # Canny edge detection low threshold
+    edge_detection_high: int = 150  # Canny edge detection high threshold
+    noise_intensity: int = 30  # Texture noise intensity (0-255)
+    speed_pulse_duration: int = 8  # Frames for speed pulse at major breaks
+    
     def __post_init__(self):
         """Initialize default neon colors if not provided."""
         if self.neon_colors is None:

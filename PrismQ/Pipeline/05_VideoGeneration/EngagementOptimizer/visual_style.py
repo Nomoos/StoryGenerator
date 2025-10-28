@@ -34,7 +34,7 @@ class VisualStyle:
         target_mid = (min_dark + max_dark) / 2 / 255.0
         
         # Apply curve: darken everything below 50% luminance
-        frame_float = np.power(frame_float, 1.3)  # Gamma correction
+        frame_float = np.power(frame_float, self.config.gamma_correction)  # Gamma correction
         frame_float = frame_float * 0.7 + target_mid * 0.3
         
         # Clip and convert back
@@ -59,7 +59,8 @@ class VisualStyle:
         blurred = cv2.GaussianBlur(gray, (5, 5), 0)
         
         # Canny edge detection
-        edges = cv2.Canny(blurred, 50, 150)
+        edges = cv2.Canny(blurred, self.config.edge_detection_low, 
+                         self.config.edge_detection_high)
         
         # Dilate edges slightly
         kernel = np.ones((3, 3), np.uint8)

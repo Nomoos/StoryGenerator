@@ -166,7 +166,7 @@ class MotionEffects:
             Speed multiplier (1.0 = normal, >1.0 = faster)
         """
         # Apply speed pulse at major breaks
-        if frame_idx % self.config.major_break_interval < 8:
+        if frame_idx % self.config.major_break_interval < self.config.speed_pulse_duration:
             return 1.4
         
         return 1.0
